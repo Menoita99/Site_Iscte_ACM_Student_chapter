@@ -1,0 +1,90 @@
+#promo {
+  text-align: center;
+  padding: 40px;
+  background: url("#{resource['img:laptop-1209008_1280.jpg']}");
+  background-size: cover;
+  padding-top: 60px;
+}
+
+.nav-item :focus-within {
+  color: rgba(255,255,255,0.9)!important;
+  background-color: #8db6d2;
+  border-color: transparent;
+  border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+  #promo {
+    padding: 20px;
+  }
+}
+
+#promo .jumbotron {
+  background-color: rgba(233,236,239,0.75);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+@media (max-width: 990px) {
+  #promo .jumbotron {
+    padding: 20px;
+  }
+}
+
+.site-section {
+  text-align: center;
+  padding-bottom: 70px;
+}
+
+.site-section h1 {
+  padding-top: 60px;
+  font-weight: normal;
+  margin-bottom: 30px;
+}
+
+#intro p {
+  max-width: 799px;
+  font-size: 20px;
+  margin: 0 auto;
+}
+
+#why .item i {
+  font-size: 40px;
+  padding: 10px;
+  color: #0a65a2;
+}
+
+#why .item {
+  padding-top: 36px;
+}
+
+#why .item h2 {
+  font-weight: normal;
+  margin-top: 5px;
+}
+
+.gray-section {
+  background-color: #e4f1f7;
+}
+
+#logo {
+  max-height: 42px;
+  margin-top: -3px;
+}
+
+.navbar i {
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+#why .item p {
+  color: #525658;
+}
+
+.info-button {
+  background-color: #7db0d3;
+  border-color: transparent;
+}
+
