@@ -17,13 +17,13 @@ public class DataBaseConnection {
 
 	// JDBC driver name and database URL
 	private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-	private static final String DB_URL = "jdbc:mysql://localhost/bomermanb2_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+	private static final String DB_URL = "jdbc:mysql://localhost/acm_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 
 	//  Database credentials
-	private static final String USER = "server";
+	private static final String USER = "server";		//Change to use your root username and password
 	private static final String PASS = "0001@bombS";
 
-	// Database Connection -> criar uma classe que aprefeiçoa a conneção
+	// Database Connection 
 	private Connection dbConnection= null;
 
 
@@ -32,7 +32,7 @@ public class DataBaseConnection {
 	}
 
 	/**
-	 * Establish the connection between server a database
+	 * Establish the connection between server and database
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
@@ -57,22 +57,23 @@ public class DataBaseConnection {
 
 	public static DataBaseConnection getInstance() {
 		INSTANCE = INSTANCE == null ? new DataBaseConnection() : INSTANCE;
-		return INSTANCE;
+		return INSTANCE; 
 	}
-
 
 	/**
 	 * Executes the @param update query  
+	 * After using ResultSet use the method .close() to avoid connection problems
 	 * @throws SQLException
 	 */
 	public void executeUpdate(String update) throws SQLException {
 		Statement stm = dbConnection.createStatement();
 		stm.executeUpdate(update);
+		stm.close();
 	}
 
 	/**
 	 * Executes the query given and returns the ResultSet
-	 * 
+	 * After using ResultSet use the method .close() to avoid connection problems
 	 * @throws SQLException
 	 */
 	public ResultSet executeQuery(String query) throws SQLException {
@@ -87,19 +88,24 @@ public class DataBaseConnection {
 	 * Suggestion: Use TIMESTAMP on query instead
 	 */
 	public String getSqlTime() {
-		Timestamp date =  new Timestamp(new Date().getTime());
-		return date.toString();
+		return new Timestamp(new Date().getTime()).toString();
+	}
+
+	
+	/**
+	 * This method returns the result Set of the query
+	 * Select *  from users where email = ? and password = ?
+	 * After using ResultSet use the method .close() to avoid connection problems 
+	 */
+	public ResultSet loginQuery(String email, String password) throws SQLException {
+		PreparedStatement stm= dbConnection.prepareStatement("Select *  from users where email = ? and password = ?");  
+		stm.setString(1,email);				//1 specifies the first parameter in the query  
+		stm.setString(2,password);			//2 specifies the Second parameter in the query  
+		return stm.executeQuery();
 	}
 
 	
 	//TODO Create your own preparedStatment
 	
-	
-
-
-	public static void main(String[] args) {
-		DataBaseConnection.getInstance();
-		System.out.println("DATABASE CONNECTION ESTABLISHED");
-	}
 
 }

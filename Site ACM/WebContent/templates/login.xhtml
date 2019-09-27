@@ -1,5 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--xmlns:p="http://primefaces.org/ui"  -->	
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -12,26 +13,25 @@
 	<meta charset="utf-8" content="" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-	<h:outputStylesheet library="css" name="Login.css" />
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"/>
-    
+	<h:outputStylesheet library="css" name="Login-Form-Dark.css" />
+	<h:outputStylesheet library="css" name="BasicStyles.css" />
 </h:head>
+
 <h:body>
-	<div class="login-dark">
-        <form method="post">
+    <div class="login-dark">
+        <h:form>
             <h2 class="sr-only">Login Form</h2>
             <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
-            <div class="form-group"><h:inputText class="form-control" type="email" name="email" a:placeholder="Email"/></div>
-            <div class="form-group"><h:inputSecret class="form-control" type="password" name="password" a:placeholder="Password"/></div>
-            <div class="form-group"><button class="btn btn-primary btn-block" type="submit">Log In</button></div>
-            <a href="#" class="forgot">Forgot your email or password?</a></form>
+            <div class="form-group"><h:outputText class="error-label" value="#{login.error}"/></div>
+            <div class="form-group"><h:inputText class="form-control" type="email" a:placeholder="Email" value="#{login.email}" /></div>
+            <div class="form-group"><h:inputSecret class="form-control" type="password" a:placeholder="Password" value="#{login.password}"/></div>
+            <div class="form-group">
+            <h:commandButton class="btn btn-primary btn-block" value="Log in" type="submit" action="#{login.login()}"/></div>
+            <a href="#" class="forgot">Forgot your email or password?</a></h:form>
     </div>
-	
-
-
 
 </h:body>
+
 </html>

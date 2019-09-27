@@ -53,7 +53,7 @@
 #why .item i {
   font-size: 40px;
   padding: 10px;
-  color: #0a65a2;
+  color: #214a80;
 }
 
 #why .item {
@@ -84,7 +84,15 @@
 }
 
 .info-button {
-  background-color: #7db0d3;
+  background-color: #214a80;
   border-color: transparent;
 }
+
+
+.error-label {
+  color: #d96161;
+  text-align: center;
+  display: block;
+}
+
 
