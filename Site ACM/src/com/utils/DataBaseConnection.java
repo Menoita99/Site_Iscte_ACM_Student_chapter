@@ -85,25 +85,64 @@ public class DataBaseConnection {
 	/**
 	 * Returns the date in a format that is accepted by SQL.
 	 *
-	 * Suggestion: Use TIMESTAMP on query instead
+	 * Suggestion: Use now() on query instead
 	 */
 	public String getSqlTime() {
 		return new Timestamp(new Date().getTime()).toString();
 	}
 
 	
+	//TODO prevent SQL Injection Attack !IMPORTATNT
+	
+	
 	/**
 	 * This method returns the result Set of the query
 	 * Select *  from users where email = ? and password = ?
 	 * After using ResultSet use the method .close() to avoid connection problems 
+	 * @throws SQLException
 	 */
+	
 	public ResultSet loginQuery(String email, String password) throws SQLException {
 		PreparedStatement stm= dbConnection.prepareStatement("Select *  from users where email = ? and password = ?");  
 		stm.setString(1,email);				//1 specifies the first parameter in the query  
 		stm.setString(2,password);			//2 specifies the Second parameter in the query  
 		return stm.executeQuery();
 	}
+	
+	
+	/**
+	 *Inserts a new user on Data Base
+	 *Query:
+	 *"INSERT INTO users (email, password, isAdmin, isMember,last_log,frist_name,last_name)"+
+	 *"VALUES (?,?,false,false,now(),?,?);"
+	 *@throws SQLException
+	 */
+	public void signInQuery(String email, String password, String fname, String lname) throws SQLException {
+		PreparedStatement stm= dbConnection.prepareStatement( 
+			"INSERT INTO users (email, password, isAdmin, isMember,last_log,frist_name,last_name)"+
+			"VALUES (?,?,false,false,now(),?,?);");
+		
+		stm.setString(1,email);				
+		stm.setString(2,password);			
+		stm.setString(3,fname);				 
+		stm.setString(4,lname);
+		stm.executeUpdate();
+		stm.close();
+	}
 
+	
+	/**
+	 * return true if there is an user with the email given
+	 * @throws SQLException 
+	 */
+	public boolean userExist(String email) throws SQLException {
+		PreparedStatement stm = dbConnection.prepareStatement( "Select *  from users where email = ? ");
+		stm.setString(1,email);			
+		boolean exists = stm.executeQuery().next();
+		stm.close();
+		return exists;
+	}
+	
 	
 	//TODO Create your own preparedStatment
 	

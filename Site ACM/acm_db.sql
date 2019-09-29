@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `acm_db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `acm_db`;
 -- MySQL dump 10.13  Distrib 8.0.16, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: acm_db
@@ -185,12 +183,17 @@ CREATE TABLE `users` (
   `isMember` tinyint(4) NOT NULL,
   `image` varchar(150) DEFAULT NULL,
   `course` varchar(60) DEFAULT NULL,
+  `frist_name` varchar(60) NOT NULL,
+  `last_name` varchar(60) NOT NULL,
   PRIMARY KEY (`id_user`),
   UNIQUE KEY `id_user_UNIQUE` (`id_user`),
-  UNIQUE KEY `email_UNIQUE` (`email`),
-  UNIQUE KEY `password_UNIQUE` (`password`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `email_UNIQUE` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping routines for database 'acm_db'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -201,4 +204,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-09-25 18:18:34
+-- Dump completed on 2019-09-29 21:11:41

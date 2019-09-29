@@ -6,6 +6,7 @@
 .register-photo .image-holder {
   display: table-cell;
   width: auto;
+  heigth: auto;
   background: url("#{resource['img:ACM_logo_icon.png']}");
   background-size: cover;
 }
@@ -72,7 +73,7 @@
 }
 
 .register-photo form .btn-primary:hover, .register-photo form .btn-primary:active {
-  background: #eb3b60;
+  background: #8080ff;
 }
 
 .register-photo form .btn-primary:active {

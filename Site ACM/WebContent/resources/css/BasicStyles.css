@@ -90,7 +90,7 @@
 
 
 .error-label {
-  color: #d96161;
+  color: #d96161 !important; 
   text-align: center;
   display: block;
 }

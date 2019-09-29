@@ -22,12 +22,23 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
-		<url-pattern>/faces/*</url-pattern>
+		<url-pattern>/acm/*</url-pattern>
 		<url-pattern>/javax.faces.resource/*</url-pattern>
 	</servlet-mapping>
- 	<session-config>
-        <session-timeout>
-            30
-        </session-timeout>
-    </session-config>
+
+	<session-config>
+		<session-timeout>30</session-timeout> 	<!-- Session expires in 30 minutes if no request is detected -->
+	</session-config>
+
+	<context-param>
+		<param-name>javax.faces.PROJECT_STAGE</param-name>
+		<param-value>Development</param-value>
+	</context-param>
+	
+	<!-- <filter> this is a teste configuration to see if filter is working 
+		( and it is =D ) <filter-name>LoginFilter</filter-name> <filter-class>com.web.LoginPageFilter</filter-class> 
+		</filter> <filter-mapping> <filter-name>LoginFilter</filter-name> <url-pattern>/acm/templates/registration.xhtml</url-pattern> 
+		</filter-mapping> <listener> <listener-class>com.web.SessionListener</listener-class> 
+		</listener> -->
+
 </web-app>
