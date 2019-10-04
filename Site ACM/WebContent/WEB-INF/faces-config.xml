@@ -11,6 +11,15 @@
 			<from-outcome>login</from-outcome>
 			<to-view-id>login.xhtml</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>events</from-outcome>
+			<to-view-id>events.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>landpage</from-outcome>
+			<to-view-id>landpage.xhtml</to-view-id>
+		</navigation-case>
+
 	</navigation-rule>
 
 	<navigation-rule><!-- registration.xhtml rules -->
@@ -37,9 +46,6 @@
         
     </navigation-rule>
 
-
-
-
 	<navigation-rule><!-- login.xhtml rules -->
 		<from-view-id>login.xhtml</from-view-id>
 		<navigation-case>
@@ -47,12 +53,7 @@
 			<to-view-id>registration.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
-		
-		<navigation-case>
-			<from-outcome>home</from-outcome>
-			<to-view-id>base.xhtml</to-view-id>
-			<redirect/>
-		</navigation-case>
+
 	</navigation-rule>
 
 

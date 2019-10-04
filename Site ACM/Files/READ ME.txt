@@ -1,0 +1,3 @@
+This directory is for the input files from users
+This later will be in a different disk, for now we will use this solution
+to simulate that scenario 

@@ -1,6 +1,7 @@
 package com.web;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -29,7 +30,12 @@ public class Session {
 			return FacesContext.getCurrentInstance().getExternalContext(); 
 	}
 
-	
+	/**
+	 * returns the sessionMap that contains the attributes 
+	 */
+	public Map<String,Object> getSessionMap(){
+		return currentExternalContext().getSessionMap();
+	}
 	
 	/**
 	 * Clear all the attributes on sessionMap and closes the session

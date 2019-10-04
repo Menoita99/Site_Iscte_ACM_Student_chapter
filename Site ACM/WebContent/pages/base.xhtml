@@ -14,8 +14,8 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-	<h:outputStylesheet library="css" name="Footer.css" />
-	<h:outputStylesheet library="css" name="BasicStyles.css" />
+	<h:outputStylesheet library="css" name="footer.css" />
+	<h:outputStylesheet library="css" name="styles.css" />
 
 	<h:outputScript library="js" name="bootstrap.min.js" />
 	<h:outputScript library="js" name="jquery.min.js" />
@@ -40,6 +40,8 @@
 </h:head>
 
 <h:body>
+	<h:outputText value="#{login.map()}" /> 
+	<h:outputText value="#{sessionScope.teste}" /> 
 	<!-- NavBar -->
 	<nav class="navbar navbar-light navbar-expand-md">
 	<div class="container-fluid">
@@ -54,19 +56,20 @@
 		<div class="collapse navbar-collapse" id="navcol-1">
 			<ul class="nav navbar-nav ml-auto">
 				<li class="nav-item" role="presentation"><h:link
-						class="nav-link" action="login">Home</h:link></li>
+						class="nav-link" action="login" outcome="landpage">Home</h:link></li>
 				<li class="nav-item" role="presentation"><h:link
-						class="nav-link" action="#">Projetos</h:link></li>
+						class="nav-link" action="#">Projects</h:link></li>
 				<li class="nav-item" role="presentation"><h:link
-						class="nav-link" href="#">Sobre nós</h:link></li>
+						class="nav-link" href="#">Team</h:link></li>
 				<li class="nav-item" role="presentation"><h:link
-						class="nav-link" href="#">Investigação</h:link></li>
+						class="nav-link" href="#">Research</h:link></li>
 				<li class="nav-item" role="presentation"><h:link
-						class="nav-link" href="#">Eventos</h:link></li>
+						class="nav-link" href="#" outcome="events">Events</h:link></li>
 				<li class="nav-item" role="presentation"><h:link
-						class="nav-link" outcome="login">Log in<i
-							class="fas fa-user"></i>
-					</h:link></li>
+						class="nav-link" action="#">Repository</h:link></li>
+				<li class="nav-item" role="presentation">
+					<h:link class="nav-link" outcome="login">Log in<i class="fas fa-user"></i> </h:link>
+				</li>
 			</ul>
 		</div>
 	</div>
@@ -109,12 +112,15 @@
 				</div>
 				<div class="col item social">
 					<h:link a:href="https://www.facebook.com/acm.iscte/"><i class="icon ion-social-facebook"></i></h:link>
-					<h:link href="#"><i class="icon ion-social-twitter"></i></h:link>
-					<h:link href="#"><i class="icon ion-social-snapchat"></i></h:link>
+					<h:link href="https://twitter.com/iscteacm"><i class="icon ion-social-twitter"></i></h:link>
+					<h:link href="http://pt.linkedin.com/in/iscteacmstudentchapter"><i class="icon ion-social-linkedin"></i></h:link>
 					<h:link a:href="https://www.instagram.com/acm.iscte/?hl=pt"><i class="icon ion-social-instagram"></i></h:link>
+					<h:link a:href="https://www.youtube.com/channel/UCwRPrD0Xhu7CeHPbS6OgIFg"><i class="icon ion-social-youtube"></i></h:link>
+					<h:link a:href="http://www.pinterest.com/acmchapter"><i class="icon ion-social-pinterest"></i></h:link>
+					<h:link a:href="https://iscteacm.tumblr.com/"><i class="icon ion-social-tumblr"></i></h:link>
 				</div>
 			</div>
-			<p class="copyright">ACM © 2019</p>
+			<p class="copyright">ACM copyright © 2019</p>
 		</div>
 		</footer>
 	</div>

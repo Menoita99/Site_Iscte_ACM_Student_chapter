@@ -7,10 +7,10 @@ import com.utils.DataBaseConnection;
 import com.web.Session;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-
+import javax.faces.bean.RequestScoped;
+	
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class Login {
 
 	private String email;
@@ -41,7 +41,13 @@ public class Login {
 		return "";													//Stays in the same page
 	}
 
-	
+	public String map() {
+		Session.getInstance().setSessionAtribute("teste", 0);
+		for (String s: Session.getInstance().getSessionMap().keySet()) {
+			System.out.println(s.toString());
+		}
+		return "Something";
+	}
 
 
 	/**

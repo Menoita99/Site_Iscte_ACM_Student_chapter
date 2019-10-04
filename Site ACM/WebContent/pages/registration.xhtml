@@ -17,14 +17,9 @@
 		href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" />
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" />
-	<h:outputStylesheet library="css" name="Registration.css" />
+	<h:outputStylesheet library="css" name="registration.css" />
+	<h:outputStylesheet library="css" name="styles.css" />
 	
-	<script>
-		function show(){
-			  document.getElementById("error-list").style.visibility= 'visible' ;
-			  document.getElementById("error-list").style.display= 'block' ;
-			}
-	</script>
 </h:head>
 <h:body>
 	<div class="register-photo">
@@ -34,22 +29,14 @@
 				<h2 class="text-center">
 					<strong>Create</strong> an account.
 				</h2>
-				<ul id="error-list" style=" visibility:hidden;display: none;">
-					<li><h:message for="fristName" class="error-label" /></li>
-					<li><h:message for="lastName" class="error-label" /></li>
-					<li><h:message for="email" class="error-label" /></li>
-					<li><h:message for="password" class="error-label" /></li>
-					<li><h:message for="repeatPassword" class="error-label" /></li>
-				</ul>
 				<h:outputText class="error-label" value="#{registration.errorMessage}"/>
 				<div class="form-group">
 					<div class="form-row">
 						
 						<div class="col">
-							<h:inputText a:placeholder="Frist Name" class="form-control" type="text" required="true" value="#{registration.fristName}"
+							<h:inputText a:placeholder="Frist Name" class="form-control" type="text" maxlength="60" required="true" value="#{registration.fristName}"
 								requiredMessage="Frist name is required" validatorMessage="Frist name must have only letters" id="fristName">
 								<f:validateRegex pattern="[a-zA-Z]*"/>
-								<f:validateLength maximum="60" minimum="1"/>
 							</h:inputText>
 						</div>
 						<div class="col">
@@ -60,6 +47,9 @@
 							</h:inputText>
 						</div>
 					</div>
+					<h:message for="fristName" class="error-label" />
+					<div></div>
+					<h:message for="lastName" class="error-label" />
 				</div>
 				<div class="form-group">
 					<h:inputText class="form-control" type="email" a:placeholder="Email" required="true" value="#{registration.email}"
@@ -67,23 +57,28 @@
 						<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>		
 						<f:validateLength maximum="70" minimum="4"/>
 					</h:inputText>
+					<h:message for="email" class="error-label" />
 				</div>
 				<div class="form-group">
 					<h:inputSecret class="form-control" type="password" a:placeholder="Password" id="password" required="true" value="#{registration.password}"
 						requiredMessage="Password is required" validatorMessage="Password must be between 8 and 64 characters long">
 						<f:validateRegex pattern=".{8,64}"/>	
 					</h:inputSecret>
+					<h:message for="password" class="error-label" />
 				</div>
 				<div class="form-group">
 					<h:inputSecret class="form-control" type="password" a:placeholder="Password (repeat)" required="true" value="#{registration.repeatPassword}"
 					requiredMessage="Please repeat password" id="repeatPassword"/>
+					<h:message for="repeatPassword" class="error-label" />
 				</div> 
+				
 				<div class="form-group">
 					<div class="form-check">
 						<label class="form-check-label">
-						<h:selectBooleanCheckbox
-								class="form-check-input" type="checkbox" required="true" requiredMessage="You must accept terms" />
-								I agree to the license terms.</label>
+						<h:selectBooleanCheckbox class="form-check-input" type="checkbox" required="true" requiredMessage="You must accept terms" id="checkBox"/>
+								I agree to the license terms.
+						</label>
+						<h:message for="checkBox" class="error-label" />
 					</div>
 				</div>
 				<div class="form-group">

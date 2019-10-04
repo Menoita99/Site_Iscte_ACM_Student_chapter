@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15695392528690" configfile="/Site ACM/WebContent/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="login.xhtml" x="432" y="204" id="pf156976799873816" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf156978682250249 pf156978682250250" inlinks="pf15697691117601 pf15697693249236" path="login.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="base.xhtml" x="600" y="12" id="pf15697691117602" referenceLink="//@navigationRule.2/@navigationCase.1/@toViewId|" outlinks="pf15697691117601" inlinks="pf156978682250250" path="base.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="login.xhtml" x="432" y="204" id="pf156976799873816" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" outlinks="pf156978682250249" inlinks="pf15697691117601 pf15697693249236" path="login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="base.xhtml" x="600" y="12" id="pf15697691117602" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15697691117601 pf15701532743081 pf15701537446283" path="base.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="registration.xhtml" x="144" y="324" id="pf15697691534474" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" outlinks="pf15697693249236 pf156978468871231" inlinks="pf156978682250249" path="registration.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="landpage.xhtml" x="132" y="36" id="pf156978468871232" referenceLink="//@navigationRule.1/@navigationCase.2/@toViewId|" inlinks="pf156978468871231" path="landpage.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="landpage.xhtml" x="132" y="36" id="pf156978468871232" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf156978468871231 pf15701537446283" path="landpage.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="events.xhtml" id="pf15701532743082" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf15701532743081" path="events.xhtml"/>
   <links id="pf15697691117601" target="pf156976799873816" source="pf15697691117602" outcome="login"/>
   <links id="pf15697693249236" target="pf156976799873816" source="pf15697691534474" outcome="login" redirect="true"/>
   <links id="pf156978468871231" target="pf156978468871232" source="pf15697691534474" outcome="landpage" redirect="true"/>
   <links id="pf156978682250249" target="pf15697691534474" source="pf156976799873816" outcome="registration" redirect="true"/>
-  <links id="pf156978682250250" target="pf15697691117602" source="pf156976799873816" outcome="home" redirect="true"/>
+  <links id="pf15701532743081" target="pf15701532743082" source="pf15697691117602" outcome="events"/>
+  <links id="pf15701537446283" target="pf156978468871232" source="pf15697691117602" outcome="landpage"/>
 </pageflow:Pageflow>
