@@ -5,56 +5,67 @@
 	version="2.3">
 
 
-	<navigation-rule>	<!-- Base.xhtml rules -->
-		<from-view-id>base.xhtml</from-view-id>
+	<navigation-rule>
+		<from-view-id>/*</from-view-id>
+
+		<!-- <navigation-case> <!ignore> <from-outcome>test</from-outcome> <to-view-id>pages/news.xhtml</to-view-id> 
+			</navigation-case> -->
+
+
+		<navigation-case>
+			<from-outcome>home</from-outcome>
+			<to-view-id>pages/home.xhtml</to-view-id>
+		</navigation-case>
+
 		<navigation-case>
 			<from-outcome>login</from-outcome>
-			<to-view-id>login.xhtml</to-view-id>
+			<to-view-id>pages/login.xhtml</to-view-id>
 		</navigation-case>
+
 		<navigation-case>
 			<from-outcome>events</from-outcome>
-			<to-view-id>events.xhtml</to-view-id>
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>landpage</from-outcome>
-			<to-view-id>landpage.xhtml</to-view-id>
+			<to-view-id>pages/events.xhtml</to-view-id>
 		</navigation-case>
 
-	</navigation-rule>
-
-	<navigation-rule><!-- registration.xhtml rules -->
-		<from-view-id>registration.xhtml</from-view-id>
-		
-		<navigation-case>
-			<from-outcome>login</from-outcome>
-			<to-view-id>login.xhtml</to-view-id>
-			<redirect/>
-		</navigation-case>
-
-		<navigation-case>
-			<from-outcome>landpage</from-outcome>
-			<to-view-id>landpage.xhtml</to-view-id>
-			<redirect/>
-		</navigation-case>
-
-    <!--<navigation-case>
-            <from-action>#{registration.teste()}</from-action>
-            <from-outcome>landpage</from-outcome>
-            <to-view-id>landpage.xhtml</to-view-id>
-            <redirect />
-        </navigation-case> -->
-        
-    </navigation-rule>
-
-	<navigation-rule><!-- login.xhtml rules -->
-		<from-view-id>login.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>registration</from-outcome>
-			<to-view-id>registration.xhtml</to-view-id>
-			<redirect/>
+			<to-view-id>pages/registration.xhtml</to-view-id>
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>news</from-outcome>
+			<to-view-id>pages/news.xhtml</to-view-id>
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>projects</from-outcome>
+			<to-view-id>pages/projects.xhtml</to-view-id>
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>team</from-outcome>
+			<to-view-id>pages/team.xhtml</to-view-id>
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>research</from-outcome>
+			<to-view-id>pages/research.xhtml</to-view-id>
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>repository</from-outcome>
+			<to-view-id>pages/repository.xhtml</to-view-id>
 		</navigation-case>
 
 	</navigation-rule>
 
-
+	<navigation-rule>	<!-- Event navigation rule -->
+		<from-view-id>events.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>event</from-outcome>
+			<to-view-id>pages/event.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
 </faces-config>

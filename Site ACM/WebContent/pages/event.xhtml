@@ -1,0 +1,19 @@
+<ui:composition template="base.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<ui:define name="content">
+
+		<f:metadata>
+			<f:viewParam name="id" />
+		</f:metadata>
+
+		<h1>IN MAKING</h1>
+		This is the id = #{id}
+        <!-- <h:link outcome="event">test<f:param name="id" value="0" /></h:link> -->
+	</ui:define>
+</ui:composition>

@@ -1,3 +1,0 @@
-DB_URL = jdbc:mysql://localhost/acm_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-USER = server
-PASS = 0001@bombS

@@ -17,7 +17,7 @@
 		href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" />
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" />
-	<h:outputStylesheet library="css" name="registration.css" />
+	<h:outputStylesheet library="css" name="registrationBean.css" />
 	<h:outputStylesheet library="css" name="styles.css" />
 	
 </h:head>
@@ -29,21 +29,20 @@
 				<h2 class="text-center">
 					<strong>Create</strong> an account.
 				</h2>
-				<h:outputText class="error-label" value="#{registration.errorMessage}"/>
+				<h:outputText class="error-label" value="#{registrationBean.errorMessage}"/>
 				<div class="form-group">
 					<div class="form-row">
 						
 						<div class="col">
-							<h:inputText a:placeholder="Frist Name" class="form-control" type="text" maxlength="60" required="true" value="#{registration.fristName}"
+							<h:inputText a:placeholder="Frist Name" class="form-control" type="text" maxlength="60" minlength="2" required="true" value="#{registrationBean.fristName}"
 								requiredMessage="Frist name is required" validatorMessage="Frist name must have only letters" id="fristName">
 								<f:validateRegex pattern="[a-zA-Z]*"/>
 							</h:inputText>
 						</div>
 						<div class="col">
-							<h:inputText a:placeholder="Last Name" class="form-control" type="text" required="true" value="#{registration.lastName}"
+							<h:inputText a:placeholder="Last Name" class="form-control" type="text"  maxlength="60" minlength="2" required="true" value="#{registrationBean.lastName}"
 								requiredMessage="Last name is required" validatorMessage="last name must have only letters" id="lastName">
 								<f:validateRegex pattern="[a-zA-Z]*"/>
-								<f:validateLength maximum="60" minimum="1"/>
 							</h:inputText>
 						</div>
 					</div>
@@ -52,22 +51,21 @@
 					<h:message for="lastName" class="error-label" />
 				</div>
 				<div class="form-group">
-					<h:inputText class="form-control" type="email" a:placeholder="Email" required="true" value="#{registration.email}"
-								requiredMessage="Email is required" validatorMessage="Invalid email" id="email">
+					<h:inputText class="form-control" type="email" a:placeholder="Email" required="true" value="#{registrationBean.email}"
+								requiredMessage="Email is required" validatorMessage="Invalid email" id="email"  maxlength="70" minlength="6">
 						<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>		
-						<f:validateLength maximum="70" minimum="4"/>
 					</h:inputText>
 					<h:message for="email" class="error-label" />
 				</div>
 				<div class="form-group">
-					<h:inputSecret class="form-control" type="password" a:placeholder="Password" id="password" required="true" value="#{registration.password}"
+					<h:inputSecret class="form-control" type="password" a:placeholder="Password" id="password" required="true" value="#{registrationBean.password}"
 						requiredMessage="Password is required" validatorMessage="Password must be between 8 and 64 characters long">
 						<f:validateRegex pattern=".{8,64}"/>	
 					</h:inputSecret>
 					<h:message for="password" class="error-label" />
 				</div>
 				<div class="form-group">
-					<h:inputSecret class="form-control" type="password" a:placeholder="Password (repeat)" required="true" value="#{registration.repeatPassword}"
+					<h:inputSecret class="form-control" type="password" a:placeholder="Password (repeat)" required="true" value="#{registrationBean.repeatPassword}"
 					requiredMessage="Please repeat password" id="repeatPassword"/>
 					<h:message for="repeatPassword" class="error-label" />
 				</div> 
@@ -82,7 +80,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<h:commandButton class="btn btn-primary btn-block" type="submit" value="Sign Up" action="#{registration.signUp()}" update="form" />
+					<h:commandButton class="btn btn-primary btn-block" type="submit" value="Sign Up" action="#{registrationBean.signUp()}" update="form" />
 				</div>
 				<h:link outcome="login" class="already" >You already have an account? Login here.</h:link>
 			</h:form>

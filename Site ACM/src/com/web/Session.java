@@ -6,6 +6,13 @@ import java.util.Map;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
+import com.store.objects.UserContainer;
+
+/**
+ *This class represents a session 
+ * 
+ * @author RuiMenoita
+ */
 public class Session {
 
 	private static Session INSTANCE;
@@ -68,20 +75,21 @@ public class Session {
 	
 	
 	/**
-	 * Set's the session attribute user_id
+	 * Set's the session attribute user
 	 */
-	public void setUserId(int id) {
-		setSessionAtribute("user_id", id);
+	public void setUser(UserContainer userContainer) {
+		setSessionAtribute("user", userContainer);
 	}
 	
 	
 	/**
-	 * return the session attribute user_id
+	 * return the session attribute user
 	 */
-	public int getUserId() {
-		return (int) getSessionAtribute("user_id");
+	public UserContainer getUser() {
+		return (UserContainer) getSessionAtribute("user");
 	}
 
+	
 	
 	/**
 	 * Redirects to @param url
@@ -93,4 +101,6 @@ public class Session {
 			e.printStackTrace();
 		}
 	}
+
+	
 }

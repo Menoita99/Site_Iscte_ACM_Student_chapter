@@ -3,7 +3,7 @@
 	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
 	id="WebApp_ID" version="4.0">
-	<display-name>WebSite_ACM</display-name>
+	<display-name>Acm</display-name>
 	<welcome-file-list>
 		<welcome-file>index.xhtml</welcome-file>
 		<welcome-file>index.html</welcome-file>
@@ -14,6 +14,11 @@
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
 
+	<context-param>	<!-- Security -->
+		<param-name>primefaces.CSP</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
 
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
@@ -22,8 +27,8 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
-		<url-pattern>/acm/*</url-pattern>
-		<url-pattern>/javax.faces.resource/*</url-pattern>
+		<url-pattern>*.xhtml</url-pattern>
+		<!-- <url-pattern>/javax.faces.resource/*</url-pattern> -->
 	</servlet-mapping>
 
 	<session-config>
@@ -34,9 +39,9 @@
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
 		<param-value>Development</param-value>
 	</context-param>
-	
-	<!-- <filter> this is a teste configuration to see if filter is working 
-		( and it is =D ) <filter-name>LoginFilter</filter-name> <filter-class>com.web.LoginPageFilter</filter-class> 
+
+	<!-- <filter> this is a test configuration to see if filter is working ( 
+		and it is =D ) <filter-name>LoginFilter</filter-name> <filter-class>com.web.LoginPageFilter</filter-class> 
 		</filter> <filter-mapping> <filter-name>LoginFilter</filter-name> <url-pattern>/acm/templates/registration.xhtml</url-pattern> 
 		</filter-mapping> <listener> <listener-class>com.web.SessionListener</listener-class> 
 		</listener> -->

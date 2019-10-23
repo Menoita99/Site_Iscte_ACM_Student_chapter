@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!--xmlns:p="http://primefaces.org/ui"  -->
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -6,16 +6,21 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+    xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>ACM</title>
+	<title>Acm</title>
 	<meta charset="utf-8" content="" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 	<h:outputStylesheet library="css" name="footer.css" />
-	<h:outputStylesheet library="css" name="styles.css" />
+	<h:outputStylesheet library="css" name="base.css" />
+
+    <h:outputStylesheet library="css" name="styles.css" /> 
 
 	<h:outputScript library="js" name="bootstrap.min.js" />
 	<h:outputScript library="js" name="jquery.min.js" />
@@ -36,40 +41,73 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
 		integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
 		crossorigin="anonymous"></script>
+		
+	<ui:insert name="headContent"></ui:insert>
 
 </h:head>
 
 <h:body>
-	<h:outputText value="#{login.map()}" /> 
-	<h:outputText value="#{sessionScope.teste}" /> 
-	<!-- NavBar -->
+
 	<nav class="navbar navbar-light navbar-expand-md">
 	<div class="container-fluid">
-		<a class="navbar-brand" href="#"> <h:graphicImage library="img"
-				name="ACM_logo_icon.png" id="logo" />
-		</a>
-		<button class="navbar-toggler" data-toggle="collapse"
-			data-target="#navcol-1">
+		<h:link class="navbar-brand" outcome="home"> 
+				<h:graphicImage library="img" name="ACM_logo_icon.png" id="logo" />
+		</h:link>
+		<button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1">
 			<span class="sr-only">Toggle navigation</span><span
 				class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navcol-1">
 			<ul class="nav navbar-nav ml-auto">
 				<li class="nav-item" role="presentation"><h:link
-						class="nav-link" action="login" outcome="landpage">Home</h:link></li>
+						class="nav-link" outcome="home">Home</h:link></li>
 				<li class="nav-item" role="presentation"><h:link
-						class="nav-link" action="#">Projects</h:link></li>
+						class="nav-link" outcome="projects">Projects</h:link></li>
 				<li class="nav-item" role="presentation"><h:link
-						class="nav-link" href="#">Team</h:link></li>
+						class="nav-link" outcome="team">Team</h:link></li>
 				<li class="nav-item" role="presentation"><h:link
-						class="nav-link" href="#">Research</h:link></li>
+						class="nav-link" outcome="/pages/research.xhtml">Research</h:link></li>
 				<li class="nav-item" role="presentation"><h:link
-						class="nav-link" href="#" outcome="events">Events</h:link></li>
+						class="nav-link" outcome="events">Events</h:link></li>
 				<li class="nav-item" role="presentation"><h:link
-						class="nav-link" action="#">Repository</h:link></li>
-				<li class="nav-item" role="presentation">
-					<h:link class="nav-link" outcome="login">Log in<i class="fas fa-user"></i> </h:link>
-				</li>
+						class="nav-link" outcome="repository">Repository</h:link></li>
+				<li class="nav-item" role="presentation"><h:link
+						class="nav-link" outcome="pretty:news">News</h:link></li>
+						
+				
+				<c:if test="${sessionScope.user == null}">     <!-- if there are no user in session  -->
+
+					<li class="nav-item" role="presentation"> <h:link class="nav-link" outcome="login">Log in <i class="fas fa-user"></i> </h:link> </li>
+					
+				</c:if>	
+				
+				<c:if test="${sessionScope.user != null}">	<!-- else -->
+					
+					<li class="nav-item" role="presentation">
+							
+							<div class="dropdown"> <!-- Drop Down -->
+								
+								<h:	 class="nav-link dropbtn">		<!-- Drop down Button -->
+										<!-- Logged in image -->
+										<c:if test="${sessionScope.user.imagePath != null}">	<!-- if user has an image  -->
+											<div class="user-icon-container">
+												 <h:graphicImage id="user-icon" value="/resources/files/users/#{sessionScope.user.imagePath}"/>
+											</div>
+										</c:if>
+										<c:if test="${sessionScope.user.imagePath == null}">	<!-- else  -->
+											<i class="fas fa-user-circle " style="font-size: 30px; margin-left: 0px !important;"></i> 
+										</c:if>
+								</h:link>
+								
+								<div class="dropdown-content"> <!-- Drop down content -->
+									<h:link>Definitions</h:link	>
+									<h:link onClick="#{loginBean.logout()}">Log Out</h:link>
+								</div>
+								
+							</div>
+					</li>
+				</c:if>
+				
 			</ul>
 		</div>
 	</div>
@@ -80,7 +118,6 @@
 		<ui:insert name="content"></ui:insert>
 
 	</div>
-
 
 	<!-- FOOTER -->
 	<div class="footer-dark">
@@ -112,14 +149,15 @@
 				</div>
 				<div class="col item social">
 					<h:link a:href="https://www.facebook.com/acm.iscte/"><i class="icon ion-social-facebook"></i></h:link>
-					<h:link href="https://twitter.com/iscteacm"><i class="icon ion-social-twitter"></i></h:link>
-					<h:link href="http://pt.linkedin.com/in/iscteacmstudentchapter"><i class="icon ion-social-linkedin"></i></h:link>
+					<h:link a:href="https://twitter.com/iscteacm"><i class="icon ion-social-twitter"></i></h:link>
+					<h:link a:href="http://pt.linkedin.com/in/iscteacmstudentchapter"><i class="icon ion-social-linkedin"></i></h:link>
 					<h:link a:href="https://www.instagram.com/acm.iscte/?hl=pt"><i class="icon ion-social-instagram"></i></h:link>
 					<h:link a:href="https://www.youtube.com/channel/UCwRPrD0Xhu7CeHPbS6OgIFg"><i class="icon ion-social-youtube"></i></h:link>
 					<h:link a:href="http://www.pinterest.com/acmchapter"><i class="icon ion-social-pinterest"></i></h:link>
 					<h:link a:href="https://iscteacm.tumblr.com/"><i class="icon ion-social-tumblr"></i></h:link>
 				</div>
 			</div>
+			
 			<p class="copyright">ACM copyright © 2019</p>
 		</div>
 		</footer>

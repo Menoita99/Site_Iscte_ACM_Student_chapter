@@ -7,99 +7,77 @@
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
 	<ui:define name="content">
-    <div>
-        <header id="event-header">
+	  	<f:metadata>
+   			 <f:param  ></f:param>
+   		</f:metadata>
+	  
+      <header id="event-header">
             <h1>Events</h1>
-            <form>
+            <h:form class="event-search">
                 <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-xl-9 offset-xl-0"><input class="form-control" type="text" placeholder="Search"/></div>
-                        <div class="col-xl-2"><input class="form-control" type="date" id="date-input"/></div>
-                        <div class="col"><button class="btn btn-primary" type="button"><i class="fa fa-search"></i></button></div>
+                    <div class="form-row" style="max-width: 950px;">
+                        <div class="col-11 offset-xl-0">
+                        <h:inputText class="form-control" type="text" placeholder="Search"/></div>
+                        <div class="col-1">
+                        <h:link class="btn btn-primary" type="submit"><i class="fa fa-search"></i></h:link></div>
                     </div>
                 </div>
-            </form>
+                <div class="form-group">
+                    <div class="form-row d-xl-flex">
+                        <div class="col-auto col-sm-2 col-md-auto col-lg-auto col-xl-auto d-xl-flex">
+                            <p class="text-left">From:</p>
+                        </div>
+                        <div class="col-sm-10 col-md-auto col-lg-auto col-xl-auto d-flex">
+                           
+                           </div>
+                        <div class="col-sm-2 col-md-auto col-lg-auto col-xl-auto d-xl-flex justify-content-center align-content-center">
+                            <p>To:</p>
+                        </div>
+                        <div class="col-sm-10 col-md-auto col-lg-auto col-xl-auto d-xl-flex">
+                        <!--	<h:inputText  class="form-control"  id="date-input"/>  type="date" -->
+                        	
+                        </div>
+                    </div>
+                </div>
+            </h:form>
         </header>
-        <div class="card-group-container">
-            <div class="card-group card-container">
-                <div class="card border rounded event-card"><h:graphicImage class="card-img-top w-100 d-block" library="img" name="carousel_img1.jpg"/>
-                    <div class="card-body">
-                        <h4 class="card-title">Title</h4>
-                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p><button class="btn btn-primary" type="button">Button</button></div>
-                </div>
-                <div class="card border rounded event-card"><h:graphicImage class="card-img-top w-100 d-block" library="img" name="carousel_img2.jpg"/>
-                    <div class="card-body">
-                        <h4 class="card-title">Title</h4>
-                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p><button class="btn btn-primary" type="button">Button</button></div>
-                </div>
-                <div class="card border rounded event-card"><h:graphicImage class="card-img-top w-100 d-block" library="img" name="carousel_img3.jpg"/>
-                    <div class="card-body">
-                        <h4 class="card-title">Title</h4>
-                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p><button class="btn btn-primary" type="button">Button</button></div>
-                </div>
-                <div class="card border rounded event-card"><h:graphicImage class="card-img-top w-100 d-block" library="img" name="star-sky.jpg"/>
-                    <div class="card-body">
-                        <h4 class="card-title">Title</h4>
-                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p><button class="btn btn-primary" type="button">Button</button></div>
-                </div>
-            </div>
-            <div class="card-group card-container">
-                <div class="card border rounded event-card"><h:graphicImage class="card-img-top w-100 d-block" library="img" name="ACM_logo_icon.png"/>
-                    <div class="card-body">
-                        <h4 class="card-title">Title</h4>
-                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p><button class="btn btn-primary" type="button">Button</button></div>
-                </div>
-                <div class="card border rounded event-card"><h:graphicImage class="card-img-top w-100 d-block" library="img" name="startup-3267505_1920.jpg"/>
-                    <div class="card-body">
-                        <h4 class="card-title">Title</h4>
-                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p><button class="btn btn-primary" type="button">Button</button></div>
-                </div>
-                <div class="card border rounded event-card"><h:graphicImage class="card-img-top w-100 d-block" library="img" name="laptop-1209008_1280.jpg"/>
-                    <div class="card-body">
-                        <h4 class="card-title">Title</h4>
-                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p><button class="btn btn-primary" type="button">Button</button></div>
-                </div>
-                <div class="card border rounded event-card"><h:graphicImage class="card-img-top w-100 d-block" library="img" name="carousel_img1.jpg"/>
-                    <div class="card-body">
-                        <h4 class="card-title">Title</h4>
-                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p><button class="btn btn-primary" type="button">Button</button></div>
-                </div>
-            </div>
-            <div class="card-group card-container">
-                <div class="card border rounded event-card"><h:graphicImage class="card-img-top w-100 d-block" library="img" name="carousel_img2.jpg"/>
-                    <div class="card-body">
-                        <h4 class="card-title">Title</h4>
-                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p><button class="btn btn-primary" type="button">Button</button></div>
-                </div>
-                <div class="card border rounded event-card"><h:graphicImage class="card-img-top w-100 d-block" library="img" name="carousel_img3.jpg"/>
-                    <div class="card-body">
-                        <h4 class="card-title">Title</h4>
-                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p><button class="btn btn-primary" type="button">Button</button></div>
-                </div>
-                <div class="card border rounded event-card"><h:graphicImage class="card-img-top w-100 d-block" library="img" name="star-sky.jpg"/>
-                    <div class="card-body">
-                        <h4 class="card-title">Title</h4>
-                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p><button class="btn btn-primary" type="button">Button</button></div>
-                </div>
-                <div class="card border rounded event-card"><h:graphicImage class="card-img-top w-100 d-block" library="img" name="carousel_img1.jpg"/>
-                    <div class="card-body">
-                        <h4 class="card-title">Title</h4>
-                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p><button class="btn btn-primary" type="button">Button</button></div>
-                </div>
-            </div>
-            <div class="pagination-container">
-                <nav>
-                    <ul class="pagination">
-                        <li class="page-item"><a class="page-link" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-                        <li class="page-item"><a class="page-link">1</a></li>
-                        <li class="page-item"><a class="page-link" aria-label="Next"><span aria-hidden="true">»</span></a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </div>
+        
+        <h:link outcome="event">teste<f:param name="id" value="0" /></h:link>
+	 
+	 <div class="card-group-container"><!-- <c:forEach -->
+	 
 
 
+	 	
+ 	<c:set var="map" value="#{eventsBean.getEventsPage(0)}" scope="session"/>
+	 	
+	 <c:forEach items="#{map}" var="map_row" > <!-- It's 4 cause is the number of columns -->
+ 		
+		 	<div class="row">
+		 	
+			 	<c:forEach items="#{map_row.value}" var="event"> <!-- It's 4 cause is the number of columns -->
+			 	
+		 				<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+		                    <div class="card border rounded event-card">
+		                    	<h:graphicImage class="card-img-top w-100 d-block" value="/resources/files/events/#{event.image}"  />
+		                      	<div class="card-body">
+		                            <h4 class="card-title">#{event.title}</h4>
+		                            <p class="card-text">#{event.description}</p>
+		                            <h:form>	
+		                            	<h:commandButton class="btn btn-primary" value="Find out" action="#{eventsBean.loadEvent(event.id)}" />
+		                            	
+                            		</h:form>
+								</div>
+		                    </div>
+		                </div> 
+			 	
+			 	</c:forEach>
+	 	 	
+	 	 	</div>
+	 	
+	 </c:forEach>
 
+	</div> 
+	
 	</ui:define>
 </ui:composition>
