@@ -126,16 +126,17 @@ public class EventsBean implements Serializable{
 	 *with the search data given
 	 */
 	public void search() {
+		setErrorMessage("");
+		
+		String query = "Where ";
+		
 		if(beginDate.isBefore(endDate)) {		//checks if the end date is before begin date
-			events = EventManager.getEventsWithPatternAndDates(searchWord, beginDate, endDate);
-			if(events==null) 
-				setErrorMessage("Somethig went wrong");
-			else
-				setErrorMessage(null);
-		}else {
-			events.clear();
+			//TODO
+		}else 
 			setErrorMessage("The begin date must be before the end date");
-		}
+		
+		if(getErrorMessage().equals(""))
+			events.clear();
 	}
 
 
@@ -157,6 +158,29 @@ public class EventsBean implements Serializable{
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
 	}
+
+
+	/**
+	 * @return the searchWord
+	 */
+	public String getSearchWord() {
+		return searchWord;
+	}
+
+
+
+
+
+	/**
+	 * @param searchWord the searchWord to set
+	 */
+	public void setSearchWord(String searchWord) {
+		System.out.println(searchWord);
+		this.searchWord = searchWord;
+	}
+
+
+
 
 
 	/**

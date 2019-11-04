@@ -25,12 +25,33 @@ public class EventManager {
 	private static String defaultImage = "default/ACM_ICON.png";
 
 
-	public static List<Integer> getUserEventsIDs(int userId) {
+	/**
+	 * @param id Event id
+	 * @return returns the event if there is an event with the given id otherwise returns null
+	 */
+	public static Event getUserEventByID(int id) {
 		//TODO
 		return null;
 	}
 
+	
+	/**
+	 * This method return a list of events.
+	 * 
+	 * JPQL query: "SELECT e FROM Event e "+customQueryPart, Event.class
+	 */
+	public static List<Event> executeCustomQuery(String customQueryPart){
+		EntityManager manager = JpaUtil.getEntityManager();					//get's manager instance
 
+		TypedQuery<Event> query = manager.createQuery( "SELECT e FROM Event e "+customQueryPart, Event.class);								//creates query
+		List<Event> results = query.getResultList();																					//get results
+
+		manager.close();
+		return results;
+	}
+	
+	
+	
 
 
 	/**
@@ -45,16 +66,6 @@ public class EventManager {
 		manager.close();
 		return results;
 	}
-
-
-
-
-
-	public static List<Event> getEventsWithPatternAndDates(String searchWord, LocalDateTime beginDate,LocalDateTime endDate) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 
 
@@ -138,7 +149,7 @@ public class EventManager {
 
 
 	/**
-	 * @return true if event has at least one vacancy
+	 * @return return true if event has at least one vacancy
 	 */
 	public static boolean hasVacancies(int eventID) {
 		EntityManager manager = JpaUtil.getEntityManager();					//get's manager instance
@@ -187,7 +198,7 @@ public class EventManager {
 		EntityManager manager = JpaUtil.getEntityManager();					//get's manager instance
 
 		TypedQuery<EventInfo> query = manager.createQuery( "SELECT ei FROM EventInfo ei "
-				+ "WHERE event.id ="+id, EventInfo.class);	//creates query
+														 + "WHERE event.id ="+id, EventInfo.class);	//creates query
 		List<EventInfo> results = query.getResultList();																					//get results
 
 		manager.close();
@@ -244,7 +255,7 @@ public class EventManager {
 
 
 	/**
-	 * @return true if user has already likes this event
+	 * @return true if @param user has already likes @param event
 	 */
 	public static boolean hasLike(Event event, User user) {
 		EntityManager manager = JpaUtil.getEntityManager();					//get's manager instance

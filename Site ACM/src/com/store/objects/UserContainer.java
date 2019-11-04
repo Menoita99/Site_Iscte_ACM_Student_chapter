@@ -162,7 +162,7 @@ public class UserContainer implements Serializable {
 
 		uc.setProjects(ProjectManager.getUserProjectsIDs(id));
 
-		uc.setEvents(EventManager.getUserEventsIDs(id));
+		//uc.setEvents(EventManager.getUserEventsIDs(id));
 
 		return uc;
 	}

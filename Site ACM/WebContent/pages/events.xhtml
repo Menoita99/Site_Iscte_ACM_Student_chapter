@@ -22,16 +22,16 @@
        <header id="event-header">
             <div class="center-div">
                 <h1>Events</h1>
-                <form class="event-search">
+                <h:form class="event-search">
                 
                 	<h:outputText class="errorLabel" >#{eventsBean.errorMessage}</h:outputText>
                 
                     <div class="form-group">
                         <div class="form-row" style="max-width: 950px;">
                             <div class="col-11 offset-xl-0">
-                            	<input class="form-control" type="text" placeholder="Search"/></div>
+                            	<h:inputText class="form-control" type="text" a:placeholder="Search" value="#{eventsBean.searchWord}"/></div>
                             <div class="col-1">
-                            	<button class="btn btn-primary" type="button"><i class="fa fa-search"></i></button>
+                            	<h:commandButton class="btn btn-primary " type="submit" action="#{eventsBean.search()}"><i class="fa fa-search"></i></h:commandButton>
                            	</div>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                             </div>
                         </div>
                     </div>
-                </form>
+                </h:form>
             </div>
         </header>
         
@@ -120,7 +120,7 @@
 		                        <c:forEach var="page" items="#{eventsBean.getPages()}">
 		                        		<li class="page-item">
 		                        			<h:form>
-			                        			<h:commandLink class="page-link" value="#{page}" ><!-- outome="events" -->
+			                        			<h:commandLink class="page-link" value="#{page}" >
 			                        				<f:param name="page" value="#{page}" />
 			                        			</h:commandLink>
 		                        			</h:form>
