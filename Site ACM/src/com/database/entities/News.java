@@ -20,7 +20,7 @@ public class News implements Serializable {
 
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "news_id")
 	private int id;
 	

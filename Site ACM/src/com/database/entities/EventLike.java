@@ -10,36 +10,44 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 /**
- * Entity implementation class for Entity: EventRespect
+ * Entity implementation class for Entity: EventLike
  *
  */
 @Entity
-public class EventRespect implements Serializable {
+
+public class EventLike implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private EventRespectID id;
 	
+	@Column(nullable = false)
+	private LocalDateTime date;
+	
+	@EmbeddedId
+	private EventParticipantID id = new EventParticipantID();
+
 	@MapsId("eventID")
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@OneToOne
+	@ManyToOne
 	private Event event;
 
 	@MapsId("userID")
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@OneToOne
+	@ManyToOne
 	private User user;
-	
-	@Column(nullable = false)
-	private LocalDateTime date;
 
 	
-	
+	/**
+	 * @return the date
+	 */
+	public LocalDateTime getDate() {
+		return date;
+	}
+
 	/**
 	 * @return the id
 	 */
-	public EventRespectID getId() {
+	public EventParticipantID getId() {
 		return id;
 	}
 
@@ -58,16 +66,16 @@ public class EventRespect implements Serializable {
 	}
 
 	/**
-	 * @return the date
+	 * @param date the date to set
 	 */
-	public LocalDateTime getDate() {
-		return date;
+	public void setDate(LocalDateTime date) {
+		this.date = date;
 	}
 
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(EventRespectID id) {
+	public void setId(EventParticipantID id) {
 		this.id = id;
 	}
 
@@ -85,13 +93,6 @@ public class EventRespect implements Serializable {
 		this.user = user;
 	}
 
-	/**
-	 * @param date the date to set
-	 */
-	public void setDate(LocalDateTime date) {
-		this.date = date;
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(date, event, id, user);
@@ -101,13 +102,10 @@ public class EventRespect implements Serializable {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!(obj instanceof EventRespect))
+		if (!(obj instanceof EventLike))
 			return false;
-		EventRespect other = (EventRespect) obj;
+		EventLike other = (EventLike) obj;
 		return Objects.equals(date, other.date) && Objects.equals(event, other.event) && Objects.equals(id, other.id)
 				&& Objects.equals(user, other.user);
 	}
-	
-	
-	
 }

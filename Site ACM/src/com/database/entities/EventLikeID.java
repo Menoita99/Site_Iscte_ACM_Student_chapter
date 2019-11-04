@@ -3,17 +3,19 @@ package com.database.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+
 import javax.persistence.*;
 
 /**
- * Entity implementation class for Entity: EventRespectID
+ * Entity implementation class for Entity: EventLikeID
  *
  */
 @Embeddable
-public class EventRespectID implements Serializable {
+public class EventLikeID implements Serializable {
 
+	
 	private static final long serialVersionUID = 1L;
-   
+
 	@Column(nullable = false)
 	private int userID;
 	
@@ -29,9 +31,9 @@ public class EventRespectID implements Serializable {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!(obj instanceof EventRespectID))
+		if (!(obj instanceof EventLikeID))
 			return false;
-		EventRespectID other = (EventRespectID) obj;
+		EventLikeID other = (EventLikeID) obj;
 		return eventID == other.eventID && userID == other.userID;
 	}
 }

@@ -13,6 +13,7 @@ import org.hibernate.annotations.OnDeleteAction;
  *
  */
 @Entity
+@Table(name = "event_participant")
 public class EventParticipant implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -21,16 +22,16 @@ public class EventParticipant implements Serializable {
 	private boolean isStaff = false;
 	
 	@EmbeddedId
-	private EventParticipantID id;
+	private EventParticipantID id = new EventParticipantID();
 
 	@MapsId("eventID")
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@OneToOne
+	@ManyToOne
 	private Event event;
 
 	@MapsId("userID")
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@OneToOne
+	@ManyToOne
 	private User user;
 
 	
@@ -105,5 +106,10 @@ public class EventParticipant implements Serializable {
 		EventParticipant other = (EventParticipant) obj;
 		return Objects.equals(event, other.event) && Objects.equals(id, other.id) && isStaff == other.isStaff
 				&& Objects.equals(user, other.user);
+	}
+
+	@Override
+	public String toString() {
+		return "EventParticipant [isStaff=" + isStaff + ", id=" + id + ", event=" + event + ", user=" + user + "]";
 	}
 }

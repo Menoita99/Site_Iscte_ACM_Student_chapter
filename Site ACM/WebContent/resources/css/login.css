@@ -1,7 +1,10 @@
+.login-background{
+	background-color: rgba(190,218,241,0.81);
+}
+
 .login-clean {
 	height: 100%;
 	width: 100%;
-	background: #f1f7fc;
 	padding-top: 40px;
 	padding-bottom: 40px;
 }
@@ -14,7 +17,6 @@
 	.login-clean {
 		height: 100%;
 		width: 100%;
-		background: #f1f7fc;
 		padding: 0px;
 	}
 }

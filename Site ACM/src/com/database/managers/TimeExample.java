@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 
 public class TimeExample {
 	
@@ -41,5 +42,10 @@ public class TimeExample {
 				//Getting date from the base date i.e 01/01/1970
 				LocalDateTime dateFromBase = LocalDateTime.ofEpochSecond(10000, 0, ZoneOffset.UTC);
 				System.out.println("10000th second time from 01/01/1970= "+dateFromBase);
+				
+				
+				
+				System.out.println(specificDate.until(today,ChronoUnit.SECONDS));
+				System.out.println(today.until(today,ChronoUnit.SECONDS));
 	}
 }

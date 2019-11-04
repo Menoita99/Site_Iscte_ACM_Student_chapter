@@ -4,3 +4,7 @@
 	text-align: center;
 	display: block;
 }
+
+p {
+  word-wrap: break-word;
+}

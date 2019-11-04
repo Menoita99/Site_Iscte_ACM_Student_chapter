@@ -1,6 +1,7 @@
 package com.database.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,7 +20,7 @@ public class Event implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "event_id")
 	private int id;
 	
@@ -35,28 +36,29 @@ public class Event implements Serializable {
 	@Column(length = 665, nullable = false)
 	private String description;
 	
-	@Column()
-	@ElementCollection(targetClass=String.class)
-	private List<String> imagePath;
+	@Column
+	@ElementCollection(targetClass=String.class, fetch = FetchType.EAGER)
+	private List<String> imagePath = new ArrayList<>();
 	
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(foreignKey = @ForeignKey(name = "FK_EVENT_USER_ID"), nullable= false)
  	private User manager;
  	
-	@OneToMany
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn(nullable = false)
-	private List<EventInfo> nextDate;
-	
 	@Column()
 	@ElementCollection(targetClass=String.class)
-	private List<String> tags;
+	private List<String> tags = new ArrayList<>();
 	
 	@Column(nullable = false)
 	private State state;
 	
-
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * @return the id
 	 */
@@ -107,13 +109,6 @@ public class Event implements Serializable {
 	}
 
 	/**
-	 * @return the nextDate
-	 */
-	public List<EventInfo> getNextDate() {
-		return nextDate;
-	}
-
-	/**
 	 * @return the tags
 	 */
 	public List<String> getTags() {
@@ -121,10 +116,10 @@ public class Event implements Serializable {
 	}
 
 	/**
-	 * @param tags the tags to set
+	 * @return the state
 	 */
-	public void setTags(List<String> tags) {
-		this.tags = tags;
+	public State getState() {
+		return state;
 	}
 
 	/**
@@ -162,6 +157,12 @@ public class Event implements Serializable {
 		this.description = description;
 	}
 
+	/**
+	 * @param imagePath the imagePath to set
+	 */
+	public void setImagePath(List<String> imagePath) {
+		this.imagePath = imagePath;
+	}
 
 	/**
 	 * @param manager the manager to set
@@ -171,15 +172,22 @@ public class Event implements Serializable {
 	}
 
 	/**
-	 * @param nextDate the nextDate to set
+	 * @param tags the tags to set
 	 */
-	public void setNextDate(List<EventInfo> nextDate) {
-		this.nextDate = nextDate;
+	public void setTags(List<String> tags) {
+		this.tags = tags;
+	}
+
+	/**
+	 * @param state the state to set
+	 */
+	public void setState(State state) {
+		this.state = state;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(description, id, imagePath, manager, nextDate, title, vacancies, views);
+		return Objects.hash(description, id, imagePath, manager, state, tags, title, vacancies, views);
 	}
 
 	@Override
@@ -191,7 +199,8 @@ public class Event implements Serializable {
 		Event other = (Event) obj;
 		return Objects.equals(description, other.description) && id == other.id
 				&& Objects.equals(imagePath, other.imagePath) && Objects.equals(manager, other.manager)
-				&& Objects.equals(nextDate, other.nextDate) && Objects.equals(title, other.title)
+				&& state == other.state && Objects.equals(tags, other.tags) && Objects.equals(title, other.title)
 				&& vacancies == other.vacancies && views == other.views;
 	}
+
 }

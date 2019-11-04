@@ -25,133 +25,8 @@
   background-color: rgba(115,148,197,0.7);
 }
 
-p {
-  word-wrap: break-word;
-}
-
-.calendar {
-  text-align: center;
-  background-color: #eeeeee;
-  border-radius: 5px;
-  margin: 30px;
-}
-
-.event-description {
-  background-color: white;
-  padding: 50px;
-}
-
-.event-description p {
-  margin-top: 35px;
-  margin-bottom: 20px;
-}
-
-.event-search p {
-  font-size: 25px;
-  align-self: center;
-}
-
-.card-group-container .row {
-  padding: 0px;
-  margin: 0px;
-}
-
-.member-card h5 {
-  margin-top: 10px;
-  opacity: 0.7;
-}
-
-.member-card {
-  align-items: center;
-  padding: 20px;
-  margin: 5px;
-  background-color: rgba(85,85,85,0);
-  border: none;
-}
-
-.card-image-container {
-  border-radius: 50%;
-  position: relative;
-  width: 100px;
-  height: 100px;
-  overflow: hidden;
-}
-
-.card-image-container img {
-  width: auto;
-  height: 100%;
-  display: inline;
-  margin: 0 auto;
-}
-
-.staff-section {
-  padding: 50px;
-  background-color: #e9ecef;
-}
-
-.event-media-displayer {
-  padding: 50px;
-  background: linear-gradient(135deg, #006f9f, #bfcdd7);
-}
-
-.carousel-inner div img {
-}
 
 
-
-.pagination-container {
-  padding: 30px;
-}
-
-.card-group-container {
-  padding: 50px;
-  background: linear-gradient( #ffffff, #a6bfd0);
-}
-
-@media (max-width: 576px) {
-  .card-group-container {
-    padding: 20px;
-  }
-}
-
-@media (min-width: 990px) {
-  .card-img-top.w-100.d-block {
-    max-height: 200px;
-  }
-}
-
-@media (max-width: 990px) {
-  .card-img-top.w-100.d-block {
-    max-height: 300px;
-  }
-}
-
-.event-card {
-  margin-top: 50px;
-  height: 520px;
-}
-
-.event-card p {
-  max-height: 190px;
-  overflow: hidden;
-}
-
-@media (max-width: 900px) {
-  .card-container {
-    display: inline-block;
-  }
-}
-
-.background-color-container {
-  background-color: #dde6ee;
-  margin-top: -50px;
-  margin-bottom: -50px;
-}
-
-.member-container {
-  margin: 50px auto;
-  padding: 50px;
-}
 
 #promo {
   text-align: center;
@@ -200,12 +75,6 @@ p {
   margin: 0 auto;
 }
 
-#event-header {
-  background: linear-gradient(135deg, #006f9f, #bfcdd7);
-  padding: 50px;
-  padding-top: 80px;
-  color: white;
-}
 
 #why .item i {
   font-size: 40px;
@@ -226,9 +95,6 @@ p {
   background-color: #e4f1f7;
 }
 
-
-
-
 #why .item p {
   color: #525658;
 }
@@ -238,27 +104,6 @@ p {
   border-color: transparent;
 }
 
-
-
-.event-search {
-  margin-top: 50px;
-  margin-left: 30px;
-}
-
-@media (max-width: 600px) {
-  .event-search {
-    margin-left: 0px !important;
-  }
-}
-
-.error-label {
-  color: #d96161 !important; 
-}
-
-/* Event image max Height*/
-.w-100.d-block { 
-  max-height: 350px;
-}
 
 
 

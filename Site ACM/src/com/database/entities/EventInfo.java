@@ -19,26 +19,35 @@ public class EventInfo implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
+	
+	@Id
+	@GeneratedValue
+	private int id;
+	
 	@Column(nullable = false)
 	private LocalDateTime startDate;
 
 	@Column(nullable = false)
 	private LocalDateTime endDate;
 
-	@JoinColumn(foreignKey = @ForeignKey(name = "FK_EVENT_INFO_EVENT_ID"), nullable= false,referencedColumnName = "event_id")
+	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	private int eventID;
+	@JoinColumn(foreignKey = @ForeignKey(name = "FK_EVENT_INFO_ID"), nullable= false)
+	private Event event;
 	
 	@Column(nullable = false)
 	private String place;
-	
-	@Id
-	@GeneratedValue
-	private int id;
 
 	
 	
 	
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
 	/**
 	 * @return the startDate
 	 */
@@ -54,10 +63,10 @@ public class EventInfo implements Serializable {
 	}
 
 	/**
-	 * @return the eventID
+	 * @return the event
 	 */
-	public int getEventID() {
-		return eventID;
+	public Event getEvent() {
+		return event;
 	}
 
 	/**
@@ -68,10 +77,10 @@ public class EventInfo implements Serializable {
 	}
 
 	/**
-	 * @return the id
+	 * @param id the id to set
 	 */
-	public int getId() {
-		return id;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	/**
@@ -89,10 +98,10 @@ public class EventInfo implements Serializable {
 	}
 
 	/**
-	 * @param eventID the eventID to set
+	 * @param event the event to set
 	 */
-	public void setEventID(int eventID) {
-		this.eventID = eventID;
+	public void setEvent(Event event) {
+		this.event = event;
 	}
 
 	/**
@@ -102,16 +111,9 @@ public class EventInfo implements Serializable {
 		this.place = place;
 	}
 
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(endDate, eventID, id, place, startDate);
+		return Objects.hash(endDate, event, id, place, startDate);
 	}
 
 	@Override
@@ -121,102 +123,7 @@ public class EventInfo implements Serializable {
 		if (!(obj instanceof EventInfo))
 			return false;
 		EventInfo other = (EventInfo) obj;
-		return Objects.equals(endDate, other.endDate) && eventID == other.eventID && id == other.id
+		return Objects.equals(endDate, other.endDate) && Objects.equals(event, other.event) && id == other.id
 				&& Objects.equals(place, other.place) && Objects.equals(startDate, other.startDate);
 	}
-	
-	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
- * 
- * 
- * 	
-	@EmbeddedId
-	private EventInfoId infoID;
-	private String place;
-	
-	@MapsId("infoEventId")
-	@OneToOne
-	private EventContainer event;
- * 
- * 
- * 
- * 
- * 
- * 
- * package com.database;
-
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.Objects;
-
-import javax.persistence.*;
-
-
-@Embeddable
-public class EventInfoId implements Serializable {
-
-
-	private static final long serialVersionUID = 1L;
-
-	@Column(nullable = false)
-	private LocalDateTime startDate;
-
-	@Column(nullable = false)
-	private LocalDateTime endDate;
-
-	@Column(nullable = false)
-	private int infoEventId;
-
-	
-	
-	@Override
-	public int hashCode() {
-		return Objects.hash(endDate, startDate);
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!(obj instanceof EventInfoId))
-			return false;
-		EventInfoId other = (EventInfoId) obj;
-		return Objects.equals(endDate, other.endDate) && Objects.equals(startDate, other.startDate);
-	}
-
-}*/

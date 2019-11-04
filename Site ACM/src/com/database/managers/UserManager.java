@@ -22,13 +22,12 @@ public class UserManager {
 
 	private static String ACCEPTABLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-";
 
+	
+	
+	
 	/**
 	 * Creates a UserContainer given:
-	 * @param email
-	 * @param password
-	 * @param fristName
-	 * @param lastName
-	 * @param username
+	 * @param email,@param password, @param fristName, @param lastName, @param username
 	 * 
 	 * if user already exits it return null
 	 */
@@ -68,7 +67,6 @@ public class UserManager {
 	
 	/**
 	 * Creates an user given:
-	 * 
 	 * @param uc
 	 * 
 	 * if user already exits it return null
@@ -94,11 +92,17 @@ public class UserManager {
 		List<User> results = query.getResultList();																					//get results
 
 		manager.close();	
+		
+		if(!results.isEmpty()) {
+			updateLastLog(results.get(0));
+			return results.get(0);
+		}
 
-		return  results.isEmpty() ? null :results.get(0);	
+		return null;	
 	}
 
 	
+
 
 
 	/**
@@ -112,11 +116,16 @@ public class UserManager {
 
 		TypedQuery<User> query = manager.createQuery( "SELECT u FROM User u WHERE u.username = '"+username+"' "+
 				" and u.password = '"+password+"' ", User.class);								//creates query
-		List<User> results = query.getResultList();																					//get results
+		User user = query.getSingleResult();																			//get results
 
 		manager.close();	
+		
+		if(user != null) {
+			updateLastLog(user);
+			return user;
+		}
 
-		return  results.isEmpty() ? null :results.get(0);	
+		return  null;	
 	}
 
 	
@@ -150,7 +159,7 @@ public class UserManager {
 
 		manager.close();	
 
-		return  results.isEmpty() ? null :results.get(0);																				 	//return user
+		return  results.isEmpty() ? null : results.get(0);																				 	//return user
 	}
 
 	
@@ -220,13 +229,32 @@ public class UserManager {
 		manager.close();
 		return getUserByActivationKey(activationKey).isActive();
 	}
+	
+	
+	
+	/** 
+	 * Set's Last_log to LocalDateTime.now()
+	 * 
+	 * @param user that must be updated
+	 */
+	private static void updateLastLog(User user) {
+		EntityManager manager = JpaUtil.getEntityManager();	
+		
+		manager.getTransaction().begin();
+		
+		user.setLast_log(LocalDateTime.now().withNano(0));
+		
+		manager.merge(user);
 
+		manager.getTransaction().commit();
+
+		manager.close();
+	}
 	
 	
 	
 	
 	//TODO SETTERS
-
 	public static void updateUser(UserContainer userContainer) {
 		//TODO
 	}

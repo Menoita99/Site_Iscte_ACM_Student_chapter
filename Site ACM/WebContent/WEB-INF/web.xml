@@ -19,12 +19,17 @@
 		<param-value>true</param-value>
 	</context-param>
 
+ <!-- <error-page>
+    <exception-type>java.lang.Exception</exception-type>
+    <location>/error.xhtml</location>
+  </error-page> -->
 
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
@@ -35,13 +40,32 @@
 		<session-timeout>30</session-timeout> 	<!-- Session expires in 30 minutes if no request is detected -->
 	</session-config>
 
+ 	<!-- Context Parameters -->
 	<context-param>
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
 		<param-value>Development</param-value>
 	</context-param>
 
-	<!-- <filter> this is a test configuration to see if filter is working ( 
-		and it is =D ) <filter-name>LoginFilter</filter-name> <filter-class>com.web.LoginPageFilter</filter-class> 
+
+	  <context-param>
+	    <description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
+	    <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+	    <param-value>client</param-value>
+	  </context-param>
+	  
+	  <context-param>
+	    <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+	    <param-value>resources.application</param-value>
+	  </context-param>
+
+	  <!-- Resource References -->
+	
+	  <!-- Listeners -->
+	  <listener>
+	    <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+	  </listener>
+  
+	<!-- <filter><filter-name>LoginFilter</filter-name> <filter-class>com.web.LoginPageFilter</filter-class> 
 		</filter> <filter-mapping> <filter-name>LoginFilter</filter-name> <url-pattern>/acm/templates/registration.xhtml</url-pattern> 
 		</filter-mapping> <listener> <listener-class>com.web.SessionListener</listener-class> 
 		</listener> -->
