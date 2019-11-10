@@ -8,8 +8,8 @@ import java.util.Random;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import com.conatiners.objects.UserContainer;
 import com.database.entities.User;
-import com.store.objects.UserContainer;
 
 /**
  * This class manages the interaction with the entity User
@@ -23,8 +23,10 @@ public class UserManager {
 	private static String ACCEPTABLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-";
 
 	
+
+
 	
-	
+
 	/**
 	 * Creates a UserContainer given:
 	 * @param email,@param password, @param fristName, @param lastName, @param username
@@ -63,8 +65,10 @@ public class UserManager {
 	}
 
 	
+
+
 	
-	
+
 	/**
 	 * Creates an user given:
 	 * @param uc
@@ -75,8 +79,10 @@ public class UserManager {
 		return createUser(uc.getEmail(),password,uc.getFristName(),uc.getLastName(),uc.getUsername());
 	}
 
+	
 
 
+	
 
 	/**
 	 *if login was successful it will return the user instance.
@@ -85,14 +91,8 @@ public class UserManager {
 	         " and u.password = '"+password+"' ", User
 	 */
 	public static User emailLogin(String email, String password ) {
-		EntityManager manager = JpaUtil.getEntityManager();					//get's manager instance
-
-		TypedQuery<User> query = manager.createQuery( "SELECT u FROM User u WHERE u.email = '"+email+"' "+
-				" and u.password = '"+password+"' ", User.class);								//creates query
-		List<User> results = query.getResultList();																					//get results
-
-		manager.close();	
-		
+		List<User> results = JpaUtil.executeQuery("SELECT u FROM User u WHERE u.email = '"+email+"' "+
+												  " and u.password = '"+password+"' ", User.class);																					//get results
 		if(!results.isEmpty()) {
 			updateLastLog(results.get(0));
 			return results.get(0);
@@ -104,6 +104,7 @@ public class UserManager {
 	
 
 
+	
 
 	/**
 	 *if login was successful it will return the user instance.
@@ -112,14 +113,8 @@ public class UserManager {
 	 		 " and u.password = '"+password+"' ", User.class);
 	 */
 	public static User usernameLogin(String username, String password ) {
-		EntityManager manager = JpaUtil.getEntityManager();					//get's manager instance
-
-		TypedQuery<User> query = manager.createQuery( "SELECT u FROM User u WHERE u.username = '"+username+"' "+
-				" and u.password = '"+password+"' ", User.class);								//creates query
-		User user = query.getSingleResult();																			//get results
-
-		manager.close();	
-		
+		User user = JpaUtil.executeQueryAndGetSingle("SELECT u FROM User u WHERE u.username = '"+username+"' "+
+													 " and u.password = '"+password+"' ", User.class);																			//get results
 		if(user != null) {
 			updateLastLog(user);
 			return user;
@@ -129,6 +124,8 @@ public class UserManager {
 	}
 
 	
+
+
 	
 
 	/**
@@ -142,8 +139,9 @@ public class UserManager {
 		return user;
 	}
 
-
 	
+
+
 	
 
 	/**
@@ -152,19 +150,15 @@ public class UserManager {
 	 * JPQL expression : "SELECT u FROM User u WHERE u.activationKey = 'activationKey' " , String
 	 */
 	public static User getUserByActivationKey(String activationKey) {
-		EntityManager manager = JpaUtil.getEntityManager();					//get's manager instance
-
-		TypedQuery<User> query = manager.createQuery( "SELECT u FROM User u WHERE u.activationKey = '"+activationKey+"' ", User.class);		//creates query
-		List<User> results = query.getResultList();																							//get results
-
-		manager.close();	
-
+		List<User> results = JpaUtil.executeQuery("SELECT u FROM User u WHERE u.activationKey = "
+												+ "'"+activationKey+"' ", User.class);																							//get results
 		return  results.isEmpty() ? null : results.get(0);																				 	//return user
 	}
 
 	
-	
 
+
+	
 
 	/**
 	 * If there isn't an user with the given username it returns null
@@ -183,8 +177,9 @@ public class UserManager {
 	}
 
 	
-	
 
+
+	
 
 	/**
 	 * If there isn't an user with the given email it returns null
@@ -192,19 +187,16 @@ public class UserManager {
 	 * JPQL expression : "SELECT u FROM User u WHERE u.email = 'email' " , String
 	 */
 	public static User getUserByEmail(String email) {
-		EntityManager manager = JpaUtil.getEntityManager();					//get's manager instance
-
-		TypedQuery<User> query = manager.createQuery( "SELECT u FROM User u WHERE u.email = '"+email+"' ", User.class);	        	//creates query
-		List<User> results = query.getResultList();																					//get results
-
-		manager.close();	
-
+		List<User> results = JpaUtil.executeQuery("SELECT u FROM User u WHERE u.email = "
+												+ "'"+email+"' ", User.class);																					//get results
 		return results.isEmpty() ? null :results.get(0);																			//return user
 	}
 
+	
+
 
 	
-	
+
 	/**
 	 * This method activates an user account 
 	 * if user account is active or became active returns true.
@@ -229,9 +221,12 @@ public class UserManager {
 		manager.close();
 		return getUserByActivationKey(activationKey).isActive();
 	}
+
 	
+
+
 	
-	
+
 	/** 
 	 * Set's Last_log to LocalDateTime.now()
 	 * 
@@ -250,38 +245,75 @@ public class UserManager {
 
 		manager.close();
 	}
+
 	
+
+
 	
-	
-	
+
 	//TODO SETTERS
 	public static void updateUser(UserContainer userContainer) {
 		//TODO
 	}
 
+	
+
+
+	
+
 	public static void removeImage(String imagePath,User user) {
 		//TODO
 	}
 
+	
+
+
+	
+
 	public static void removeAllImage(Collection<String> imagePath,User user) {
 		//TODO
 	}
+
 	
+
+
+	
+
 	public static void addImage(String imagePath,User user) {
 		//TODO
 	}
+
+	
+
+
+	
 
 	public static void addAllImage(Collection<String> imagePath,User user) {
 		//TODO
 	}
 
+	
+
+
+	
+
 	public static void setMainImage(String imagePath,User user){
 		//TODO
 	}
 
+	
+
+
+	
+
 	public static void deleteUser(User user) {
 		//TODO
 	}
+
+	
+
+
+	
 
 	public static void desactivateUser(User user) {
 		//CHANGE KEY
@@ -289,9 +321,10 @@ public class UserManager {
 	}
 
 	
+
+
 	
-	
-	
+
 	/**
 	 * This method generates a random key with ACCEPTABLE_CHARS with
 	 * KEY_LENGTH that isn't present in data base
@@ -309,8 +342,9 @@ public class UserManager {
 		return key;
 	}
 
-
 	
+
+
 	
 
 	/**
@@ -326,6 +360,7 @@ public class UserManager {
 		return null;
 	}
 
+	
 
 
 	

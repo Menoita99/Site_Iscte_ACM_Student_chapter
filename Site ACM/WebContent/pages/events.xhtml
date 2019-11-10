@@ -9,6 +9,9 @@
 	
 	<ui:define name="headContent">
 		<h:outputStylesheet library="css" name="events.css" />
+		
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	</ui:define>
 
 
@@ -31,7 +34,7 @@
                             <div class="col-11 offset-xl-0">
                             	<h:inputText class="form-control" type="text" a:placeholder="Search" value="#{eventsBean.searchWord}"/></div>
                             <div class="col-1">
-                            	<h:commandButton class="btn btn-primary " type="submit" action="#{eventsBean.search()}"><i class="fa fa-search"></i></h:commandButton>
+                            	<h:commandLink class="btn btn-primary fa fa-search" type="submit" action="#{eventsBean.search()}"/>
                            	</div>
                         </div>
                     </div>
@@ -41,13 +44,13 @@
                                 <p class="text-left">From:</p>
                             </div>
                             <div class="col-sm-10 col-md-auto col-lg-auto col-xl-auto d-flex">
-                                <input class="form-control" type="date" id="date-input"/>
+                                <h:inputText class="form-control datepicker" value="#{eventsBean.beginDate}"/>
                                 </div>
                             <div class="col-sm-2 col-md-auto col-lg-auto col-xl-auto d-xl-flex justify-content-center align-content-center">
                                 <p>To:</p>
                             </div>
                             <div class="col-sm-10 col-md-auto col-lg-auto col-xl-auto d-xl-flex">
-                            	<input class="form-control" type="date" id="date-input"/>
+                            	<h:inputText class="form-control datepicker" value="#{eventsBean.endDate}"/>
                             </div>
                         </div>
                     </div>
@@ -69,34 +72,41 @@
 							 	 
 								 	<c:forEach items="#{eventsBean.getRow(i)}" var="event">
 								 		
-								 		<div class="col-sm-12 col-md-6 col-lg-6 col-xl-4">
-							                    <div class="card event-card rect-border">
-							                  
-							                    	<h:graphicImage class="card-img-top w-100 d-block rect-border" value="/resources/files/#{event.getImage()}"/>
-							                        <div class="card-body">
-						                        		
-							                            	<h1 class="card-title">#{event.getTitle()}</h1>
-							                            
-							                            <ul class="list-inline" style="margin: 10px 0 0 0;">
-							                                <li class="list-inline-item"><i class="fa fa-map-marker"></i> #{event.getSoonerPlace()}</li>
-							                            </ul>
-							                            <ul class="list-inline" style="margin: 3px 0 0;">
-							                                <li class="list-inline-item"><i class="fa fa-calendar"></i> #{event.getSoonerDate()}</li>
-							                                <li class="list-inline-item"><i class="fa fa-thumbs-o-up"></i> #{event.getLikes()}</li>
-							                            </ul>  
-							                            <h:form>
-								                            <h:button class="btn btn-primary rect-border" type="button" a:data-bs-hover-animate="pulse" value="Discovery" style="margin: 10px 0 0 -1px;" outcome="event">
-								                      	      	<f:param name="id" value="#{event.getId()}" />
-								                            </h:button>
-							                            </h:form>
-						                            </div>
-						                             
-							                    </div>
-							                </div>
+								 		<c:if test="#{not empty event}">
+								 		
+									 		<div class="col-sm-12 col-md-6 col-lg-6 col-xl-4">
+								                    <div class="card event-card rect-border">
+								                  
+								                    	<h:graphicImage class="card-img-top w-100 d-block rect-border" value="/resources/files/#{event.getImage()}"/>
+								                        <div class="card-body">
+							                        		
+								                            	<h1 class="card-title">#{event.getTitle()}</h1>
+								                            
+								                            <ul class="list-inline" style="margin: 10px 0 0 0;">
+								                                <li class="list-inline-item"><i class="fa fa-map-marker"></i> #{event.getSoonerPlace()}</li>
+								                            </ul>
+								                            <ul class="list-inline" style="margin: 3px 0 0;">
+								                                <li class="list-inline-item"><i class="fa fa-calendar"></i> #{event.getSoonerDate()}</li>
+								                                <li class="list-inline-item"><i class="fa fa-thumbs-o-up"></i> #{event.getLikes()}</li>
+								                            </ul>  
+								                            <h:form>
+									                            <h:button class="btn btn-primary rect-border" type="button" a:data-bs-hover-animate="pulse" value="Discovery" style="margin: 10px 0 0 -1px;" outcome="event">
+									                      	      	<f:param name="id" value="#{event.getId()}" />
+									                            </h:button>
+								                            </h:form>
+							                            </div>
+							                             
+								                    </div>
+								                </div>
+							                
+							                </c:if>
+							                
 								 	</c:forEach>
 								 	
 						 	 	</div>
+						 	 	
 					 	</c:forEach>
+					 	
 					</div> 
 					
 				</c:if>
@@ -107,9 +117,7 @@
 					
 			</h:panelGroup>
 			
-			#{eventsBean.actualPage}
-			
-			<h:panelGroup id="paginationPane" rendered="#{eventsBean.hasEvents()}">
+			<h:panelGroup rendered="#{eventsBean.hasEvents()}">
 			  	<div class="d-flex pagination-container">
 		               <nav>
 		                   <ul class="pagination">
@@ -126,14 +134,29 @@
 		                        			</h:form>
 			                        	</li>
 		                        </c:forEach>
-		                    	    <li class="page-item">
-			                    	   <a class="page-link" aria-label="Next"><span aria-hidden="true">»</span></a>
-	                    	    	</li>
+	                    	    <li class="page-item">
+		                    	   <a class="page-link" aria-label="Next"><span aria-hidden="true">»</span></a>
+                    	    	</li>
 		                   </ul>
 		               </nav>
 		          </div>
 			  </h:panelGroup>
 	
+			
+		<script type="text/javascript">
+			
+		    //For calendar
+		    $(".datepicker").datepicker({
+		        inline: true,
+		        showWeek: true,
+		        firstDay: 1,
+		        showAnim: "clip",
+	        	dateFormat:"dd/mm/yy",
+	        	changeMonth: true,
+                changeYear: true
+		    });
+		
+		</script>
 	</ui:define>
 
 </ui:composition>

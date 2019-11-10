@@ -1,10 +1,10 @@
 package com.database.managers;
 
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 
 import com.database.entities.Event;
 import com.database.entities.EventInfo;
@@ -33,22 +33,6 @@ public class EventManager {
 		//TODO
 		return null;
 	}
-
-	
-	/**
-	 * This method return a list of events.
-	 * 
-	 * JPQL query: "SELECT e FROM Event e "+customQueryPart, Event.class
-	 */
-	public static List<Event> executeCustomQuery(String customQueryPart){
-		EntityManager manager = JpaUtil.getEntityManager();					//get's manager instance
-
-		TypedQuery<Event> query = manager.createQuery( "SELECT e FROM Event e "+customQueryPart, Event.class);								//creates query
-		List<Event> results = query.getResultList();																					//get results
-
-		manager.close();
-		return results;
-	}
 	
 	
 	
@@ -58,13 +42,7 @@ public class EventManager {
 	 * @return all events present on DataBase without discriminate event state 
 	 */
 	public static List<Event> getAllEvents() {//TODO function that only gives projects that have been approved
-		EntityManager manager = JpaUtil.getEntityManager();					//get's manager instance
-
-		TypedQuery<Event> query = manager.createQuery( "SELECT e FROM Event e", Event.class);								//creates query
-		List<Event> results = query.getResultList();																					//get results
-
-		manager.close();
-		return results;
+		return JpaUtil.executeQuery("SELECT e FROM Event e", Event.class);
 	}
 
 
@@ -111,7 +89,7 @@ public class EventManager {
 	/**
 	 * Add's an user to event and specify if user is member of staff or not
 	 */
-	public static void addParticipant(Event event, User user, boolean isStaff) {//TODO vacancies
+	public static void addParticipant(Event event, User user, boolean isStaff) {
 		if(hasVacancies(event.getId())) {
 			EntityManager manager = JpaUtil.getEntityManager();
 			manager.getTransaction().begin();
@@ -152,13 +130,8 @@ public class EventManager {
 	 * @return return true if event has at least one vacancy
 	 */
 	public static boolean hasVacancies(int eventID) {
-		EntityManager manager = JpaUtil.getEntityManager();					//get's manager instance
-
-		TypedQuery<Event> query = manager.createQuery( "SELECT e FROM Event e WHERE id =" + eventID, Event.class);	//creates query
-		Event e = query.getSingleResult();																					//get results
-
-		manager.close();
-		return e.getVacancies()>0;
+		Event e = JpaUtil.executeQueryAndGetSingle( "SELECT e FROM Event e WHERE id =" + eventID, Event.class);
+		return e != null ? e.getVacancies()>0 : false;
 	}
 
 
@@ -195,14 +168,8 @@ public class EventManager {
 	 * This method returns all the EventInfos of a given event id
 	 */
 	public static List<EventInfo> getEventInfos(int id) {
-		EntityManager manager = JpaUtil.getEntityManager();					//get's manager instance
-
-		TypedQuery<EventInfo> query = manager.createQuery( "SELECT ei FROM EventInfo ei "
-														 + "WHERE event.id ="+id, EventInfo.class);	//creates query
-		List<EventInfo> results = query.getResultList();																					//get results
-
-		manager.close();
-		return results;
+		return JpaUtil.executeQuery("SELECT ei FROM EventInfo ei "
+								  + "WHERE event.id ="+id, EventInfo.class);
 	}
 
 
@@ -213,14 +180,8 @@ public class EventManager {
 	 *@param id event id 
 	 */
 	public static long getLikes(int id) {
-		EntityManager manager = JpaUtil.getEntityManager();					//get's manager instance
-
-		TypedQuery<Long> query = manager.createQuery( "SELECT COUNT(*) FROM EventLike el "
-				+ "WHERE el.event.id ="+id, Long.class);	//creates query
-		long count = query.getSingleResult();														//get results
-
-		manager.close();
-		return count;
+		return JpaUtil.executeQueryAndGetSingle( "SELECT COUNT(*) FROM EventLike el "
+												+ "WHERE el.event.id ="+id, Long.class);
 	}
 
 
@@ -255,18 +216,12 @@ public class EventManager {
 
 
 	/**
-	 * @return true if @param user has already likes @param event
+	 * @return true if user has already liked event
 	 */
 	public static boolean hasLike(Event event, User user) {
-		EntityManager manager = JpaUtil.getEntityManager();					//get's manager instance
-
-		TypedQuery<EventLike> query = manager.createQuery( "SELECT evtlike FROM EventLike evtlike "
-				+ "WHERE evtlike.event.id ="+event.getId()+" and "
-				+ " evtlike.user.id = "+user.getId(), EventLike.class);	//creates query
-		List<EventLike> result = query.getResultList();														//get results
-
-		manager.close();
-
+		List<EventLike> result = JpaUtil.executeQuery( "SELECT evtlike FROM EventLike evtlike "
+													 + "WHERE evtlike.event.id ="+event.getId()+" and "
+													 + "evtlike.user.id = "+user.getId(), EventLike.class);														//get results
 		return !result.isEmpty();
 	}
 
@@ -275,6 +230,17 @@ public class EventManager {
 
 	//USED TO TEST FUCNTIONS
 	public static void main(String[] args) {
-		giveLike(getAllEvents().get(0), UserManager.getUserById(1));
+		//giveLike(getAllEvents().get(0), UserManager.getUserById(1));
+		
+//		SELECT eve.event_id, eveinfo.startDate FROM acmdb.event as eve , acmdb.event_info as eveinfo
+//		where eve.event_id = eveinfo.event_event_id and eveinfo.startDate >= "2020-01-01 10:10:30";
+		LocalDateTime specificDate = LocalDateTime.of(2020, Month.JANUARY, 1, 10, 10, 30);
+		
+		List<Event> e = JpaUtil.executeQuery("SELECT eve FROM Event eve, EventInfo eveinfo WHERE "
+										   + "eve.event_id = eveinfo.id and eveinfo.startDate >= "+specificDate, Event.class);
+		for (Event event : e) {
+			System.out.println(event.getId());
+		}
+		
 	}
 }

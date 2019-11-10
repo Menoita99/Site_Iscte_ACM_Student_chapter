@@ -1,8 +1,8 @@
 package com.beans;
 
 
+import com.conatiners.objects.UserContainer;
 import com.database.managers.UserManager;
-import com.store.objects.UserContainer;
 import com.web.Session;
 
 import javax.faces.bean.ManagedBean;

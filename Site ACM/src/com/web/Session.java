@@ -6,7 +6,7 @@ import java.util.Map;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
-import com.store.objects.UserContainer;
+import com.conatiners.objects.UserContainer;
 
 /**
  *This class represents a session 
