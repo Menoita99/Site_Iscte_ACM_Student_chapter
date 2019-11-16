@@ -1,0 +1,91 @@
+.nav-link i {
+  margin-left: 0px !important;
+}
+
+.nav-item :focus-within {
+  color: rgba(255,255,255,0.9)!important;
+  background-color: #8db6d2;
+  border-color: transparent;
+  border-radius: 5px;
+}
+
+.navbar i {
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+@media (max-width: 770px) {
+  .nav.navbar-nav {
+    text-align: center;
+    align-self: center!important;
+  }
+}
+
+.user-icon-container img {
+  width: auto;
+  height: 100%;
+  display: inline;
+  margin: 0 auto;
+}
+
+.user-icon-container {
+  border-radius: 50%;
+  position: relative;
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+}
+
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+@media (min-width: 768px) {
+	.dropdown-content {
+	  right: 0 !important;
+	}
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: rgba(0,0,0,.5);
+  padding: 10px 14px;
+  text-decoration: none !important;
+  display: block;
+  
+}
+
+.dropdown-content a:hover {
+  color: rgba(0,0,0,.7);
+}
+
+
+#logo {
+  max-height: 42px;
+  margin-top: -3px;
+}
+
+.fixed-bottom {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1030;
+}	

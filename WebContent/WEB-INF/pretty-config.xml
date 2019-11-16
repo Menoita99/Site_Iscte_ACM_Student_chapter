@@ -1,0 +1,60 @@
+<pretty-config
+	xmlns="http://ocpsoft.org/schema/rewrite-config-prettyfaces"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<url-mapping id="home">
+		<pattern value="/home" />
+		<view-id value="/pages/home.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="login">
+		<pattern value="/login" />
+		<view-id value="/pages/login.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="events">
+		<pattern value="/events" />
+		<view-id value="/pages/events.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="registration">
+		<pattern value="/registration" />
+		<view-id value="/pages/registration.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="news">
+		<pattern value="/news" />
+		<view-id value="/pages/news.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="projects">
+		<pattern value="/projects" />
+		<view-id value="/pages/projects.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="team">
+		<pattern value="/team" />
+		<view-id value="/pages/team.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="research">
+		<pattern value="/research" />
+		<view-id value="/pages/research.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="repository">
+		<pattern value="/repository" />
+		<view-id value="/pages/repository.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="event">
+		<pattern value="/events/#{id}" />
+		<view-id value="/pages/event.xhtml" />
+	</url-mapping>
+	
+		<url-mapping id="event">
+		<pattern value="/activate" />
+		<view-id value="/pages/activate.xhtml" />
+	</url-mapping>
+
+</pretty-config>

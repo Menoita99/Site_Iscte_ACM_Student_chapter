@@ -1,0 +1,40 @@
+<ui:composition template="base.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+    xmlns:p="http://primefaces.org/ui">
+    
+	<ui:define name="headContent">
+		<h:outputStylesheet library="css" name="activate.css" />
+	</ui:define>
+	
+	<ui:define name="content">
+	
+		<c:if test="${not empty param['key']}">
+			
+		</c:if>
+		<h:outputText>#{param['key']}</h:outputText>
+		
+		<div class="container">
+        <div class="jumbotron jumbotron-activate" style="background-color: #3bb6c6">
+            <h1 class="display-1" style="margin-bottom: 50px;">Account was not verified</h1>
+            <p style="line-height: 29px;font-size: 23px;letter-spacing: 0px;">To resend verification email please fill in the form<br></br></p>
+            <form>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend"></div>
+                        	<input class="form-control" type="text" placeholder="email"/>
+                        <div class="input-group-append"><button class="btn btn-primary btn-activate" type="button">Resend Email</button></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+		
+	</ui:define>
+</ui:composition>

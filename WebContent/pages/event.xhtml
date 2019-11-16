@@ -1,0 +1,146 @@
+<ui:composition template="base.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<ui:define name="headContent">
+		<h:outputStylesheet library="css" name="event.css" />
+	</ui:define>
+
+	<ui:define name="content">
+	 	
+	 	<div class="container">
+	 
+	 		<c:set var="event" value="#{eventBean.getEvent()}"/>
+	 	
+	 		<c:if test="#{not empty event}">
+	 
+		        <div class="jumbotron event-jumbotron" style="margin: 0px;padding-bottom: 32px;">
+		            <h1 class="display-4">#{event.title}</h1>
+		            <ul class="list-inline"></ul>
+		            <div class="row">
+		                <div class="col-lg-7 col-xl-8">
+		                    <div class="carousel slide" data-ride="carousel" data-pause="false" id="carousel-1" style="max-width: 300;max-height: 300;margin-bottom: 20px;">
+		                        <div class="carousel-inner" role="listbox">
+		                        
+		                        	<c:forEach items="#{event.images}" var="image" varStatus="loopStatus">
+		                        	
+		                        		<c:if test="#{loopStatus.index == 0}">
+			                        		<div class="carousel-item active">
+			                        			<h:graphicImage class="w-100 d-block" value="/resources/files/#{image}"/>
+		                        			</div>
+               			              	</c:if>
+               			              	<c:if test="#{loopStatus.index != 0}">
+               			              	<div class="carousel-item">
+			                        			<h:graphicImage class="w-100 d-block" value="/resources/files/#{image}"/>
+		                        			</div>
+               			              	</c:if>
+               			              	
+		                      		</c:forEach> 	
+		                      		
+		                        </div>
+		                        
+		                        <c:if test="#{event.images.size()  > 0}">
+		                        
+			                        <div>
+			                        	<a class="carousel-control-prev" href="#carousel-1" role="button" data-slide="prev">
+				                        	<span class="carousel-control-prev-icon"></span>
+				                        	<span class="sr-only">Previous</span>
+			                        	</a>
+			                        	<a class="carousel-control-next" href="#carousel-1" role="button" data-slide="next">
+				                        	<span class="carousel-control-next-icon"></span>
+				                        	<span class="sr-only">Next</span>
+			                        	</a>
+		                        	</div>
+		                        	
+	                        	</c:if>
+		                    </div>
+		                </div>
+		                <div class="col-lg-5 col-xl-4" style="padding: 0px;padding-right: 15px;padding-left: 15px;">
+		                    <ul class="list-group">
+		                      
+		                        <c:forEach items="#{eventBean.getEvent().infos}" var="info" varStatus="loopStatus">
+		                      
+			                        <li class="list-group-item" data-aos="fade-down" data-aos-duration="950" data-aos-delay="50" data-aos-once="true">
+			                            <div class="row" style="margin: 0px;">
+			                                <div class="col-2" style="padding: 0px;">
+			                                    <ul class="list-unstyled text-center" style="font-size: 30px;color: rgba(33,37,41,0.76);">
+			                                        <li>#{info.getStartDateDay()}</li>
+			                                        <li>#{info.getStartDateMonth()}</li>
+			                                    </ul>
+			                                </div>
+			                                <div class="col-10" style="padding: 0px;">
+			                                    <ul class="list-unstyled text-left" style="font-size: 20px;padding-left: 20px;color: rgba(33,37,41,0.89);">
+			                                        <li><i class="fa fa-map-marker"></i> #{info.getPlace()}</li>
+			                                        <li><i class="fa fa-clock-o"></i> #{info.getStartDateHours()} - #{info.getEndDateHours()}</li>
+			                                    </ul>
+			                                </div>
+			                            </div>
+			                        </li>
+		                        
+	                            </c:forEach>
+		                   
+		                    </ul>
+		                </div>
+		            </div>
+		            <p></p>
+		        </div>
+		        <section style="padding: 20px 20px 20px 50px;">
+		            <h1 class="display-4" style="padding: 0px;margin: 0px 0px 20px;">Description</h1>
+		            <p class="lead"><br></br>#{event.description}<br></br><br></br></p>
+		            <p class="lead">
+		            <h:form>
+			            
+			            <c:if test="${not eventBean.hasJoin()}">
+			        
+			            	<h:commandLink class="btn btn-primary join-btn " action="#{eventBean.join()}">
+			            		<i class="fa fa-plus"></i> Join 
+			            	</h:commandLink>
+			            	
+		            	</c:if>
+	            			(#{event.vacanciesFilled}/#{event.vacancies})
+		            </h:form>
+	            		
+	            	</p>
+		        </section>
+		        <section style="padding: 20px 20px 20px 50px;">
+		            <h1 class="display-4" style="padding: 0px;margin: 0px 0px 20px;">Staff Team</h1>
+		            <ul class="list-inline">
+		            
+		           		<c:forEach items="#{eventBean.getEvent().staff}" var="staff" varStatus="loopStatus">
+		           		
+		            		<li class="list-inline-item">
+			                    <div class="team-card" style="padding: 20px;">
+			                    
+			                    	<c:if test="#{not empty staff.imagePath}">
+				                    	<h:graphicImage value="/resources/files/#{staff.imagePath}"/>
+			                        </c:if>
+			                        <c:if test="#{empty staff.imagePath}">
+			                        	<h:graphicImage value="/resources/files/default/ACM_ICON.png"/>
+			                       	</c:if> 
+			                       	
+			                       	<h5 style="margin: 5px auto ;padding: auto">#{staff.username}</h5>
+			                    </div>
+			                </li>
+			                
+		            	</c:forEach>
+		            </ul>
+		            
+		        </section>
+		    
+	        </c:if>		
+		    
+	    </div>
+		    
+	    <c:if test="#{empty event}">
+	    
+	    	<h1 class="display-4" style="margin:20px">	Event not found</h1>
+	    
+	    </c:if>
+
+
+	</ui:define>
+</ui:composition>
