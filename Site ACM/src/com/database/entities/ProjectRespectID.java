@@ -35,4 +35,9 @@ public class ProjectRespectID implements Serializable {
 		ProjectRespectID other = (ProjectRespectID) obj;
 		return projectID == other.projectID && userID == other.userID;
 	}
+
+	@Override
+	public String toString() {
+		return "ProjectRespectID [userID=" + userID + ", projectID=" + projectID + "]";
+	}
 }

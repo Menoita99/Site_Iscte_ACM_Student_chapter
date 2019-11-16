@@ -1,10 +1,10 @@
 package com.database.managers;
 
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+
 
 import com.database.entities.Event;
 import com.database.entities.EventInfo;
@@ -23,30 +23,39 @@ public class EventManager {
 
 	private static final String IMAGES_DIR = "events/";
 	private static String defaultImage = "default/ACM_ICON.png";
+	
 
-
+	
+	
+	
 	/**
-	 * @param id Event id
-	 * @return returns the event if there is an event with the given id otherwise returns null
+	 * @param id event id
+	 * @return returns the event with the given id
 	 */
-	public static Event getUserEventByID(int id) {
-		//TODO
-		return null;
+	public static Event getEventById(int id) {
+		EntityManager em = JpaUtil.getEntityManager();
+		try{
+			return em.find(Event.class,id);
+		}finally {
+			em.close();
+		}
 	}
 	
 	
+
+
 	
-
-
 	/**
 	 * @return all events present on DataBase without discriminate event state 
 	 */
-	public static List<Event> getAllEvents() {//TODO function that only gives projects that have been approved
-		return JpaUtil.executeQuery("SELECT e FROM Event e", Event.class);
+	public static List<Event> getAllAprovedEvents() {
+		return JpaUtil.executeQuery("Select e from Event e where e.state = 'APPROVED'", Event.class); 
 	}
 
 
 
+	
+	
 	/**
 	 *Creates an event
 	 */
@@ -55,28 +64,22 @@ public class EventManager {
 
 		if(vacancies>0 && title!= null && description!= null && user!= null ) {
 
-			EntityManager manager = JpaUtil.getEntityManager();
-
-			manager.getTransaction().begin();
-
 			event = new Event();
 			event.setVacancies(vacancies);
 			event.setTitle(title);
 			event.setDescription(description);
 			event.setManager(user);
-			event.setState(State.ON_APPROVAL);
+			event.setState(State.APPROVED);
 
-			if(tags!=null) event.getTags().addAll(tags);
+			if(tags!=null) event.addAllTags(tags);
 			if(imagePath!= null && !imagePath.isEmpty()) 
 				for (String img: imagePath) 
 					if(img.matches("([^\\s]+(\\.(?i)(jpg|png|gif|jpeg))$)"))		//checks if it is an image
-						event.getImagePath().add(IMAGES_DIR+img);
+						event.addImage(IMAGES_DIR+img);
 					else
-						event.getImagePath().add(defaultImage);
-
-			manager.persist(event);								
-			manager.getTransaction().commit();					//commits changes to database
-			manager.close();
+						event.addImage(defaultImage);
+			
+			JpaUtil.createEntity(event);
 
 			addParticipant(event,user,true);
 		}
@@ -86,42 +89,27 @@ public class EventManager {
 
 
 
+	
+	
 	/**
 	 * Add's an user to event and specify if user is member of staff or not
 	 */
 	public static void addParticipant(Event event, User user, boolean isStaff) {
-		if(hasVacancies(event.getId())) {
-			EntityManager manager = JpaUtil.getEntityManager();
-			manager.getTransaction().begin();
-
+		List<EventParticipant> l = JpaUtil.executeQuery("SELECT part FROM EventParticipant part WHERE "
+													  + " part.event.id = "+event.getId()+" and part.user.id = "+user.getId(), 
+													  EventParticipant.class);
+		
+		if(hasVacancies(event.getId()) && l.isEmpty()) {
 			EventParticipant ep = new EventParticipant();
 			ep.setEvent(event);
 			ep.setUser(user);
 			ep.setStaff(isStaff);
-
-			manager.merge(ep);
-			manager.getTransaction().commit();			
-			manager.close();
-			takeVacancy(event);
+			
+			JpaUtil.mergeEntity(ep);
 		}
 	}
 
 
-	/**
-	 * Desincrement in one unity the vacancies value of the event with the given id
-	 */
-	private static void takeVacancy(Event event) {
-		if(hasVacancies(event.getId())) {
-			EntityManager manager = JpaUtil.getEntityManager();
-			manager.getTransaction().begin();
-			
-			event.setVacancies(event.getVacancies()-1);
-			
-			manager.merge(event);
-			manager.getTransaction().commit();			
-			manager.close();
-		}
-	}
 
 
 
@@ -130,11 +118,28 @@ public class EventManager {
 	 * @return return true if event has at least one vacancy
 	 */
 	public static boolean hasVacancies(int eventID) {
-		Event e = JpaUtil.executeQueryAndGetSingle( "SELECT e FROM Event e WHERE id =" + eventID, Event.class);
-		return e != null ? e.getVacancies()>0 : false;
+		List<Event> e = JpaUtil.executeQuery( "SELECT e FROM Event e WHERE id =" + eventID, Event.class);
+		
+		return e.isEmpty() ? false : e.get(0).getVacancies() > getOccupation(eventID);
 	}
 
 
+
+
+
+	/**
+	 * 
+	 * @param eventID Event id
+	 * @return returns the number of participants registered in the event
+	 */
+	public static long getOccupation(int eventID) {
+		return JpaUtil.executeQuery(" select count(*) from EventParticipant p where p.event.id = "
+													   + eventID+" and p.isStaff = false", Long.class).get(0);
+	}
+
+
+	
+	
 
 
 	/**
@@ -144,9 +149,6 @@ public class EventManager {
 		EventInfo ei = null;
 
 		if(startDate.isBefore(endDate) && place != null && event != null) {
-			EntityManager manager = JpaUtil.getEntityManager();
-			manager.getTransaction().begin();
-
 			ei = new EventInfo();
 
 			ei.setEvent(event);
@@ -154,18 +156,28 @@ public class EventManager {
 			ei.setEndDate(endDate);
 			ei.setPlace(place);
 
-			manager.flush();
-			manager.persist(ei);
-			manager.getTransaction().commit();
-			manager.close();
+			EntityManager manager = JpaUtil.getEntityManager();	
+			try {
+				manager.getTransaction().begin();	
+				manager.merge(ei);
+				manager.flush();
+				manager.getTransaction().commit();			
+			}finally {
+				manager.close();
+			}
 		}
 		return ei;
 	}
 
 
+	
+	
+	
+	
 
 	/**
 	 * This method returns all the EventInfos of a given event id
+	 * @param id Event id
 	 */
 	public static List<EventInfo> getEventInfos(int id) {
 		return JpaUtil.executeQuery("SELECT ei FROM EventInfo ei "
@@ -173,8 +185,10 @@ public class EventManager {
 	}
 
 
+	
 
-
+	
+	
 	/**
 	 *Return the number of likes of an event
 	 *@param id event id 
@@ -185,6 +199,9 @@ public class EventManager {
 	}
 
 
+	
+	
+	
 	/**
 	 * @param user User that gives the like
 	 * @param event Event liked 
@@ -215,6 +232,8 @@ public class EventManager {
 
 
 
+	
+	
 	/**
 	 * @return true if user has already liked event
 	 */
@@ -228,19 +247,44 @@ public class EventManager {
 
 
 
-	//USED TO TEST FUCNTIONS
+
+	
+	
+	/**
+	 * 
+	 * @param eventID id of the event to be checked
+	 * @param userID id of the user user to be checked
+	 * 
+	 * @return return true if user is already a participant of this event
+	 * 		
+	 */
+	public static boolean isParticipant(int eventID, int userID) {
+		List<EventParticipant> result = JpaUtil.executeQuery( "Select p FROM EventParticipant p Where p.event.id = "+eventID+" and p.user.id = "+ userID
+													,EventParticipant.class);														//get results
+		return !result.isEmpty();
+	}
+	
+
+
+
+
+
+	/**
+	 * @param id Event id
+	 * @return return all the staff members of the given id
+	 */
+	public static List<User> getStaffParticipants(int id) {
+		return JpaUtil.executeQuery("Select p.user from EventParticipant p Where p.event.id = "+id, User.class);
+	}
+
+	
+	
+	
+	
+
+	//USED TO DEBUG
 	public static void main(String[] args) {
-		//giveLike(getAllEvents().get(0), UserManager.getUserById(1));
-		
-//		SELECT eve.event_id, eveinfo.startDate FROM acmdb.event as eve , acmdb.event_info as eveinfo
-//		where eve.event_id = eveinfo.event_event_id and eveinfo.startDate >= "2020-01-01 10:10:30";
-		LocalDateTime specificDate = LocalDateTime.of(2020, Month.JANUARY, 1, 10, 10, 30);
-		
-		List<Event> e = JpaUtil.executeQuery("SELECT eve FROM Event eve, EventInfo eveinfo WHERE "
-										   + "eve.event_id = eveinfo.id and eveinfo.startDate >= "+specificDate, Event.class);
-		for (Event event : e) {
-			System.out.println(event.getId());
-		}
-		
+		System.out.println(isParticipant(2,2));
+		System.out.println(isParticipant(1,45));
 	}
 }

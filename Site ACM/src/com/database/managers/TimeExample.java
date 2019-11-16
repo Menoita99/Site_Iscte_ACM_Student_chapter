@@ -47,5 +47,7 @@ public class TimeExample {
 
 		System.out.println(specificDate.until(today,ChronoUnit.SECONDS));
 		System.out.println(today.until(today,ChronoUnit.SECONDS));
+		
+		System.out.println(dateFromBase.getMonth().toString().toUpperCase().substring(0, 3));
 	}
 }

@@ -108,4 +108,9 @@ public class EventLike implements Serializable {
 		return Objects.equals(date, other.date) && Objects.equals(event, other.event) && Objects.equals(id, other.id)
 				&& Objects.equals(user, other.user);
 	}
+
+	@Override
+	public String toString() {
+		return "EventLike [date=" + date + ", id=" + id + ", event=" + event + ", user=" + user + "]";
+	}
 }

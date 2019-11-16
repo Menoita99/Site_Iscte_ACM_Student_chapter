@@ -192,4 +192,10 @@ public class News implements Serializable {
 				&& Objects.equals(tags, other.tags) && Objects.equals(title, other.title)
 				&& Objects.equals(url, other.url) && views == other.views;
 	}
+
+	@Override
+	public String toString() {
+		return "News [id=" + id + ", views=" + views + ", title=" + title + ", description=" + description + ", url="
+				+ url + ", author=" + author + ", site=" + site + ", date=" + date + ", tags=" + tags + "]";
+	}
 }

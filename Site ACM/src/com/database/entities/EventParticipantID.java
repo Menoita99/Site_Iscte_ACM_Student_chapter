@@ -34,5 +34,10 @@ public class EventParticipantID implements Serializable {
 		EventParticipantID other = (EventParticipantID) obj;
 		return eventID == other.eventID && userID == other.userID;
 	}
+
+	@Override
+	public String toString() {
+		return "EventParticipantID [userID=" + userID + ", eventID=" + eventID + "]";
+	}
    
 }

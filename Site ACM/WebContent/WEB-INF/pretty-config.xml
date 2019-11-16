@@ -51,5 +51,10 @@
 		<pattern value="/events/#{id}" />
 		<view-id value="/pages/event.xhtml" />
 	</url-mapping>
+	
+		<url-mapping id="event">
+		<pattern value="/activate" />
+		<view-id value="/pages/activate.xhtml" />
+	</url-mapping>
 
 </pretty-config>

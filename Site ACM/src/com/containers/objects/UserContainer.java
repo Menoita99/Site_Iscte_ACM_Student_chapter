@@ -1,10 +1,9 @@
-package com.conatiners.objects;
+package com.containers.objects;
 
 import java.io.Serializable;
 import java.util.List;
 
 import com.database.entities.User;
-import com.database.managers.EventManager;
 import com.database.managers.ProjectManager;
 
 /**
@@ -38,7 +37,7 @@ public class UserContainer implements Serializable {
 		this.lastName = lastName;
 		this.course = course;
 		this.cellPhone = cellPhone;
-		this.setUsername(username);
+		this.username= username;
 	}
 
 

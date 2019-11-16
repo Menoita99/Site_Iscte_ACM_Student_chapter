@@ -79,22 +79,6 @@
 	opacity: 1;
 	text-decoration: none;
 }
-/*
-.login-input-text {
-	background: #f7f9fc;
-	border: none;
-	border-bottom: 1px solid #dfe7f1;
-	border-radius: 0;
-	box-shadow: none;
-	outline: none;
-	color: inherit;
-	text-indent: 8px;
-	height: 42px;
-	width: 100%;
-	text-shadow: none;
-	text-decoration: none;
-	box-shadow: none !important;
-}*/
 
 
 .login-clean form .form-control {

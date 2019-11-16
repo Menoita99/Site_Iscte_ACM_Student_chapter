@@ -14,9 +14,11 @@
   margin-left: 10px;
 }
 
-.nav.navbar-nav.ml-auto {
-  text-align: center;
-  align-self: center!important;
+@media (max-width: 770px) {
+  .nav.navbar-nav {
+    text-align: center;
+    align-self: center!important;
+  }
 }
 
 .user-icon-container img {
@@ -79,3 +81,11 @@
   max-height: 42px;
   margin-top: -3px;
 }
+
+.fixed-bottom {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1030;
+}	

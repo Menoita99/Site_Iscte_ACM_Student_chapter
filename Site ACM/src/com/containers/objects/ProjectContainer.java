@@ -1,4 +1,4 @@
-package com.conatiners.objects;
+package com.containers.objects;
 
 import java.io.Serializable;
 

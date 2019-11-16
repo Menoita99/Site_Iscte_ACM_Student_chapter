@@ -8,7 +8,7 @@ import java.util.Random;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import com.conatiners.objects.UserContainer;
+import com.containers.objects.UserContainer;
 import com.database.entities.User;
 
 /**
@@ -37,10 +37,6 @@ public class UserManager {
 		User user = null;
 		if(getUserByEmail(email)==null && getUserByUsername(username)==null) {	//verifies if user already exits
 
-			EntityManager manager = JpaUtil.getEntityManager();
-
-			manager.getTransaction().begin();					//starts the transaction
-
 			user = new User();									//creates an user
 			user.setActivationKey(generateActivationKey());
 			user.setEmail(email);
@@ -53,14 +49,10 @@ public class UserManager {
 			user.setAdmin(false);
 			user.setMember(false);
 			user.setLast_log(LocalDateTime.now().withNano(0));
-
-
-			manager.persist(user);								//saves user
-
-			manager.getTransaction().commit();					//commits changes to database
-
-			manager.close();
+			JpaUtil.createEntity(user);
 		}
+		
+		
 		return user;
 	}
 
@@ -189,7 +181,7 @@ public class UserManager {
 	public static User getUserByEmail(String email) {
 		List<User> results = JpaUtil.executeQuery("SELECT u FROM User u WHERE u.email = "
 												+ "'"+email+"' ", User.class);																					//get results
-		return results.isEmpty() ? null :results.get(0);																			//return user
+		return results.isEmpty() ? null : results.get(0);																			//return user
 	}
 
 	
@@ -251,7 +243,6 @@ public class UserManager {
 
 	
 
-	//TODO SETTERS
 	public static void updateUser(UserContainer userContainer) {
 		//TODO
 	}

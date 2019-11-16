@@ -77,7 +77,7 @@
 									 		<div class="col-sm-12 col-md-6 col-lg-6 col-xl-4">
 								                    <div class="card event-card rect-border">
 								                  
-								                    	<h:graphicImage class="card-img-top w-100 d-block rect-border" value="/resources/files/#{event.getImage()}"/>
+								                    	<h:graphicImage class="card-img-top w-100 d-block rect-border" value="/resources/files/#{event.getImage(0)}"/>
 								                        <div class="card-body">
 							                        		
 								                            	<h1 class="card-title">#{event.getTitle()}</h1>
@@ -87,7 +87,7 @@
 								                            </ul>
 								                            <ul class="list-inline" style="margin: 3px 0 0;">
 								                                <li class="list-inline-item"><i class="fa fa-calendar"></i> #{event.getSoonerDate()}</li>
-								                                <li class="list-inline-item"><i class="fa fa-thumbs-o-up"></i> #{event.getLikes()}</li>
+								                                <li class="list-inline-item"><i class="fa fa-thumbs-o-up">	 </i>#{event.getLikes()}</li>
 								                            </ul>  
 								                            <h:form>
 									                            <h:button class="btn btn-primary rect-border" type="button" a:data-bs-hover-animate="pulse" value="Discovery" style="margin: 10px 0 0 -1px;" outcome="event">
@@ -112,7 +112,7 @@
 				</c:if>
 			
 				<c:if test="${not eventsBean.hasEvents()}">
-					<h1 style="margin:50px auto 50px auto;width:90%">No Events Found</h1>
+					<h1 class="display-4" style="margin:50px auto 50px auto;width:90%">No Events Found</h1>
 				</c:if>
 					
 			</h:panelGroup>
@@ -141,7 +141,6 @@
 		               </nav>
 		          </div>
 			  </h:panelGroup>
-	
 			
 		<script type="text/javascript">
 			

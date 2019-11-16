@@ -6,7 +6,7 @@ import java.util.Map;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
-import com.conatiners.objects.UserContainer;
+import com.containers.objects.UserContainer;
 
 /**
  *This class represents a session 
@@ -23,6 +23,11 @@ public class Session {
 		return INSTANCE;
 	}
 
+	
+	
+	
+	
+	
 	/**
 	 * This method returns a ExternalContext object through the current HTTP request 
 	 * and this is only possible if a request was shot. 
@@ -37,12 +42,31 @@ public class Session {
 			return FacesContext.getCurrentInstance().getExternalContext(); 
 	}
 
+	
+	
+	
+	
+	
 	/**
 	 * returns the sessionMap that contains the attributes 
 	 */
 	public Map<String,Object> getSessionMap(){
 		return currentExternalContext().getSessionMap();
 	}
+	
+	
+	
+	
+	/**
+	 * returns the requestMap that contains the attributes 
+	 */
+	public Map<String,String> getRequestMap(){
+        return currentExternalContext().getRequestParameterMap();
+	}
+	
+	
+	
+	
 	
 	/**
 	 * Clear all the attributes on sessionMap and closes the session
@@ -52,6 +76,11 @@ public class Session {
 	public void logout() {
 		currentExternalContext().invalidateSession();
 	}
+	
+	
+	
+	
+	
 	
 	
 	/**
@@ -65,12 +94,20 @@ public class Session {
 	}
 	
 	
+	
+	
+	
+	
+	
 	/**
 	 * Method used to get information stored on Session
 	 */
 	public Object getSessionAtribute(String key) {
 		return currentExternalContext().getSessionMap().get(key);
 	}
+	
+	
+	
 	
 	
 	
@@ -82,13 +119,21 @@ public class Session {
 	}
 	
 	
+	
+	
+	
 	/**
-	 * return the session attribute user
+	 * return the session attribute user, 
+	 * if there is no user present in session this returns null
 	 */
 	public UserContainer getUser() {
 		return (UserContainer) getSessionAtribute("user");
 	}
 
+	
+	
+	
+	
 	
 	
 	/**

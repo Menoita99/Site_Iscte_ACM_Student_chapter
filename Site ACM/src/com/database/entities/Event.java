@@ -2,11 +2,16 @@ package com.database.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -33,12 +38,13 @@ public class Event implements Serializable {
 	@Column(length = 65, nullable = false, unique = true)	
 	private String title;
 	
-	@Column(length = 665, nullable = false)
+	@Column(length = 750, nullable = false)
 	private String description;
 	
 	@Column
-	@ElementCollection(targetClass=String.class, fetch = FetchType.EAGER)
-	private List<String> imagePath = new ArrayList<>();
+	@ElementCollection(targetClass=String.class)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private Set<String> imagePath = new LinkedHashSet<>();
 	
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
@@ -47,16 +53,32 @@ public class Event implements Serializable {
  	
 	@Column()
 	@ElementCollection(targetClass=String.class)
-	private List<String> tags = new ArrayList<>();
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private Set<String> tags = new LinkedHashSet<>();
 	
 	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
 	private State state;
 	
 	
 	
 	
+	/**
+	 * This method adds an image to imagePath
+	 * @param image image path
+	 */
+	public void addImage(String image) {
+		imagePath.add(image);
+	}
 	
 	
+	/**
+	 * Add all tags from a Collection 
+	 * @param tags collection with tags to be added
+	 */
+	public void addAllTags(Collection<String> tags) {
+		this.tags.addAll(tags);
+	}
 	
 	
 	/**
@@ -98,7 +120,9 @@ public class Event implements Serializable {
 	 * @return the imagePath
 	 */
 	public List<String> getImagePath() {
-		return imagePath;
+		List<String> list = new ArrayList<String>();
+		list.addAll(imagePath);
+		return list;
 	}
 
 	/**
@@ -112,7 +136,9 @@ public class Event implements Serializable {
 	 * @return the tags
 	 */
 	public List<String> getTags() {
-		return tags;
+		List<String> list = new ArrayList<String>();
+		list.addAll(tags);
+		return list;
 	}
 
 	/**
@@ -160,7 +186,7 @@ public class Event implements Serializable {
 	/**
 	 * @param imagePath the imagePath to set
 	 */
-	public void setImagePath(List<String> imagePath) {
+	public void setImagePath(Set<String> imagePath) {
 		this.imagePath = imagePath;
 	}
 
@@ -174,7 +200,7 @@ public class Event implements Serializable {
 	/**
 	 * @param tags the tags to set
 	 */
-	public void setTags(List<String> tags) {
+	public void setTags(Set<String> tags) {
 		this.tags = tags;
 	}
 
@@ -202,5 +228,4 @@ public class Event implements Serializable {
 				&& state == other.state && Objects.equals(tags, other.tags) && Objects.equals(title, other.title)
 				&& vacancies == other.vacancies && views == other.views;
 	}
-
 }

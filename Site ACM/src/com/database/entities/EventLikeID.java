@@ -36,4 +36,9 @@ public class EventLikeID implements Serializable {
 		EventLikeID other = (EventLikeID) obj;
 		return eventID == other.eventID && userID == other.userID;
 	}
+
+	@Override
+	public String toString() {
+		return "EventLikeID [userID=" + userID + ", eventID=" + eventID + "]";
+	}
 }

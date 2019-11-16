@@ -238,4 +238,12 @@ public class Project implements Serializable {
 				&& Objects.equals(subscriptionDeadline, other.subscriptionDeadline)
 				&& Objects.equals(title, other.title) && views == other.views;
 	}
+
+	@Override
+	public String toString() {
+		return "Project [id=" + id + ", views=" + views + ", maxMembers=" + maxMembers + ", title=" + title
+				+ ", description=" + description + ", imagePath=" + imagePath + ", manager=" + manager + ", deadLine="
+				+ deadLine + ", subscriptionDeadline=" + subscriptionDeadline + ", state=" + state + ", tags=" + tags
+				+ ", participants=" + participants + "]";
+	}
 }

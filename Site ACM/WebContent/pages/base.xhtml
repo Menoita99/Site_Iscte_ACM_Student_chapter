@@ -30,6 +30,7 @@
 		
 		<h:outputStylesheet library="css" name="footer.css" />
 		<h:outputStylesheet library="css" name="base.css" />
+		<h:outputStylesheet library="css" name="global.css" /> 
 	    <h:outputStylesheet library="css" name="styles.css" /> 
 	
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" />
@@ -63,26 +64,29 @@
 				class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navcol-1">
-			<ul class="nav navbar-nav ml-auto">
+			<ul class="nav navbar-nav">
 				<li class="nav-item" role="presentation"><h:link
-						class="nav-link" outcome="home">Home</h:link></li>
+						class="nav-link active" outcome="home">Home</h:link></li>
 				<li class="nav-item" role="presentation"><h:link
 						class="nav-link" outcome="projects">Projects</h:link></li>
+				<li class="nav-item" role="presentation"><h:link
+						class="nav-link" outcome="events">Events</h:link></li>
 				<li class="nav-item" role="presentation"><h:link
 						class="nav-link" outcome="team">Team</h:link></li>
 				<li class="nav-item" role="presentation"><h:link
 						class="nav-link" outcome="/pages/research.xhtml">Research</h:link></li>
-				<li class="nav-item" role="presentation"><h:link
-						class="nav-link" outcome="events">Events</h:link></li>
-				<li class="nav-item" role="presentation"><h:link
-						class="nav-link" outcome="repository">Repository</h:link></li>
+				<c:if test="${sessionScope.user != null}">
+					<li class="nav-item" role="presentation"><h:link
+							class="nav-link" outcome="repository">Repository</h:link></li>
+				</c:if>
 				<li class="nav-item" role="presentation"><h:link
 						class="nav-link" outcome="news">News</h:link></li>
-						
-				
+			</ul>		
+			<ul class="nav navbar-nav ml-auto">
 				<c:if test="${sessionScope.user == null}">     <!-- if there are no user in session  -->
-
-					<li class="nav-item" role="presentation"> <h:link class="nav-link" outcome="login">Log in <i class="fas fa-user"></i> </h:link> </li>
+				
+					<li class="nav-item" role="presentation"> <h:link class="nav-link" outcome="login">Sign in</h:link> </li>
+					<li class="nav-item" role="presentation"> <h:link class="nav-link" outcome="registration">Sign up</h:link> </li>
 					
 				</c:if>	
 				
@@ -125,9 +129,9 @@
 	</div>
 
 	<!-- FOOTER -->
-	<div class="footer-dark">
+	<div id="footer" class="footer-dark">
 		<footer>
-		<div class="container">
+		 <div class="container">  
 			<div class="row">
 				<div class="col-sm-6 col-md-3 item">
 					<h3>Services</h3>
@@ -164,13 +168,13 @@
 			</div>
 			
 			<p class="copyright">ACM copyright © 2019</p>
-		</div>
+			</div>
 		</footer>
 	</div>
 	
 	
 	
-	
+	<!-- Script for bootstrap animations	-->
 	<script>
 		$(document).ready(function(){
 			AOS.init({ disable: 'mobile' });
@@ -179,6 +183,8 @@
 				.mouseleave( function(){ var elem = $(this); elem.removeClass('animated ' + elem.attr('data-bs-hover-animate')) });
 		});
 	</script>
+	
+	<h:outputScript library="js" name="base.js"/>
 	
 </h:body>
 

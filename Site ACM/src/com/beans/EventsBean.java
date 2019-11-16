@@ -5,12 +5,13 @@ import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import com.conatiners.objects.EventContainer;
+import com.containers.objects.EventContainer;
 import com.database.entities.Event;
 import com.database.managers.CreatorManager;
 import com.database.managers.EventManager;
@@ -29,7 +30,7 @@ public class EventsBean implements Serializable{
 	private static int ROWS = 3;
 	private static int COLUMNS = 3;
 
-	private List<Event> events = EventManager.getAllEvents();
+	private List<Event> events = EventManager.getAllAprovedEvents();
 
 	private int actualPage = 0;
 
@@ -57,7 +58,7 @@ public class EventsBean implements Serializable{
 			int pageStartIndex = actualPage*COLUMNS*ROWS;
 
 			for (int i = n*COLUMNS+pageStartIndex; i < events.size() && i<(n*COLUMNS+COLUMNS + pageStartIndex) ; i++) 
-				row.add(EventContainer.convertTo(events.get(i)));
+				row.add(new EventContainer(events.get(i)));
 			
 			return row;
 		}
@@ -161,7 +162,7 @@ public class EventsBean implements Serializable{
 
 
 			if(beginDate.isBlank() && endDate.isBlank() && searchWord.isBlank())		//all fields are empty
-				buffer = EventManager.getAllEvents();
+				buffer = EventManager.getAllAprovedEvents();
 			
 			System.out.println(buffer);
 			events = buffer;
@@ -349,6 +350,11 @@ public class EventsBean implements Serializable{
 		return actualPage;
 	}
 
+	
+	
+	
+	
+	
 	/**
 	 * @param actualPage the actualPage to set
 	 */
@@ -357,7 +363,7 @@ public class EventsBean implements Serializable{
 			this.actualPage = actualPage;
 	}
 
-
+	//To debug proposes
 	public List<Event> getEvents(){
 		return events;
 	}
@@ -366,6 +372,20 @@ public class EventsBean implements Serializable{
 
 	//Used to debug and test
 	public static void main(String[] args) {
-	//	EventsBean eb = new EventsBean();
+		EventsBean eb = new EventsBean();
+		eb.setSearchWord("l");
+		eb.search();
+		eb.setActualPage(8);
+		System.out.println(eb.hasEvents());
+		System.out.println(Arrays.toString(eb.getNumberOfRows()));
+		for (int i :eb.getNumberOfRows()) {
+			for(EventContainer e :eb.getRow(i)) {
+				if(e != null) {
+					System.out.println(e.getTitle());
+					System.out.println(e.getLikes());
+				}
+			}
+		}
+		System.out.println();
 	}
 }

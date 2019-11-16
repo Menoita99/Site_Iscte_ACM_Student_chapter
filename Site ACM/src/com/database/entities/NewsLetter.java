@@ -52,4 +52,9 @@ public class NewsLetter implements Serializable {
 		NewsLetter other = (NewsLetter) obj;
 		return Objects.equals(email, other.email);
 	}
+
+	@Override
+	public String toString() {
+		return "NewsLetter [email=" + email + "]";
+	}
  }

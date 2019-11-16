@@ -45,6 +45,64 @@ public class EventInfo implements Serializable {
 	
 	
 	
+	
+	
+	/**
+	 * @return return the day of startDate attribute
+	 */
+	public int getStartDateDay() {
+		return startDate.getDayOfMonth();
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * @return return the month from startDate as a 3 letters format text
+	 * 		e.g: JANUARY -> JAN
+	 */
+	public String getStartDateMonth() {
+		return startDate.getMonth().toString().toUpperCase().substring(0, 3);
+	}
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * 
+	 * @return return a string with the startDate hours
+	 * 	e.g-> 20:30 
+	 */
+	public String getStartDateHours() {
+		return startDate.getHour() + ":" + startDate.getMinute();
+	}
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * 
+	 * @return return a string with the endDate hours
+	 * 	e.g-> 20:30 
+	 */
+	public String getEndDateHours() {
+		return endDate.getHour() + ":" + endDate.getMinute();
+	}
+	
+	
+	
+	
+	
+	//--------- GETTERS AND SETTERS
+	
 	/**
 	 * @return the id
 	 */
@@ -129,5 +187,11 @@ public class EventInfo implements Serializable {
 		EventInfo other = (EventInfo) obj;
 		return Objects.equals(endDate, other.endDate) && Objects.equals(event, other.event) && id == other.id
 				&& Objects.equals(place, other.place) && Objects.equals(startDate, other.startDate);
+	}
+
+	@Override
+	public String toString() {
+		return "EventInfo [id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", event=" + event
+				+ ", place=" + place + "]";
 	}
 }

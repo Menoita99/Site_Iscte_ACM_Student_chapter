@@ -1,19 +1,22 @@
 package com.beans;
 
 
-import com.conatiners.objects.UserContainer;
+import com.containers.objects.UserContainer;
+import com.database.entities.User;
 import com.database.managers.UserManager;
 import com.web.Session;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+
+
+
 /**
  *This bean must be used in login forms
  *This bean is used in login.xhtml
  * 
  * @author RuiMenoita
  */
-
 
 @ManagedBean
 @RequestScoped
@@ -32,10 +35,11 @@ public class LoginBean {
 	 */
 	public String login() {
 		if(email != null && password!=null) {
+			
+			User user = UserManager.emailLogin(email, password);
+			UserContainer userContainer = UserContainer.convertToUserContainer(user);
 
-			UserContainer userContainer = UserContainer.convertToUserContainer(UserManager.emailLogin(email, password));
-
-			if( userContainer != null) {			
+			if( userContainer != null && user.isActive()) {			
 				setError("");
 				Session.getInstance().setUser(userContainer);					// stores user in session
 
@@ -45,16 +49,16 @@ public class LoginBean {
 				}
 
 				return "home";										//Navigation rule the redirects user to home page
-			}else
+			}else if(!user.isActive()) {							//checks if user is active
+				return "activate?key="+user.getActivationKey()+"&faces-redirect = true";
+			}else 	
 				setError("Username or password are incorrect");		//Displays an error message on template
 		}else {
-			System.out.println("AQUI ACARALHO");
 			setError("Empty fields");
 		}
 
 		return "";													//Stays in the same page
 	}
-
 
 
 	/**

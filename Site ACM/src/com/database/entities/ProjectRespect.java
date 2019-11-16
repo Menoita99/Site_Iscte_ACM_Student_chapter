@@ -108,5 +108,10 @@ public class ProjectRespect implements Serializable {
 		return Objects.equals(date, other.date) && Objects.equals(id, other.id)
 				&& Objects.equals(project, other.project) && Objects.equals(user, other.user);
 	}
+
+	@Override
+	public String toString() {
+		return "ProjectRespect [id=" + id + ", project=" + project + ", user=" + user + ", date=" + date + "]";
+	}
 	
 }
