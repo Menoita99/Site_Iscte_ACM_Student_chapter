@@ -8,9 +8,15 @@
 	<navigation-rule>
 		<from-view-id>/*</from-view-id>
 
-		<!-- <navigation-case> <!ignore> <from-outcome>test</from-outcome> <to-view-id>pages/news.xhtml</to-view-id> 
-			</navigation-case> -->
+		<navigation-case>
+			<from-outcome>user</from-outcome>
+			<to-view-id>pages/user.xhtml</to-view-id>
+		</navigation-case>
 
+		<navigation-case>
+			<from-outcome>license_terms</from-outcome>
+			<to-view-id>pages/licenseTerms.xhtml</to-view-id>
+		</navigation-case>
 
 		<navigation-case>
 			<from-outcome>home</from-outcome>
@@ -67,5 +73,5 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	
+
 </faces-config>

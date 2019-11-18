@@ -41,16 +41,11 @@ public class LoginBean {
 
 			if( userContainer != null && user.isActive()) {			
 				setError("");
-				Session.getInstance().setUser(userContainer);					// stores user in session
-
-				if(Session.getInstance().getSessionAtribute("lastPage") != null) {										//if the attribute "lastPage" is set (it means filter was worked)
-					Session.getInstance().redirect(Session.getInstance().getSessionAtribute("lastPage").toString()); 	//redirects to last page
-					return "";										
-				}
+				Session.getInstance().setUser(userContainer);		// stores user in session
 
 				return "home";										//Navigation rule the redirects user to home page
 			}else if(!user.isActive()) {							//checks if user is active
-				return "activate?key="+user.getActivationKey()+"&faces-redirect = true";
+				return "activate";
 			}else 	
 				setError("Username or password are incorrect");		//Displays an error message on template
 		}else {

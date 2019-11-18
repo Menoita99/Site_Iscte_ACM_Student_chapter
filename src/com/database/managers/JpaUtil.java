@@ -191,11 +191,11 @@ public class JpaUtil {
 	 * 
 	 * @param ep
 	 */
-	public static void mergeEntity(Object ep) {
+	public static void mergeEntity(Object entity) {
 		EntityManager manager = JpaUtil.getEntityManager();	
 		try {
 			manager.getTransaction().begin();					
-			manager.merge(ep);
+			manager.merge(entity);
 			manager.flush();
 			manager.getTransaction().commit();			
 		}finally {

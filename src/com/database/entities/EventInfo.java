@@ -9,7 +9,6 @@ import javax.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import com.database.converters.LocalDateTimeAttributeConverter;
 
 /**
  * Entity implementation class for Entity: EventInfo
@@ -26,11 +25,9 @@ public class EventInfo implements Serializable {
 	@GeneratedValue
 	private int id;
 	
-	@Convert(converter = LocalDateTimeAttributeConverter.class)
 	@Column(nullable = false)
 	private LocalDateTime startDate;
 
-	@Convert(converter = LocalDateTimeAttributeConverter.class)
 	@Column(nullable = false)
 	private LocalDateTime endDate;
 

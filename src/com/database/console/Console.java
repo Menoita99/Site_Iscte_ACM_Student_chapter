@@ -17,7 +17,7 @@ public class Console {
 		EntityManager em = emf.createEntityManager();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		
-		for (;;) {
+		while(true) {
 			
 			System.out.print("JPQL> ");
 			String query = reader.readLine();
@@ -37,9 +37,9 @@ public class Console {
 						
 						if(o  instanceof Object[]) {
 							for(Object ob : (Object[]) o) 
-								System.out.println(count++ + " ->	" + ob);
+								System.out.println(count++ + " -> " + ob);
 						}else
-							System.out.println(count++ + " ->	" + o);
+							System.out.println(count++ + " -> " + o);
 					}
 					
 				} else {

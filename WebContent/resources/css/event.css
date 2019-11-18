@@ -24,12 +24,7 @@ section {
   border-radius: 50%;
 }
 
-.btn.btn-primary.join-btn {
-  background-color: rgba(89,134,251,0.76);
-  border: none;
-}
-
-.btn.btn-primary.joined-btn {
+.btn .btn-primary .join-btn {
   background-color: rgba(89,134,251,0.76);
   border: none;
 }
@@ -40,3 +35,15 @@ section {
   max-height: 460px;
 }
 
+
+.joined-btn {
+  color: #ffffff;
+  background-color: rgba(111,247,78,0.76);
+  border: none;
+}
+
+
+.joined-btn:hover{
+	color:white;
+	background-color: rgba(251,89,89,0.76);
+}

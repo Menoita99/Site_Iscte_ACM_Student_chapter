@@ -36,12 +36,12 @@
 		<pattern value="/team" />
 		<view-id value="/pages/team.xhtml" />
 	</url-mapping>
-	
+
 	<url-mapping id="research">
 		<pattern value="/research" />
 		<view-id value="/pages/research.xhtml" />
 	</url-mapping>
-	
+
 	<url-mapping id="repository">
 		<pattern value="/repository" />
 		<view-id value="/pages/repository.xhtml" />
@@ -51,10 +51,20 @@
 		<pattern value="/events/#{id}" />
 		<view-id value="/pages/event.xhtml" />
 	</url-mapping>
-	
-		<url-mapping id="event">
+
+	<url-mapping id="event">
 		<pattern value="/activate" />
 		<view-id value="/pages/activate.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="license_terms">
+		<pattern value="/LicenseTerms" />
+		<view-id value="/pages/licenseTerms.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="user">
+		<pattern value="/user" />
+		<view-id value="/pages/user.xhtml" />
 	</url-mapping>
 
 </pretty-config>

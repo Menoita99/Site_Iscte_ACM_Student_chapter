@@ -18,19 +18,24 @@
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" />
 	<h:outputStylesheet library="css" name="registration.css" />
-	<h:outputStylesheet library="css" name="styles.css" />
+	<h:outputStylesheet library="css" name="global.css" />
 	
 </h:head>
 <h:body>
 	<div class="register-photo">
 		<div class="form-container blue-box">
 			<div class="image-holder"></div>
-			<h:form method="post">
+			
+			<h:form>
+			
 				<h2 class="text-center">
 					<strong>Create</strong> an account.
 				</h2>
-				<h:outputText class="error-label" value="#{registrationBean.errorMessage}"/>
+				
+				<h:outputText class="error-label-md text-center" style="margin-bottom:15px; margin-top:-10px" value="#{registrationBean.errorMessage}"/>
+				
 				<div class="form-group">
+					
 					<div class="form-row">
 						
 						<div class="col">
@@ -39,44 +44,71 @@
 								<f:validateRegex pattern="[a-zA-Z]*"/>
 							</h:inputText>
 						</div>
+						
 						<div class="col">
 							<h:inputText a:placeholder="Last Name" class="form-control" type="text"  maxlength="60" minlength="2" required="true" value="#{registrationBean.lastName}"
 								requiredMessage="Last name is required" validatorMessage="last name must have only letters" id="lastName">
 								<f:validateRegex pattern="[a-zA-Z]*"/>
 							</h:inputText>
 						</div>
+						
 					</div>
-					<h:message for="fristName" class="error-label" />
+					
+					<h:message for="fristName" class="error-label-sm" />
+					
 					<div></div>
-					<h:message for="lastName" class="error-label" />
+					
+					<h:message for="lastName" class="error-label-sm" />
 				</div>
+				
 				<div class="form-group">
+				
+					<h:inputText class="form-control" type="text" a:placeholder="Username" required="true" value="#{registrationBean.username}"
+								requiredMessage="Username is required" validatorMessage="Invalid username" id="username"  maxlength="60" minlength="6">
+						<f:validateRegex pattern="[a-zA-Z0-9]{4,}"/>		
+					</h:inputText>
+					
+					<h:message for="username" class="error-label-sm" />
+					
+				</div>
+				
+				<div class="form-group">
+				
 					<h:inputText class="form-control" type="email" a:placeholder="Email" required="true" value="#{registrationBean.email}"
 								requiredMessage="Email is required" validatorMessage="Invalid email" id="email"  maxlength="70" minlength="6">
 						<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>		
 					</h:inputText>
-					<h:message for="email" class="error-label" />
+					
+					<h:message for="email" class="error-label-sm" />
+					
 				</div>
+				
 				<div class="form-group">
+					<p class="info">Password must have at least 8 characters</p>
 					<h:inputSecret class="form-control" type="password" a:placeholder="Password" id="password" required="true" value="#{registrationBean.password}"
 						requiredMessage="Password is required" validatorMessage="Password must be between 8 and 64 characters long">
 						<f:validateRegex pattern=".{8,64}"/>	
 					</h:inputSecret>
-					<h:message for="password" class="error-label" />
+					
+					<h:message for="password" class="error-label-sm" />
 				</div>
+				
 				<div class="form-group">
 					<h:inputSecret class="form-control" type="password" a:placeholder="Password (repeat)" required="true" value="#{registrationBean.repeatPassword}"
 					requiredMessage="Please repeat password" id="repeatPassword"/>
-					<h:message for="repeatPassword" class="error-label" />
+					<h:message for="repeatPassword" class="error-label-sm" />
 				</div> 
+				
+				
 				
 				<div class="form-group">
 					<div class="form-check">
 						<label class="form-check-label">
-						<h:selectBooleanCheckbox class="form-check-input" type="checkbox" required="true" requiredMessage="You must accept terms" id="checkBox"/>
-								I agree to the license terms.
-						</label>
-						<h:message for="checkBox" class="error-label" />
+						<h:selectBooleanCheckbox class="form-check-input" type="checkbox" required="true" requiredMessage="You must accept terms" id="checkBox"
+						value="#{registrationBean.acceptedTermsAndConditions}"/>
+								I agree to the <h:link outcome="license_terms">license terms</h:link>.
+						</label> 
+						<h:message for="checkBox" class="error-label-sm" />
 					</div>
 				</div>
 				<div class="form-group">

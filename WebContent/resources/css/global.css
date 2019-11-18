@@ -1,9 +1,20 @@
-.error-label{
-	color: #f35f63;
+.error-label-md{
 	font-size:18px;
-	text-align: center;
 	display: block;
 }
+
+.error-label-sm{
+	font-size:12px;
+	display: block;
+}
+
+
+.error-label-bg{
+	font-size:24px;
+	display: block;
+}
+
+
 
 p {
   word-wrap: break-word;

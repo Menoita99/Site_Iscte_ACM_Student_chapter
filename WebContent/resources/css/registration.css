@@ -73,7 +73,7 @@
 }
 
 .register-photo form .btn-primary:hover, .register-photo form .btn-primary:active {
-  background: #8080ff;
+  background: #000000;
 }
 
 .register-photo form .btn-primary:active {
@@ -93,5 +93,17 @@
   background-color: #acbfdd;
 }
 
+.info{
+	font-size: 12px;
+	margin: 0px;
+	padding: 0px;
+}
 
+.error-label-md{
+	color: #f35f63;
+}
+
+.error-label-sm{
+	color: #f35f63;
+}
 

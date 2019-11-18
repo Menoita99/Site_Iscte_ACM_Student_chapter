@@ -228,4 +228,11 @@ public class Event implements Serializable {
 				&& state == other.state && Objects.equals(tags, other.tags) && Objects.equals(title, other.title)
 				&& vacancies == other.vacancies && views == other.views;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Event [id=" + id + ", views=" + views + ", vacancies=" + vacancies + ", title=" + title + ", manager="
+				+ manager + ", tags=" + tags + ", state=" + state + "]";
+	}
 }

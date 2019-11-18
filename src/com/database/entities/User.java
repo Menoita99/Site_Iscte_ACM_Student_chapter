@@ -294,4 +294,11 @@ public class User implements Serializable {
 				&& Objects.equals(password, other.password) && Objects.equals(username, other.username)
 				&& views == other.views;
 	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", email=" + email + ", fristName=" + fristName + ", LastName=" + LastName
+				+ ", last_log=" + last_log + ", isAdmin=" + isAdmin + ", isMember=" + isMember + ", isActive="
+				+ isActive + "]";
+	}
 }

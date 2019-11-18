@@ -21,7 +21,6 @@ public class EventContainer implements Serializable {
 	private String description;
 
 	private int vacancies;
-	private int vacanciesFilled;
 
 	private int manager;
 
@@ -43,7 +42,6 @@ public class EventContainer implements Serializable {
 		this.vacancies = event.getVacancies();
 		this.images = event.getImagePath();
 		this.manager = event.getManager().getId();
-		this.vacanciesFilled = (int)EventManager.getOccupation(id);
 
 		infos = sortByDate(EventManager.getEventInfos(id));
 	}
@@ -65,7 +63,6 @@ public class EventContainer implements Serializable {
 		this.vacancies = event.getVacancies();
 		this.images = event.getImagePath();
 		this.manager = event.getManager().getId();
-		this.vacanciesFilled = (int)EventManager.getOccupation(id);
 
 		infos = sortByDate(EventManager.getEventInfos(id));
 	}
@@ -255,7 +252,7 @@ public class EventContainer implements Serializable {
 	 * @return the vacanciesFilled
 	 */
 	public int getVacanciesFilled() {
-		return vacanciesFilled;
+		return (int)EventManager.getOccupation(id);
 	}
 
 
@@ -335,16 +332,6 @@ public class EventContainer implements Serializable {
 		this.vacancies = vacancies;
 	}
 
-
-
-
-
-	/**
-	 * @param vacanciesFilled the vacanciesFilled to set
-	 */
-	public void setVacanciesFilled(int vacanciesFilled) {
-		this.vacanciesFilled = vacanciesFilled;
-	}
 
 
 

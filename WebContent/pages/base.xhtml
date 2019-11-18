@@ -31,7 +31,6 @@
 		<h:outputStylesheet library="css" name="footer.css" />
 		<h:outputStylesheet library="css" name="base.css" />
 		<h:outputStylesheet library="css" name="global.css" /> 
-	    <h:outputStylesheet library="css" name="styles.css" /> 
 	
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" />
 	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"/>
@@ -92,7 +91,7 @@
 				
 				<c:if test="${sessionScope.user != null}">	<!-- else -->
 					
-					<li class="nav-item" role="presentation">
+					<li role="presentation">
 							
 							<div class="dropdown"> <!-- Drop Down -->
 								
@@ -109,8 +108,10 @@
 								</h:link>
 								
 								<div class="dropdown-content"> <!-- Drop down content -->
-									<h:link>Definitions</h:link	>
-									<h:link onClick="#{loginBean.logout()}">Log Out</h:link>
+									<h:link outcome="user">Definitions</h:link	>
+									<h:form>
+										<h:commandLink action="#{loginBean.logout()}" value="Log Out"/>
+									</h:form>
 								</div>
 								
 							</div>

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 import com.containers.objects.UserContainer;
 
@@ -142,6 +143,29 @@ public class Session {
 	public void redirect(String url) {
 		try {
 			currentExternalContext().redirect(url);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+
+
+
+	/**
+	 * Redirect user to a page of this website
+	 * e.g:
+	 * 		if path = "/home"
+	 * 		this page will be redirected to home page
+	 * 	
+	 * @param path url path
+	 */
+	public void redirectWithContext(String path) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		HttpServletRequest origRequest = (HttpServletRequest)context.getExternalContext().getRequest();
+		String contextPath = origRequest.getContextPath();
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect(contextPath  + path);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

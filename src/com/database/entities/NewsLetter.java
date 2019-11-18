@@ -15,17 +15,15 @@ public class NewsLetter implements Serializable {
 
 	
 	private static final long serialVersionUID = 1L;
-
+	
+	@Id
+	@Column(length = 50, nullable = false, unique = true)
 	private String email;
 
-	
-	
 	
 	/**
 	 * @return the email
 	 */
-	@Id
-	@Column(length = 50, nullable = false, unique = true)
 	public String getEmail() {
 		return email;
 	}
