@@ -153,8 +153,7 @@ public class JpaUtil {
 		EntityManager manager = getEntityManager();	
 		try {
 			manager.getTransaction().begin();					
-			manager.persist(entity);
-			manager.flush();
+			manager.persist(manager.contains(entity) ? entity : manager.merge(entity));
 			manager.getTransaction().commit();			
 		}finally {
 			manager.close();
@@ -170,11 +169,11 @@ public class JpaUtil {
 	 * Deletes the given entity from database
 	 * @param entity entity
 	 */
-	public void deleteEntity(Object entity) {
+	public static void deleteEntity(Object entity) {
 		EntityManager manager = getEntityManager();	
 		try {
-			manager.getTransaction().begin();					
-			manager.remove(entity);	
+			manager.getTransaction().begin();			
+			manager.remove(manager.contains(entity) ? entity : manager.merge(entity));	
 			manager.getTransaction().commit();			
 		}finally {
 			manager.close();

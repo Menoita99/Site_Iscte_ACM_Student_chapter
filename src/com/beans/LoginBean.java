@@ -44,7 +44,7 @@ public class LoginBean {
 				Session.getInstance().setUser(userContainer);		// stores user in session
 
 				return "home";										//Navigation rule the redirects user to home page
-			}else if(!user.isActive()) {							//checks if user is active
+			}else if(userContainer != null && !user.isActive()) {							//checks if user is active
 				return "activate";
 			}else 	
 				setError("Username or password are incorrect");		//Displays an error message on template

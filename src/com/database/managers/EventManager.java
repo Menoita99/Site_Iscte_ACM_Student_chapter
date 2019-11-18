@@ -23,11 +23,11 @@ public class EventManager {
 
 	private static final String IMAGES_DIR = "events/";
 	private static String defaultImage = "default/ACM_ICON.png";
-	
 
-	
-	
-	
+
+
+
+
 	/**
 	 * @param id event id
 	 * @return returns the event with the given id
@@ -40,11 +40,11 @@ public class EventManager {
 			em.close();
 		}
 	}
-	
-	
 
 
-	
+
+
+
 	/**
 	 * @return all events present on DataBase without discriminate event state 
 	 */
@@ -54,8 +54,8 @@ public class EventManager {
 
 
 
-	
-	
+
+
 	/**
 	 *Creates an event
 	 */
@@ -78,7 +78,7 @@ public class EventManager {
 						event.addImage(IMAGES_DIR+img);
 					else
 						event.addImage(defaultImage);
-			
+
 			JpaUtil.createEntity(event);
 
 			addParticipant(event,user,true);
@@ -88,80 +88,107 @@ public class EventManager {
 
 
 
-	
-	
-	
+
+
+
 	/**
 	 * Add's an user to event and specify if user is member of staff or not
 	 */
 	public static EventParticipant addParticipant(Event event, User user, boolean isStaff) {
 		List<EventParticipant> l = JpaUtil.executeQuery("SELECT part FROM EventParticipant part WHERE "
-													  + " part.event.id = "+event.getId()+" and part.user.id = "+user.getId(), 
-													  EventParticipant.class);
-		
+				+ " part.event.id = "+event.getId()+" and part.user.id = "+user.getId(), 
+				EventParticipant.class);
+
 		if(hasVacancies(event.getId()) && l.isEmpty()) {
 			EventParticipant ep = new EventParticipant();
 			ep.setEvent(event);
 			ep.setUser(user);
 			ep.setStaff(isStaff);
-			
+
 			JpaUtil.mergeEntity(ep);
 
 			return ep;
 		}
-		
+
 		return null;
 	}
-	
-	
-	
 
-	
-	
+
+
+
+
+
 	/**
 	 * Add's an user to event and specify if user is member of staff or not
 	 */
 	public static EventParticipant addParticipant(int eventID, int userID, boolean isStaff) {
 		List<EventParticipant> l = JpaUtil.executeQuery("SELECT part FROM EventParticipant part WHERE "
-													  + " part.event.id = "+eventID+" and part.user.id = "+userID, 
-													  EventParticipant.class);
-		
+				+ " part.event.id = "+eventID+" and part.user.id = "+userID, 
+				EventParticipant.class);
+
 		Event event = getEventById(eventID);
 		User user = UserManager.getUserById(userID);
-		
+
 		if(hasVacancies(eventID) && l.isEmpty()) {
 			EventParticipant ep = new EventParticipant();
 			ep.setEvent(event);
 			ep.setUser(user);
 			ep.setStaff(isStaff);
-			
+
 			JpaUtil.mergeEntity(ep);
-			
+
 			return ep;
 		}
-		
+
 		return null;
 	}
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 	/**
-	 * 
-	 * @param eventId
-	 * @param userId
-	 * @return
+	 * Removes Event participant from data base.
+	 * if it is the manager or can't find Event Manager it will return null;
+
+	 * @param eventId event id
+	 * @param userId user id
 	 */
 	public static EventParticipant removeParticipant(int eventId, int userId) {
-		// TODO verificar se é o manager e se é participant
-		System.out.println("NEED'S TO BE DONE (REMOVE PARTICIPANT)");
-		return null;
+		EventParticipant ep = null;
+		List<EventParticipant> results = JpaUtil.executeQuery("", EventParticipant.class);
+		
+		if(!results.isEmpty()) {
+		
+			User user = UserManager.getUserById(userId);
+			User manager = getEventManager(eventId);
+			
+			if(user != null && manager != null && !user.equals(manager)) 
+				JpaUtil.deleteEntity(ep);
+		}
+		
+		return ep;
 	}
 
 
+
+
+
+
 	
+	/**
+	 * @param eventId event id
+	 * @return return the manager of the given id
+	 */
+	private static User getEventManager(int eventId) {
+		List<User> results = JpaUtil.executeQuery("Select e.manager from Event e where e.id = "+eventId, User.class);
+		return results.isEmpty() ? null : results.get(0) ;
+	}
+
+	
+	
+
 
 
 
@@ -170,7 +197,7 @@ public class EventManager {
 	 */
 	public static boolean hasVacancies(int eventID) {
 		List<Event> e = JpaUtil.executeQuery( "SELECT e FROM Event e WHERE id =" + eventID, Event.class);
-		
+
 		return e.isEmpty() ? false : e.get(0).getVacancies() > getOccupation(eventID);
 	}
 
@@ -185,12 +212,12 @@ public class EventManager {
 	 */
 	public static long getOccupation(int eventID) {
 		return JpaUtil.executeQuery(" select count(*) from EventParticipant p where p.event.id = "
-													   + eventID+" and p.isStaff = false", Long.class).get(0);
+				+ eventID+" and p.isStaff = false", Long.class).get(0);
 	}
 
 
-	
-	
+
+
 
 
 	/**
@@ -221,10 +248,10 @@ public class EventManager {
 	}
 
 
-	
-	
-	
-	
+
+
+
+
 
 	/**
 	 * This method returns all the EventInfos of a given event id
@@ -232,27 +259,27 @@ public class EventManager {
 	 */
 	public static List<EventInfo> getEventInfos(int id) {
 		return JpaUtil.executeQuery("SELECT ei FROM EventInfo ei "
-								  + "WHERE event.id ="+id, EventInfo.class);
+				+ "WHERE event.id ="+id, EventInfo.class);
 	}
 
 
-	
 
-	
-	
+
+
+
 	/**
 	 *Return the number of likes of an event
 	 *@param id event id 
 	 */
 	public static long getLikes(int id) {
 		return JpaUtil.executeQueryAndGetSingle( "SELECT COUNT(*) FROM EventLike el "
-												+ "WHERE el.event.id ="+id, Long.class);
+				+ "WHERE el.event.id ="+id, Long.class);
 	}
 
 
-	
-	
-	
+
+
+
 	/**
 	 * @param user User that gives the like
 	 * @param event Event liked 
@@ -283,23 +310,23 @@ public class EventManager {
 
 
 
-	
-	
+
+
 	/**
 	 * @return true if user has already liked event
 	 */
 	public static boolean hasLike(Event event, User user) {
 		List<EventLike> result = JpaUtil.executeQuery( "SELECT evtlike FROM EventLike evtlike "
-													 + "WHERE evtlike.event.id ="+event.getId()+" and "
-													 + "evtlike.user.id = "+user.getId(), EventLike.class);														//get results
+				+ "WHERE evtlike.event.id ="+event.getId()+" and "
+				+ "evtlike.user.id = "+user.getId(), EventLike.class);														//get results
 		return !result.isEmpty();
 	}
 
 
 
 
-	
-	
+
+
 	/**
 	 * 
 	 * @param eventID id of the event to be checked
@@ -310,10 +337,10 @@ public class EventManager {
 	 */
 	public static boolean isParticipant(int eventID, int userID) {
 		List<EventParticipant> result = JpaUtil.executeQuery( "Select p FROM EventParticipant p Where p.event.id = "+eventID+" and p.user.id = "+ userID
-													,EventParticipant.class);														//get results
+				,EventParticipant.class);														//get results
 		return !result.isEmpty();
 	}
-	
+
 
 
 
@@ -327,15 +354,15 @@ public class EventManager {
 		return JpaUtil.executeQuery("Select p.user from EventParticipant p Where p.event.id = "+id+" and p.isStaff = true", User.class);
 	}
 
-	
-	
-	
-	
+
+
+
+
 
 	//USED TO DEBUG
 	public static void main(String[] args) {
-		System.out.println(isParticipant(2,2));
-		System.out.println(isParticipant(1,45));
+		User u = UserManager.getUserById(1);
+		JpaUtil.deleteEntity(u);
 	}
 
 
