@@ -40,7 +40,9 @@ public class JpaUtil {
 
 
 
-
+	/**
+	 * Closes entity manager factory
+	 */
 	public static void close(){
 		entityFactory.close();
 	}
@@ -187,15 +189,14 @@ public class JpaUtil {
 
 	
 	/**
-	 * 
-	 * @param ep
+	 * Used to commit changes
+	 * @param entity entity
 	 */
 	public static void mergeEntity(Object entity) {
 		EntityManager manager = JpaUtil.getEntityManager();	
 		try {
 			manager.getTransaction().begin();					
 			manager.merge(entity);
-			manager.flush();
 			manager.getTransaction().commit();			
 		}finally {
 			manager.close();

@@ -21,7 +21,6 @@ public class EventContainer implements Serializable {
 	private String description;
 
 	private int vacancies;
-
 	private int manager;
 
 	private List<String> images;
@@ -72,6 +71,7 @@ public class EventContainer implements Serializable {
 
 
 	/**
+	 * 
 	 * Sorts a List of EventInfos by near future date and then by past near date
 	 * @param eventInfos
 	 * @return sorted list
@@ -166,7 +166,7 @@ public class EventContainer implements Serializable {
 		if(staff.isEmpty()) {
 			staff = new ArrayList<>();
 			for(User u: EventManager.getStaffParticipants(id))
-				staff.add(UserContainer.convertToUserContainer(u));
+				staff.add(new UserContainer(u));
 		}
 		return staff;
 	}

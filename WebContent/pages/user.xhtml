@@ -8,12 +8,389 @@
 	xmlns:o="http://omnifaces.org/ui"
 	xmlns:of="http://omnifaces.org/functions"
 	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="headContent">
+		<h:outputStylesheet library="css" name="user.css" />
+	</ui:define>
 
 	<ui:define name="content">
-
-		<h1 style="margin-top: 50px">
-			<center>IN MAKING :)</center>
-		</h1>
-
+	
+	<c:if test="${param['rendered'] != null}">
+		#{ userBean.setRendered(param['rendered'])}
+	</c:if>
+	
+	<c:if test="${sessionScope.user != null}">
+	
+		<c:set var="user" value="#{userBean.user}" />
+	
+		<div>
+	        <div class="container" style="margin-bottom: 50px;margin-top:20px;">
+	            <div class="row">
+	                <div class="col-md-4 col-lg-4 col-xl-4" style="padding: 0px;">
+	                    <div id="user-menu" style="padding: 30px;margin-right: 0;">
+	                        <div class="image-container">
+	                        	<c:if test="${not empty user.imagePath}">
+	                        		<h:graphicImage value="/resources/files/users/#{user.imagePath}"/>
+                        		</c:if>
+                        		<c:if test="${empty user.imagePath}">
+                        			<center>
+                        				<i class="fa fa-user-circle-o" style="color: white; font-size: 200px;"/>
+                     				</center>
+                        		</c:if>
+	                       	</div>
+	                        <ul class="list-group" style="margin-top: 20px;">
+	                            <li class="list-group-item">
+	                            	<h:form>
+	                            		<center>
+		                            		<h:commandLink value="Definitions" action="#{ userBean.setRendered('definitions')}">
+		                            			<f:ajax execute="@form" render=":events :definitions :projects :research" />
+		                            		</h:commandLink>
+		                            	</center>	
+	                            	</h:form>
+	                            </li>
+	                             <li class="list-group-item">
+	                            	<h:form>
+	                            		<center>
+		                            		<h:commandLink value="Events" action="#{ userBean.setRendered('events')}">
+		                            			<f:ajax execute="@form" render=":events :definitions :projects :research" />
+		                            		</h:commandLink>
+	                            		</center>
+	                            	</h:form>
+	                            </li>
+	                             <li class="list-group-item">
+	                            	<h:form>
+	                            		<center>
+		                            		<h:commandLink value="Projects" action="#{ userBean.setRendered('projects')}">
+		                            			<f:ajax execute="@form" render=":events :definitions :projects :research" />
+		                            		</h:commandLink>
+		                            	</center>	
+	                            	</h:form>
+	                            </li>
+	                             <li class="list-group-item">
+	                            	<h:form>
+		                            	<center>
+		                            		<h:commandLink value="Research" action="#{ userBean.setRendered('research')}">
+		                            			<f:ajax execute="@form" render=":events :definitions :projects :research" />
+		                            		</h:commandLink>
+	                            		</center>
+	                            	</h:form>
+	                            </li>
+	                        </ul>
+	                            <center>
+		                            <h:link class="btn btn-primary" style="margin-top:10px;width:100%">
+		                        	<i class="fa fa-plus"></i> Become a member
+		                       	   </h:link>
+	                       	   </center>
+	                    </div>
+	                </div>
+	                <div class="col-md-8 col-lg-8 col-xl-8">
+	                
+	                <h:panelGroup id="definitions" >
+	                	<h:panelGroup rendered="#{ userBean.rendered == 'definitions'}">
+		                    <div class="content  def" style="padding: 30px;">
+			                        <h1 class="display-4 text-center" style="margin-bottom: 30px;">Definitions</h1>
+			                        
+			                        <h:outputText value="#{userBean.definitionsErrorMessage}" class="error-label-md" style="margin-bottom:10px"/>
+			                       
+			                        <h:form>
+			                            <div class="form-group">
+			                                <div class="form-row">
+			                                    <div class="col-md-2 col-lg-2 col-xl-2">
+			                                    	<label class="col-form-label">Email</label>
+		                                    	</div>
+			                                    <div class="col-md-10 col-lg-10 col-xl-10">
+			                                    
+			                                    	<h:inputText class="form-control" a:type="email" a:placeholder="#{user.email}" value="#{userBean.email}" 
+			                                    	validatorMessage="Invalid email" id="email"  maxlength="70" minlength="6">
+														<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>		
+													</h:inputText>
+													
+													<h:message for="email" class="error-label-sm" />
+		                                    	</div>
+			                                </div>
+			                            </div>
+			                            <div class="form-group">
+			                                <div class="form-row">
+			                                    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+			                                        <div class="form-row">
+			                                            <div class="col-md-3 col-lg-4 col-xl-4">
+			                                            	<label class="col-form-label">First Name</label>
+		                                            	</div>
+			                                            <div class="col-md-9 col-lg-8 col-xl-8">
+			                                            	<h:inputText class="form-control" a:placeholder="#{user.firstName}" value="#{userBean.firstName}"
+			                                            	 validatorMessage="Frist name must have only letters" id="fristName">
+																<f:validateRegex pattern="[a-zA-Z]*"/>
+															</h:inputText>
+															<h:message for="fristName" class="error-label-sm" />
+		                                            	</div>
+			                                        </div>
+			                                    </div>
+			                                    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+			                                        <div class="form-row">
+			                                            <div class="col-md-3 col-lg-4 col-xl-4">
+			                                            	<label class="col-form-label">Last Name<br></br></label>
+		                                            	</div>
+			                                            <div class="col-md-9 col-lg-8 col-xl-8">
+			                                            	<h:inputText class="form-control" a:placeholder="#{user.lastName}" value="#{userBean.lastName}"
+			                                            	validatorMessage="last name must have only letters" id="lastName">
+																<f:validateRegex pattern="[a-zA-Z]*"/>
+															</h:inputText>
+															
+															<h:message for="lastName" class="error-label-sm" />
+		                                            	</div>
+			                                        </div>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                            <div class="form-group">
+			                                <div class="form-row">
+			                                    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+			                                        <div class="form-row">
+			                                            <div class="col-md-3 col-lg-4 col-xl-4">
+			                                            	<label class="col-form-label">Cell Phone</label>
+		                                            	</div>
+			                                            <div class="col-md-9 col-lg-8 col-xl-8">
+			                                            
+			                                            	<h:inputText class="form-control" a:type="tel" a:placeholder="#{user.cellPhone}" value="#{userBean.cellPhone}"
+											                 validatorMessage="cell phone must have only 9 numbers" id="cellPhone">
+																<f:validateRegex pattern="[0-9]{9}"/>
+															</h:inputText>
+															
+															<h:message for="cellPhone" class="error-label-sm" />
+															
+			                                            </div>
+			                                        </div>
+			                                    </div>
+			                                    <div class="col-lg-6 col-xl-6">
+			                                        <div class="form-row">
+			                                            <div class="col-md-3 col-lg-4 col-xl-4">
+			                                            	<label class="col-form-label">Course<br></br></label>
+		                                            	</div>
+			                                            <div class="col-md-9 col-lg-8 col-xl-8">
+			                                            	<h:inputText class="form-control" a:placeholder="#{user.course}" value="#{userBean.course}"/>
+		                                            	</div>
+			                                        </div>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                            <div class="form-group">
+			                                <div class="form-row">
+			                                    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+			                                        <div class="form-row">
+			                                            <div class="col-md-3 col-lg-4 col-xl-4">
+			                                            	<label class="col-form-label">Username</label>
+		                                            	</div>
+			                                            <div class="col-md-9 col-lg-8 col-xl-8">
+			                                            	<h:inputText class="form-control" a:placeholder="#{user.username}" value="#{userBean.username}"
+															validatorMessage="Invalid username" id="username"  maxlength="60" minlength="6">
+															<f:validateRegex pattern="[a-zA-Z0-9]{4,}"/>		
+														</h:inputText>
+														
+														<h:message for="username" class="error-label-sm" />
+		                                            	</div>
+			                                        </div>
+			                                    </div>
+			                                    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+			                                        <div class="form-row">
+			                                            <div class="col-md-3 col-lg-4 col-xl-4">
+			                                            	<label class="col-form-label">Password<br></br></label>
+		                                            	</div>
+			                                            <div class="col-md-9 col-lg-8 col-xl-8">
+			                                            	<h:inputSecret class="form-control" a:placeholder="New password" value="#{userBean.newPassword}"
+			                                            	validatorMessage="Password must be between 8 and 64 characters long" id="newPassword">
+			                                            		<f:validateRegex pattern=".{8,64}"/>	
+			                                           		 </h:inputSecret>	
+		                                            	</div>
+		                                            	<h:message for="newPassword" class="error-label-sm" />
+			                                        </div>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                            <div class="form-group">
+			                                <div class="form-row">
+			                                    <div class="col-sm-12">
+			                                        <div class="form-row">
+			                                            <div class="col-sm-3 col-md-3 col-lg-2 col-xl-2">
+			                                            	<h:commandButton class="btn btn-primary" value="Save" update="@form" action="#{userBean.saveChanges()}"/>
+		                                            	</div>
+			                                            <div class="col-sm-9 col-md-9 col-lg-4 col-xl-4">
+			                                            	<h:inputSecret id="password" class="form-control" a:placeholder="Password" value="#{userBean.password}" required="true" 
+			                                            	requiredMessage="Password is required to save changes"/>
+			                                            	 <h:message for="password" class="error-label-sm" />
+		                                            	</div>
+			                                        </div>
+			                                    </div>
+			                                </div>
+			                               
+			                            </div>
+			                        </h:form>
+			                      
+			                  	</div>
+		               	</h:panelGroup>
+	               	</h:panelGroup>
+	               	
+	               	<h:panelGroup id="events" >
+	         			<h:panelGroup rendered="#{ userBean.rendered == 'events'}">
+		                    <div class="content">
+		                        <h1 class="display-4 text-center" style="margin-bottom: 30px;">Events</h1>
+		                        
+		                        <div role="tablist" id="accordion-1">
+		                        	
+		                        	<c:forEach items="#{user.getEvents()}" var="event" varStatus="loopStatus">
+		                        	
+		                        		<div class="card">
+		                        		
+			                                <div class="card-header" role="tab">
+			                                    <h5 class="mb-0">
+			                                    	<a data-toggle="collapse" aria-expanded="true" aria-controls="accordion-1 .item-#{loopStatus.index + 1}" href="#accordion-1 .item-#{loopStatus.index + 1}">#{event.title}</a>
+			                                    </h5>
+			                                </div>
+			                                
+			                                <div class="collapse #{(loopStatus.index + 1) == 1 ? 'show ' : ''}item-#{loopStatus.index + 1}" role="tabpanel" data-parent="#accordion-1">
+			                                
+			                                    <div class="card-body">
+			                                    
+				                                    <c:forEach items="#{event.infos}" var="info" varStatus="loopStatus1">
+				                      
+														<div>
+				                                            <ul class="list-inline">
+				                                                <li class="list-inline-item"><i class="fa fa-map-marker"></i> #{info.getPlace()}</li>
+				                                                <li class="list-inline-item"><i class="fa fa-calendar"></i> #{info.getStartDateDay()} #{info.getStartDateMonth()}</li>
+				                                                <li class="list-inline-item"><i class="fa fa-clock-o"></i>#{info.getStartDateHours()} - #{info.getEndDateHours()}</li>
+				                                            </ul>
+			                                               <h:form>
+									                            <h:button class="btn btn-primary rect-border" a:data-bs-hover-animate="pulse" value="See event" outcome="event">
+									                      	      	<f:param name="id" value="#{event.getId()}" />
+									                            </h:button>
+								                           </h:form>
+			                                            </div>
+							                        
+						                            </c:forEach>
+			                                        
+			                                    </div>
+			                                </div>
+			                            </div>
+               			              	
+		                      		</c:forEach> 
+		                      		
+		                      		<c:if test="#{empty user.getEvents()}">
+		                      			<h2 class="text-center" contenteditable="true">You don't have any events joined, try to create or dicover one!!!<br></br><br></br></h2>
+		                      		</c:if>
+		                      		
+		                             <div class="row text-center" style="margin-top: 30px;">
+									    <div class="col">
+									    	<h:link class="btn btn-primary"> <i class="fa fa-plus"></i> Create Event</h:link>
+								    	</div>
+									    <div class="col">
+									    	<h:link class="btn btn-primary"  outcome="events"><i class="fa fa-search"></i> Discover Events</h:link>
+									    </div>
+									</div>
+									
+		                        </div>
+		                    </div>
+	               		</h:panelGroup>
+	               	</h:panelGroup>
+	               	
+	      	     	<h:panelGroup id="projects" >
+	         			<h:panelGroup rendered="#{ userBean.rendered == 'projects'}">
+		                    <div class="content">
+		                        <h1 class="display-4 text-center" style="margin-bottom: 30px;">Projects</h1>
+		                        <div role="tablist" id="accordion-1">
+		                            <div class="card">
+		                                <div class="card-header" role="tab">
+		                                    <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="true" aria-controls="accordion-1 .item-1" href="#accordion-1 .item-1">Projects title</a></h5>
+		                                </div>
+		                                <div class="collapse show item-1" role="tabpanel" data-parent="#accordion-1">
+		                                    <div class="card-body">
+		                                        <div>
+		                                            <ul class="list-inline">
+		                                                <li class="list-inline-item"><i class="fa fa-map-marker"></i> Avenida das forças armadas (ISCTE-IUL)</li>
+		                                                <li class="list-inline-item"><i class="fa fa-calendar"></i> 03/07/2020</li>
+		                                                <li class="list-inline-item"><i class="fa fa-clock-o"></i> 20: 30 - 00:30</li>
+		                                            </ul><button class="btn btn-primary" type="button">See event</button></div>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                            <div class="card">
+		                                <div class="card-header" role="tab">
+		                                    <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-2" href="#accordion-1 .item-2">Accordion Item</a></h5>
+		                                </div>
+		                                <div class="collapse item-2" role="tabpanel" data-parent="#accordion-1">
+		                                    <div class="card-body">
+		                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                            <div class="card">
+		                                <div class="card-header" role="tab">
+		                                    <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-3" href="#accordion-1 .item-3">Accordion Item</a></h5>
+		                                </div>
+		                                <div class="collapse item-3" role="tabpanel" data-parent="#accordion-1">
+		                                    <div class="card-body">
+		                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                        </div>
+		                    </div>
+	               		</h:panelGroup>
+	               	</h:panelGroup>
+	               	
+	      	     	<h:panelGroup id="research" >
+	         			<h:panelGroup rendered="#{ userBean.rendered == 'research'}">
+		                    <div class="content">
+		                        <h1 class="display-4 text-center" style="margin-bottom: 30px;">Research</h1>
+		                        <div role="tablist" id="accordion-1">
+		                            <div class="card">
+		                                <div class="card-header" role="tab">
+		                                    <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="true" aria-controls="accordion-1 .item-1" href="#accordion-1 .item-1">Event title</a></h5>
+		                                </div>
+		                                <div class="collapse show item-1" role="tabpanel" data-parent="#accordion-1">
+		                                    <div class="card-body">
+		                                        <div>
+		                                            <ul class="list-inline">
+		                                                <li class="list-inline-item"><i class="fa fa-map-marker"></i> Avenida das forças armadas (ISCTE-IUL)</li>
+		                                                <li class="list-inline-item"><i class="fa fa-calendar"></i> 03/07/2020</li>
+		                                                <li class="list-inline-item"><i class="fa fa-clock-o"></i> 20: 30 - 00:30</li>
+		                                            </ul><button class="btn btn-primary" type="button">See event</button></div>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                            <div class="card">
+		                                <div class="card-header" role="tab">
+		                                    <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-2" href="#accordion-1 .item-2">Accordion Item</a></h5>
+		                                </div>
+		                                <div class="collapse item-2" role="tabpanel" data-parent="#accordion-1">
+		                                    <div class="card-body">
+		                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                            <div class="card">
+		                                <div class="card-header" role="tab">
+		                                    <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-3" href="#accordion-1 .item-3">Accordion Item</a></h5>
+		                                </div>
+		                                <div class="collapse item-3" role="tabpanel" data-parent="#accordion-1">
+		                                    <div class="card-body">
+		                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                        </div>
+		                    </div>
+	               		</h:panelGroup>
+	               	</h:panelGroup>
+	               	
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	    
+	</c:if>
+		
+	<c:if test="${sessionScope.user == null}">
+		#{userBean.redirectToLogin()}
+	</c:if>
+		
 	</ui:define>
 </ui:composition>

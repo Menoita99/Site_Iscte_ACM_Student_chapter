@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<h:html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
@@ -39,14 +39,14 @@
 	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.css"/>
         
-
+		<ui:insert name="headContent"></ui:insert>
 		<!-- Scripts -->	
 			
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
   		<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.js"></script>
 
-		<ui:insert name="headContent"></ui:insert>
+		
 		
 	</f:facet>
 </h:head>
@@ -108,7 +108,18 @@
 								</h:link>
 								
 								<div class="dropdown-content"> <!-- Drop down content -->
-									<h:link outcome="user">Definitions</h:link	>
+									<h:link outcome="user" value="Definitions">
+										<f:param name="rendered" value="definitions" />
+									</h:link>
+									<h:link outcome="user" value="Events">
+										<f:param name="rendered" value="events" />
+									</h:link>
+										<h:link outcome="user" value="Projects">
+										<f:param name="rendered" value="projects" />
+									</h:link>
+										<h:link outcome="user" value="Research">
+										<f:param name="rendered" value="research" />
+									</h:link>
 									<h:form>
 										<h:commandLink action="#{loginBean.logout()}" value="Log Out"/>
 									</h:form>
@@ -189,4 +200,4 @@
 	
 </h:body>
 
-</html>
+</h:html>

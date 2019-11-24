@@ -22,6 +22,9 @@ public class EventBean implements Serializable{
 
 	private String errorMessage;
 
+	
+	
+	
 
 	/**
 	 * @return return the event there is in request map

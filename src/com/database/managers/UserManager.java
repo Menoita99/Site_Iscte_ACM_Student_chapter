@@ -29,7 +29,12 @@ public class UserManager {
 
 	/**
 	 * Creates a UserContainer given:
-	 * @param email,@param password, @param fristName, @param lastName, @param username
+	 * 
+	 * @param email
+	 * @param password
+	 * @param fristName
+	 * @param lastName
+	 * @param username
 	 * 
 	 * if user already exits it return null
 	 */
@@ -68,7 +73,7 @@ public class UserManager {
 	 * if user already exits it return null
 	 */
 	public static User createUser(UserContainer uc,String password) {
-		return createUser(uc.getEmail(),password,uc.getFristName(),uc.getLastName(),uc.getUsername());
+		return createUser(uc.getEmail(),password,uc.getFirstName(),uc.getLastName(),uc.getUsername());
 	}
 
 	
@@ -79,8 +84,6 @@ public class UserManager {
 	/**
 	 *if login was successful it will return the user instance.
 	 *Otherwise returns null 
-	 *Query: "SELECT u FROM User u WHERE u.email = '"+email+"' "+
-	         " and u.password = '"+password+"' ", User
 	 */
 	public static User emailLogin(String email, String password ) {
 		List<User> results = JpaUtil.executeQuery("SELECT u FROM User u WHERE u.email = '"+email+"' "+
@@ -101,8 +104,6 @@ public class UserManager {
 	/**
 	 *if login was successful it will return the user instance.
 	 *Otherwise returns null 
-	 *Query: "SELECT u FROM User u WHERE u.username = '"+username+"' "+
-	 		 " and u.password = '"+password+"' ", User.class);
 	 */
 	public static User usernameLogin(String username, String password ) {
 		User user = JpaUtil.executeQueryAndGetSingle("SELECT u FROM User u WHERE u.username = '"+username+"' "+
@@ -139,7 +140,6 @@ public class UserManager {
 	/**
 	 * If there isn't an user with the given activationKey it returns null
 	 * otherwise returns the user instance
-	 * JPQL expression : "SELECT u FROM User u WHERE u.activationKey = 'activationKey' " , String
 	 */
 	public static User getUserByActivationKey(String activationKey) {
 		List<User> results = JpaUtil.executeQuery("SELECT u FROM User u WHERE u.activationKey = "
@@ -155,7 +155,6 @@ public class UserManager {
 	/**
 	 * If there isn't an user with the given username it returns null
 	 * otherwise returns the user instance
-	 * JPQL expression : "SELECT u FROM User u WHERE u.username = 'username' " , String
 	 */
 	public static User getUserByUsername(String username) {
 		EntityManager manager = JpaUtil.getEntityManager();					//get's manager instance
@@ -176,7 +175,6 @@ public class UserManager {
 	/**
 	 * If there isn't an user with the given email it returns null
 	 * otherwise returns the user instance
-	 * JPQL expression : "SELECT u FROM User u WHERE u.email = 'email' " , String
 	 */
 	public static User getUserByEmail(String email) {
 		List<User> results = JpaUtil.executeQuery("SELECT u FROM User u WHERE u.email = "
@@ -225,17 +223,8 @@ public class UserManager {
 	 * @param user that must be updated
 	 */
 	private static void updateLastLog(User user) {
-		EntityManager manager = JpaUtil.getEntityManager();	
-		
-		manager.getTransaction().begin();
-		
 		user.setLast_log(LocalDateTime.now().withNano(0));
-		
-		manager.merge(user);
-
-		manager.getTransaction().commit();
-
-		manager.close();
+		JpaUtil.mergeEntity(user);
 	}
 
 	

@@ -1,0 +1,99 @@
+<ui:composition template="base.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="headContent">
+		<h:outputStylesheet library="css" name="perfil.css" />
+	</ui:define>
+
+
+	<ui:define name="content">
+
+    <div class="container">
+        <section>
+            <div id="landing-section">
+                <h1 class="display-4" id="username">Joana Mascarenhas</h1>
+                <p class="lead text-right" style="padding-right: 50px;">ACM Member</p>
+            </div>
+            <div class="user-image" style="margin-top: -100px;margin-left: 50px;">
+            	<h:graphicImage value="/resources/files/users/brooke-cagle-NoRsyXmHGpI-unsplash.jpg" />
+           	</div>
+        </section>
+        <section style="margin-top: 60px;">
+            <h1 class="display-4 text-center">Events</h1>
+            <div role="tablist" id="accordion-1">
+                <div class="card">
+                    <div class="card-header" role="tab">
+                        <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-1" href="#accordion-1 .item-1">Acm event</a></h5>
+                    </div>
+                    <div class="collapse item-1" role="tabpanel" data-parent="#accordion-1">
+                        <div class="card-body">
+                            <div>
+                                <div class="row">
+                                    <div class="col-xl-4">
+                                        <div class="image-conatiner"><img src="assets/img/ACM_logo_icon.png"/></div>
+                                    </div>
+                                    <div class="col list-col">
+                                        <ul class="list-unstyled" style="font-size: 18px;color: rgba(33,37,41,0.83);line-height: 30px;">
+                                            <li> <i class="fa fa-map-marker"></i> Avenida das forças armadas (ISCTE-IUL)<br></br></li>
+                                            <li> <i class="fa fa-calendar"></i>  15 DEC  <i class="fa fa-clock-o"></i> 17:10 - 18:10<br></br></li>
+                                        </ul><button class="btn btn-primary" type="button">See event</button></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" role="tab">
+                        <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-2" href="#accordion-1 .item-2">Another event</a></h5>
+                    </div>
+                    <div class="collapse item-2" role="tabpanel" data-parent="#accordion-1">
+                        <div class="card-body">
+                            <div>
+                                <div class="row">
+                                    <div class="col-xl-4">
+                                        <div class="image-conatiner"><img src="assets/img/meeting.jpg"/></div>
+                                    </div>
+                                    <div class="col list-col">
+                                        <ul class="list-unstyled" style="font-size: 18px;color: rgba(33,37,41,0.83);line-height: 30px;">
+                                            <li> <i class="fa fa-map-marker"></i> Avenida das forças armadas (ISCTE-IUL)<br></br></li>
+                                            <li> <i class="fa fa-calendar"></i>  15 DEC  <i class="fa fa-clock-o"></i> 17:10 - 18:10<br></br></li>
+                                        </ul><button class="btn btn-primary" type="button">See event</button></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" role="tab">
+                        <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="true" aria-controls="accordion-1 .item-3" href="#accordion-1 .item-3">Accordion Item</a></h5>
+                    </div>
+                    <div class="collapse show item-3" role="tabpanel" data-parent="#accordion-1">
+                        <div class="card-body">
+                            <div>
+                                <div class="row">
+                                    <div class="col-xl-4">
+                                        <div class="image-conatiner"><img src="assets/img/star-sky.jpg"/></div>
+                                    </div>
+                                    <div class="col list-col">
+                                        <ul class="list-unstyled" style="font-size: 18px;color: rgba(33,37,41,0.83);line-height: 30px;">
+                                            <li> <i class="fa fa-map-marker"></i> Avenida das forças armadas (ISCTE-IUL)<br></br></li>
+                                            <li> <i class="fa fa-calendar"></i>  15 DEC  <i class="fa fa-clock-o"></i> 17:10 - 18:10<br></br></li>
+                                        </ul><button class="btn btn-primary" type="button">See event</button></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+	</ui:define>
+</ui:composition>

@@ -157,10 +157,11 @@ public class EventManager {
 	 */
 	public static EventParticipant removeParticipant(int eventId, int userId) {
 		EventParticipant ep = null;
-		List<EventParticipant> results = JpaUtil.executeQuery("", EventParticipant.class);
+		List<EventParticipant> results = JpaUtil.executeQuery("Select ep from EventParticipant ep where ep.user.id = "+userId+" and ep.event.id = "+eventId, EventParticipant.class);
 		
 		if(!results.isEmpty()) {
 		
+			ep = results.get(0);
 			User user = UserManager.getUserById(userId);
 			User manager = getEventManager(eventId);
 			
@@ -337,7 +338,7 @@ public class EventManager {
 	 */
 	public static boolean isParticipant(int eventID, int userID) {
 		List<EventParticipant> result = JpaUtil.executeQuery( "Select p FROM EventParticipant p Where p.event.id = "+eventID+" and p.user.id = "+ userID
-				,EventParticipant.class);														//get results
+				,EventParticipant.class);														
 		return !result.isEmpty();
 	}
 
@@ -357,13 +358,14 @@ public class EventManager {
 
 
 
-
-
-	//USED TO DEBUG
-	public static void main(String[] args) {
-		User u = UserManager.getUserById(1);
-		JpaUtil.deleteEntity(u);
+	/**
+	 * 
+	 * @param userId user id
+	 * @return returns a list with all the events that a given user is in
+	 */
+	public static List<Event> getParticipations(int userId) {
+		return JpaUtil.executeQuery("SELECT DISTINCT e FROM Event e, EventParticipant ep "
+				+ "WHERE e.id = ep.event.id AND ep.user.id ="+ userId, Event.class);
 	}
-
 
 }
