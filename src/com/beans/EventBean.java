@@ -17,6 +17,7 @@ public class EventBean implements Serializable{
 
 	private static final long serialVersionUID = 1L; 
 
+
 	private EventContainer event = null;
 
 	private String errorMessage;
@@ -105,7 +106,7 @@ public class EventBean implements Serializable{
 
 
 	/**
-	 * @return return false if user isn't logged or if user isn't a participant of this event
+	 * @return return false is user isn't logged or if user isn't a participant of this event
 	 * 			otherwise returns true.
 	 */
 	public boolean hasJoin() {

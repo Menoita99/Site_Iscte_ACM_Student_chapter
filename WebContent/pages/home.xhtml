@@ -56,30 +56,16 @@
         </div>
     </section>
     <div class="newsletter-subscribe" style="background-color: rgb(255,255,255);">
+        <section></section>
         <div class="container" data-aos="fade-left" data-aos-duration="1000" data-aos-once="true">
             <div class="intro">
                 <h2 class="text-center">Subscribe for our Newsletter</h2>
                 <p class="text-center">Nunc luctus in metus eget fringilla. Aliquam sed justo ligula. Vestibulum nibh erat, pellentesque ut laoreet vitae. </p>
             </div>
-            
-            <h:outputText class="error-label-md text-center" value="#{homeBean.errorMessage}"/>
-      		<h:outputText class="info-label-md text-center" value="#{homeBean.infoMessage}"/>
-            <h:message for="email" class="error-label-md text-center" />
-            
-            <h:form class="form-inline">
-                <div class="form-group">
-                
-                	<h:inputText class="form-control" type="email" a:placeholder="Your email" required="true" value="#{homeBean.email}" style="background-color: rgb(240,241,245);"
-								requiredMessage="Email is required" validatorMessage="Invalid email" id="email"  maxlength="70" minlength="6">
-						<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>		
-					</h:inputText>
-					
-            	</div>
-                <div class="form-group">
-                	<h:commandButton class="btn btn-primary" type="submit" value="Subscribe" action="#{homeBean.submitEmail()}"/>
-                </div>
-            </h:form>
-           
+            <form class="form-inline" method="post">
+                <div class="form-group"><input class="form-control" type="email" name="email" placeholder="Your Email" style="background-color: rgb(240,241,245);"/></div>
+                <div class="form-group"><button class="btn btn-primary" type="submit">Subscribe </button></div>
+            </form>
         </div>
     </div>
 	

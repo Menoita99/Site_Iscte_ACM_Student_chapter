@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Random;
 
 import com.database.entities.Event;
-import com.database.entities.NewsLetter;
 import com.database.entities.User;
 
 public class CreatorManager {
@@ -27,7 +26,6 @@ public class CreatorManager {
 	 * Generates Users and events with complete status
 	 */
 	public static void main(String[] args) {
-		
 		for (int i = 0; i < nUsers; i++) {
 			String email = generateRandomPhrases(1)+"@"+generateRandomPhrases(1)+"."+generateRandomPhrases(1);
 			User user = UserManager.createUser(email, "123456789", generateRandomPhrases(1),generateRandomPhrases(1), generateRandomPhrases(1));
@@ -71,13 +69,6 @@ public class CreatorManager {
 
 		}
 
-		
-		for (int i = 0; i < 10; i++) {
-			NewsLetter n = new NewsLetter();
-			n.setEmail(generateRandomPhrases(1)+"@"+generateRandomPhrases(1)+"."+generateRandomPhrases(1));
-			JpaUtil.createEntity(n);
-		}
-		
 	}
 
 

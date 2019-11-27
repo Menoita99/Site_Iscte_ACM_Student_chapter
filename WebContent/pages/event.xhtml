@@ -142,11 +142,8 @@
 			                        <c:if test="#{empty staff.imagePath}">
 			                        	<h:graphicImage value="/resources/files/default/ACM_ICON.png"/>
 			                       	</c:if> 
-			                       	<h:form>
-			                       		<h:link class="userNameLink"  value="#{staff.username}" outcome="perfil">
-			                       			<f:param value="#{staff.id}" name="userID"/>
-			                       		</h:link>
-			                       	</h:form>
+			                       	
+			                       	<h5 style="margin: 5px auto ;padding: auto">#{staff.username}</h5>
 			                    </div>
 			                </li>
 			                
@@ -161,9 +158,7 @@
 		    
 	    <c:if test="#{empty event}">
 	    
-	    	<h1 class="display-4" style="margin:20px; text-align: center">
-    			<i class="fa fa-close"></i> Event not found 
-   			</h1>
+	    	<h1 class="display-4" style="margin:20px"><center><i class="fa fa-close"></i> Event not found </center></h1>
 	    
 	    </c:if>
 

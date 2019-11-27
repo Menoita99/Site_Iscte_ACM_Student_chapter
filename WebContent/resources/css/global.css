@@ -15,30 +15,9 @@
 }
 
 
-.info-label-md{
-	font-size:18px;
-	display: block;
-}
-
-.info-label-sm{
-	font-size:12px;
-	display: block;
-}
-
-
-.info-label-bg{
-	font-size:24px;
-	display: block;
-}
-
-
 
 p {
   word-wrap: break-word;
-}
-
-section {
-  background-color: rgba(226,229,234,0.65);
 }
 
 

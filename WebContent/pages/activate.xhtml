@@ -19,26 +19,24 @@
 			#{activateBean.activateUser(param['key'])}
 		</c:if>
 		
-	    <section style="padding-top: 50px;padding-bottom: 50px;padding-right: 20px;padding-left: 20px;">
-	        <div class="container">
-	            <div class="activate-container">
-	                <h1 class="display-1" style="margin-bottom: 50px;">Account was not verified</h1>
-	                 <h:outputText value="#{activationBean.errorMessage}" class="error-label-md"/>
-	                <p style="line-height: 29px;font-size: 23px;letter-spacing: 0px;">To resend verification email please fill in the form<br></br></p>
-	               <h:form>
-		                <div class="form-group"> 
-		                    <div class="input-group">
-		                        <div class="input-group-prepend"></div>
-		                        	<h:inputText class="form-control" type="text" a:placeholder="email" value="#{activateBean.email}"/>
-		                        <div class="input-group-append">
-		                        	<h:commandButton class="btn btn-primary btn-activate" value="Resend Email" action="#{activateBean.resendEmail()}"/>
-		                       	</div>
-		                    </div>
-		                </div>
-		            </h:form>
-	            </div>
-	        </div>
-    	</section>
+		<div class="container">
+        <div class="jumbotron jumbotron-activate" style="background-color: #3bb6c6; padding: 50px">
+            <h1 class="display-1" style="margin-bottom: 50px;">Account was not verified</h1>
+            <h:outputText class="error-label-md	 center" value="#{activateBean.errorMessage}"/>
+            <p style="line-height: 29px;font-size: 23px;letter-spacing: 0px;">To resend verification email please fill in the form<br></br></p>
+            <h:form>
+                <div class="form-group"> 
+                    <div class="input-group">
+                        <div class="input-group-prepend"></div>
+                        	<h:inputText class="form-control" type="text" a:placeholder="email" value="#{activateBean.email}"/>
+                        <div class="input-group-append">
+                        	<h:commandButton class="btn btn-primary btn-activate" value="Resend Email" action="#{activateBean.resendEmail()}"/>
+                       	</div>
+                    </div>
+                </div>
+            </h:form>
+        </div>
+    </div>
 		
 	</ui:define>
 </ui:composition>

@@ -34,26 +34,6 @@ public class UserBean {
 	
 	
 	/**
-	 * If there is an valid userID in request map it returns the correspondent
-	 * UserContainer object otherwise returns null
-	 */
-	public UserContainer getPerfilUser() {
-		UserContainer perfil = null;
-		String id = Session.getInstance().getRequestMap().get("userID");
-		if(id != null && !id.isBlank()) {
-			User u = UserManager.getUserById(Integer.parseInt(id));
-			if(u != null)
-				perfil = new UserContainer(u);
-		}
-				
-		return perfil;
-	}
-	
-	
-	
-	
-	
-	/**
 	 * Saves changes and commits them to data base.
 	 */
 	public String saveChanges() {
@@ -92,8 +72,6 @@ public class UserBean {
 			
 			user = new UserContainer(userUpdate);
 			Session.getInstance().setUser(user);					//commits changes
-			
-			clearForm();
 		}else {
 			setDefinitionsErrorMessage("Password is incorrect");
 		}
@@ -106,27 +84,7 @@ public class UserBean {
 	
 	
 	
-	/**
-	 * This method cleans the values that remain in the user form
-	 */
-	private void clearForm() {
-		this.email = null;
-		this.cellPhone = null;
-		this.course = null;
-		this.firstName = null;
-		this.lastName = null;;
-		this.newPassword = null;
-		this.password = null;
-		this.username = null;
-	}
-
-
-
-
-
-
-
-
+	
 	/**
 	 * Redirects to login page
 	 */
@@ -340,4 +298,13 @@ public class UserBean {
 		Session.getInstance().setLastPage("/user");
 		this.rendered = rendered;
 	}
+
+
+
+
+
+
+
+
+
 }

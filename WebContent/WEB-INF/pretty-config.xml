@@ -52,7 +52,7 @@
 		<view-id value="/pages/event.xhtml" />
 	</url-mapping>
 
-	<url-mapping id="activate">
+	<url-mapping id="event">
 		<pattern value="/activate" />
 		<view-id value="/pages/activate.xhtml" />
 	</url-mapping>
@@ -65,16 +65,6 @@
 	<url-mapping id="user">
 		<pattern value="/user" />
 		<view-id value="/pages/user.xhtml" />
-	</url-mapping>
-	
-	<url-mapping id="perfil">
-		<pattern value="/user/#{userID}" />
-		<view-id value="/pages/perfil.xhtml" />
-	</url-mapping>
-	
-	<url-mapping id="createEvent">
-		<pattern value="/createEvent" />
-		<view-id value="/pages/createEvent.xhtml" />
 	</url-mapping>
 
 </pretty-config>
