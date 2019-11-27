@@ -21,11 +21,11 @@
            	</div>
             <div class="form-group">
             	<h:inputText class="form-control" a:placeholder="Email" required="true" requiredMessage="Email must be given" id="email" value="#{becameMemberBean.email}"/>
-           		<h:message for="email" class="error-label-bg" /> 
+           		<h:message for="email" class="error-label-sm" /> 
             </div>
             <div class="form-group">
             	<h:inputTextarea class="form-control" a:placeholder="Tell us a little bit about yourself" required="true" requiredMessage="You must write something about yourself" id="aboutYourself" value="#{becameMemberBean.aboutYourself}" rows="1"/>
-           		<h:message for="aboutYourself" class="error-label-bg" />
+           		<h:message for="aboutYourself" class="error-label-sm" />
             </div>
             <div class="form-group"><h:commandButton class="btn btn-primary" type="submit"  value="send" action="#{becameMemberBean.submit()}" />
             </div>
