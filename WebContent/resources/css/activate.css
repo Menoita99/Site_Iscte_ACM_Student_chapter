@@ -1,19 +1,30 @@
-.jumbotron-activate {
-  background-color: #3bb6c6;
-  color: white;
+.input-group {
+  max-width: 980px;
+}
+
+@media (max-width: 300px) {
+  .activate-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
+
+.activate-container {
+  padding: 0px;
 }
 
 
+
 .error-label-bg{
-	color: #909090;
+	color: #f35f63;
 }
 
 
 .error-label-md{
-	color: #909090;
+	color: #f35f63;
 	
 }
 
 .error-label-sm{
-	color: #909090;
+	color: #f35f63;
 }

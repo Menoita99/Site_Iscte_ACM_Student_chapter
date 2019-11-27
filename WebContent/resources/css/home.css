@@ -179,3 +179,30 @@
   background-color: #7db0d3;
   border-color: transparent;
 }
+
+.error-label-md{
+	color: rgba(251,89,89,0.76);
+}
+
+.error-label-sm{
+	color: rgba(251,89,89,0.76);
+}
+
+
+.error-label-bg{
+	color: rgba(251,89,89,0.76);
+}
+
+
+.info-label-md{
+	color: rgba(111,247,78,0.76);
+}
+
+.info-label-sm{
+	color: rgba(111,247,78,0.76);
+}
+
+
+.info-label-bg{
+	color: rgba(111,247,78,0.76);
+}

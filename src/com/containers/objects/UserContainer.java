@@ -27,7 +27,8 @@ public class UserContainer implements Serializable {
 	private String course;
 	private String cellPhone;
 	private String username;
-
+	private boolean isMember;
+	private boolean isAdmin;
 	
 	
 	
@@ -49,6 +50,8 @@ public class UserContainer implements Serializable {
 		this.course = user.getCourse();
 		this.cellPhone = user.getCellPhone();
 		this.username = user.getUsername();
+		this.isMember = user.isMember();
+		this.isAdmin = user.isAdmin();
 	}
 
 	
@@ -64,6 +67,8 @@ public class UserContainer implements Serializable {
 		this.course = user.getCourse();
 		this.cellPhone = user.getCellPhone();
 		this.username = user.getUsername();
+		this.isMember = user.isMember();
+		this.isAdmin = user.isAdmin();
 	}
 
 	
@@ -188,6 +193,50 @@ public class UserContainer implements Serializable {
 	
 	
 	
+	/**
+	 * @return the isMember
+	 */
+	public boolean isMember() {
+		return isMember;
+	}
+
+
+
+
+
+	/**
+	 * @return the isAdmin
+	 */
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+
+
+
+
+	/**
+	 * @param isAdmin the isAdmin to set
+	 */
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+
+
+
+
+	/**
+	 * @param isMember the isMember to set
+	 */
+	public void setMember(boolean isMember) {
+		this.isMember = isMember;
+	}
+
+
+
+
+
 	/**
 	 * @param id the id to set
 	 */
