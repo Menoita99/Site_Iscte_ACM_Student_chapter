@@ -17,7 +17,6 @@ public class EventBean implements Serializable{
 
 	private static final long serialVersionUID = 1L; 
 
-
 	private EventContainer event = null;
 
 	private String errorMessage;
@@ -32,6 +31,10 @@ public class EventBean implements Serializable{
 	 */
 	public EventContainer getEvent() {
 		String id = Session.getInstance().getRequestMap().get("id");
+		
+		if(id == null)
+			id = "" + Session.getInstance().getSessionAtribute("eventID");	
+		
 		try {
 			
 			if(id != null && !id.isBlank() && (event == null || Integer.parseInt(id) != event.getId()))
@@ -61,7 +64,11 @@ public class EventBean implements Serializable{
 	public String join() {
 		UserContainer user = Session.getInstance().getUser();
 
-		if(user == null) return "login";
+		if(user == null) {
+			Session.getInstance().setLastPage("event");
+			Session.getInstance().setSessionAtribute("eventID", event.getId());
+			return "login";
+		}
 
 
 		if(!hasJoin()) {
@@ -106,7 +113,7 @@ public class EventBean implements Serializable{
 
 
 	/**
-	 * @return return false is user isn't logged or if user isn't a participant of this event
+	 * @return return false if user isn't logged or if user isn't a participant of this event
 	 * 			otherwise returns true.
 	 */
 	public boolean hasJoin() {

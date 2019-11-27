@@ -77,9 +77,8 @@ public class EmailSender {
 				message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(receiver));
 				message.setSubject(subject);
 				message.setText(content);
-				System.out.println("oi");
+
 				Transport.send(message);
-				System.out.println("boi");
 			}catch(MessagingException e ) {
 				e.printStackTrace();
 			}
@@ -102,13 +101,6 @@ public class EmailSender {
 		String subject = "Account Activation Email";
 		String content = "Please to activate your account click this link = "+activationLink +"?key="+activationKey;
 		sendTextEmail(email, subject, content);
-	}
-	
-	
-	public static void main(String[] args) {
-		for (int i = 0; i < 10; i++) {
-			EmailSender.getInstance().sendTextEmail("paripac927@xmailweb.com","efvfv", "fbfbegfgg");
-		}
 	}
 }
 

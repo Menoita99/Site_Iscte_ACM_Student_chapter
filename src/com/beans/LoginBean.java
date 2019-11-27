@@ -44,7 +44,13 @@ public class LoginBean {
 				setError("");
 				Session.getInstance().setUser(new UserContainer(user));		// stores user in session
 
-				return "home";												//Navigation rule the redirects user to home page
+				try {
+					String lastPage = Session.getInstance().getLastPage();
+					return lastPage != null && !lastPage.isBlank() ? lastPage : "home";		//redirects user to home or last page
+				}finally {
+					Session.getInstance().setLastPage(null);
+				}
+				
 			}else if(user != null && !user.isActive()) {					//checks if user is active
 				return "activate";
 			}else 	
