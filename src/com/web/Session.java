@@ -171,5 +171,14 @@ public class Session {
 		}
 	}
 
-	
+
+
+
+
+	/**
+	 *  Set's the session attribute lastPage
+	 */
+	public void setLastPage(String lastPage) {
+		setSessionAtribute("lastPage", lastPage);
+	}
 }

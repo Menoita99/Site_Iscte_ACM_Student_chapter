@@ -1,0 +1,67 @@
+#accordion-1 .collapse {
+  background-color: rgb(208,208,208);
+}
+
+.col.list-col {
+  margin: auto 0;
+}
+
+.image-conatiner img {
+  max-height: 250px;
+  width: auto;
+  max-width: 320px;
+  border-radius: 5px;
+}
+
+.image-container {
+  margin: auto 0;
+  text-align: center;
+}
+
+#accordion-1 {
+  padding: 20px;
+}
+
+#accordion-1 .card {
+  border: none;
+  border-radius: 0px;
+}
+
+#accordion-1 .card .card-header {
+  text-align: center;
+}
+
+#accordion-1 .card .card-header a {
+  color: grey;
+}
+
+section {
+  background-color: white;
+}
+
+#landing-section p {
+  color: white;
+}
+
+#landing-section {
+  background: linear-gradient(125deg, #00b2ff, #77f7b9);
+  height: 200px;
+}
+
+.user-image img {
+  height: 150px;
+  width: auto;
+  border-radius: 20px;
+}
+
+#username {
+  color: white;
+  text-align: right;
+  padding-top: 20px;
+  padding-right: 50px;
+}
+
+.user-image {
+  margin-top: 100px;
+}
+

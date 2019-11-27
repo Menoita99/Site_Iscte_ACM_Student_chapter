@@ -47,7 +47,7 @@ public class RegistrationBean {
 			setErrorMessage("Username already exists");
 			return "";
 			
-		}else if(email.isBlank() || UserManager.getUserByEmail(email) != null){				//check email
+		}else if(email.isBlank() || UserManager.getUserByEmail(email) != null){					//check email
 			setErrorMessage("Email already registed");
 			return"";
 

@@ -40,7 +40,9 @@ public class JpaUtil {
 
 
 
-
+	/**
+	 * Closes entity manager factory
+	 */
 	public static void close(){
 		entityFactory.close();
 	}
@@ -153,8 +155,7 @@ public class JpaUtil {
 		EntityManager manager = getEntityManager();	
 		try {
 			manager.getTransaction().begin();					
-			manager.persist(entity);
-			manager.flush();
+			manager.persist(manager.contains(entity) ? entity : manager.merge(entity));
 			manager.getTransaction().commit();			
 		}finally {
 			manager.close();
@@ -170,11 +171,11 @@ public class JpaUtil {
 	 * Deletes the given entity from database
 	 * @param entity entity
 	 */
-	public void deleteEntity(Object entity) {
+	public static void deleteEntity(Object entity) {
 		EntityManager manager = getEntityManager();	
 		try {
-			manager.getTransaction().begin();					
-			manager.remove(entity);	
+			manager.getTransaction().begin();			
+			manager.remove(manager.contains(entity) ? entity : manager.merge(entity));	
 			manager.getTransaction().commit();			
 		}finally {
 			manager.close();
@@ -188,15 +189,14 @@ public class JpaUtil {
 
 	
 	/**
-	 * 
-	 * @param ep
+	 * Used to commit changes
+	 * @param entity entity
 	 */
 	public static void mergeEntity(Object entity) {
 		EntityManager manager = JpaUtil.getEntityManager();	
 		try {
 			manager.getTransaction().begin();					
 			manager.merge(entity);
-			manager.flush();
 			manager.getTransaction().commit();			
 		}finally {
 			manager.close();

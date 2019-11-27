@@ -93,7 +93,6 @@ public class EmailSender {
 
 
 	/**
-	 * 
 	 * Sends the Activation email 
 	 * 
 	 * @param email

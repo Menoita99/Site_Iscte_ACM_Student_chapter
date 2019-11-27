@@ -18,7 +18,6 @@ import com.database.managers.EventManager;
 import com.database.managers.JpaUtil;
 
 
-
 @ManagedBean
 @ViewScoped
 public class EventsBean implements Serializable{ 
@@ -42,7 +41,8 @@ public class EventsBean implements Serializable{
 
 	private String viewID = CreatorManager.generateRandomString(5);
 
-
+	//TODO SHORT BY TIME
+	//TODO RESOLVE NULL POINTER ERROR ( WTF IS THIS SHIT )
 
 
 

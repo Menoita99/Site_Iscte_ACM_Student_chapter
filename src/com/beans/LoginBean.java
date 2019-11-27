@@ -22,7 +22,7 @@ import javax.faces.bean.RequestScoped;
 @RequestScoped
 public class LoginBean {
 
-	private String email;
+	private String emailOrUsename;
 	private String password;
 	private String error;				
 
@@ -34,25 +34,26 @@ public class LoginBean {
 	 * otherwise displays an error message
 	 */
 	public String login() {
-		if(email != null && password!=null) {
+		if(emailOrUsename != null && password!=null) {
 			
-			User user = UserManager.emailLogin(email, password);
-			UserContainer userContainer = UserContainer.convertToUserContainer(user);
+			User user = UserManager.emailLogin(emailOrUsename, password);
+			if(user ==  null)
+				user = UserManager.usernameLogin(emailOrUsename, password);
 
-			if( userContainer != null && user.isActive()) {			
+			if( user!= null && user.isActive()) {			
 				setError("");
-				Session.getInstance().setUser(userContainer);		// stores user in session
+				Session.getInstance().setUser(new UserContainer(user));		// stores user in session
 
-				return "home";										//Navigation rule the redirects user to home page
-			}else if(!user.isActive()) {							//checks if user is active
+				return "home";												//Navigation rule the redirects user to home page
+			}else if(user != null && !user.isActive()) {					//checks if user is active
 				return "activate";
 			}else 	
-				setError("Username or password are incorrect");		//Displays an error message on template
+				setError("Username or password are incorrect");				//Displays an error message on template
 		}else {
 			setError("Empty fields");
 		}
 
-		return "";													//Stays in the same page
+		return "";															//Stays in the same page
 	}
 
 
@@ -64,24 +65,53 @@ public class LoginBean {
 		return "home";		
 	}
 
-	public String getError() {
-		return error;	
+
+	/**
+	 * @return the emailOrUsename
+	 */
+	public String getEmailOrUsename() {
+		return emailOrUsename;
 	}
 
+
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+
+	/**
+	 * @return the error
+	 */
+	public String getError() {
+		return error;
+	}
+
+
+	/**
+	 * @param emailOrUsename the emailOrUsename to set
+	 */
+	public void setEmailOrUsename(String emailOrUsename) {
+		this.emailOrUsename = emailOrUsename;
+	}
+
+
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+	/**
+	 * @param error the error to set
+	 */
 	public void setError(String error) {
 		this.error = error;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
+
 }
