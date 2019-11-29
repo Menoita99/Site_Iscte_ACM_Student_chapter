@@ -41,6 +41,9 @@ public class Event implements Serializable {
 	@Column(length = 750, nullable = false)
 	private String description;
 	
+	@Column(length = 300)
+	private String requirements;
+	
 	@Column
 	@ElementCollection(targetClass=String.class)
 	@LazyCollection(LazyCollectionOption.FALSE)
@@ -60,7 +63,8 @@ public class Event implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private State state;
 	
-	
+	@Column()
+	private Double budget;
 	
 	
 	/**
@@ -149,6 +153,38 @@ public class Event implements Serializable {
 	}
 
 	/**
+	 * @return the requirements
+	 */
+	public String getRequirements() {
+		return requirements;
+	}
+
+
+	/**
+	 * @return the budget
+	 */
+	public Double getBudget() {
+		return budget;
+	}
+
+
+	/**
+	 * @param budget the budget to set
+	 */
+	public void setBudget(Double budget) {
+		this.budget = budget;
+	}
+
+
+	/**
+	 * @param requirements the requirements to set
+	 */
+	public void setRequirements(String requirements) {
+		this.requirements = requirements;
+	}
+
+
+	/**
 	 * @param id the id to set
 	 */
 	public void setId(int id) {
@@ -211,10 +247,13 @@ public class Event implements Serializable {
 		this.state = state;
 	}
 
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(description, id, imagePath, manager, state, tags, title, vacancies, views);
+		return Objects.hash(budget, description, id, imagePath, manager, requirements, state, tags, title, vacancies,
+				views);
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -223,16 +262,20 @@ public class Event implements Serializable {
 		if (!(obj instanceof Event))
 			return false;
 		Event other = (Event) obj;
-		return Objects.equals(description, other.description) && id == other.id
+		return Objects.equals(budget, other.budget) && Objects.equals(description, other.description) && id == other.id
 				&& Objects.equals(imagePath, other.imagePath) && Objects.equals(manager, other.manager)
-				&& state == other.state && Objects.equals(tags, other.tags) && Objects.equals(title, other.title)
+				&& Objects.equals(requirements, other.requirements) && state == other.state
+				&& Objects.equals(tags, other.tags) && Objects.equals(title, other.title)
 				&& vacancies == other.vacancies && views == other.views;
 	}
 
 
 	@Override
 	public String toString() {
-		return "Event [id=" + id + ", views=" + views + ", vacancies=" + vacancies + ", title=" + title + ", manager="
-				+ manager + ", tags=" + tags + ", state=" + state + "]";
+		return "Event [id=" + id + ", views=" + views + ", vacancies=" + vacancies + ", title=" + title
+				+ ", description=" + description + ", requirements=" + requirements + ", imagePath=" + imagePath
+				+ ", manager=" + manager + ", tags=" + tags + ", state=" + state + ", budget=" + budget + "]";
 	}
+
+
 }

@@ -1,7 +1,10 @@
 package com.database.entities;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Objects;
 
 import javax.persistence.*;
@@ -25,11 +28,13 @@ public class EventInfo implements Serializable {
 	@GeneratedValue
 	private int id;
 	
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false)
-	private LocalDateTime startDate;
+	private Date startDate;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false)
-	private LocalDateTime endDate;
+	private Date endDate;
 
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
@@ -44,11 +49,12 @@ public class EventInfo implements Serializable {
 	
 	
 	
+	
 	/**
 	 * @return return the day of startDate attribute
 	 */
 	public int getStartDateDay() {
-		return startDate.getDayOfMonth();
+		return getStartDate().getDayOfMonth();
 	}
 	
 	
@@ -61,7 +67,7 @@ public class EventInfo implements Serializable {
 	 * 		e.g: JANUARY -> JAN
 	 */
 	public String getStartDateMonth() {
-		return startDate.getMonth().toString().toUpperCase().substring(0, 3);
+		return getStartDate().getMonth().toString().toUpperCase().substring(0, 3);
 	}
 	
 	
@@ -76,7 +82,7 @@ public class EventInfo implements Serializable {
 	 * 	e.g-> 20:30 
 	 */
 	public String getStartDateHours() {
-		return startDate.getHour() + ":" + startDate.getMinute();
+		return getStartDate().getHour() + ":" + getStartDate().getMinute();
 	}
 	
 	
@@ -91,7 +97,7 @@ public class EventInfo implements Serializable {
 	 * 	e.g-> 20:30 
 	 */
 	public String getEndDateHours() {
-		return endDate.getHour() + ":" + endDate.getMinute();
+		return getEndDate().getHour() + ":" + getEndDate().getMinute();
 	}
 	
 	
@@ -111,14 +117,14 @@ public class EventInfo implements Serializable {
 	 * @return the startDate
 	 */
 	public LocalDateTime getStartDate() {
-		return startDate;
+		return Instant.ofEpochMilli(startDate.getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
 	}
 
 	/**
 	 * @return the endDate
 	 */
 	public LocalDateTime getEndDate() {
-		return endDate;
+		return Instant.ofEpochMilli(endDate.getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
 	}
 
 	/**
@@ -145,15 +151,15 @@ public class EventInfo implements Serializable {
 	/**
 	 * @param startDate the startDate to set
 	 */
-	public void setStartDate(LocalDateTime startDate) {
-		this.startDate = startDate;
+	public void setStartDate(LocalDateTime startLocalDateTime) {
+		this.startDate = Date.from(startLocalDateTime.atZone(ZoneId.systemDefault()).toInstant());
 	}
 
 	/**
 	 * @param endDate the endDate to set
 	 */
-	public void setEndDate(LocalDateTime endDate) {
-		this.endDate = endDate;
+	public void setEndDate(LocalDateTime endLocalDateTime) {
+		this.endDate = Date.from(endLocalDateTime.atZone(ZoneId.systemDefault()).toInstant());
 	}
 
 	/**

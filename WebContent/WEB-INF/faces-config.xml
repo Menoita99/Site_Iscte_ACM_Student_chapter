@@ -10,7 +10,7 @@
 
 		<navigation-case>
 			<from-outcome>user</from-outcome>
-			<to-view-id>pages/user.xhtml</to-view-id>
+			<to-view-id>/pages/user.xhtml</to-view-id>
 		</navigation-case>
 
 		<navigation-case>
@@ -62,31 +62,27 @@
 			<from-outcome>repository</from-outcome>
 			<to-view-id>/pages/repository.xhtml</to-view-id>
 		</navigation-case>
-		
+
 		<navigation-case>
 			<from-outcome>perfil</from-outcome>
 			<to-view-id>/pages/perfil.xhtml</to-view-id>
 		</navigation-case>
-		
+
 		<navigation-case>
 			<from-outcome>createEvent</from-outcome>
 			<to-view-id>/pages/createEvent.xhtml</to-view-id>
 		</navigation-case>
-		
+
+		<navigation-case>
+			<from-outcome>event</from-outcome>
+			<to-view-id>/pages/event.xhtml</to-view-id>
+		</navigation-case>
+
 		<navigation-case>
 			<from-outcome>becameMember</from-outcome>
 			<to-view-id>/pages/becameMember.xhtml</to-view-id>
 		</navigation-case>
 
-	</navigation-rule>
-
-	<navigation-rule>	<!-- Event navigation rule -->
-		<from-view-id>events.xhtml</from-view-id>
-		<navigation-case>
-			<from-outcome>event</from-outcome>
-			<to-view-id>pages/event.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
 	</navigation-rule>
 
 </faces-config>

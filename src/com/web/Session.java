@@ -102,9 +102,10 @@ public class Session {
 	
 	/**
 	 * Method used to get information stored on Session
+	 * if there isn't the requested object with the key given it returns null
 	 */
 	public Object getSessionAtribute(String key) {
-		return currentExternalContext().getSessionMap().get(key);
+		return currentExternalContext().getSessionMap().getOrDefault(key, null);
 	}
 	
 	
@@ -180,5 +181,16 @@ public class Session {
 	 */
 	public void setLastPage(String lastPage) {
 		setSessionAtribute("lastPage", lastPage);
+	}
+
+
+
+
+
+	/**
+	 *  Set's the session attribute lastPage
+	 */
+	public String getLastPage() {
+		return (String) getSessionAtribute("lastPage");
 	}
 }

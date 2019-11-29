@@ -76,5 +76,10 @@
 		<pattern value="/createEvent" />
 		<view-id value="/pages/createEvent.xhtml" />
 	</url-mapping>
+	
+	<url-mapping id="becameMember">
+		<pattern value="/becameMember" />
+		<view-id value="/pages/becameMember.xhtml" />
+	</url-mapping>
 
 </pretty-config>

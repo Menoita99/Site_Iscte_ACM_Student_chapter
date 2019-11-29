@@ -8,21 +8,21 @@
 	xmlns:o="http://omnifaces.org/ui"
 	xmlns:of="http://omnifaces.org/functions"
 	xmlns:p="http://primefaces.org/ui">
-	
+
 	<ui:define name="headContent">
 		<h:outputStylesheet library="css" name="user.css" />
 	</ui:define>
 
 	<ui:define name="content">
-	
+
 	<c:if test="${param['rendered'] != null}">
 		#{ userBean.setRendered(param['rendered'])}
 	</c:if>
-	
+
 	<c:if test="${sessionScope.user != null}">
-	
+
 		<c:set var="user" value="#{userBean.user}" />
-	
+
 		<div>
 	        <div class="container" style="margin-bottom: 50px;margin-top:20px;">
 	            <div class="row">
@@ -45,7 +45,7 @@
 		                            		<h:commandLink value="Definitions" action="#{ userBean.setRendered('definitions')}">
 		                            			<f:ajax execute="@form" render=":events :definitions :projects :research" />
 		                            		</h:commandLink>
-		                            	</center>	
+		                            	</center>
 	                            	</h:form>
 	                            </li>
 	                             <li class="list-group-item">
@@ -63,7 +63,7 @@
 		                            		<h:commandLink value="Projects" action="#{ userBean.setRendered('projects')}">
 		                            			<f:ajax execute="@form" render=":events :definitions :projects :research" />
 		                            		</h:commandLink>
-		                            	</center>	
+		                            	</center>
 	                            	</h:form>
 	                            </li>
 	                             <li class="list-group-item">
@@ -76,22 +76,22 @@
 	                            	</h:form>
 	                            </li>
 	                        </ul>
-<!-- 	                           	<h:form> -->
-<!-- 		                            <h:commandLink class="btn btn-primary" style="margin-top:10px;width:100%" outcome="becameMember"> -->
-<!-- 		                        	<i class="fa fa-plus"></i> Become a member -->
-<!-- 		                       	   </h:commandLink> -->
-<!-- 		                       	  </h:form> -->
+	                        <h:form>
+	                            <h:link class="btn btn-primary" style="margin-top:10px;width:100%" outcome="becameMember">
+	                        		<i class="fa fa-plus"></i> Become a member
+	                       	   </h:link>
+                       	   </h:form>
 	                    </div>
 	                </div>
 	                <div class="col-md-8 col-lg-8 col-xl-8">
-	                
+
 	                <h:panelGroup id="definitions" >
 	                	<h:panelGroup rendered="#{ userBean.rendered == 'definitions'}">
 		                    <div class="content  def" style="padding: 30px;">
 			                        <h1 class="display-4 text-center" style="margin-bottom: 30px;">Definitions</h1>
-			                        
+
 			                        <h:outputText value="#{userBean.definitionsErrorMessage}" class="error-label-md" style="margin-bottom:10px"/>
-			                       
+
 			                        <h:form>
 			                            <div class="form-group">
 			                                <div class="form-row">
@@ -99,12 +99,12 @@
 			                                    	<label class="col-form-label">Email</label>
 		                                    	</div>
 			                                    <div class="col-md-10 col-lg-10 col-xl-10">
-			                                    
-			                                    	<h:inputText class="form-control" a:type="email" a:placeholder="#{user.email}" value="#{userBean.email}" 
+
+			                                    	<h:inputText class="form-control" a:type="email" a:placeholder="#{user.email}" value="#{userBean.email}"
 			                                    	validatorMessage="Invalid email" id="email"  maxlength="70" minlength="6">
-														<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>		
+														<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
 													</h:inputText>
-													
+
 													<h:message for="email" class="error-label-sm" />
 		                                    	</div>
 			                                </div>
@@ -135,7 +135,7 @@
 			                                            	validatorMessage="last name must have only letters" id="lastName">
 																<f:validateRegex pattern="[a-zA-Z]*"/>
 															</h:inputText>
-															
+
 															<h:message for="lastName" class="error-label-sm" />
 		                                            	</div>
 			                                        </div>
@@ -150,14 +150,14 @@
 			                                            	<label class="col-form-label">Cell Phone</label>
 		                                            	</div>
 			                                            <div class="col-md-9 col-lg-8 col-xl-8">
-			                                            
+
 			                                            	<h:inputText class="form-control" a:type="tel" a:placeholder="#{user.cellPhone}" value="#{userBean.cellPhone}"
 											                 validatorMessage="cell phone must have only 9 numbers" id="cellPhone">
 																<f:validateRegex pattern="[0-9]{9}"/>
 															</h:inputText>
-															
+
 															<h:message for="cellPhone" class="error-label-sm" />
-															
+
 			                                            </div>
 			                                        </div>
 			                                    </div>
@@ -183,9 +183,9 @@
 			                                            <div class="col-md-9 col-lg-8 col-xl-8">
 			                                            	<h:inputText class="form-control" a:placeholder="#{user.username}" value="#{userBean.username}"
 															validatorMessage="Invalid username" id="username"  maxlength="60" minlength="6">
-															<f:validateRegex pattern="[a-zA-Z0-9]{4,}"/>		
+															<f:validateRegex pattern="[a-zA-Z0-9]{4,}"/>
 														</h:inputText>
-														
+
 														<h:message for="username" class="error-label-sm" />
 		                                            	</div>
 			                                        </div>
@@ -198,8 +198,8 @@
 			                                            <div class="col-md-9 col-lg-8 col-xl-8">
 			                                            	<h:inputSecret class="form-control" a:placeholder="New password" value="#{userBean.newPassword}"
 			                                            	validatorMessage="Password must be between 8 and 64 characters long" id="newPassword">
-			                                            		<f:validateRegex pattern=".{8,64}"/>	
-			                                           		 </h:inputSecret>	
+			                                            		<f:validateRegex pattern=".{8,64}"/>
+			                                           		 </h:inputSecret>
 		                                            	</div>
 		                                            	<h:message for="newPassword" class="error-label-sm" />
 			                                        </div>
@@ -214,44 +214,44 @@
 			                                            	<h:commandButton class="btn btn-primary" value="Save" update="@form" action="#{userBean.saveChanges()}"/>
 		                                            	</div>
 			                                            <div class="col-sm-9 col-md-9 col-lg-4 col-xl-4">
-			                                            	<h:inputSecret id="password" class="form-control" a:placeholder="Password" value="#{userBean.password}" required="true" 
+			                                            	<h:inputSecret id="password" class="form-control" a:placeholder="Password" value="#{userBean.password}" required="true"
 			                                            	requiredMessage="Password is required to save changes"/>
 			                                            	 <h:message for="password" class="error-label-sm" />
 		                                            	</div>
 			                                        </div>
 			                                    </div>
 			                                </div>
-			                               
+
 			                            </div>
 			                        </h:form>
-			                      
+
 			                  	</div>
 		               	</h:panelGroup>
 	               	</h:panelGroup>
-	               	
+
 	               	<h:panelGroup id="events" >
 	         			<h:panelGroup rendered="#{ userBean.rendered == 'events'}">
 		                    <div class="content">
 		                        <h1 class="display-4 text-center" style="margin-bottom: 30px;">Events</h1>
-		                        
+
 		                        <div role="tablist" id="accordion-1">
-		                        	
+
 		                        	<c:forEach items="#{user.getEvents()}" var="event" varStatus="loopStatus">
-		                        	
+
 		                        		<div class="card">
-		                        		
+
 			                                <div class="card-header" role="tab">
 			                                    <h5 class="mb-0">
 			                                    	<a data-toggle="collapse" aria-expanded="true" aria-controls="accordion-1 .item-#{loopStatus.index + 1}" href="#accordion-1 .item-#{loopStatus.index + 1}">#{event.title}</a>
 			                                    </h5>
 			                                </div>
-			                                
+
 			                                <div class="collapse #{(loopStatus.index + 1) == 1 ? 'show ' : ''}item-#{loopStatus.index + 1}" role="tabpanel" data-parent="#accordion-1">
-			                                
+
 			                                    <div class="card-body">
-			                                    
+
 				                                    <c:forEach items="#{event.infos}" var="info" varStatus="loopStatus1">
-				                      
+
 														<div>
 				                                            <ul class="list-inline">
 				                                                <li class="list-inline-item"><i class="fa fa-map-marker"></i> #{info.getPlace()}</li>
@@ -264,19 +264,19 @@
 									                            </h:button>
 								                           </h:form>
 			                                            </div>
-							                        
+
 						                            </c:forEach>
-			                                        
+
 			                                    </div>
 			                                </div>
 			                            </div>
-               			              	
-		                      		</c:forEach> 
-		                      		
+
+		                      		</c:forEach>
+
 		                      		<c:if test="#{empty user.getEvents()}">
 		                      			<h2 class="text-center" contenteditable="true">You don't have any events joined, try to create or dicover one!!!<br></br><br></br></h2>
 		                      		</c:if>
-		                      		
+
 		                             <div class="row text-center" style="margin-top: 30px;">
 									    <div class="col">
 									    	<h:link class="btn btn-primary"  outcome="createEvent"> <i class="fa fa-plus"></i> Create Event</h:link>
@@ -285,12 +285,12 @@
 									    	<h:link class="btn btn-primary"  outcome="events"><i class="fa fa-search"></i> Discover Events</h:link>
 									    </div>
 									</div>
-									
+
 		                        </div>
 		                    </div>
 	               		</h:panelGroup>
 	               	</h:panelGroup>
-	               	
+
 	      	     	<h:panelGroup id="projects" >
 	         			<h:panelGroup rendered="#{ userBean.rendered == 'projects'}">
 		                    <div class="content">
@@ -335,7 +335,7 @@
 		                    </div>
 	               		</h:panelGroup>
 	               	</h:panelGroup>
-	               	
+
 	      	     	<h:panelGroup id="research" >
 	         			<h:panelGroup rendered="#{ userBean.rendered == 'research'}">
 		                    <div class="content">
@@ -380,17 +380,17 @@
 		                    </div>
 	               		</h:panelGroup>
 	               	</h:panelGroup>
-	               	
+
 	                </div>
 	            </div>
 	        </div>
 	    </div>
-	    
+
 	</c:if>
-		
+
 	<c:if test="${sessionScope.user == null}">
 		#{userBean.redirectToLogin()}
 	</c:if>
-		
+
 	</ui:define>
 </ui:composition>
