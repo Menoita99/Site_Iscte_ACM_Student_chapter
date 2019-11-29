@@ -77,6 +77,11 @@
 			<from-outcome>event</from-outcome>
 			<to-view-id>/pages/event.xhtml</to-view-id>
 		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>becameMember</from-outcome>
+			<to-view-id>/pages/becameMember.xhtml</to-view-id>
+		</navigation-case>
 
 	</navigation-rule>
 
