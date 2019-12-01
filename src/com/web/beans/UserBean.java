@@ -1,14 +1,14 @@
-package com.beans;
+package com.web.beans;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.persistence.EntityManager;
 
-import com.containers.objects.UserContainer;
 import com.database.entities.User;
 import com.database.managers.JpaUtil;
 import com.database.managers.UserManager;
 import com.web.Session;
+import com.web.containers.UserContainer;
 
 @ManagedBean
 @RequestScoped

@@ -7,7 +7,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
-import com.containers.objects.UserContainer;
+import com.web.containers.UserContainer;
 
 /**
  *This class represents a session 

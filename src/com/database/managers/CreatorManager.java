@@ -131,7 +131,7 @@ public class CreatorManager {
 		if(length>0)
 			for (int i = 0; i < length; i++) 
 				output+= OK_CHARS.charAt(new Random().nextInt(OK_CHARS.length()));
-		return output;
+		return output.trim();
 	}
 
 
@@ -145,7 +145,7 @@ public class CreatorManager {
 		if(words>0)
 			for (int i = 0; i < words; i++) 
 				output+= TEXT[new Random().nextInt(TEXT.length)]+ (words==1?"":" ");
-		return output;
+		return output.trim();
 	}
 }
 

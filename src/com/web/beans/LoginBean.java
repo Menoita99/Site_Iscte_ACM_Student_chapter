@@ -1,10 +1,10 @@
-package com.beans;
+package com.web.beans;
 
 
-import com.containers.objects.UserContainer;
 import com.database.entities.User;
 import com.database.managers.UserManager;
 import com.web.Session;
+import com.web.containers.UserContainer;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;

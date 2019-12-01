@@ -67,5 +67,5 @@
 		</filter> <filter-mapping> <filter-name>LoginFilter</filter-name> <url-pattern>/acm/templates/registration.xhtml</url-pattern> 
 		</filter-mapping> <listener> <listener-class>com.web.SessionListener</listener-class> 
 		</listener> -->
-
+		
 </web-app>

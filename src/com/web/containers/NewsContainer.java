@@ -1,4 +1,4 @@
-package com.containers.objects;
+package com.web.containers;
 
 public class NewsContainer {
 

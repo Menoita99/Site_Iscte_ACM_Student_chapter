@@ -39,14 +39,14 @@
 					<div class="form-row">
 						
 						<div class="col">
-							<h:inputText a:placeholder="Frist Name" class="form-control" type="text" maxlength="60" minlength="2" required="true" value="#{registrationBean.fristName}"
+							<h:inputText a:placeholder="Frist Name" class="form-control" type="text" a:maxlength="60" a:minlength="2" required="true" value="#{registrationBean.fristName}"
 								requiredMessage="Frist name is required" validatorMessage="Frist name must have only letters" id="fristName">
 								<f:validateRegex pattern="[a-zA-Z]*"/>
 							</h:inputText>
 						</div>
 						
 						<div class="col">
-							<h:inputText a:placeholder="Last Name" class="form-control" type="text"  maxlength="60" minlength="2" required="true" value="#{registrationBean.lastName}"
+							<h:inputText a:placeholder="Last Name" class="form-control" type="text"  a:maxlength="60" a:minlength="2" required="true" value="#{registrationBean.lastName}"
 								requiredMessage="Last name is required" validatorMessage="last name must have only letters" id="lastName">
 								<f:validateRegex pattern="[a-zA-Z]*"/>
 							</h:inputText>
@@ -64,7 +64,7 @@
 				<div class="form-group">
 				
 					<h:inputText class="form-control" type="text" a:placeholder="Username" required="true" value="#{registrationBean.username}"
-								requiredMessage="Username is required" validatorMessage="Invalid username" id="username"  maxlength="60" minlength="6">
+								requiredMessage="Username is required" validatorMessage="Invalid username" id="username"  a:maxlength="60" a:minlength="6">
 						<f:validateRegex pattern="[a-zA-Z0-9]{4,}"/>		
 					</h:inputText>
 					
@@ -75,7 +75,7 @@
 				<div class="form-group">
 				
 					<h:inputText class="form-control" type="email" a:placeholder="Email" required="true" value="#{registrationBean.email}"
-								requiredMessage="Email is required" validatorMessage="Invalid email" id="email"  maxlength="70" minlength="6">
+								requiredMessage="Email is required" validatorMessage="Invalid email" id="email"  a:maxlength="70" a:minlength="6">
 						<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>		
 					</h:inputText>
 					

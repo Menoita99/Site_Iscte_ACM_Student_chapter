@@ -101,7 +101,7 @@
 			                                    <div class="col-md-10 col-lg-10 col-xl-10">
 			                                    
 			                                    	<h:inputText class="form-control" a:type="email" a:placeholder="#{user.email}" value="#{userBean.email}" 
-			                                    	validatorMessage="Invalid email" id="email"  maxlength="70" minlength="6">
+			                                    	validatorMessage="Invalid email" id="email"  a:maxlength="70" a:minlength="6">
 														<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>		
 													</h:inputText>
 													
@@ -152,7 +152,7 @@
 			                                            <div class="col-md-9 col-lg-8 col-xl-8">
 			                                            
 			                                            	<h:inputText class="form-control" a:type="tel" a:placeholder="#{user.cellPhone}" value="#{userBean.cellPhone}"
-											                 validatorMessage="cell phone must have only 9 numbers" id="cellPhone">
+											                 validatorMessage="cell phone must have only 9 numbers" id="cellPhone" a:maxlength="9" a:minlength="9">
 																<f:validateRegex pattern="[0-9]{9}"/>
 															</h:inputText>
 															
@@ -182,7 +182,7 @@
 		                                            	</div>
 			                                            <div class="col-md-9 col-lg-8 col-xl-8">
 			                                            	<h:inputText class="form-control" a:placeholder="#{user.username}" value="#{userBean.username}"
-															validatorMessage="Invalid username" id="username"  maxlength="60" minlength="6">
+															validatorMessage="Invalid username" id="username"  a:maxlength="60" a:minlength="6">
 															<f:validateRegex pattern="[a-zA-Z0-9]{4,}"/>		
 														</h:inputText>
 														

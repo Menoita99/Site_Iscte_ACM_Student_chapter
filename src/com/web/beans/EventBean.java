@@ -1,15 +1,15 @@
-package com.beans;
+package com.web.beans;
 
 import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
-import com.containers.objects.EventContainer;
-import com.containers.objects.UserContainer;
 import com.database.entities.EventParticipant;
 import com.database.managers.EventManager;
 import com.web.Session;
+import com.web.containers.EventContainer;
+import com.web.containers.UserContainer;
 
 @ManagedBean
 @RequestScoped
@@ -41,7 +41,7 @@ public class EventBean implements Serializable{
 				event = new EventContainer(Integer.parseInt(id));
 			
 		}catch(Exception e) {
-			System.err.println("Error parsing id or there is no event with the given id : error type -> "+e.getClass());
+			System.err.println("(EventBean)[getEvent] Error parsing id or there is no event with the given event id "+id+" : error type -> "+e.getClass());
 			event=null;
 		}
 		

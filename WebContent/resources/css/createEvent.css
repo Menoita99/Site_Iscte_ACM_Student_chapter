@@ -1,3 +1,7 @@
+.plus-button {
+  border-radius: 50% !important;
+}
+
 .create-form-container {
   padding: 20px;
   background-color: white;
@@ -60,5 +64,20 @@
 
 .active {
   background-color: rgb(236,238,241);
+}
+
+
+
+.error-label-md{
+	color: #f35f63;
+}
+
+.error-label-bg{
+	color: #f35f63;
+}
+
+.error-label-sm{
+	color: #f35f63;
+	text-align: center;
 }
 

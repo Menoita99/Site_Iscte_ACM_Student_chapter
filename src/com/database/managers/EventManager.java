@@ -45,6 +45,22 @@ public class EventManager {
 
 
 
+	
+	/**
+	 * This method returns the event with the given title
+	 * This method is NOT case sensitive
+	 * 
+	 * @param title event title
+	 */
+	public static Event getEventByTitle(String title) {
+		List<Event> result = JpaUtil.executeQuery("Select e from Event e where lower(e.title) = lower('"+ title +"')", Event.class);
+		return result.isEmpty() ? null : result.get(0);
+	}
+	
+	
+	
+	
+	
 	/**
 	 * @return all events present on DataBase without discriminate event state 
 	 */

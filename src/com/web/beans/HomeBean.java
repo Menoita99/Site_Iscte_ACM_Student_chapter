@@ -1,4 +1,4 @@
-package com.beans;
+package com.web.beans;
 
 import java.util.List;
 

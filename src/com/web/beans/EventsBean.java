@@ -1,4 +1,4 @@
-package com.beans;
+package com.web.beans;
 
 import java.io.Serializable;
 import java.time.DateTimeException;
@@ -11,11 +11,11 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import com.containers.objects.EventContainer;
 import com.database.entities.Event;
 import com.database.managers.CreatorManager;
 import com.database.managers.EventManager;
 import com.database.managers.JpaUtil;
+import com.web.containers.EventContainer;
 
 
 @ManagedBean

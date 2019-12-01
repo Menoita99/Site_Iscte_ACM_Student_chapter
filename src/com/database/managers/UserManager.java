@@ -8,8 +8,8 @@ import java.util.Random;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import com.containers.objects.UserContainer;
 import com.database.entities.User;
+import com.web.containers.UserContainer;
 
 /**
  * This class manages the interaction with the entity User
@@ -106,11 +106,11 @@ public class UserManager {
 	 *Otherwise returns null 
 	 */
 	public static User usernameLogin(String username, String password ) {
-		User user = JpaUtil.executeQueryAndGetSingle("SELECT u FROM User u WHERE u.username = '"+username+"' "+
+		List<User> user = JpaUtil.executeQuery("SELECT u FROM User u WHERE u.username = '"+username+"' "+
 													 " and u.password = '"+password+"' ", User.class);																			//get results
-		if(user != null) {
-			updateLastLog(user);
-			return user;
+		if(!user.isEmpty()) {
+			updateLastLog(user.get(0));
+			return user.get(0);
 		}
 
 		return  null;	
