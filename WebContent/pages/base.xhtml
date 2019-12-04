@@ -141,48 +141,51 @@
 	</div>
 
 	<!-- FOOTER -->
-	<div id="footer" class="footer-dark">
-		<footer>
-		 <div class="container">  
-			<div class="row">
-				<div class="col-sm-6 col-md-3 item">
-					<h3>Services</h3>
-					<ul>
-						<li><a href="#">Web design</a></li>
-						<li><a href="#">Development</a></li>
-						<li><a href="#">Hosting</a></li>
-					</ul>
+	<ui:insert name="script"></ui:insert>	
+	
+	<footer>
+		<div id="footer" class="footer-dark">
+			 <div class="container">  
+				<div class="row">
+					<div class="col-sm-6 col-md-3 item">
+						<h3>Services</h3>
+						<ul>
+							<li><a href="#">Web design</a></li>
+							<li><a href="#">Development</a></li>
+							<li><a href="#">Hosting</a></li>
+						</ul>
+					</div>
+					<div class="col-sm-6 col-md-3 item">
+						<h3>About</h3>
+						<ul>
+							<li><a href="#">Company</a></li>
+							<li><a href="#">Team</a></li>
+							<li><a href="#">Careers</a></li>
+						</ul>
+					</div>
+					<div class="col-md-6 item text">
+						<h3>Company Name</h3>
+						<p>Praesent sed lobortis mi. Suspendisse vel placerat ligula.
+							Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis
+							tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel
+							in justo.</p>
+					</div>
+					<div class="col item social">
+						<h:link a:href="https://www.facebook.com/acm.iscte/"><i class="icon ion-social-facebook"></i></h:link>
+						<h:link a:href="https://twitter.com/iscteacm"><i class="icon ion-social-twitter"></i></h:link>
+						<h:link a:href="http://pt.linkedin.com/in/iscteacmstudentchapter"><i class="icon ion-social-linkedin"></i></h:link>
+						<h:link a:href="https://www.instagram.com/acm.iscte/?hl=pt"><i class="icon ion-social-instagram"></i></h:link>
+						<h:link a:href="https://www.youtube.com/channel/UCwRPrD0Xhu7CeHPbS6OgIFg"><i class="icon ion-social-youtube"></i></h:link>
+						<h:link a:href="http://www.pinterest.com/acmchapter"><i class="icon ion-social-pinterest"></i></h:link>
+						<h:link a:href="https://iscteacm.tumblr.com/"><i class="icon ion-social-tumblr"></i></h:link>
+					</div>
 				</div>
-				<div class="col-sm-6 col-md-3 item">
-					<h3>About</h3>
-					<ul>
-						<li><a href="#">Company</a></li>
-						<li><a href="#">Team</a></li>
-						<li><a href="#">Careers</a></li>
-					</ul>
+				
+				<p class="copyright">ACM copyright © 2019</p>
 				</div>
-				<div class="col-md-6 item text">
-					<h3>Company Name</h3>
-					<p>Praesent sed lobortis mi. Suspendisse vel placerat ligula.
-						Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis
-						tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel
-						in justo.</p>
-				</div>
-				<div class="col item social">
-					<h:link a:href="https://www.facebook.com/acm.iscte/"><i class="icon ion-social-facebook"></i></h:link>
-					<h:link a:href="https://twitter.com/iscteacm"><i class="icon ion-social-twitter"></i></h:link>
-					<h:link a:href="http://pt.linkedin.com/in/iscteacmstudentchapter"><i class="icon ion-social-linkedin"></i></h:link>
-					<h:link a:href="https://www.instagram.com/acm.iscte/?hl=pt"><i class="icon ion-social-instagram"></i></h:link>
-					<h:link a:href="https://www.youtube.com/channel/UCwRPrD0Xhu7CeHPbS6OgIFg"><i class="icon ion-social-youtube"></i></h:link>
-					<h:link a:href="http://www.pinterest.com/acmchapter"><i class="icon ion-social-pinterest"></i></h:link>
-					<h:link a:href="https://iscteacm.tumblr.com/"><i class="icon ion-social-tumblr"></i></h:link>
-				</div>
-			</div>
-			
-			<p class="copyright">ACM copyright © 2019</p>
 			</div>
 		</footer>
-	</div>
+	
 	
 	
 	
@@ -198,7 +201,6 @@
 		
 	</script>
 	
-	<ui:insert name="script"></ui:insert>	
 	<h:outputScript library="js" name="base.js"/>
 	
 </h:body>

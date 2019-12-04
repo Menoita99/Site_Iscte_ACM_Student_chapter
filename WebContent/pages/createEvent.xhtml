@@ -12,228 +12,618 @@
 	<ui:define name="headContent">
 		<h:outputStylesheet library="css" name="createEvent.css" />
 	</ui:define>
-	
+
 
 	<ui:define name="content">
 
-    <section class="header">
-        <h1 class="display-3 text-center">Create Event</h1>
-    </section>
-    <div class="container" style="margin-bottom: 10px;margin-top: 10px;">
-        <div class="row">
-            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4" style="margin: 10px 0px;">
-                <div id="step1" class="step-container" style="padding: 15px;">
-                    <div class="row">
-                        <div class="col-auto" style="padding: 0px 15px;">
-                            <div class="circle ">
-                                <p style="margin: 0px;">1</p>
-                            </div>
-                        </div>
-                        <div class="col-auto" style="padding: 0px 15px;">
-                            <p class="lead text-left" style="font-size: 30px;margin: 0px;">Event description</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4" style="margin: 10px 0px;">
-                <div id="step2" class="step-container" style="padding: 15px;">
-                    <div class="row">
-                        <div class="col-auto" style="padding: 0px 15px;">
-                            <div class="circle">
-                                <p style="margin: 0px;">2</p>
-                            </div>
-                        </div>
-                        <div class="col-auto" style="padding: 0px 15px;">
-                            <p class="lead text-left" style="font-size: 30px;margin: 0px;">Event Info</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4" style="margin: 10px 0px;">
-                <div id="step3" class="step-container" style="padding: 15px;">
-                    <div class="row">
-                        <div class="col-auto" style="padding: 0px 15px;">
-                            <div class="circle">
-                                <p style="margin: 0px;">3</p>
-                            </div>
-                        </div>
-                        <div class="col-auto" style="padding: 0px 15px;">
-                            <p class="lead text-left" style="font-size: 30px;margin: 0px;">Acceptance</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <section style="padding: 40px;background-color: rgba(226,229,234,0.65);">
-        <div class="container" style="background-color:white;">
-            <div class="create-form-container">
-            
-				<h:panelGroup id="forms-panel">
+		<section class="header">
+			<h1 class="display-3 text-center">Create Event</h1>
+		</section>
 
-	               	<h:panelGroup rendered="#{createEventBean.stage eq 1}"> 	<!--Start  Step 1 form -->
-            	
-		                <h1 class="display-4 text-center">Event description</h1>
-		                
-		                <h:outputText class="error-label-md text-center" value="#{createEventBean.errorMessage}"/>
-	                
-		                <h:form style="margin-top: 30px;">
-		                    <div class="form-group">
-		                    
-		                    	<h:message for="title" class="error-label-sm"/>
-		                    	
-		                        <div class="form-row">
-		                            <div class="col-sm-1 col-md-1 col-lg-2 col-xl-1 offset-xl-1">
-		                            	<label class="col-form-label">Title</label>
-		                           	</div>
-		                            <div class="col-sm-12 col-md-11 col-lg-9 col-xl-9">
-		                            	<h:inputText class="form-control" a:placeholder="A superb title" value="#{createEventBean.title}" a:maxlength="70" a:minlength="2"
-		                            		required="true" requiredMessage="Event must have a title" id="title"/>
-		                           	</div>
-		                        </div>
-		                        
-		                    </div>
-		                    
-		                    <div class="form-group">
-		                    
-		                    	 <h:message for="description" class="error-label-sm"/>
-		                    
-		                        <div class="form-row">
-		                            <div class="col-sm-12 col-md-12 col-lg-2 col-xl-2">
-		                            	<label class="col-form-label">Description</label>
-		                           	</div>
-		                            <div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
-		                            	<h:inputTextarea class="form-control" a:placeholder="A really nice description" rows="5" a:maxlength="750" a:minlength="50"
-		                            		required="true" requiredMessage="Event must have a description" id="description"/>
-		                           	</div>
-		                        </div>
-		                         
-		                    </div>
-		                    <div class="form-group">
-		                        <div class="form-row">
-		                            <div class="col-md-12 col-lg-2 col-xl-2">
-		                            	<label class="col-form-label">Requirements</label>
-		                           	</div>
-		                            <div class="col-lg-9 col-xl-9">
-		                            	<h:inputTextarea class="form-control" a:placeholder="Some awsome requirements" rows="3" a:maxlength="300"/>
-		                           	</div>
-		                        </div>
-		                    </div>
-		                    <div class="form-group">
-		                    	
-		                    	 <h:message for="vacancies" class="error-label-sm"/>
-		                    	
-		                        <div class="form-row">
-		                        
-		                            <div class="col-md-2 col-lg-2 col-xl-1 offset-xl-1">
-		                            	<label class="col-form-label">Vacancies</label>
-		                           	</div>
-		                           	
-		                            <div class="col-md-10 col-lg-9 col-xl-9">
-		                            	<h:inputText class="form-control" a:type="number" value="#{createEventBean.vacancies}" a:min="1" required="true"
-		                            		requiredMessage="Event must have vacancies" validatorMessage="Invalid Number" id="vacancies">
-		                            		<f:validateRegex pattern="[1-9][0-9]*" />
-		                            	</h:inputText>
-		                           	</div>
-		                           	
-		                        </div>
-		                        
-		                    </div>
-		                    <div class="form-row">
-		                        <div class="col-md-10 col-lg-10 col-xl-10"></div>
-		                        <div class="col-sm-2 col-md-2 col-lg-1 col-xl-1">
-		                        	<h:commandLink class="btn btn-primary" action="#{createEventBean.nextStage()}" onclick="changeActiveStep()">
+		<div class="container" style="margin-bottom: 10px; margin-top: 10px;">
+			<div class="row">
+				<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4"
+					style="margin: 10px 0px;">
+					<div id="step1" class="step-container" style="padding: 15px;">
+						<div class="row">
+							<div class="col-auto" style="padding: 0px 15px;">
+								<div class="circle ">
+									<p style="margin: 0px;">1</p>
+								</div>
+							</div>
+							<div class="col-auto" style="padding: 0px 15px;">
+								<p class="lead text-left" style="font-size: 30px; margin: 0px;">Event
+									description</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4"
+					style="margin: 10px 0px;">
+					<div id="step2" class="step-container" style="padding: 15px;">
+						<div class="row">
+							<div class="col-auto" style="padding: 0px 15px;">
+								<div class="circle">
+									<p style="margin: 0px;">2</p>
+								</div>
+							</div>
+							<div class="col-auto" style="padding: 0px 15px;">
+								<p class="lead text-left" style="font-size: 30px; margin: 0px;">Event
+									Info</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4"
+					style="margin: 10px 0px;">
+					<div id="step3" class="step-container" style="padding: 15px;">
+						<div class="row">
+							<div class="col-auto" style="padding: 0px 15px;">
+								<div class="circle">
+									<p style="margin: 0px;">3</p>
+								</div>
+							</div>
+							<div class="col-auto" style="padding: 0px 15px;">
+								<p class="lead text-left" style="font-size: 30px; margin: 0px;">Acceptance</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<section
+			style="padding: 40px; background-color: rgba(226, 229, 234, 0.65);">
+			<div class="container" style="background-color: white;">
+				<div class="create-form-container">
+
+					<h:panelGroup id="forms-panel">
+
+						<!--Start  Step 1 form -->
+
+						<h:panelGroup rendered="#{createEventBean.stage eq 1}">
+
+							<h1 class="display-4 text-center">Event description</h1>
+
+							<h:outputText class="error-label-md text-center"
+								value="#{createEventBean.errorMessage}" />
+
+							<h:form style="margin-top: 30px;">
+								<div class="form-group">
+
+									<h:message for="title" class="error-label-sm" />
+
+									<div class="form-row">
+										<div class="col-sm-1 col-md-1 col-lg-2 col-xl-1 offset-xl-1">
+											<label class="col-form-label">Title</label>
+										</div>
+										<div class="col-sm-12 col-md-11 col-lg-9 col-xl-9">
+											<h:inputText class="form-control"
+												a:placeholder="A superb title"
+												value="#{createEventBean.title}" a:maxlength="70"
+												a:minlength="2" required="true"
+												requiredMessage="Event must have a title" id="title" />
+										</div>
+									</div>
+
+								</div>
+
+								<div class="form-group">
+
+									<h:message for="description" class="error-label-sm" />
+
+									<div class="form-row">
+										<div class="col-sm-12 col-md-12 col-lg-2 col-xl-2">
+											<label class="col-form-label">Description</label>
+										</div>
+										<div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
+											<h:inputTextarea class="form-control"
+												a:placeholder="A really nice description" rows="5"
+												a:maxlength="750" a:minlength="50" required="true"
+												requiredMessage="Event must have a description"
+												id="description" />
+										</div>
+									</div>
+
+								</div>
+								<div class="form-group">
+									<div class="form-row">
+										<div class="col-md-12 col-lg-2 col-xl-2">
+											<label class="col-form-label">Requirements</label>
+										</div>
+										<div class="col-lg-9 col-xl-9">
+											<h:inputTextarea class="form-control"
+												a:placeholder="Some awsome requirements" rows="3"
+												a:maxlength="300" />
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+
+									<h:message for="vacancies" class="error-label-sm" />
+
+									<div class="form-row">
+
+										<div class="col-md-2 col-lg-2 col-xl-1 offset-xl-1">
+											<label class="col-form-label">Vacancies</label>
+										</div>
+
+										<div class="col-md-10 col-lg-9 col-xl-9">
+											<h:inputText class="form-control" a:type="number"
+												value="#{createEventBean.vacancies}" a:min="1"
+												required="true" a:placeholder="0"
+												requiredMessage="Event must have vacancies"
+												validatorMessage="Invalid Number" id="vacancies">
+												<f:validateRegex pattern="[1-9][0-9]*" />
+											</h:inputText>
+										</div>
+
+									</div>
+
+								</div>
+								<div class="form-row">
+									<div class="col-md-10 col-lg-10 col-xl-10"></div>
+									<div class="col-sm-2 col-md-2 col-lg-1 col-xl-1">
+										<h:commandLink class="btn btn-primary" action="#{createEventBean.nextStage()}" onclick="changeActiveStep()">
 		                        		Next <i class="fa fa-angle-right"></i>
-		                        		<f:ajax execute="@form" render="forms-panel"/>	
-	                        		</h:commandLink>
-		                       	</div>
-		                    </div>
-		                </h:form>
-	                
-	                </h:panelGroup>  <!--End Step 1 form -->
-	               
-	                <h:panelGroup rendered="#{createEventBean.stage eq 2}">	<!--Start Step 2 form -->
-	                
-	               		  	<h1 class="display-4 text-center">Event Info</h1>
-			                <h:form style="margin-top: 30px;" prependid="false" enctype="multipart/form-data">
-			                    <div class="form-group">
-			                        <div class="form-row">
-			                            <div class="col-xl-2 offset-xl-1">
-			                            	<label class="col-form-label">Images</label>
-		                            	</div>
-			                            <div class="col-xl-5 text-left">
-			                            
-		                            		<h:inputFile maxsize="#{25 * 1024 * 1024}" type="file"  multiple="true" draggable="true" accept="png,jpg,gif.jpeg"
-		                            		maxsizeMessage="At least one file is too big!" id="images"/>
-		                            		
-		                            		<h:message for="images" class="error-label-sm"/>
-	                            		</div>
-			                            <div class="col text-left">
-			                            	<button class="btn btn-primary plus-button" type="button">
-			                            		<i class="fa fa-plus"></i>
-		                            		</button>
-	                            		</div>
-			                        </div>
+										</h:commandLink>
+									</div>
+								</div>
+							</h:form>
+
+						</h:panelGroup>
+
+						<!--End Step 1 form -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+						<!--Start Step 2 form -->
+						
+						
+						<h:panelGroup rendered="#{createEventBean.stage eq 2}">
+
+							<h1 class="display-4 text-center">Event Info</h1>
+
+
+
+
+
+
+
+
+
+
+
+							<!-- images -->
+
+
+
+							<div class="form-group">
+								<div class="form-row">
+									
+								    <div class="col-lg-1 col-xl-1 offset-lg-2 offset-xl-2">
+		                            	<label class="col-form-label">Images</label>
+		                            </div>
+									
+									<h:form prependId="false" enctype="multipart/form-data">
+
+										<div class="col-lg-6 col-xl-5 ">
+											<h:inputFile accept="image/*" value="#{createEventBean.file}">
+												<f:validator validatorId="ImageValidator" />	
+											</h:inputFile>	
+										</div>
+
+										<div class="col text-left">
+											<h:commandLink class="btn btn-primary plus-button" action="#{createEventBean.addImage()}">
+												<i class="fa fa-plus"></i> Add
+											</h:commandLink>
+										</div>
+
+									</h:form>
+									
+									<div class="form-group">
+				                        <div class="form-row">
+				                            <div class="col-lg-8 col-xl-7 offset-lg-2 offset-xl-2">
+												<div class="table-div">
+													<div class="table-responsive text-center">
+														<table class="table table-hover table-sm">
+															<tbody>
+																<h:form>
+																	<c:forEach var="image" items="#{createEventBean.images}">
+																		<tr>
+																			<td>#{image.getSubmittedFileName()}</td>
+																			<td>
+																				<h:commandLink action="#{createEventBean.deleteImage(image)}">
+																					<i class="fa fa-close" style="font-size: 20px;"></i>
+																				</h:commandLink>
+																			</td>
+																		</tr>
+																	</c:forEach>
+																</h:form>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							<!-- Staff -->	
+
+							<div class="form-group">
+								<div class="form-row">
+								
+									<div class="col-lg-1 col-xl-1 offset-lg-2 offset-xl-2">
+										<label class="col-form-label">Staff</label>
+									</div>
+										
+									<h:form>
+									
+										<div class="col-lg-6 col-xl-5">
+											<h:inputText class="form-control" a:placeholder="Email or Username" value="#{createEventBean.usernameOrEmail}" />
+										</div>
+										
+										<div class="col text-left">
+											<h:commandLink class="btn btn-primary plus-button" action="#{createEventBean.addUser()}" >
+												<i class="fa fa-plus"></i> Add
+											</h:commandLink>
+										</div>
+										
+									</h:form>	
+								</div>
+							</div>
+							
+							<div class="form-group">
+		                        <div class="form-row">
+		                            <div class="col-lg-8 col-xl-7 offset-lg-2 offset-xl-2">
+										<div class="table-div">
+											<div class="table-responsive text-center" style="margin-top: 0px;">
+												<table class="table table-hover table-sm">
+													<tbody>
+														<h:form>
+															<c:forEach var="username" items="#{createEventBean.staff}">
+																<tr>
+																	<td>#{username}</td>
+																	<td>
+																		<h:commandLink action="#{createEventBean.deleteUser(username)}">
+																			<i class="fa fa-close" style="font-size: 20px;"></i>
+																		</h:commandLink>
+																	</td>
+																</tr>
+															</c:forEach>
+														</h:form>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+					<!-- Date , time and place form -->
+							
+							
+					<h:form>		
+						 <div class="form-group">
+	                        <div class="form-row">
+	                            <div class="col-lg-1 col-xl-1 offset-lg-2 offset-xl-2">	
+	                            	<label class="col-form-label">Date:</label>
+                            	</div>
+	                            <div class="col-lg-3 col-xl-3">
+	                            	<h:inputText class="form-control" a:type="date" value="#{createEventBean.time}">
+	                            		<f:validator validatorId="FutureDateValidator" />
+	                            	</h:inputText>
+                            	</div>
+	                            <div class="col-lg-2 col-xl-1">
+	                            	<label class="col-form-label">Duration:</label>
+                            	</div>
+	                            <div class="col-lg-2 col-xl-2">
+                            		<h:inputText class="form-control" a:type="time" value="#{createEventBean.duration}">
+                            			<f:validateRegex pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]"/>
+                            		</h:inputText>
+                           		</div>
+	                        </div>
+	                    </div>
+	                    <div class="form-group">
+	                        <div class="form-row">
+	                            <div class="col-lg-1 col-xl-1 offset-lg-2 offset-xl-2">	
+	                            	<label class="col-form-label">Place</label>
+                            	</div>
+	                            <div class="col-lg-6 col-xl-5 offset-xl-0">
+	                            	<h:inputText class="form-control" value="#{createEventBean.place}" a:placeholder="Place"/>
+                            	</div>
+	                            <div class="col text-left">
+	                            	<h:commandLink class="btn btn-primary" >
+	                            		<i class="fa fa-plus"></i> Add
+                            		</h:commandLink>
+                           		</div>
+	                        </div>
+	                    </div>							
+					</h:form>	
+					
+					<h:panelGroup rendered="#{not empty createEventBean.durations}" >
+						<div class="form-group">
+	                        <div class="form-row">
+	                            <div class="col-lg-8 col-xl-7 offset-lg-2 offset-xl-2">
+									<div class="table-div">
+										<div class="table-responsive text-center" style="margin-top: 0px;">
+											<table class="table table-hover table-sm">
+												<tbody>
+													<h:form>
+														<c:forEach var="duration" items="#{createEventBean.durations}" varStatus="loopStatus">
+															<tr>
+																<td>#{createEventBean.schedules.get(loopStatus.index).toString()}</td>
+																<td>#{duration}</td>
+																<td>#{createEventBean.places.get(loopStatus.index).toString()}</td>
+																<td>
+																	<h:commandLink>
+																		<i class="fa fa-close" style="font-size: 20px;"></i>
+																	</h:commandLink>
+																</td>
+															</tr>
+														</c:forEach>
+													</h:form>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>	
+					</h:panelGroup>
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							<!-- Tags form -->
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							<!-- observation, budget e submit -->
+							
+							<h:form>
+								<div class="form-group">
+									<div class="form-row">
+									
+										<div class="col-xl-3">
+											<label class="col-form-label">Observation</label>
+										</div>
+										
+										<div class="col-xl-5">
+											<h:inputTextarea class="form-control" a:placeholder="This observation will be only seen by admin" rows="3" value="#{createEventBean.observation}"/>
+										</div>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<div class="form-row">
+									
+										<div class="col-xl-2 offset-xl-1">
+											<label class="col-form-label">Budget</label>
+										</div>
+										
+										<div class="col-xl-5">
+										
+											<h:inputText class="form-control" a:type="number" value="#{createEventBean.budget}" a:min="0" a:step="1" id="budget">
+												<f:validateDoubleRange minimum="0.00" />
+												<h:message for="budget"/>
+											</h:inputText>
+											
+										</div>
+										
+									</div>
+								</div>
+								
+								<div class="form-row">
+									<div class="col-xl-2"></div>
+									<div class="col-xl-6">
+										<small class="form-text text-left text-muted">*Images must have less then 2 MB</small>
+									</div>
+									<div class="col-xl-1">
+										<h:commandLink class="btn btn-primary" action="#{createEventBean.nextStage()}" onclick="changeActiveStep()" >
+											Next <i class="fa fa-angle-right"></i>
+										</h:commandLink>	
+									</div>
+								</div>
+							</h:form>
+
+						</h:panelGroup>
+						<!--End Step 2 form -->
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						<!--Start Step 3 form -->
+						<h:panelGroup rendered="#{createEventBean.stage eq 3}">
+
+							<div class="create-form-container">
+				                <h1 class="display-4 text-center">Acceptance</h1>
+				                <div class="text-center" style="padding: 30px;">
+				                    <div class="success-div">
+				                        <h1>Your event was submited with success</h1>
+				                    </div>
+				                    <p class="lead" style="margin-top: 20px;">Please, wait for an answer from administrators, it will not take to long (1-5 days)</p>
+				                    <h:form>	
+				                    	<h:link class="btn btn-primary" outcome="home" value="Back to home"/>
+			                    	</h:form>
 			                    </div>
-			                    <div class="form-group">
-			                        <div class="form-row">
-			                            <div class="col-xl-3">
-			                            	<label class="col-form-label">Staff</label>
-		                            	</div>
-			                            <div class="col-xl-5">
-			                            	<input class="form-control" type="text" placeholder="Email or Username"/>
-		                            	</div>
-			                            <div class="col text-left">
-			                            	<button class="btn btn-primary plus-button" type="button">
-			                            		<i class="fa fa-plus"></i>
-		                            		</button>
-	                            		</div>
-			                        </div>
-			                    </div>
-			                    <div class="form-group">
-			                        <div class="form-row">
-			                            <div class="col-xl-3"><label class="col-form-label">Observation</label></div>
-			                            <div class="col-xl-5"><textarea class="form-control" placeholder="This observation will be only seen by admin" rows="3"></textarea></div>
-			                        </div>
-			                    </div>
-			                    <div class="form-group">
-			                        <div class="form-row">
-			                            <div class="col-xl-2 offset-xl-1"><label class="col-form-label">Budget</label></div>
-			                            <div class="col-xl-5">
-			                            	<input class="form-control" type="number" value="0" min="0"/>
-		                            	</div>
-			                        </div>
-			                    </div>
-			                    <div class="form-row">
-			                        <div class="col-xl-2"></div>
-			                        <div class="col-xl-6"><small class="form-text text-left text-muted">*Images must have less then 25 MB</small></div>
-			                        <div class="col-xl-1">
-				                        <h:commandLink class="btn btn-primary" action="#{createEventBean.nextStage()}">
-			                        		Next <i class="fa fa-angle-right"></i>
-			                        		<f:ajax execute="@form" render="forms-panel"/>	
-		                        		</h:commandLink>
-	                        		</div>
-		                   		</div>
-			                </h:form>
-	                
-	                </h:panelGroup> <!--End Step 2 form -->
-	                
-	                <h:panelGroup rendered="#{createEventBean.stage eq 3}">	<!--Start Step 3 form -->
-	                
-	                	 <h1>Step #{createEventBean.stage}</h1>
-	                
-	                </h:panelGroup> <!--End Step 3 form -->
-                
-                
-                </h:panelGroup>
-            </div>
-        </div>
-    </section>
+				            </div>
+
+						</h:panelGroup>
+						<!--End Step 3 form -->
+
+
+					</h:panelGroup>
+				</div>
+			</div>
+
+		</section>
 
 	</ui:define>
-	
+
 	<ui:define name="script">
-		
+
 		<script type="text/javascript">
 		
 				function changeActiveStep(){
@@ -245,7 +635,7 @@
 				}
 	
 		</script>
-	
+
 	</ui:define>
-	
+
 </ui:composition>

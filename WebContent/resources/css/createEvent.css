@@ -1,5 +1,9 @@
-.plus-button {
-  border-radius: 50% !important;
+.table-div {
+  margin-top: 20px;
+}
+
+.table-div tbody {
+  border-bottom: 1px solid rgb(206,212,218);
 }
 
 .create-form-container {

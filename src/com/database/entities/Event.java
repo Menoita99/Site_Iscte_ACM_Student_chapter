@@ -44,6 +44,9 @@ public class Event implements Serializable {
 	@Column(length = 300)
 	private String requirements;
 	
+	@Column(length = 500)
+	private String observation;
+	
 	@Column
 	@ElementCollection(targetClass=String.class)
 	@LazyCollection(LazyCollectionOption.FALSE)
