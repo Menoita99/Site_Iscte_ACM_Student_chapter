@@ -214,7 +214,6 @@ public class EventManager {
 	 */
 	public static boolean hasVacancies(int eventID) {
 		List<Event> e = JpaUtil.executeQuery( "SELECT e FROM Event e WHERE id =" + eventID, Event.class);
-
 		return e.isEmpty() ? false : e.get(0).getVacancies() > getOccupation(eventID);
 	}
 
@@ -225,11 +224,12 @@ public class EventManager {
 	/**
 	 * 
 	 * @param eventID Event id
-	 * @return returns the number of participants registered in the event
+	 * @return returns the number of participants registered in the event. if event doesn't exists returns null
 	 */
 	public static long getOccupation(int eventID) {
-		return JpaUtil.executeQuery(" select count(*) from EventParticipant p where p.event.id = "
-				+ eventID+" and p.isStaff = false", Long.class).get(0);
+		List<Long> result = JpaUtil.executeQuery(" select count(*) from EventParticipant p where p.event.id = "
+													+ eventID+" and p.isStaff = false", Long.class);
+		return result.isEmpty()? null : result.get(0);
 	}
 
 

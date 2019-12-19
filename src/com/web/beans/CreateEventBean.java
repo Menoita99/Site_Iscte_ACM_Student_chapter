@@ -1,5 +1,7 @@
 package com.web.beans;
 
+import java.io.IOException;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,14 +13,17 @@ import javax.servlet.http.Part;
 import com.database.entities.User;
 import com.database.managers.EventManager;
 import com.database.managers.UserManager;
+import com.utils.FileManager;
 import com.web.Session;
 import com.web.containers.UserContainer;
 
 @ManagedBean
 @ViewScoped
-public class CreateEventBean {
+public class CreateEventBean implements Serializable{
 
 
+	private static final long serialVersionUID = 1L;
+	
 	private String title;
 	private String description;
 	private String requirements;
@@ -29,20 +34,33 @@ public class CreateEventBean {
 	//STORAGE ATTRIBUTES
 	private List<Part> images = new ArrayList<>();
 	private List<String> staff = new ArrayList<>();
-	private List<LocalDateTime> schedules = new ArrayList<>();
-	private List<String> places = new ArrayList<>();
+	private List<LocalDateTime> dates = new ArrayList<>();
+	private List<String> places = new ArrayList<>(); 
 	private List<String> durations = new ArrayList<>();
+	private List<String> tags = new ArrayList<>();
 
 	//TEMP ATTRIBUTES
 	private Part file;
 	private String usernameOrEmail;
-	private String time;
 	private String place;
 	private String duration;
-	
+	private String tag;
+	private String date;
+
 	private String errorMessage;
 
 	private int stage = 1;
+
+
+
+
+
+	/**
+	 * Redirects to login page
+	 */
+	public void redirectToLogin() {
+		Session.getInstance().redirectWithContext("/login");
+	}
 
 
 
@@ -56,17 +74,11 @@ public class CreateEventBean {
 	public void nextStage() {
 		setErrorMessage(null);
 
-		switch (stage) {
-		case 1:			//stage 1
+		if (stage == 1) {
 			validateStage1();
-			break ;
-		case 2:
-			validateStage2();
-			break ;
-		case 3:
-			createEvent();
-			break ;
-		default:
+		} else if (stage == 2) {
+			executeStage2();
+		} else if(stage >3){
 			setErrorMessage("Something went wrong!");
 			System.out.println("(CreateEventBean)[nextStage()] Stage value --> "+stage);
 		}
@@ -76,27 +88,33 @@ public class CreateEventBean {
 
 
 
-	
-	/**
-	 * Creates an event with state equals ON_APPROVAL
-	 * send's an email to administrators warning about the new submit
-	 */
-	private void createEvent() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-
 
 	/**
 	 * Validates Stage 2 form
+	 * Creates an event with state equals ON_APPROVAL
+	 * send's an email to administrators warning about the new submit
 	 */
-	private void validateStage2() {
-		// TODO Auto-generated method stub
-		stage++;
+	private void executeStage2() {
+		
+		if(dates.isEmpty() || durations.isEmpty() || places.isEmpty()) {
+			setErrorMessage("Event must have at least one date");
+		
+		}else {
+			try {
+				FileManager.saveEventImages(images);
+				//create Event TODO
+//				EventManager.createEvent(vacancies, title, description, imagePath, user, tags);
+
+				stage++;
+			} catch (IOException e) {
+				setErrorMessage("Something went wrong please, try again");
+				e.printStackTrace();
+			}
+			
+		}
+		
 	}
+
 
 
 
@@ -106,7 +124,6 @@ public class CreateEventBean {
 	 * Validates Stage 1 form
 	 */
 	private void validateStage1() {
-
 		if(title != null && !title.isBlank()) {										
 			if(EventManager.getEventByTitle(title) != null)  				//checks if title is already in use
 				setErrorMessage("There is already an event with the given title");
@@ -117,22 +134,9 @@ public class CreateEventBean {
 					setErrorMessage("Invalid number at Vacancies");
 				}
 			}
+			stage++;
 		}else 
 			setErrorMessage("Invalid title");
-		stage++;															//changes stage
-	}
-
-
-
-
-
-	/**
-	 * This method removes the part given from the images list 
-	 * @param part part to be deleted
-	 */
-	public void deleteImage(Part part) {
-		if( part != null) 
-			images.remove(part);
 	}
 
 
@@ -142,20 +146,18 @@ public class CreateEventBean {
 	/**
 	 * This method verifies if usernameOrEmail was a valid user to be added
 	 * and in case it has it adds to staff list 
-	 * 
 	 */
 	public void addUser() {
 		setErrorMessage(null);
 		UserContainer loggedUser = Session.getInstance().getUser();
 
-		if(usernameOrEmail != null && loggedUser!=null) {
-			if(!usernameOrEmail.isBlank() && 
-					!(usernameOrEmail.equals(loggedUser.getUsername()) || usernameOrEmail.equals(loggedUser.getEmail()))) {	//verifies if user is the manager and if is not a blank string
+		if(usernameOrEmail != null && loggedUser!=null  &&  !usernameOrEmail.isBlank()) {								//verify if user isn't a blank string
+			if(!(usernameOrEmail.equals(loggedUser.getUsername()) || usernameOrEmail.equals(loggedUser.getEmail()))) {	//verify if user is the manager 
 
 				User check = UserManager.getUserByEmail(usernameOrEmail);
 				if(check == null) check = UserManager.getUserByUsername(usernameOrEmail);
 
-				if(check != null && !staff.contains(check.getUsername())) {						//verifies if user exists
+				if(check != null && !staff.contains(check.getUsername())) {												//verifies if user exists
 					staff.add(check.getUsername());
 					usernameOrEmail = null;
 
@@ -188,12 +190,91 @@ public class CreateEventBean {
 	 * Adds file to images and cleans file input field
 	 */
 	public void addImage() {
+		setErrorMessage(null);
 		if(file != null) {
 			images.add(file);
 			file = null;
 		}
 	}
 
+
+
+
+
+	/**
+	 * This method removes the part given from the images list 
+	 * @param part part to be deleted
+	 */
+	public void deleteImage(Part part) {
+		if( part != null) 
+			images.remove(part);
+	}
+
+
+
+
+	/**
+	 * Adds tag to tags and cleans file input field
+	 */
+	public void addTag() {
+		setErrorMessage(null);
+		if(tag != null) 
+			if(!tag.isBlank()) 
+				if(!tags.contains(tag)) {
+					tags.add(tag);
+					tag = null;
+				}
+	}
+
+
+
+
+	/**
+	 * @param deleteTag tag to be deleted
+	 * remove tag from tags
+	 */
+	public void deleteTag(String deleteTag) {
+		if(deleteTag != null) 
+			if(!deleteTag.isBlank()) 
+				if(!tags.contains(deleteTag)) 
+					tags.remove(tag);
+	}
+
+
+
+
+
+	/**
+	 * Adds information into
+	 *  places
+	 *  durations 
+	 *  dates
+	 * This method is validated by xhtml validators
+	 */
+	public void addInfo() {
+		setErrorMessage(null);
+
+		if(duration != null && date != null && place != null && !duration.isBlank() && !date.isBlank() && !place.isBlank()) {			//verify if fields are empty
+			try {
+				
+				LocalDateTime localDate = LocalDateTime.parse(date);
+				
+				if(!dates.contains(localDate))
+					dates.add(localDate);
+				
+				if(!durations.contains(duration))
+					durations.add(duration);
+				
+				if(!places.contains(place)) 
+					places.add(place);
+				
+			} catch (Exception e) {
+				setErrorMessage("Something went worng");
+				e.printStackTrace();
+			}
+		}else 
+			setErrorMessage("Required fields can't be empty");
+	}
 
 
 
@@ -331,32 +412,10 @@ public class CreateEventBean {
 
 
 	/**
-	 * @return the schedules
-	 */
-	public List<LocalDateTime> getSchedules() {
-		return schedules;
-	}
-
-
-
-
-
-	/**
 	 * @return the places
 	 */
 	public List<String> getPlaces() {
 		return places;
-	}
-
-
-
-
-
-	/**
-	 * @return the time
-	 */
-	public String getTime() {
-		return time;
 	}
 
 
@@ -397,6 +456,99 @@ public class CreateEventBean {
 
 
 	/**
+	 * @return the tag
+	 */
+	public String getTag() {
+		return tag;
+	}
+
+
+
+
+
+	/**
+	 * @return the tags
+	 */
+	public List<String> getTags() {
+		return tags;
+	}
+
+
+
+
+
+	/**
+	 * @return the dates
+	 */
+	public List<LocalDateTime> getDates() {
+		return dates;
+	}
+
+
+
+
+
+
+	/**
+	 * @return the date
+	 */
+	public String getDate() {
+		return date;
+	}
+
+
+
+
+
+
+	/**
+	 * @param date the date to set
+	 */
+	public void setDate(String date) {
+		System.out.println(date);
+		this.date = date;
+	}
+
+
+
+
+
+
+	/**
+	 * @param dates the dates to set
+	 */
+	public void setDates(List<LocalDateTime> dates) {
+		this.dates = dates;
+	}
+
+
+
+
+
+
+	/**
+	 * @param tags the tags to set
+	 */
+	public void setTags(List<String> tags) {
+		this.tags = tags;
+	}
+
+
+
+
+
+	/**
+	 * @param tag the tag to set
+	 */
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
+
+
+
+
+	/**
 	 * @param duration the duration to set
 	 */
 	public void setDuration(String duration) {
@@ -428,34 +580,11 @@ public class CreateEventBean {
 
 
 
-
-	/**
-	 * @param time the time to set
-	 */
-	public void setTime(String time) {
-		this.time = time;
-	}
-
-
-
-
-
 	/**
 	 * @param places the places to set
 	 */
 	public void setPlaces(List<String> places) {
 		this.places = places;
-	}
-
-
-
-
-
-	/**
-	 * @param schedules the schedules to set
-	 */
-	public void setSchedules(List<LocalDateTime> schedules) {
-		this.schedules = schedules;
 	}
 
 

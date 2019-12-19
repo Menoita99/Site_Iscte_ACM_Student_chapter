@@ -20,9 +20,8 @@ public class ImageValidator implements Validator {
 
 
 	/**
-	 * Validates the file given using static metrics.
+	 * Validates the given file using static metrics.
 	 * This method will check max size (2 MB) and file type (images jpg , png , giff , jpeg)
-	 * in case th
 	 */
 	@Override
 	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
