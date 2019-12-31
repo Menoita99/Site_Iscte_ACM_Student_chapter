@@ -9,11 +9,103 @@
 	xmlns:of="http://omnifaces.org/functions"
 	xmlns:p="http://primefaces.org/ui">
 
+	<ui:define name="headContent">
+		<h:outputStylesheet library="css" name="projects.css" />
+	</ui:define>
+
 	<ui:define name="content">
 
-		<h1 style="margin-top: 50px">
-			<center>IN MAKING :)</center>
-		</h1>
-
+	<section id="project-header">
+        <div class="container">
+            <div class="jumbotron" style="background-color: rgba(255,255,255,0);">
+	            <h1 class="display-4">Projects</h1>
+	            <p class="lead">Here you can find all iscte-acm projects</p>
+	            <h:form id="search-form" style="margin-top: 20px;margin-bottom: 20px;">
+	                <div class="input-group" style="max-width: 800px;">
+	                    <div class="input-group-prepend"></div>
+	                   		<h:inputText class="form-control" autofocus="on" autocomplete="on" value="#{projectsBean.searchField}"/>
+	                    <div class="input-group-append">
+	                    	<h:commandButton class="btn btn-primary" value="Search!" actionListener="#{projectsBean.search}"/>
+	                    </div>
+	                </div>
+		            <div>
+		            	<a class="btn btn-primary" data-toggle="collapse" aria-expanded="false" aria-controls="collapse-1" href="#collapse-1" role="button" style="margin-top: 20px">
+		            		<i class="fa fa-gear"></i> Filters
+	            		</a>
+		                <div class="collapse" id="collapse-1">
+		                    <div class="container">
+	                            <div class="form-group" >
+	                                <ul class="list-inline">
+	                                    <li class="list-inline-item"><label for="state">State</label></li>
+	                                    <li class="list-inline-item">
+                                            <h:selectOneMenu id="state" class="form-control" value="#{projectsBean.state}" valueChangeListener="#{projectsBean.search}" >
+                                           		<f:selectItems class="dropdown-item" value="#{projectsBean.states}"/> 
+                                           		<f:ajax  render=":projects-container" execute=":search-form"/>
+                                            </h:selectOneMenu>
+	                                    </li>
+	                                    <li class="list-inline-item"><label>Sort:</label></li>
+                                    	<li class="list-inline-item" >
+                                    		<h:selectOneRadio  value="#{projectsBean.ascending}" valueChangeListener="#{projectsBean.sort}">
+                                    			<f:selectItem itemLabel="Ascending" itemValue="#{true}"/>
+                                    			<f:selectItem itemLabel="Descending" itemValue="#{false}" />
+                                    			<f:ajax  render=":projects-container" execute="@this"/>
+                                    		</h:selectOneRadio>
+                                    	</li>
+	                                </ul>
+	                            </div>
+		                    </div>
+		                </div>
+		            </div>
+	            </h:form>
+	        </div>
+        </div>
+    </section>
+   
+   <h:panelGroup id="projects-container">
+	   <h:panelGroup rendered="#{not empty projectsBean.projects}">
+		    <div class="container" style="padding-bottom: 100px;">
+		        <div class="row">
+			        <ui:repeat var="project" value="#{projectsBean.projects}">
+			             <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4 project-column" data-aos="fade-left" data-aos-duration="1500" data-aos-once="true">
+			                <div class="card">
+			                	<h:graphicImage class="card-img-top w-100 d-block projects-img img-fluid" 
+			                					style="background-size: cover;background-position: top;"
+			                					value="/resources/files/#{project.imagePath.get(0)}"/>
+			                    <div class="card-body">
+			                        <h4 class="card-title">#{project.title}</h4>
+			                        <p class="card-text">#{project.state}</p>
+			                        <p class="card-text">#{project.deadLine}</p>
+			                        <p class="card-text"> <ui:repeat var="tag" value="#{project.tags}"> #{tag} </ui:repeat> </p>
+			                        <h:form>
+				                        <h:button class="btn btn-primary" value="Button" outcome="project">
+				                        	<f:param name="projectID" value="#{project.getId()}" />
+				                        </h:button>
+			                        </h:form>
+		                        </div>
+			                </div>
+			            </div>
+			        </ui:repeat>
+		        </div>
+		    </div>
+		    
+		    <nav class="text-monospace pagination">
+		        <ul class="pagination">
+		            <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+		            <li class="page-item"><a class="page-link" href="#">1</a></li>
+		            <li class="page-item"><a class="page-link" href="#">2</a></li>
+		            <li class="page-item"><a class="page-link" href="#">3</a></li>
+		            <li class="page-item"><a class="page-link" href="#">4</a></li>
+		            <li class="page-item"><a class="page-link" href="#">5</a></li>
+		            <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+		        </ul>
+		    </nav>
+		    
+	    </h:panelGroup>
+	    <h:panelGroup rendered="#{empty projectsBean.projects}">
+	    	<div class="container" style="text-align: center">
+	   			<h1 class="display-4">No Events Found <i class="fa fa-frown-o"></i> </h1>
+	   		</div>
+	    </h:panelGroup>
+    </h:panelGroup>
 	</ui:define>
 </ui:composition>

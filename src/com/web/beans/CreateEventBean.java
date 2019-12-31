@@ -14,6 +14,7 @@ import com.database.entities.User;
 import com.database.managers.EventManager;
 import com.database.managers.UserManager;
 import com.utils.FileManager;
+import com.utils.IllegalAssertionException;
 import com.web.Session;
 import com.web.containers.UserContainer;
 
@@ -28,7 +29,7 @@ public class CreateEventBean implements Serializable{
 	private String description;
 	private String requirements;
 	private String vacancies;
-	private String Observation;
+	private String observation;
 	private String budget = "0";
 
 	//STORAGE ATTRIBUTES
@@ -101,18 +102,19 @@ public class CreateEventBean implements Serializable{
 		
 		}else {
 			try {
-				FileManager.saveEventImages(images);
-				//create Event TODO
-//				EventManager.createEvent(vacancies, title, description, imagePath, user, tags);
+				List<String> imagePaths = FileManager.saveEventImages(images);
+				EventManager.createEvent(Integer.parseInt(vacancies), title, description, imagePaths, Session.getInstance().getUser().getId(),
+										tags, requirements, observation, Double.parseDouble(budget), staff, dates, places, durations);
 
 				stage++;
-			} catch (IOException e) {
+			} catch (IOException | NumberFormatException e) {
 				setErrorMessage("Something went wrong please, try again");
 				e.printStackTrace();
+			} catch (IllegalAssertionException e) {
+				setErrorMessage(e.getMessage());
+				e.printStackTrace();
 			}
-			
 		}
-		
 	}
 
 
@@ -382,7 +384,7 @@ public class CreateEventBean implements Serializable{
 	 * @return the observation
 	 */
 	public String getObservation() {
-		return Observation;
+		return observation;
 	}
 
 
@@ -617,7 +619,7 @@ public class CreateEventBean implements Serializable{
 	 * @param observation the observation to set
 	 */
 	public void setObservation(String observation) {
-		Observation = observation;
+		this.observation = observation;
 	}
 
 

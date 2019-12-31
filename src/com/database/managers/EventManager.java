@@ -1,10 +1,10 @@
 package com.database.managers;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-
 
 import com.database.entities.Event;
 import com.database.entities.EventInfo;
@@ -12,6 +12,8 @@ import com.database.entities.EventLike;
 import com.database.entities.EventParticipant;
 import com.database.entities.State;
 import com.database.entities.User;
+import com.utils.Assert;
+import com.utils.IllegalAssertionException;
 
 /**
  *
@@ -45,7 +47,70 @@ public class EventManager {
 
 
 
-	
+
+
+	public static Event createEvent(int vacancies, String title, String description, List<String> imagePaths, int managerId, List<String> tags, String requirements,
+			String observation, double budget, List<String> staff, List<LocalDateTime> dates, List<String> places, List<String> durations) throws IllegalAssertionException {
+		//assertions
+		Assert.assertTrue(vacancies > 0, "Vacancies must be a positive number bigger than 0");
+		Assert.isBlanckOrNull(title, "Title must not be empty");
+		Assert.assertTrue(budget >= 0, "Budget must not be a negative number");
+		Assert.isEmptyOrNull(dates, "Event must a date");
+		Assert.isEmptyOrNull(places, "The event must have a place where it occurs");
+		Assert.isEmptyOrNull(durations , "Event must a duration");
+
+		Event event = new Event();
+
+		event.setState(State.ON_APPROVAL);
+		event.setViews(0);
+
+		event.setVacancies(vacancies);
+		event.setTitle(title);
+		event.setDescription(description);
+		event.setManager(UserManager.getUserById(managerId));
+		event.setRequirements(requirements);
+		event.setObservation(observation);
+		event.setBudget(budget);
+
+		if(tags != null)
+			event.setTags(new HashSet<String>(tags));
+
+		if(imagePaths!= null && imagePaths.isEmpty()) {
+			for (String img: imagePaths) 
+				if(img.matches("([^\\s]+(\\.(?i)(jpg|png|gif|jpeg))$)"))		//checks if it is an image
+					event.addImage(IMAGES_DIR+img);
+		}else
+			event.addImage(defaultImage);
+
+
+		JpaUtil.createEntity(event);
+
+		try {
+			
+			for (String username : staff) 
+				addParticipant(event, UserManager.getUserByUsername(username), true);
+
+			if(dates.size() == places.size() && dates.size() ==  durations.size()) {
+				for (int i = 0; i < dates.size(); i++) 
+					createEventInfo(event, dates.get(i), durations.get(i), places.get(i));
+				
+			}else
+				throw new IllegalArgumentException("Can't create EventInfo object, diferent list sizes given");
+		}catch(Exception e) {
+			JpaUtil.deleteEntity(event);
+			throw e;
+		}
+
+		return event;
+	}
+
+
+
+
+
+
+
+
 	/**
 	 * This method returns the event with the given title
 	 * This method is NOT case sensitive
@@ -56,11 +121,13 @@ public class EventManager {
 		List<Event> result = JpaUtil.executeQuery("Select e from Event e where lower(e.title) = lower('"+ title +"')", Event.class);
 		return result.isEmpty() ? null : result.get(0);
 	}
+
+
+
 	
 	
-	
-	
-	
+
+
 	/**
 	 * @return all events present on DataBase without discriminate event state 
 	 */
@@ -174,17 +241,17 @@ public class EventManager {
 	public static EventParticipant removeParticipant(int eventId, int userId) {
 		EventParticipant ep = null;
 		List<EventParticipant> results = JpaUtil.executeQuery("Select ep from EventParticipant ep where ep.user.id = "+userId+" and ep.event.id = "+eventId, EventParticipant.class);
-		
+
 		if(!results.isEmpty()) {
-		
+
 			ep = results.get(0);
 			User user = UserManager.getUserById(userId);
 			User manager = getEventManager(eventId);
-			
+
 			if(user != null && manager != null && !user.equals(manager)) 
 				JpaUtil.deleteEntity(ep);
 		}
-		
+
 		return ep;
 	}
 
@@ -193,7 +260,7 @@ public class EventManager {
 
 
 
-	
+
 	/**
 	 * @param eventId event id
 	 * @return return the manager of the given id
@@ -203,8 +270,8 @@ public class EventManager {
 		return results.isEmpty() ? null : results.get(0) ;
 	}
 
-	
-	
+
+
 
 
 
@@ -228,7 +295,7 @@ public class EventManager {
 	 */
 	public static long getOccupation(int eventID) {
 		List<Long> result = JpaUtil.executeQuery(" select count(*) from EventParticipant p where p.event.id = "
-													+ eventID+" and p.isStaff = false", Long.class);
+				+ eventID+" and p.isStaff = false", Long.class);
 		return result.isEmpty()? null : result.get(0);
 	}
 
@@ -265,6 +332,27 @@ public class EventManager {
 	}
 
 
+	
+	
+	
+	
+	/**
+	 * Creates an event info for an event
+	 * given start Date and duration
+	 * Duration format: "Integer : Integer"
+	 */
+	public static void createEventInfo(Event event, LocalDateTime startDate, String duration, String place) {
+		LocalDateTime endDate = startDate;
+		
+		String[] time = duration.split(":");
+		
+		endDate.plusHours(Integer.parseInt(time[0].trim()));
+		endDate.plusMinutes(Integer.parseInt(time[1].trim()));
+
+		createEventInfo(event, startDate, endDate, place);
+	}
+	
+	
 
 
 
@@ -383,5 +471,11 @@ public class EventManager {
 		return JpaUtil.executeQuery("SELECT DISTINCT e FROM Event e, EventParticipant ep "
 				+ "WHERE e.id = ep.event.id AND ep.user.id ="+ userId, Event.class);
 	}
+
+
+
+
+
+
 
 }

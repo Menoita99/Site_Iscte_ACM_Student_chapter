@@ -172,6 +172,22 @@ public class Event implements Serializable {
 
 
 	/**
+	 * @return the observation
+	 */
+	public String getObservation() {
+		return observation;
+	}
+
+
+	/**
+	 * @param observation the observation to set
+	 */
+	public void setObservation(String observation) {
+		this.observation = observation;
+	}
+
+
+	/**
 	 * @param budget the budget to set
 	 */
 	public void setBudget(Double budget) {

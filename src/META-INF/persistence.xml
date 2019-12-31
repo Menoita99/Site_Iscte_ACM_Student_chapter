@@ -4,12 +4,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 
-	<persistence-unit name="acmDB">
-		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+<persistence-unit name="acmDB">
+	<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<properties>
 			<property name="javax.persistence.jdbc.url" 
 			value="jdbc:mysql://localhost/acmdb?useUnicode=TRUE&amp;useJDBCCompliantTimezoneShift=TRUE&amp;useLegacyDatetimeCode=FALSE&amp;serverTimezone=UTC&amp;autoReconnect=TRUE" />
-			<property name="javax.persistence.jdbc.user" value="server" /><!-- sessionVariables=storage_engine=InnoDB&amp; -->
+			<property name="javax.persistence.jdbc.user" value="server" />
 			<property name="javax.persistence.jdbc.password" value="0001@bombS" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />

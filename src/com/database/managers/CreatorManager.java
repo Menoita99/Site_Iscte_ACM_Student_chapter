@@ -1,11 +1,16 @@
 package com.database.managers;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import com.database.entities.Event;
 import com.database.entities.NewsLetter;
@@ -19,7 +24,7 @@ public class CreatorManager {
 
 	private static int nUsers= 100;
 
-	private static int nEvents= 30;
+	private static int nEvents= 1;
 
 
 
@@ -28,13 +33,26 @@ public class CreatorManager {
 	 */
 	public static void main(String[] args) {
 		
-		for (int i = 0; i < nUsers; i++) {
-			String email = generateRandomPhrases(1)+"@"+generateRandomPhrases(1)+"."+generateRandomPhrases(1);
-			User user = UserManager.createUser(email, "123456789", generateRandomPhrases(1),generateRandomPhrases(1), generateRandomPhrases(1));
-			if(user == null)
-				i--;
-		}
+		createUsers(nUsers);
 
+//		createEvents();
+
+		createProject(5);
+		
+		for (int i = 0; i < 10; i++) {
+			NewsLetter n = new NewsLetter();
+			n.setEmail(generateRandomPhrases(1)+"@"+generateRandomPhrases(1)+"."+generateRandomPhrases(1));
+			JpaUtil.createEntity(n);
+		}
+		
+	}
+
+
+
+	/**
+	 * Creates n Events
+	 */
+	private static void createEvents() {
 		for(int i = 0; i <nEvents;i++) {
 
 			Event e = EventManager.createEvent(new Random().nextInt(100)+1, 
@@ -70,17 +88,48 @@ public class CreatorManager {
 			}
 
 		}
-
-		
-		for (int i = 0; i < 10; i++) {
-			NewsLetter n = new NewsLetter();
-			n.setEmail(generateRandomPhrases(1)+"@"+generateRandomPhrases(1)+"."+generateRandomPhrases(1));
-			JpaUtil.createEntity(n);
-		}
-		
 	}
 
 
+
+	/**
+	 * Creates n Users
+	 */
+	private static void createUsers(int n) {
+		for (int i = 0; i < n ;  i++) {
+			String email = generateRandomPhrases(1)+"@"+generateRandomPhrases(1)+"."+generateRandomPhrases(1);
+			User user = UserManager.createUser(email, "123456789", getRandomUserImage() , generateRandomPhrases(1),generateRandomPhrases(1), generateRandomPhrases(1));
+			if(user == null)
+				i--;
+		}
+	}
+
+
+	
+	
+	/**
+	 * Creates n project
+	 */
+	private static void createProject(int n) {
+		Random r = new Random();
+		for (int i = 0; i < n ; i++) {
+			
+			long users = JpaUtil.executeQueryAndGetSingle("Select count(*) from User u", Long.class);
+			
+			Date deadLine = Date.from(LocalDate.now().plusYears(1).plusDays(r.nextInt(20)).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+			Date subscriptionDeadline = Date.from(LocalDate.now().plusDays(10+r.nextInt(20)).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+			
+			ProjectManager.createproject(r.nextInt(9)+1, generateRandomPhrases(r.nextInt(3)+1), generateRandomPhrases(r.nextInt(50)+50),generateRandomPhrases(r.nextInt(30)+10)
+										, deadLine, subscriptionDeadline, r.nextInt((int)users), randomTags(), getRandomEventImages());
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
 
 
 
@@ -88,7 +137,7 @@ public class CreatorManager {
 	 * returns a list of random images from images that are on events directory
 	 */
 	private static List<String> getRandomEventImages() {
-		List<String> images = new ArrayList<String>();
+		Set<String> images = new HashSet<String>();
 
 		File dir = new File("WebContent/resources/files/events/");
 		int r = new Random().nextInt(5)+1;
@@ -99,11 +148,30 @@ public class CreatorManager {
 				images.add(dir.list()[img]);
 		}
 
-		return images;
+		return new ArrayList<String>(images);
+	}
+	
+	
+	
+	
+	
+	
+	
+
+
+
+	/**
+	 * returns a list of random images from images that are on events directory
+	 */
+	private static String getRandomUserImage() {
+		File dir = new File("WebContent/resources/files/users/");
+		int r = new Random().nextInt(dir.list().length);
+		return dir.list()[r];
 	}
 
 
-
+	
+	
 
 	/**
 	 * Generate random tags 
@@ -111,17 +179,18 @@ public class CreatorManager {
 	private static List<String> randomTags() {
 		int bound = 10;
 		int nTags = new Random().nextInt(bound);
-		List<String> tags = new ArrayList<String>();
+		Set<String> tags = new HashSet<String>();
 
 		for (int i = 0; i < nTags; i++) 
-			tags.add(generateRandomPhrases(nTags));
-		return tags;
+			tags.add(generateRandomPhrases(1));
+		return new ArrayList<String>(tags);
 	}
 
 
 
 
 
+	
 	/**
 	 *generate random strings
 	 *@param size of random string
@@ -136,6 +205,8 @@ public class CreatorManager {
 
 
 
+	
+	
 	/**
 	 *generate random phrases
 	 *@param number of words
@@ -148,7 +219,3 @@ public class CreatorManager {
 		return output.trim();
 	}
 }
-
-
-
-

@@ -9,17 +9,22 @@ import com.database.entities.User;
 import com.database.managers.EventManager;
 import com.database.managers.UserManager;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  *	This class represents an user that can be stored in session 
  *	This must be used only to save and read information
  *
  * @author RuiMenoita
  */
+@Data
+@NoArgsConstructor
 public class UserContainer implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private int id = -1; 		//simulates null id
+	private int id; 		
 	private String imagePath;
 	private String email;
 	private String firstName;
@@ -30,11 +35,6 @@ public class UserContainer implements Serializable {
 	private boolean isMember;
 	private boolean isAdmin;
 	
-	
-	
-	
-	public UserContainer() {}
-
 	
 	
 	
@@ -97,227 +97,5 @@ public class UserContainer implements Serializable {
 			events.add(new EventContainer(e));
 		
 		return events;
-	}
-
-	
-	
-	
-	
-	//----------------------------------
-	
-	/**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
-
-	
-	
-	
-	
-	/**
-	 * @return the imagePath
-	 */
-	public String getImagePath() {
-		return imagePath;
-	}
-
-	
-	
-	
-	
-	/**
-	 * @return the email
-	 */
-	public String getEmail() {
-		return email;
-	}
-
-	
-	
-	
-	
-	/**
-	 * @return the firstName
-	 */
-	public String getFirstName() {
-		return firstName;
-	}
-
-	
-	
-	
-	
-	/**
-	 * @return the lastName
-	 */
-	public String getLastName() {
-		return lastName;
-	}
-
-	
-	
-	
-	
-	/**
-	 * @return the course
-	 */
-	public String getCourse() {
-		return course;
-	}
-
-	
-	
-	
-	
-	/**
-	 * @return the cellPhone
-	 */
-	public String getCellPhone() {
-		return cellPhone;
-	}
-
-	
-	
-	
-	
-	/**
-	 * @return the username
-	 */
-	public String getUsername() {
-		return username;
-	}
-
-	
-	
-	
-	
-	/**
-	 * @return the isMember
-	 */
-	public boolean isMember() {
-		return isMember;
-	}
-
-
-
-
-
-	/**
-	 * @return the isAdmin
-	 */
-	public boolean isAdmin() {
-		return isAdmin;
-	}
-
-
-
-
-
-	/**
-	 * @param isAdmin the isAdmin to set
-	 */
-	public void setAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
-	}
-
-
-
-
-
-	/**
-	 * @param isMember the isMember to set
-	 */
-	public void setMember(boolean isMember) {
-		this.isMember = isMember;
-	}
-
-
-
-
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	
-	
-	
-	
-	/**
-	 * @param imagePath the imagePath to set
-	 */
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
-	}
-
-	
-	
-	
-	
-	/**
-	 * @param email the email to set
-	 */
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	
-	
-	
-	
-	/**
-	 * @param firstName the firstName to set
-	 */
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	
-	
-	
-	
-	/**
-	 * @param lastName the lastName to set
-	 */
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	
-	
-	
-	
-	/**
-	 * @param course the course to set
-	 */
-	public void setCourse(String course) {
-		this.course = course;
-	}
-
-	
-	
-	
-	
-	/**
-	 * @param cellPhone the cellPhone to set
-	 */
-	public void setCellPhone(String cellPhone) {
-		this.cellPhone = cellPhone;
-	}
-
-	
-	
-	
-	
-	/**
-	 * @param username the username to set
-	 */
-	public void setUsername(String username) {
-		this.username = username;
 	}
 }

@@ -154,7 +154,7 @@ public class JpaUtil {
 	public static void createEntity(Object entity) {
 		EntityManager manager = getEntityManager();	
 		try {
-			manager.getTransaction().begin();					
+			manager.getTransaction().begin();				
 			manager.persist(manager.contains(entity) ? entity : manager.merge(entity));
 			manager.getTransaction().commit();			
 		}finally {
