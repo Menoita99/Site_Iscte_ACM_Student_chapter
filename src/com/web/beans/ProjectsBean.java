@@ -61,10 +61,20 @@ public class ProjectsBean implements Serializable {
 	}
 
 
+	/**
+	 * 
+	 * @param event
+	 */
 	public void search(ActionEvent event) { 
 		search();
 	}
 
+	
+	
+	/**
+	 * 
+	 * @param event
+	 */
 	public void search(ValueChangeEvent event) { 
 		state = (State) event.getNewValue();
 		search();

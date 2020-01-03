@@ -173,6 +173,25 @@ public class Session {
 	}
 
 
+	
+	
+	
+	
+	
+	/**
+	 * Redirects to login page
+	 * @param lastPage page to redirected after login
+	 * e.g "/user"
+	 */
+	public void redirectToLogin(String lastPage) {
+		setLastPage(lastPage);
+		redirectWithContext("/login");
+	}
+	
+	
+	
+	
+	
 
 
 

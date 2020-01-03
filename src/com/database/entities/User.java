@@ -7,6 +7,9 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString.Exclude;
@@ -69,11 +72,17 @@ public class User implements Serializable {
 	private String activationKey;
 	
 	@Exclude
-	@OneToMany(mappedBy = "manager", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@ManyToMany(mappedBy = "participants", cascade = CascadeType.ALL)
 	private List<Project> projects = new ArrayList<>();
 	
+	@Exclude
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<AcmLike> acmLikes = new ArrayList<>();
 	
-
+	
+	
 	
 	/**
 	 * @param email

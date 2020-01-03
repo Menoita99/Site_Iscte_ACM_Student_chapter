@@ -49,11 +49,6 @@
                 </div>
                 <div><a class="carousel-control-prev" href="#carousel-1" role="button" data-slide="prev"><span class="carousel-control-prev-icon"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next" href="#carousel-1" role="button"
                         data-slide="next"><span class="carousel-control-next-icon"></span><span class="sr-only">Next</span></a></div>
-                <ol class="carousel-indicators">
-                    <li data-target="#carousel-1" data-slide-to="0" class="active"></li>
-                    <li data-target="#carousel-1" data-slide-to="1"></li>
-                    <li data-target="#carousel-1" data-slide-to="2"></li>
-                </ol>
             </div>
         </div>
         
@@ -84,13 +79,13 @@
                                 <div class="card-header">
                                    	 <h5 class="mb-0" >Dates</h5>
                                    	 <br></br>
-                                     <strong> Dead Line: </strong><p class="lead"> #{project.deadLine} </p>
+                                     <strong> Project deadline: </strong><p class="lead"> #{project.deadLine.toString().substring(0,16)} </p>
                                      <br></br>
-                                     <strong> Subscription dead line:</strong> <p class="lead"> #{project.subscriptionDeadline} </p>
+                                     <strong> Application deadline:</strong> <p class="lead"> #{project.subscriptionDeadline.toString().substring(0,16)} </p>
                                 </div>
                                 <div class="card-body">
                                     <button class="btn btn-primary join-btn" type="button"> 
-                                    <i class="fa fa-plus"></i> Candidate </button></div>
+                                    <i class="fa fa-plus"></i> Apply for </button></div>
                             </div>
                         </div>
                     </div>

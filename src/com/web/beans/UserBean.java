@@ -1,18 +1,29 @@
 package com.web.beans;
 
+import java.io.Serializable;
+
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
+
+import javax.faces.event.ActionEvent;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.persistence.EntityManager;
 
 import com.database.entities.User;
 import com.database.managers.JpaUtil;
 import com.database.managers.UserManager;
 import com.web.Session;
+import com.web.containers.ProjectContainer;
 import com.web.containers.UserContainer;
 
+import lombok.Data;
+
 @ManagedBean
-@RequestScoped
-public class UserBean {
+@ViewScoped
+@Data
+public class UserBean implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	private String email;
 	private String firstName;
@@ -30,14 +41,18 @@ public class UserBean {
 	private String definitionsErrorMessage;
 
 	
-	
-	
-	
+	public UserBean() {
+		user = Session.getInstance().getUser();
+		if(user == null)
+			Session.getInstance().redirectToLogin("user");
+	}
+
+
 	/**
 	 * If there is an valid userID in request map it returns the correspondent
 	 * UserContainer object otherwise returns null
 	 */
-	public UserContainer getPerfilUser() {
+	public UserContainer getUserPerfil() {
 		UserContainer perfil = null;
 		String id = Session.getInstance().getRequestMap().get("userID");
 		if(id != null && !id.isBlank()) {
@@ -45,65 +60,57 @@ public class UserBean {
 			if(u != null)
 				perfil = new UserContainer(u);
 		}
-				
+
 		return perfil;
 	}
-	
-	
-	
-	
-	
+
+
 	/**
 	 * Saves changes and commits them to data base.
 	 */
 	public String saveChanges() {
 		User userUpdate = UserManager.getUserById(user.getId());
-		
+
 		if(userUpdate.getPassword().equals(password)) {
-		
+
 			EntityManager em = JpaUtil.getEntityManager();
-			
+
 			em.getTransaction().begin();
-			
+
 			if(email != null && !email.isBlank()) 				//Sets user email
 				userUpdate.setEmail(email);
-			
+
 			if(firstName != null && !firstName.isBlank())  		//Sets user first name
 				userUpdate.setFristName(firstName);
-			
+
 			if(lastName != null && !lastName.isBlank())  		//Sets user last name
 				userUpdate.setLastName(lastName);
-			
+
 			if(cellPhone != null && !cellPhone.isBlank())  		//Sets user cell phone
 				userUpdate.setCellPhone(cellPhone);
-			
+
 			if(course != null && !course.isBlank()) 			//Sets user course
 				userUpdate.setCourse(course);
-			
+
 			if(username != null && !username.isBlank())  		//Sets user username
 				userUpdate.setUsername(username);
-			
+
 			if(newPassword != null && !newPassword.isBlank())  	//Sets user newPassword
 				userUpdate.setPassword(newPassword);
-			
+
 			em.merge(userUpdate);
 			em.flush();
 			em.getTransaction().commit();
-			
+
 			user = new UserContainer(userUpdate);
 			Session.getInstance().setUser(user);					//commits changes
-			
+
 			clearForm();
 		}else {
 			setDefinitionsErrorMessage("Password is incorrect");
 		}
 		return "";
 	}
-	
-	
-	
-	
-	
 	
 	
 	/**
@@ -118,226 +125,5 @@ public class UserBean {
 		this.newPassword = null;
 		this.password = null;
 		this.username = null;
-	}
-
-
-
-
-
-
-
-
-	/**
-	 * Redirects to login page
-	 */
-	public void redirectToLogin() {
-		Session.getInstance().redirectWithContext("/login");
-	}
-	
-
-
-	
-	
-	
-	
-	/**
-	 * @return the rendered
-	 */
-	public String getRendered() {
-		return rendered;
-	}
-
-	/**
-	 * @return the user
-	 */
-	public UserContainer getUser() {
-		user = Session.getInstance().getUser();
-		return user;
-	}
-
-	/**
-	 * @return the email
-	 */
-	public String getEmail() {
-		return email;
-	}
-
-
-
-	/**
-	 * @return the firstName
-	 */
-	public String getFirstName() {
-		return firstName;
-	}
-
-
-
-	/**
-	 * @return the lastName
-	 */
-	public String getLastName() {
-		return lastName;
-	}
-
-
-
-	/**
-	 * @return the cellPhone
-	 */
-	public String getCellPhone() {
-		return cellPhone;
-	}
-
-
-
-	/**
-	 * @return the course
-	 */
-	public String getCourse() {
-		return course;
-	}
-
-
-
-	/**
-	 * @return the username
-	 */
-	public String getUsername() {
-		return username;
-	}
-
-
-
-	/**
-	 * @return the newPassword
-	 */
-	public String getNewPassword() {
-		return newPassword;
-	}
-
-
-
-	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
-	}
-
-	
-	/**
-	 * @return the definitionsErrorMessage
-	 */
-	public String getDefinitionsErrorMessage() {
-		return definitionsErrorMessage;
-	}
-
-
-
-
-
-
-
-
-	/**
-	 * @param definitionsErrorMessage the definitionsErrorMessage to set
-	 */
-	public void setDefinitionsErrorMessage(String definitionsErrorMessage) {
-		this.definitionsErrorMessage = definitionsErrorMessage;
-	}
-
-
-
-
-
-
-
-
-	/**
-	 * @param email the email to set
-	 */
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-
-
-	/**
-	 * @param firstName the firstName to set
-	 */
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-
-
-	/**
-	 * @param lastName the lastName to set
-	 */
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-
-
-	/**
-	 * @param cellPhone the cellPhone to set
-	 */
-	public void setCellPhone(String cellPhone) {
-		this.cellPhone = cellPhone;
-	}
-
-
-
-	/**
-	 * @param course the course to set
-	 */
-	public void setCourse(String course) {
-		this.course = course;
-	}
-
-
-
-	/**
-	 * @param username the username to set
-	 */
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-
-
-	/**
-	 * @param newPassword the newPassword to set
-	 */
-	public void setNewPassword(String newPassword) {
-		this.newPassword = newPassword;
-	}
-
-
-
-	/**
-	 * @param password the password to set
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-
-
-	/**
-	 * @param user the user to set
-	 */
-	public void setUser(UserContainer user) {
-		this.user = user;
-	}
-
-	/**
-	 * @param rendered the rendered to set
-	 */
-	public void setRendered(String rendered) {
-		Session.getInstance().setLastPage("/user");
-		this.rendered = rendered;
 	}
 }

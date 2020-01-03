@@ -31,7 +31,7 @@ public class Project implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "project_id")
+	@Column
 	private int id;
 	
 	
@@ -46,11 +46,12 @@ public class Project implements Serializable {
 	@Column(length = 65, nullable = false, unique = true)	
 	private String title;
 	
-	
+	@Exclude
 	@Column(length = 665, nullable = false)	
 	private String description;
 	
-	@Column(length = 665, nullable = false)	
+	@Exclude
+	@Column(length = 300, nullable = false)	
 	private String requirements;
 	
 	@Column(nullable = false)
@@ -65,16 +66,16 @@ public class Project implements Serializable {
 	
 	@Column(nullable = false)
 	@Enumerated
-	private State state =  State.ON_APPROVAL;  //State.values()[new Random().nextInt(State.values().length)]; to random generate
+	private State state = State.ON_APPROVAL;  //State.values()[new Random().nextInt(State.values().length)]; to random generate
 
-	
+
+	@Exclude
 	@ManyToOne(cascade = CascadeType.ALL)
-	@LazyCollection(LazyCollectionOption.FALSE)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(foreignKey = @ForeignKey(name = "FK_PROJECT_MANAGER_ID"), nullable= false)
  	private User manager;
 	
-	
+	@Exclude
 	@Column
 	@ElementCollection(targetClass=String.class)
 	@LazyCollection(LazyCollectionOption.FALSE)
@@ -90,13 +91,25 @@ public class Project implements Serializable {
 			   inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<User> participants;
 	
-	
+	@Exclude
 	@Column
 	@ElementCollection(targetClass=String.class)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<String> imagePath;
-
-
+	
+	@Exclude
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+	private List<AcmLike> acmLikes = new ArrayList<>();
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	/**
@@ -119,7 +132,7 @@ public class Project implements Serializable {
 		this.deadLine = deadLine;
 		this.subscriptionDeadline = subscriptionDeadline;
 		this.manager = manager;
-		this.tags = tags;
+		this.tags = tags; 
 		this.imagePath = imagePath.stream().map(path -> "projects/"+path).collect(Collectors.toList());
 		
 		List<User> participants = new ArrayList<>();

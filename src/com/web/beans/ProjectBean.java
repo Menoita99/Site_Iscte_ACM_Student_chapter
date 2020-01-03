@@ -28,7 +28,7 @@ public class ProjectBean implements Serializable{
 		
 		try {
 			
-			if(id != null && !id.isBlank() && (project == null || Integer.parseInt(id) != project.getId()))
+			if(id != null && !id.isBlank())
 				project = new ProjectContainer(Integer.parseInt(id));
 			
 		}catch(Exception e) {

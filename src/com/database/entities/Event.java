@@ -70,6 +70,7 @@ public class Event implements Serializable {
 	private Double budget;
 	
 	
+	
 	/**
 	 * This method adds an image to imagePath
 	 * @param image image path

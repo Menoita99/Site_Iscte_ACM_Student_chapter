@@ -10,6 +10,7 @@ import com.database.entities.State;
 import com.database.managers.ProjectManager;
 
 import lombok.Data;
+import lombok.ToString.Exclude;
 
 /**
  * This object represents the Data transfer Object of class Project (Project DTO)
@@ -24,14 +25,19 @@ public class ProjectContainer implements Serializable {
 	private int id;
 	private int maxMembers;
 	private String title;
+	@Exclude
 	private String description;
+	@Exclude
 	private String requirements;
 	private Date deadLine;
 	private Date subscriptionDeadline;
 	private State state ;
+	@Exclude
 	private UserContainer manager;
 	private List<String> tags;
+	@Exclude
 	private List<UserContainer> participants;
+	@Exclude
 	private List<String> imagePath;
 
 
@@ -49,9 +55,7 @@ public class ProjectContainer implements Serializable {
 		this.deadLine  = p.getDeadLine();
 		this.subscriptionDeadline  = p.getSubscriptionDeadline();
 		this.state   = p.getState();
-		this.manager  = new UserContainer(p.getManager());
 		this.tags  = p.getTags();
-		this.participants  = p.getParticipants().stream().map(UserContainer::new).collect(Collectors.toList());
 		this.imagePath  = p.getImagePath();
 	}
 
@@ -67,9 +71,21 @@ public class ProjectContainer implements Serializable {
 		this.deadLine  = p.getDeadLine();
 		this.subscriptionDeadline  = p.getSubscriptionDeadline();
 		this.state   = p.getState();
-		this.manager  = new UserContainer(p.getManager());
 		this.tags  = p.getTags();
-		this.participants  = p.getParticipants().stream().map(UserContainer::new).collect(Collectors.toList());
 		this.imagePath  = p.getImagePath();
+	}
+	
+	
+	public UserContainer getManager() {
+		if(manager == null) 
+			manager = new UserContainer(ProjectManager.findById(id).getManager());
+		return manager;
+	}
+	
+	
+	public List<UserContainer> getParticipants() {
+		if(participants == null) 
+			participants = ProjectManager.findById(id).getParticipants().stream().map(UserContainer::new).collect(Collectors.toList());
+		return participants;
 	}
 }

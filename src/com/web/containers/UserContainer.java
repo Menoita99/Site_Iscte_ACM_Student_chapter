@@ -1,10 +1,9 @@
 package com.web.containers;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import com.database.entities.Event;
 import com.database.entities.User;
 import com.database.managers.EventManager;
 import com.database.managers.UserManager;
@@ -34,6 +33,7 @@ public class UserContainer implements Serializable {
 	private String username;
 	private boolean isMember;
 	private boolean isAdmin;
+	private List<ProjectContainer> projects;
 	
 	
 	
@@ -52,6 +52,7 @@ public class UserContainer implements Serializable {
 		this.username = user.getUsername();
 		this.isMember = user.isMember();
 		this.isAdmin = user.isAdmin();
+		this.projects = user.getProjects().stream().map(ProjectContainer::new).collect(Collectors.toList());
 	}
 
 	
@@ -69,17 +70,7 @@ public class UserContainer implements Serializable {
 		this.username = user.getUsername();
 		this.isMember = user.isMember();
 		this.isAdmin = user.isAdmin();
-	}
-
-	
-	
-	
-	
-	/**
-	 * @return the projects
-	 */
-	public List<ProjectContainer> getProjects() {
-		return null;
+		this.projects = user.getProjects().stream().map(ProjectContainer::new).collect(Collectors.toList());
 	}
 
 	
@@ -91,11 +82,6 @@ public class UserContainer implements Serializable {
 	 * only when this method is called will it retrieve information from the database
 	 */
 	public List<EventContainer> getEvents() {
-		List<EventContainer> events = new ArrayList<>();
-		
-		for (Event e : EventManager.getParticipations(id)) 
-			events.add(new EventContainer(e));
-		
-		return events;
+		return EventManager.getParticipations(id).stream().map(EventContainer::new).collect(Collectors.toList());
 	}
 }

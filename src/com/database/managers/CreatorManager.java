@@ -37,13 +37,13 @@ public class CreatorManager {
 
 //		createEvents();
 
-		createProject(5);
+		createProject(35);
 		
-		for (int i = 0; i < 10; i++) {
-			NewsLetter n = new NewsLetter();
-			n.setEmail(generateRandomPhrases(1)+"@"+generateRandomPhrases(1)+"."+generateRandomPhrases(1));
-			JpaUtil.createEntity(n);
-		}
+//		for (int i = 0; i < 10; i++) {
+//			NewsLetter n = new NewsLetter();
+//			n.setEmail(generateRandomPhrases(1)+"@"+generateRandomPhrases(1)+"."+generateRandomPhrases(1));
+//			JpaUtil.createEntity(n);
+//		}
 		
 	}
 
@@ -119,8 +119,8 @@ public class CreatorManager {
 			Date deadLine = Date.from(LocalDate.now().plusYears(1).plusDays(r.nextInt(20)).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 			Date subscriptionDeadline = Date.from(LocalDate.now().plusDays(10+r.nextInt(20)).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 			
-			ProjectManager.createproject(r.nextInt(9)+1, generateRandomPhrases(r.nextInt(3)+1), generateRandomPhrases(r.nextInt(50)+50),generateRandomPhrases(r.nextInt(30)+10)
-										, deadLine, subscriptionDeadline, r.nextInt((int)users), randomTags(), getRandomEventImages());
+			System.out.println(ProjectManager.createproject(r.nextInt(9)+1, generateRandomPhrases(r.nextInt(3)+1), generateRandomPhrases(r.nextInt(50)+50),generateRandomPhrases(r.nextInt(30)+10)
+										, deadLine, subscriptionDeadline, r.nextInt((int)users), randomTags(), getRandomEventImages()));
 		}
 	}
 	

@@ -64,7 +64,7 @@ public class UserManager {
 		if(getUserByEmail(email)==null && getUserByUsername(username)==null) {	//verifies if user already exits
 			
 			try {
-				user = new User(email,password,imagePath,fristName,lastName,username);									
+				user = new User(email,password,imagePath,fristName,lastName,username,generateActivationKey());									
 				JpaUtil.createEntity(user);
 			}catch (Exception e) {
 				user = null;
