@@ -1,7 +1,9 @@
 package com.web.containers;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.database.entities.User;
@@ -10,6 +12,7 @@ import com.database.managers.UserManager;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString.Exclude;
 
 /**
  *	This class represents an user that can be stored in session 
@@ -33,6 +36,8 @@ public class UserContainer implements Serializable {
 	private String username;
 	private boolean isMember;
 	private boolean isAdmin;
+	@Exclude
+	@lombok.EqualsAndHashCode.Exclude
 	private List<ProjectContainer> projects;
 	
 	
@@ -52,7 +57,6 @@ public class UserContainer implements Serializable {
 		this.username = user.getUsername();
 		this.isMember = user.isMember();
 		this.isAdmin = user.isAdmin();
-		this.projects = user.getProjects().stream().map(ProjectContainer::new).collect(Collectors.toList());
 	}
 
 	
@@ -70,18 +74,21 @@ public class UserContainer implements Serializable {
 		this.username = user.getUsername();
 		this.isMember = user.isMember();
 		this.isAdmin = user.isAdmin();
-		this.projects = user.getProjects().stream().map(ProjectContainer::new).collect(Collectors.toList());
 	}
 
 	
-	
+	public List<ProjectContainer> getProjects(){
+		if(projects == null)
+			this.projects = new ArrayList<>(UserManager.getUserById(id).getProjects().stream().map(ProjectContainer::new).collect(Collectors.toSet()));
+		return projects;
+	}
 	
 	
 	/**
 	 * This method returns all the events that an user is in  
 	 * only when this method is called will it retrieve information from the database
 	 */
-	public List<EventContainer> getEvents() {
-		return EventManager.getParticipations(id).stream().map(EventContainer::new).collect(Collectors.toList());
+	public Set<EventContainer> getEvents() {
+		return EventManager.getParticipations(id).stream().map(EventContainer::new).collect(Collectors.toSet());
 	}
 }

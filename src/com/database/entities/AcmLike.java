@@ -3,14 +3,13 @@ package com.database.entities;
 import com.database.entities.User;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString.Exclude;
 
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 /**
  * Entity implementation class for Entity: AcmLike
@@ -18,6 +17,7 @@ import org.hibernate.annotations.OnDeleteAction;
  */
 @Entity
 @Data
+@NoArgsConstructor
 public class AcmLike implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -28,26 +28,42 @@ public class AcmLike implements Serializable {
 	private int id;
 	
 	@Exclude
-	@ManyToOne(cascade = CascadeType.ALL)
-	@OnDelete(action = OnDeleteAction.CASCADE)
+	@ManyToOne
 	@JoinColumn(foreignKey = @ForeignKey(name = "FK_USER_LIKE_ID"), nullable= false)
 	private User user;
 	
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date date;
-	
+	private Date date =  new Date(System.currentTimeMillis());
+
 	@Exclude
-	@ManyToOne(cascade = CascadeType.ALL)
-	@OnDelete(action = OnDeleteAction.CASCADE)
+	@ManyToOne
 	@JoinColumn(foreignKey = @ForeignKey(name = "FK_PROJECT_LIKE_ID"), nullable= true)
-	private Project project;
+	private Project project = null;
 	
 	
 	@Exclude
-	@ManyToOne(cascade = CascadeType.ALL)
-	@OnDelete(action = OnDeleteAction.CASCADE)
+	@ManyToOne
 	@JoinColumn(foreignKey = @ForeignKey(name = "FK_EVENT_LIKE_ID"), nullable= true)
-	private Event event;
+	private Event event = null;
 	
+	
+	/**
+	 * @param user
+	 * @param project
+	 */
+	public AcmLike(User user, Project project) {
+		this.user = user;
+		this.project = project;
+	}
+	
+	
+	/**
+	 * @param user
+	 * @param event
+	 */
+	public AcmLike(User user,Event event) {
+		this.user = user;
+		this.event = event;
+	}
 }

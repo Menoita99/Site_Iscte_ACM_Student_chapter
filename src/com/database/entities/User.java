@@ -1,9 +1,12 @@
 package com.database.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -40,6 +43,9 @@ public class User implements Serializable {
 	@Column(length = 110)
 	private String imagePath = "default/ACM_ICON.png";
 	
+	@Column(length = 110)
+	private String cv;
+	
 	@Column(length = 25)
 	private String course;
 	
@@ -73,13 +79,8 @@ public class User implements Serializable {
 	
 	@Exclude
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@ManyToMany(mappedBy = "participants", cascade = CascadeType.ALL)
-	private List<Project> projects = new ArrayList<>();
-	
-	@Exclude
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<AcmLike> acmLikes = new ArrayList<>();
+	@ManyToMany(mappedBy = "participants")
+	private Set<Project> projects = new HashSet<>();
 	
 	
 	
@@ -151,4 +152,34 @@ public class User implements Serializable {
 		this.activationKey = activationKey;
 	}
 	
+	
+	
+	
+	
+	
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof User))
+			return false;
+		User other = (User) obj;
+		return Objects.equals(activationKey, other.activationKey) && Objects.equals(cellPhone, other.cellPhone)
+				&& Objects.equals(course, other.course) && Objects.equals(email, other.email)
+				&& Objects.equals(fristName, other.fristName) && Objects.equals(imagePath, other.imagePath)
+				&& isActive == other.isActive && isAdmin == other.isAdmin && isMember == other.isMember
+				&& Objects.equals(lastName, other.lastName) && Objects.equals(last_log, other.last_log)
+				&& Objects.equals(password, other.password) && Objects.equals(username, other.username)
+				&& views == other.views;
+	}
+
+
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(activationKey, cellPhone, course, email, fristName, imagePath, isActive, isAdmin, isMember,
+				lastName, last_log, password, username, views);
+	}
 }

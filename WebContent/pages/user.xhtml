@@ -301,7 +301,7 @@
 				                        <h1 class="display-4 text-center" style="margin-bottom: 30px;">Projects</h1>
 				                        <div class="table-responsive">
 				                        
-				                        	<h:dataTable class="table table-hover" value="#{user.projects}" var="p">
+				                        	<h:dataTable class="table table-hover" value="#{user.projects}" var="p" rendered="#{not empty user.projects}">
 				                        		<h:column>
 				                        			<f:facet name="header">Project title</f:facet>
 
@@ -354,12 +354,12 @@
 
 									<!-- sessionScope. -->
 									<c:if test="#{empty user.projects}">
-		                      			<h2 class="text-center" contenteditable="true">You don't have any events joined, try to create or dicover one!!!<br/></h2>
+		                      			<h2 class="text-center" contenteditable="true">You don't have any projects joined, try to create or discover one!!!<br/></h2>
 		                      		</c:if>
 		                      		
 		                             <div class="row text-center" style="margin-top: 30px;">
 									    <div class="col">
-									    	<h:link class="btn btn-primary"  > <i class="fa fa-plus"></i> Create Project</h:link>
+									    	<h:link class="btn btn-primary"> <i class="fa fa-plus"></i> Create Project</h:link>
 								    	</div>
 									    <div class="col">
 									    	<h:link class="btn btn-primary"  outcome="projects"><i class="fa fa-search"></i> Discover Projects</h:link>

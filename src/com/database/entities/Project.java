@@ -2,8 +2,9 @@ package com.database.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 import javax.persistence.*;
@@ -97,15 +98,6 @@ public class Project implements Serializable {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<String> imagePath;
 	
-	@Exclude
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
-	private List<AcmLike> acmLikes = new ArrayList<>();
-	
-	
-	
-	
-	
 	
 	
 	
@@ -138,6 +130,35 @@ public class Project implements Serializable {
 		List<User> participants = new ArrayList<>();
 		participants.add(manager);
 		this.participants = participants;
+	}
+
+
+
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(deadLine, description, imagePath, maxMembers, requirements, state, subscriptionDeadline,
+				tags, title, views);
+	}
+
+
+
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof Project))
+			return false;
+		Project other = (Project) obj;
+		return Objects.equals(deadLine, other.deadLine) && Objects.equals(description, other.description)
+				&& Objects.equals(imagePath, other.imagePath) && maxMembers == other.maxMembers
+				&& Objects.equals(requirements, other.requirements) && state == other.state
+				&& Objects.equals(subscriptionDeadline, other.subscriptionDeadline) && Objects.equals(tags, other.tags)
+				&& Objects.equals(title, other.title) && views == other.views;
 	}
 }
 
