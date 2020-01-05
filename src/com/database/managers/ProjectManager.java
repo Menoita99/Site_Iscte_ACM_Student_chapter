@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 
 import com.database.entities.AcmLike;
 import com.database.entities.Project;
+import com.database.entities.ProjectCandidate;
 import com.database.entities.User;
 
 public class ProjectManager {
@@ -48,7 +49,6 @@ public class ProjectManager {
 
 
 	/**
-	 * 
 	 * @param id
 	 * @return
 	 */
@@ -105,7 +105,40 @@ public class ProjectManager {
 
 
 
-//	public static void main(String[] args) {
-//		dislike(JpaUtil.executeQueryAndGetSingle("Select l from AcmLike l where l.user.id = 1", AcmLike.class));
-//	}
+
+
+
+	/**
+	 * Given the user ID it returns all the projects that user liked, 
+	 * if he didn't liked projects it returns an empty list
+	 */
+	public static List<Project> getLikedProjects(int userId) {
+		return JpaUtil.executeQuery("Select l.project from AcmLike l where l.user.id = "+userId,Project.class);
+	}
+	
+	
+	
+	/**
+	 *@return return an AcmLike object that correspond to the like that the given user  gave to the given project
+	 */
+	public static AcmLike getLikedProject(int userId, int projectId) {
+		List<AcmLike> rst = JpaUtil.executeQuery("Select l from AcmLike l where l.user.id = "+userId+" and l.project.id = "+projectId,AcmLike.class);
+		return rst.isEmpty() ? null : rst.get(0);
+	}
+	
+	
+	//----Project Candidate Manager ----//
+	
+	/**
+	 * 
+	 * @param userId
+	 * @param projectId
+	 * @return
+	 */
+	public static ProjectCandidate getCandidature(int userId , int projectId) {
+		List<ProjectCandidate> cand = JpaUtil.executeQuery("Select c from ProjectCandidate c where c.user.id = "+userId
+														  +" and c.project.id = "+projectId, ProjectCandidate.class);
+		
+		return cand.isEmpty() ? null : cand.get(0);
+	}
 }

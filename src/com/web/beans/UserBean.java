@@ -4,16 +4,14 @@ import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-
 import javax.faces.event.ActionEvent;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.persistence.EntityManager;
 
 import com.database.entities.User;
 import com.database.managers.JpaUtil;
+import com.database.managers.ProjectManager;
 import com.database.managers.UserManager;
 import com.web.Session;
-import com.web.containers.ProjectContainer;
 import com.web.containers.UserContainer;
 
 import lombok.Data;
@@ -45,6 +43,8 @@ public class UserBean implements Serializable{
 		user = Session.getInstance().getUser();
 		if(user == null)
 			Session.getInstance().redirectToLogin("user");
+		else
+			user.refresh();
 	}
 
 
@@ -126,4 +126,30 @@ public class UserBean implements Serializable{
 		this.password = null;
 		this.username = null;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	//------------------//
+	
+	/**
+	 *Dislikes project 
+	 */
+	public void dislikeProject(ActionEvent event) {
+		int projectId = (int) event.getComponent().getAttributes().get("projectId");
+		ProjectManager.dislike(ProjectManager.getLikedProject(Session.getInstance().getUser().getId(),projectId));
+		Session.getInstance().getUser().refresh();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }

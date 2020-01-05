@@ -1,13 +1,13 @@
 package com.web.containers;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.database.entities.User;
 import com.database.managers.EventManager;
+import com.database.managers.ProjectManager;
 import com.database.managers.UserManager;
 
 import lombok.Data;
@@ -38,8 +38,10 @@ public class UserContainer implements Serializable {
 	private boolean isAdmin;
 	@Exclude
 	@lombok.EqualsAndHashCode.Exclude
-	private List<ProjectContainer> projects;
-	
+	private List<ProjectContainer> joinedProjects;
+	@Exclude
+	@lombok.EqualsAndHashCode.Exclude
+	private List<ProjectContainer> likedProjects;
 	
 	
 	
@@ -59,7 +61,7 @@ public class UserContainer implements Serializable {
 		this.isAdmin = user.isAdmin();
 	}
 
-	
+
 	
 	
 	
@@ -76,12 +78,30 @@ public class UserContainer implements Serializable {
 		this.isAdmin = user.isAdmin();
 	}
 
+
 	
-	public List<ProjectContainer> getProjects(){
-		if(projects == null)
-			this.projects = new ArrayList<>(UserManager.getUserById(id).getProjects().stream().map(ProjectContainer::new).collect(Collectors.toSet()));
-		return projects;
+	
+	
+	/**
+	 * @return return a list with projects that user is a participant
+	 */
+	public List<ProjectContainer> getJoinedProjects(){
+		if(joinedProjects == null)
+			this.joinedProjects = UserManager.getUserById(id).getProjects().stream().map(ProjectContainer::new).collect(Collectors.toList());
+		return joinedProjects;
 	}
+
+
+	
+	
+	public List<ProjectContainer> getLikedProjects(){
+		if(likedProjects == null) 
+			this.likedProjects = ProjectManager.getLikedProjects(id).stream().map(ProjectContainer::new).collect(Collectors.toList());
+		return likedProjects;
+	}
+
+	
+	
 	
 	
 	/**
@@ -90,5 +110,27 @@ public class UserContainer implements Serializable {
 	 */
 	public Set<EventContainer> getEvents() {
 		return EventManager.getParticipations(id).stream().map(EventContainer::new).collect(Collectors.toSet());
+	}
+
+
+
+
+	/**
+	 * refresh 
+	 */
+	public void refresh() {
+		User user = UserManager.getUserById(id);
+		this.id = user.getId();
+		this.imagePath = user.getImagePath();
+		this.email = user.getEmail();
+		this.firstName = user.getFristName();
+		this.lastName = user.getLastName();
+		this.course = user.getCourse();
+		this.cellPhone = user.getCellPhone();
+		this.username = user.getUsername();
+		this.isMember = user.isMember();
+		this.isAdmin = user.isAdmin();
+		this.likedProjects = null;
+		this.joinedProjects = null;
 	}
 }

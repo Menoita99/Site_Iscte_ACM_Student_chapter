@@ -46,7 +46,7 @@
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
   		<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.js"></script>
-
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/js/swiper.jquery.min.js"></script>
 	</f:facet>
 	
 </h:head>
@@ -99,7 +99,7 @@
 										<!-- Logged in image -->
 										<c:if test="${sessionScope.user.imagePath != null}">	<!-- if user has an image  -->
 											<div class="user-icon-container">
-												 <h:graphicImage id="user-icon" value="/resources/files/#{sessionScope.user.imagePath}"/>
+											 	<h:graphicImage id="user-icon" value="/resources/files/#{sessionScope.user.imagePath}"/>
 											</div>
 										</c:if>
 										<c:if test="${sessionScope.user.imagePath == null}">	<!-- else  -->
@@ -114,7 +114,7 @@
 									<h:link outcome="user" value="Events">
 										<f:param name="rendered" value="events" />
 									</h:link>
-										<h:link outcome="user" value="Projects">
+									<h:link outcome="user" value="Projects">
 										<f:param name="rendered" value="projects" />
 									</h:link>
 										<h:link outcome="user" value="Research">

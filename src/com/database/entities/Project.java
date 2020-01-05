@@ -20,10 +20,8 @@ import lombok.ToString.Exclude;
 
 /**
  * Entity implementation class for Entity: Project
- *
  */
 @Entity
-@Table(name = "project")
 @Data
 @NoArgsConstructor
 public class Project implements Serializable {
@@ -32,7 +30,6 @@ public class Project implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column
 	private int id;
 	
 	
@@ -50,6 +47,10 @@ public class Project implements Serializable {
 	@Exclude
 	@Column(length = 665, nullable = false)	
 	private String description;
+	
+	@Exclude
+	@Column(length = 100, nullable = false)	
+	private String shortDescription;
 	
 	@Exclude
 	@Column(length = 300, nullable = false)	
@@ -77,14 +78,12 @@ public class Project implements Serializable {
  	private User manager;
 	
 	@Exclude
-	@Column
 	@ElementCollection(targetClass=String.class)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<String> tags;
 	
 	
 	@Exclude
-	@Column
 	@ManyToMany
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(name = "project_participants",
@@ -93,12 +92,17 @@ public class Project implements Serializable {
 	private List<User> participants;
 	
 	@Exclude
-	@Column
 	@ElementCollection(targetClass=String.class)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<String> imagePath;
 	
-	
+	@Exclude
+	@ManyToMany
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JoinTable(name = "project_material",
+			   joinColumns = @JoinColumn(name = "project_id"),
+			   inverseJoinColumns = @JoinColumn(name = "material_id"))
+	private List<Material> material;
 	
 	
 	
@@ -138,8 +142,7 @@ public class Project implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(deadLine, description, imagePath, maxMembers, requirements, state, subscriptionDeadline,
-				tags, title, views);
+		return Objects.hash(deadLine, description, imagePath, maxMembers, requirements, state, subscriptionDeadline, tags, title, views);
 	}
 
 

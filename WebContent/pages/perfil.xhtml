@@ -16,7 +16,7 @@
 
 	<ui:define name="content">
 	
-	<c:set var="user" value="#{userBean.getPerfilUser()}" />
+	<c:set var="user" value="#{userBean.getUserPerfil()}" />
 	
 	<c:if test="#{not empty user}">
 
@@ -28,7 +28,7 @@
 					    <div class="col">
 						     <c:if test="#{not empty user.imagePath}">
 					            <div class="user-image" style="margin-left: 50px;">
-					        		<h:graphicImage value="/resources/files/users/#{user.imagePath}" />
+					        		<h:graphicImage value="/resources/files/#{user.imagePath}" />
 				        		</div>
 				           	</c:if>
 				           	 <c:if test="#{empty user.imagePath}">

@@ -24,11 +24,11 @@
 		<div> 
 	        <div class="container" style="margin-bottom: 50px;margin-top:20px;">
 	            <div class="row">
-	                <div class="col-md-4 col-lg-4 col-xl-4" style="padding: 0px;">
+	                <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4" style="padding: 0px 0px 30px 0px;">
 	                    <div id="user-menu" style="padding: 30px;margin-right: 0;">
 	                        <div class="image-container">
 	                        	<c:if test="${not empty user.imagePath}">
-	                        		<h:graphicImage value="/resources/files/#{user.imagePath}"/>
+	                        		<h:graphicImage class="img-fluid" a:loading="lazy" a:alt="user_image" value="/resources/files/#{user.imagePath}"/>
                         		</c:if>
                         		<c:if test="${empty user.imagePath}">
                         			<center>
@@ -40,38 +40,33 @@
 	                            <li class="list-group-item">
 	                            	<h:form>
 	                            		<center>
-		                            		<h:commandLink value="Definitions" action="#{ userBean.setRendered('definitions')}">
-		                            			<f:ajax execute="@form" render=":events :definitions :projects :research" />
-		                            		</h:commandLink>
+		                            		<h:commandLink class="link" value="Definitions" action="#{ userBean.setRendered('definitions')}"/>
 		                            	</center>	
 	                            	</h:form>
 	                            </li>
 	                             <li class="list-group-item">
 	                            	<h:form>
 	                            		<center>
-		                            		<h:commandLink value="Events" action="#{ userBean.setRendered('events')}">
-		                            			<f:ajax execute="@form" render=":events :definitions :projects :research" />
-		                            		</h:commandLink>
+		                            		<h:commandLink class="link" value="Events" action="#{ userBean.setRendered('events')}"/>
 	                            		</center>
 	                            	</h:form>
 	                            </li>
 	                             <li class="list-group-item">
 	                            	<h:form>
 	                            		<center>
-		                            		<h:commandLink value="Projects" action="#{ userBean.setRendered('projects')}">
-		                            			<f:ajax execute="@form" render=":events :definitions :projects :research" />
-		                            		</h:commandLink>
+		                            		<h:commandLink class="link" value="Projects" action="#{ userBean.setRendered('projects')}"/>
 		                            	</center>	
 	                            	</h:form>
 	                            </li>
 	                             <li class="list-group-item">
 	                            	<h:form>
 		                            	<center>
-		                            		<h:commandLink value="Research" action="#{ userBean.setRendered('research')}">
-		                            			<f:ajax execute="@form" render=":events :definitions :projects :research" />
-		                            		</h:commandLink>
+		                            		<h:commandLink class="link" value="Research" action="#{ userBean.setRendered('research')}"/>
 	                            		</center>
 	                            	</h:form>
+	                            </li>
+	                             <li class="list-group-item">
+	                            	<a class="link">Applications</a>
 	                            </li>
 	                        </ul>
 	                        <h:form>
@@ -81,7 +76,8 @@
                        	   </h:form>
 	                    </div>
 	                </div>
-	                <div class="col-md-8 col-lg-8 col-xl-8">
+	                
+	                <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8">
 	                
 	                <h:panelGroup id="definitions" >
 	                	<h:panelGroup rendered="#{ userBean.rendered == 'definitions'}">
@@ -289,19 +285,15 @@
 	               		</h:panelGroup>
 	               	</h:panelGroup>
 	               	
-	               	
-	               	
-	               	
-	               
 	      	     	<h:panelGroup id="projects" >
 	         			<h:panelGroup rendered="#{ userBean.rendered == 'projects'}">
 								
-								<div class="content">
-								   <div class="content-eve" style="margin-top: 10px;">
-				                        <h1 class="display-4 text-center" style="margin-bottom: 30px;">Projects</h1>
-				                        <div class="table-responsive">
+								<div class="content"> <!-- Joined Projects -->
+								   <div style="margin-top: 10px;">
+				                        <h1 class="display-4 text-center" style="margin-bottom: 30px;">Joined Projects</h1>
+				                        <h:panelGroup class="table-responsive" rendered="#{not empty user.joinedProjects}">
 				                        
-				                        	<h:dataTable class="table table-hover" value="#{user.projects}" var="p" rendered="#{not empty user.projects}">
+				                        	<h:dataTable class="table table-hover" value="#{user.joinedProjects}" var="p" >
 				                        		<h:column>
 				                        			<f:facet name="header">Project title</f:facet>
 
@@ -340,7 +332,7 @@
 												    
 			                        			</h:column>
 				                        		<h:column>
-				                        			<f:facet name="header">Data</f:facet>
+				                        			<f:facet name="header">Date</f:facet>
 				                        			#{p.deadLine.toString().substring(0,16)}
 			                        			</h:column>
 				                        		<h:column>
@@ -348,18 +340,17 @@
 				                        			<i class="fa fa-remove"/>
 				                        		</h:column>
 				                        	</h:dataTable>
-				                        </div>
+				                        </h:panelGroup>
 				                    </div>
 
 
-									<!-- sessionScope. -->
-									<c:if test="#{empty user.projects}">
+									<c:if test="#{empty user.joinedProjects}">
 		                      			<h2 class="text-center" contenteditable="true">You don't have any projects joined, try to create or discover one!!!<br/></h2>
 		                      		</c:if>
 		                      		
 		                             <div class="row text-center" style="margin-top: 30px;">
 									    <div class="col">
-									    	<h:link class="btn btn-primary"> <i class="fa fa-plus"></i> Create Project</h:link>
+									    	<h:link class="btn btn-primary" outcome="createProject"> <i class="fa fa-plus"></i> Create Project</h:link>
 								    	</div>
 									    <div class="col">
 									    	<h:link class="btn btn-primary"  outcome="projects"><i class="fa fa-search"></i> Discover Projects</h:link>
@@ -367,13 +358,93 @@
 									</div>
 								</div>	
 
+								<div class="content " style="margin-top: 10px;"><!-- Liked Projects -->
+				                        <h1 class="display-4 text-center" style="margin-bottom: 30px;">Liked Projects</h1>
+				                        <h:panelGroup id="likes-table" class="table-responsive" rendered="#{not empty user.likedProjects}">
+				                        
+				                        	<h:dataTable class="table table-hover" value="#{user.likedProjects}" var="p" >
+				                        		<h:column>
+			                        				<f:facet name="header">
+				                        				<div style="text-align:center">
+				                        					Project title
+		                        						</div>
+		                        					</f:facet>
+													<div style="text-align:center">
+				                        				<h:link class="text-dark" a:data-toggle="modal" a:data-target="#project-modal" value="#{p.title}"/>
+													</div>
+																	                        			
+				                        			<div class="modal fade" role="dialog" tabindex="-1" id="project-modal">
+												        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+												            <div class="modal-content">
+												                <div class="modal-header">
+												                <h4 class="display-4 modal-title">#{p.title}</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+												                <div class="modal-body">
+												                    <h4>Description</h4>
+												                    <p><br/>#{p.description}<br/><br/></p>
+												                    <h4>Requirements</h4>
+												                    <p><br/>#{p.requirements}<br/><br/></p>
+												                    <h4>Dates</h4>
+												                    <br/>
+												                    <p>Dead line : #{p.deadLine.toString().substring(0,16)}</p>
+												                    <p>Candidature dead line : #{p.subscriptionDeadline.toString().substring(0,16)}</p>
+												                    <div class="text-center">
+											                    	    <h:form>
+													                        <h:button class="btn btn-primary" value="Discover" outcome="project">
+													                        	<f:param name="projectID" value="#{p.id}" />
+													                        </h:button>
+												                        </h:form>
+												                        <br/>
+												                	</div>
+												                	<div class="modal-footer">
+												                		<button class="btn btn-light" type="button" data-dismiss="modal">Close</button>
+												                		<!-- <button class="btn btn-primary" type="button">Save</button> -->
+											                		</div>
+										                		</div>
+												            </div>
+												        </div>
+												    </div>
+			                        			</h:column>
+				                        		<h:column>
+				                        			<f:facet name="header">
+				                        				<div style="text-align:center">
+				                        					Date
+		                        						</div>
+		                        					</f:facet>
+		                        					<div style="text-align:center">
+				                        				#{p.deadLine.toString().substring(0,16)}
+				                        			</div>
+			                        			</h:column>
+				                        		<h:column >
+				                        			<f:facet name="header">
+				                        				<div style="text-align:center">
+				                        					Dislike
+		                        						</div>
+		                        					</f:facet>
+				                        			<div style="text-align:center">
+				                        				<h:form>
+				                        					<h:commandLink  actionListener="#{userBean.dislikeProject}">
+				                        						<f:attribute name="projectId" value="#{p.id}"/>
+				                        						<f:ajax render="@all" execute="@this"/>
+				                        						<i class="fa fa-thumbs-down hover-red"/>
+				                        					</h:commandLink>
+				                        				</h:form>
+				                        				
+				                        			</div>
+				                        		</h:column>
+				                        	</h:dataTable>
+				                        </h:panelGroup>
+
+										<c:if test="#{empty user.likedProjects}">
+			                      			<h2 class="text-center" contenteditable="true">You didn't liked any project <i class="fa fa-frown-o"/></h2>
+			                      			<h2 class="text-center" contenteditable="true">Try to discover one!!!<br/></h2>
+		                      		
+		                      				<div style="text-align:center;margin-top:40px">
+		                      					<h:link class="btn btn-primary"  outcome="projects"><i class="fa fa-search"></i> Discover Projects</h:link>
+		                      				</div>
+										</c:if>
+									</div>
 	               		</h:panelGroup>
-	               		
 	               	</h:panelGroup>
-	               	
-	               	
-	               	
-	               	
 	               	
 	      	     	<h:panelGroup id="research" >
 	         			<h:panelGroup rendered="#{ userBean.rendered == 'research'}">

@@ -12,6 +12,7 @@ import com.database.managers.JpaUtil;
 import com.database.managers.ProjectManager;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString.Exclude;
 
 /**
@@ -20,6 +21,7 @@ import lombok.ToString.Exclude;
  */
 
 @Data
+@NoArgsConstructor
 public class ProjectContainer implements Serializable {
 
 	private static final long serialVersionUID = 1L;

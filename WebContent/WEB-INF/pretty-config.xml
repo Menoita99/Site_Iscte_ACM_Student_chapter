@@ -87,4 +87,8 @@
 		<view-id value="/pages/project.xhtml" />
 	</url-mapping>
 
+	<url-mapping id="createProject">
+		<pattern value="/createProject" />
+		<view-id value="/pages/createProject.xhtml" />
+	</url-mapping>
 </pretty-config>
