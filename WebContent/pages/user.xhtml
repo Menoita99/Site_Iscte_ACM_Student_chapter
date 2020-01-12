@@ -19,18 +19,16 @@
 		#{ userBean.setRendered(param['rendered'])}
 	</c:if>
 
-	<c:if test="${sessionScope.user != null}">
-
-		<c:set var="user" value="#{userBean.user}" />
+	<c:set var="user" value="#{userBean.user}" />
 
 		<div>
 	        <div class="container" style="margin-bottom: 50px;margin-top:20px;">
 	            <div class="row">
-	                <div class="col-md-4 col-lg-4 col-xl-4" style="padding: 0px;">
+	                <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4" style="padding: 0px 0px 30px 0px;">
 	                    <div id="user-menu" style="padding: 30px;margin-right: 0;">
 	                        <div class="image-container">
 	                        	<c:if test="${not empty user.imagePath}">
-	                        		<h:graphicImage value="/resources/files/users/#{user.imagePath}"/>
+	                        		<h:graphicImage class="img-fluid" a:loading="lazy" a:alt="user_image" value="/resources/files/#{user.imagePath}"/>
                         		</c:if>
                         		<c:if test="${empty user.imagePath}">
                         			<center>
@@ -42,38 +40,33 @@
 	                            <li class="list-group-item">
 	                            	<h:form>
 	                            		<center>
-		                            		<h:commandLink value="Definitions" action="#{ userBean.setRendered('definitions')}">
-		                            			<f:ajax execute="@form" render=":events :definitions :projects :research" />
-		                            		</h:commandLink>
+		                            		<h:commandLink class="link" value="Definitions" action="#{ userBean.setRendered('definitions')}"/>
 		                            	</center>
 	                            	</h:form>
 	                            </li>
 	                             <li class="list-group-item">
 	                            	<h:form>
 	                            		<center>
-		                            		<h:commandLink value="Events" action="#{ userBean.setRendered('events')}">
-		                            			<f:ajax execute="@form" render=":events :definitions :projects :research" />
-		                            		</h:commandLink>
+		                            		<h:commandLink class="link" value="Events" action="#{ userBean.setRendered('events')}"/>
 	                            		</center>
 	                            	</h:form>
 	                            </li>
 	                             <li class="list-group-item">
 	                            	<h:form>
 	                            		<center>
-		                            		<h:commandLink value="Projects" action="#{ userBean.setRendered('projects')}">
-		                            			<f:ajax execute="@form" render=":events :definitions :projects :research" />
-		                            		</h:commandLink>
+		                            		<h:commandLink class="link" value="Projects" action="#{ userBean.setRendered('projects')}"/>
 		                            	</center>
 	                            	</h:form>
 	                            </li>
 	                             <li class="list-group-item">
 	                            	<h:form>
 		                            	<center>
-		                            		<h:commandLink value="Research" action="#{ userBean.setRendered('research')}">
-		                            			<f:ajax execute="@form" render=":events :definitions :projects :research" />
-		                            		</h:commandLink>
+		                            		<h:commandLink class="link" value="Research" action="#{ userBean.setRendered('research')}"/>
 	                            		</center>
 	                            	</h:form>
+	                            </li>
+	                             <li class="list-group-item">
+	                            	<a class="link">Applications</a>
 	                            </li>
 	                        </ul>
 	                        <h:form>
@@ -83,7 +76,8 @@
                        	   </h:form>
 	                    </div>
 	                </div>
-	                <div class="col-md-8 col-lg-8 col-xl-8">
+
+	                <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8">
 
 	                <h:panelGroup id="definitions" >
 	                	<h:panelGroup rendered="#{ userBean.rendered == 'definitions'}">
@@ -101,7 +95,7 @@
 			                                    <div class="col-md-10 col-lg-10 col-xl-10">
 
 			                                    	<h:inputText class="form-control" a:type="email" a:placeholder="#{user.email}" value="#{userBean.email}"
-			                                    	validatorMessage="Invalid email" id="email"  maxlength="70" minlength="6">
+			                                    	validatorMessage="Invalid email" id="email"  a:maxlength="70" a:minlength="6">
 														<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
 													</h:inputText>
 
@@ -128,7 +122,7 @@
 			                                    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
 			                                        <div class="form-row">
 			                                            <div class="col-md-3 col-lg-4 col-xl-4">
-			                                            	<label class="col-form-label">Last Name<br></br></label>
+			                                            	<label class="col-form-label">Last Name<br/></label>
 		                                            	</div>
 			                                            <div class="col-md-9 col-lg-8 col-xl-8">
 			                                            	<h:inputText class="form-control" a:placeholder="#{user.lastName}" value="#{userBean.lastName}"
@@ -152,7 +146,7 @@
 			                                            <div class="col-md-9 col-lg-8 col-xl-8">
 
 			                                            	<h:inputText class="form-control" a:type="tel" a:placeholder="#{user.cellPhone}" value="#{userBean.cellPhone}"
-											                 validatorMessage="cell phone must have only 9 numbers" id="cellPhone">
+											                 validatorMessage="cell phone must have only 9 numbers" id="cellPhone" a:maxlength="9" a:minlength="9">
 																<f:validateRegex pattern="[0-9]{9}"/>
 															</h:inputText>
 
@@ -164,7 +158,7 @@
 			                                    <div class="col-lg-6 col-xl-6">
 			                                        <div class="form-row">
 			                                            <div class="col-md-3 col-lg-4 col-xl-4">
-			                                            	<label class="col-form-label">Course<br></br></label>
+			                                            	<label class="col-form-label">Course<br/></label>
 		                                            	</div>
 			                                            <div class="col-md-9 col-lg-8 col-xl-8">
 			                                            	<h:inputText class="form-control" a:placeholder="#{user.course}" value="#{userBean.course}"/>
@@ -182,7 +176,7 @@
 		                                            	</div>
 			                                            <div class="col-md-9 col-lg-8 col-xl-8">
 			                                            	<h:inputText class="form-control" a:placeholder="#{user.username}" value="#{userBean.username}"
-															validatorMessage="Invalid username" id="username"  maxlength="60" minlength="6">
+															validatorMessage="Invalid username" id="username"  a:maxlength="60" a:minlength="6">
 															<f:validateRegex pattern="[a-zA-Z0-9]{4,}"/>
 														</h:inputText>
 
@@ -193,7 +187,7 @@
 			                                    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
 			                                        <div class="form-row">
 			                                            <div class="col-md-3 col-lg-4 col-xl-4">
-			                                            	<label class="col-form-label">Password<br></br></label>
+			                                            	<label class="col-form-label">Password<br/></label>
 		                                            	</div>
 			                                            <div class="col-md-9 col-lg-8 col-xl-8">
 			                                            	<h:inputSecret class="form-control" a:placeholder="New password" value="#{userBean.newPassword}"
@@ -274,7 +268,7 @@
 		                      		</c:forEach>
 
 		                      		<c:if test="#{empty user.getEvents()}">
-		                      			<h2 class="text-center" contenteditable="true">You don't have any events joined, try to create or dicover one!!!<br></br><br></br></h2>
+		                      			<h2 class="text-center" contenteditable="true">You don't have any events joined, try to create or dicover one!!!<br/><br/></h2>
 		                      		</c:if>
 
 		                             <div class="row text-center" style="margin-top: 30px;">
@@ -293,46 +287,162 @@
 
 	      	     	<h:panelGroup id="projects" >
 	         			<h:panelGroup rendered="#{ userBean.rendered == 'projects'}">
-		                    <div class="content">
-		                        <h1 class="display-4 text-center" style="margin-bottom: 30px;">Projects</h1>
-		                        <div role="tablist" id="accordion-1">
-		                            <div class="card">
-		                                <div class="card-header" role="tab">
-		                                    <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="true" aria-controls="accordion-1 .item-1" href="#accordion-1 .item-1">Projects title</a></h5>
-		                                </div>
-		                                <div class="collapse show item-1" role="tabpanel" data-parent="#accordion-1">
-		                                    <div class="card-body">
-		                                        <div>
-		                                            <ul class="list-inline">
-		                                                <li class="list-inline-item"><i class="fa fa-map-marker"></i> Avenida das forças armadas (ISCTE-IUL)</li>
-		                                                <li class="list-inline-item"><i class="fa fa-calendar"></i> 03/07/2020</li>
-		                                                <li class="list-inline-item"><i class="fa fa-clock-o"></i> 20: 30 - 00:30</li>
-		                                            </ul><button class="btn btn-primary" type="button">See event</button></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="card">
-		                                <div class="card-header" role="tab">
-		                                    <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-2" href="#accordion-1 .item-2">Accordion Item</a></h5>
-		                                </div>
-		                                <div class="collapse item-2" role="tabpanel" data-parent="#accordion-1">
-		                                    <div class="card-body">
-		                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="card">
-		                                <div class="card-header" role="tab">
-		                                    <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-3" href="#accordion-1 .item-3">Accordion Item</a></h5>
-		                                </div>
-		                                <div class="collapse item-3" role="tabpanel" data-parent="#accordion-1">
-		                                    <div class="card-body">
-		                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                        </div>
-		                    </div>
+
+								<div class="content"> <!-- Joined Projects -->
+								   <div style="margin-top: 10px;">
+				                        <h1 class="display-4 text-center" style="margin-bottom: 30px;">Joined Projects</h1>
+				                        <h:panelGroup class="table-responsive" rendered="#{not empty user.joinedProjects}">
+
+				                        	<h:dataTable class="table table-hover" value="#{user.joinedProjects}" var="p" >
+				                        		<h:column>
+				                        			<f:facet name="header">Project title</f:facet>
+
+				                        			<h:link class="text-dark" a:data-toggle="modal" a:data-target="#project-modal" value="#{p.title}"/>
+
+				                        			<div class="modal fade" role="dialog" tabindex="-1" id="project-modal">
+												        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+												            <div class="modal-content">
+												                <div class="modal-header">
+												                <h4 class="display-4 modal-title">#{p.title}</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+												                <div class="modal-body">
+												                    <h4>Description</h4>
+												                    <p><br/>#{p.description}<br/><br/></p>
+												                    <h4>Requirements</h4>
+												                    <p><br/>#{p.requirements}<br/><br/></p>
+												                    <h4>Dates</h4>
+												                    <br/>
+												                    <p>Dead line : #{p.deadline.toString().substring(0,16)}</p>
+												                    <p>Candidature dead line : #{p.subscriptionDeadline.toString().substring(0,16)}</p>
+												                    <div class="text-center">
+											                    	    <h:form>
+													                        <h:button class="btn btn-primary" value="Discover" outcome="project">
+													                        	<f:param name="projectID" value="#{p.id}" />
+													                        </h:button>
+												                        </h:form>
+												                        <br/>
+												                	</div>
+												                	<div class="modal-footer">
+												                		<button class="btn btn-light" type="button" data-dismiss="modal">Close</button>
+												                		<!-- <button class="btn btn-primary" type="button">Save</button> -->
+											                		</div>
+										                		</div>
+												            </div>
+												        </div>
+												    </div>
+
+			                        			</h:column>
+				                        		<h:column>
+				                        			<f:facet name="header">Date</f:facet>
+				                        			#{p.deadline.toString().substring(0,16)}
+			                        			</h:column>
+				                        		<h:column>
+				                        			<f:facet name="header">Edit</f:facet>
+				                        			<i class="fa fa-remove"/>
+				                        		</h:column>
+				                        	</h:dataTable>
+				                        </h:panelGroup>
+				                    </div>
+
+
+									<c:if test="#{empty user.joinedProjects}">
+		                      			<h2 class="text-center" contenteditable="true">You don't have any projects joined, try to create or discover one!!!<br/></h2>
+		                      		</c:if>
+
+		                             <div class="row text-center" style="margin-top: 30px;">
+									    <div class="col">
+									    	<h:link class="btn btn-primary" outcome="createProject"> <i class="fa fa-plus"></i> Create Project</h:link>
+								    	</div>
+									    <div class="col">
+									    	<h:link class="btn btn-primary"  outcome="projects"><i class="fa fa-search"></i> Discover Projects</h:link>
+									    </div>
+									</div>
+								</div>
+
+								<div class="content " style="margin-top: 10px;"><!-- Liked Projects -->
+				                        <h1 class="display-4 text-center" style="margin-bottom: 30px;">Liked Projects</h1>
+				                        <h:panelGroup id="likes-table" class="table-responsive" rendered="#{not empty user.likedProjects}">
+
+				                        	<h:dataTable class="table table-hover" value="#{user.likedProjects}" var="p" >
+				                        		<h:column>
+			                        				<f:facet name="header">
+				                        				<div style="text-align:center">
+				                        					Project title
+		                        						</div>
+		                        					</f:facet>
+													<div style="text-align:center">
+				                        				<h:link class="text-dark" a:data-toggle="modal" a:data-target="#project-modal" value="#{p.title}"/>
+													</div>
+
+				                        			<div class="modal fade" role="dialog" tabindex="-1" id="project-modal">
+												        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+												            <div class="modal-content">
+												                <div class="modal-header">
+												                <h4 class="display-4 modal-title">#{p.title}</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+												                <div class="modal-body">
+												                    <h4>Description</h4>
+												                    <p><br/>#{p.description}<br/><br/></p>
+												                    <h4>Requirements</h4>
+												                    <p><br/>#{p.requirements}<br/><br/></p>
+												                    <h4>Dates</h4>
+												                    <br/>
+												                    <p>Dead line : #{p.deadline.toString().substring(0,16)}</p>
+												                    <p>Candidature dead line : #{p.subscriptionDeadline.toString().substring(0,16)}</p>
+												                    <div class="text-center">
+											                    	    <h:form>
+													                        <h:button class="btn btn-primary" value="Discover" outcome="project">
+													                        	<f:param name="projectID" value="#{p.id}" />
+													                        </h:button>
+												                        </h:form>
+												                        <br/>
+												                	</div>
+												                	<div class="modal-footer">
+												                		<button class="btn btn-light" type="button" data-dismiss="modal">Close</button>
+												                		<!-- <button class="btn btn-primary" type="button">Save</button> -->
+											                		</div>
+										                		</div>
+												            </div>
+												        </div>
+												    </div>
+			                        			</h:column>
+				                        		<h:column>
+				                        			<f:facet name="header">
+				                        				<div style="text-align:center">
+				                        					Date
+		                        						</div>
+		                        					</f:facet>
+		                        					<div style="text-align:center">
+				                        				#{p.deadline.toString().substring(0,16)}
+				                        			</div>
+			                        			</h:column>
+				                        		<h:column >
+				                        			<f:facet name="header">
+				                        				<div style="text-align:center">
+				                        					Dislike
+		                        						</div>
+		                        					</f:facet>
+				                        			<div style="text-align:center">
+				                        				<h:form>
+				                        					<h:commandLink  actionListener="#{userBean.dislikeProject}">
+				                        						<f:attribute name="projectId" value="#{p.id}"/>
+				                        						<f:ajax render="@all" execute="@this"/>
+				                        						<i class="fa fa-thumbs-down hover-red"/>
+				                        					</h:commandLink>
+				                        				</h:form>
+
+				                        			</div>
+				                        		</h:column>
+				                        	</h:dataTable>
+				                        </h:panelGroup>
+
+										<c:if test="#{empty user.likedProjects}">
+			                      			<h2 class="text-center" contenteditable="true">You didn't liked any project <i class="fa fa-frown-o"/></h2>
+			                      			<h2 class="text-center" contenteditable="true">Try to discover one!!!<br/></h2>
+
+		                      				<div style="text-align:center;margin-top:40px">
+		                      					<h:link class="btn btn-primary"  outcome="projects"><i class="fa fa-search"></i> Discover Projects</h:link>
+		                      				</div>
+										</c:if>
+									</div>
 	               		</h:panelGroup>
 	               	</h:panelGroup>
 
@@ -385,12 +495,5 @@
 	            </div>
 	        </div>
 	    </div>
-
-	</c:if>
-
-	<c:if test="${sessionScope.user == null}">
-		#{userBean.redirectToLogin()}
-	</c:if>
-
 	</ui:define>
 </ui:composition>

@@ -27,11 +27,6 @@
 		<view-id value="/pages/news.xhtml" />
 	</url-mapping>
 
-	<url-mapping id="projects">
-		<pattern value="/projects" />
-		<view-id value="/pages/projects.xhtml" />
-	</url-mapping>
-
 	<url-mapping id="team">
 		<pattern value="/team" />
 		<view-id value="/pages/team.xhtml" />
@@ -81,5 +76,19 @@
 		<pattern value="/becameMember" />
 		<view-id value="/pages/becameMember.xhtml" />
 	</url-mapping>
+	
+	<url-mapping id="projects">
+		<pattern value="/projects" />
+		<view-id value="/pages/projects.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="project">
+		<pattern value="/projects/#{projectID}" />
+		<view-id value="/pages/project.xhtml" />
+	</url-mapping>
 
+	<url-mapping id="createProject">
+		<pattern value="/createProject" />
+		<view-id value="/pages/createProject.xhtml" />
+	</url-mapping>
 </pretty-config>

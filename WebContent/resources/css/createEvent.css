@@ -1,3 +1,52 @@
+hr {
+	color:black;
+}
+
+.fa.fa-close {
+	color: red;
+}
+
+.fa.fa-close:hover {
+	color: rgba(255,0,0,0.6);
+}
+
+
+.success-div {
+  background-color: #8cf871;
+  border-radius: 5px;
+  color: white;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+#file-label:hover {
+  background-color: #65cccc;
+  cursor: pointer;
+}
+
+#file-label {
+  color: white;
+  background-color: rgb(75,175,188);
+  display: inline-block;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.table-div tbody {
+  border-bottom: 1px solid rgb(206,212,218);
+}
+
 .create-form-container {
   padding: 20px;
   background-color: white;
@@ -10,7 +59,6 @@
 }
 
 .create-form-container form {
-  padding: 20px;
   background-color: white;
   text-align: left;
 }
@@ -60,5 +108,20 @@
 
 .active {
   background-color: rgb(236,238,241);
+}
+
+
+
+.error-label-md{
+	color: #f35f63;
+}
+
+.error-label-bg{
+	color: #f35f63;
+}
+
+.error-label-sm{
+	color: #f35f63;
+	text-align: left;
 }
 

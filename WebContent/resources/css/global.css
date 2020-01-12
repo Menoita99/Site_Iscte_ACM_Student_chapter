@@ -6,17 +6,20 @@ section {
 .error-label-md{
 	font-size:18px;
 	display: block;
+	color:red;
 }
 
 .error-label-sm{
 	font-size:12px;
 	display: block;
+	color:red;
 }
 
 
 .error-label-bg{
 	font-size:24px;
 	display: block;
+	color:red;
 }
 
 
@@ -43,5 +46,8 @@ p {
 }
 
 
+.white-section {
+	background-color: white !important;
+}
 
 

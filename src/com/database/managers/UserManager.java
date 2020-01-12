@@ -1,15 +1,15 @@
 package com.database.managers;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.Date;
 import java.util.Random;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import com.containers.objects.UserContainer;
 import com.database.entities.User;
+import com.web.containers.UserContainer;
 
 /**
  * This class manages the interaction with the entity User
@@ -28,39 +28,57 @@ public class UserManager {
 	
 
 	/**
-	 * Creates a UserContainer given:
-	 * 
-	 * @param email
-	 * @param password
-	 * @param fristName
-	 * @param lastName
-	 * @param username
-	 * 
-	 * if user already exits it return null
+	 * Creates an user, if user already exits it returns null
 	 */
 	public static User createUser(String email, String password,String fristName, String lastName, String username) {
 		User user = null;
 		if(getUserByEmail(email)==null && getUserByUsername(username)==null) {	//verifies if user already exits
-
-			user = new User();									//creates an user
-			user.setActivationKey(generateActivationKey());
-			user.setEmail(email);
-			user.setPassword(password);
-			user.setFristName(fristName);
-			user.setLastName(lastName);
-			user.setUsername(username);
-			user.setViews(0);
-			user.setActive(false);
-			user.setAdmin(false);
-			user.setMember(false);
-			user.setLast_log(LocalDateTime.now().withNano(0));
-			JpaUtil.createEntity(user);
+			
+			try {
+				user = new User(email,password,fristName,lastName,username,generateActivationKey());									
+				JpaUtil.createEntity(user);
+			}catch (Exception e) {
+				user = null;
+				System.out.println("-------------------ERROR CREATING USER-------------------");
+				System.out.println();
+				System.out.println(e.getMessage());
+				System.out.println();
+				e.printStackTrace();
+				System.out.println("------------------------------------------------------------");
+			}
 		}
-		
 		
 		return user;
 	}
 
+	
+
+
+	
+
+	/**
+	 * Creates an user, if user already exits it returns null
+	 */
+	public static User createUser(String email, String password, String imagePath, String fristName, String lastName, String username) {
+		User user = null;
+		if(getUserByEmail(email)==null && getUserByUsername(username)==null) {	//verifies if user already exits
+			
+			try {
+				user = new User(email,password,imagePath,fristName,lastName,username,generateActivationKey());									
+				JpaUtil.createEntity(user);
+			}catch (Exception e) {
+				user = null;
+				System.out.println("-------------------ERROR CREATING USER-------------------");
+				System.out.println();
+				System.out.println(e.getMessage());
+				System.out.println();
+				e.printStackTrace();
+				System.out.println("------------------------------------------------------------");
+			}
+		}
+		
+		return user;
+	}
 	
 
 
@@ -106,11 +124,11 @@ public class UserManager {
 	 *Otherwise returns null 
 	 */
 	public static User usernameLogin(String username, String password ) {
-		User user = JpaUtil.executeQueryAndGetSingle("SELECT u FROM User u WHERE u.username = '"+username+"' "+
+		List<User> user = JpaUtil.executeQuery("SELECT u FROM User u WHERE u.username = '"+username+"' "+
 													 " and u.password = '"+password+"' ", User.class);																			//get results
-		if(user != null) {
-			updateLastLog(user);
-			return user;
+		if(!user.isEmpty()) {
+			updateLastLog(user.get(0));
+			return user.get(0);
 		}
 
 		return  null;	
@@ -223,7 +241,7 @@ public class UserManager {
 	 * @param user that must be updated
 	 */
 	private static void updateLastLog(User user) {
-		user.setLast_log(LocalDateTime.now().withNano(0));
+		user.setLast_log(new Date(System.currentTimeMillis()));
 		JpaUtil.mergeEntity(user);
 	}
 
@@ -311,41 +329,13 @@ public class UserManager {
 	 * 
 	 * Number of possible key =  ACCEPTABLE_CHARS ^ KEY_LENGTH (Math.pow(ACCEPTABLE_CHARS , KEY_LENGTH))
 	 */
-	private static String generateActivationKey() {
+	private static String generateActivationKey(){
 		String key = "";
-
 		do {
 			for (int i = 0; i < KEY_LENGTH; i++) 
 				key += ACCEPTABLE_CHARS.charAt(new Random().nextInt(ACCEPTABLE_CHARS.length()));
 		}while(getUserByActivationKey(key) != null);												//verifies if key already exits
 
 		return key;
-	}
-
-	
-
-
-	
-
-	/**
-	 * Converts an UserContainer into an User
-	 */
-	public static User convertToUser(UserContainer userContainer) {
-		if(userContainer.getId() != -1)
-			return getUserById(userContainer.getId());
-		if(userContainer.getEmail() != null)
-			return getUserByEmail(userContainer.getEmail());
-		if(userContainer.getUsername() != null)
-			return getUserByUsername(userContainer.getUsername());
-		return null;
-	}
-
-	
-
-
-	
-	 // Using main to debug and test
-	public static void main(String[] args) {
-		UserManager.createUser("teste@teste.com", "123456789", "Teste2", "Testão2", "teste");
 	}
 }

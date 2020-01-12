@@ -1,12 +1,16 @@
 package com.utils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.servlet.http.Part;
+
 
 /**
  *This class is used to get files from a root directory
@@ -23,39 +27,54 @@ import javax.faces.bean.ManagedBean;
 @ApplicationScoped
 public class FileManager {
 
-	private static final String ROOT_PATH= "D:/Files/";
-	
-	
-	/**
-	 * returns the a FileInputStream object of the image that we pretend to get
-	 */
-	public InputStream getImage(String filepath) {
-			try {
-				File file = new File(ROOT_PATH+filepath);
-				if(file.getName().matches("([^\\s]+(\\.(?i)(jpg|png|gif|jpeg))$)"))
-					return new FileInputStream(file);
-				
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
+
+	private static final String ROOT_PATH= "C:/Users/Rui Menoita/Desktop/Rui Menoita/WorkSpaces"		//FILES HARD PATH
+			+ "/Git-repository/Site_Iscte_ACM_Student_chapter"
+			+ "/WebContent/resources/files";	
+
+	private static final String imageRegexValidator = "([^\\s]+(\\.(?i)(jpg|png|gif|jpeg))$)";
+	private final static String typeRegex = ".*(jpg|png|gif|jpeg)$" ;
+
+
+
+
+
+
+	public static List<String> saveEventImages(List<Part> files) throws IOException {
+		List<String> paths = new ArrayList<>();
+
+		for (Part part : files) {
+			if(!part.getContentType().matches(typeRegex)) {
+				InputStream input = part.getInputStream();
+				Files.copy(input, Paths.get(ROOT_PATH +"/events/"));
+				input.close();
+				paths.add("/events/"+ part.getName());
 			}
-		return null;
-	}
-	
-	/**
-	 * returns the a string array with all the file names inside of the given dir
-	 */
-	public String[] getFileList(String dir) {
-		return new File(ROOT_PATH+dir).list();
-	}
-	
-	/**
-	 * returns the a file array with all the files inside of the given dir
-	 */
-	public File[] getFiles(String dir) {
-		return new File(ROOT_PATH+dir).listFiles();
+		}
+		
+		return paths;
 	}
 
-	public static boolean isImage(String path) {
-		return path.matches("([^\\s]+(\\.(?i)(jpg|png|gif|jpeg))$)");
+
+
+
+
+	/**
+	 * @return validates if the path given pertences to an image
+	 */
+	public static boolean validImage(String path) {
+		return path.matches(imageRegexValidator);
+	}
+
+
+
+
+	/**
+	 * Saves Part objects into projects folder and returns the paths
+	 * @return
+	 */
+	public static List<String> saveProjectFiles(List<Part> parts) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

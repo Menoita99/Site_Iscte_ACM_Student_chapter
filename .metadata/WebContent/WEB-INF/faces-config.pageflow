@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15695392528690" configfile="/Site ACM/WebContent/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="2482" id="pf1571604305806112" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15717911776090 pf15717911776091 pf15717911776092 pf15717911776093 pf15717911776094 pf15717911776095 pf15717911776096 pf15717911776097 pf15717911776098 pf15740201440750 pf15746231290333 pf15748499658000 pf157485011728213 pf157485011728214 pf15748867241400" path="/*"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="2482" id="pf1571604305806112" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15717911776090 pf15717911776091 pf15717911776092 pf15717911776093 pf15717911776094 pf15717911776095 pf15717911776096 pf15717911776097 pf15717911776098 pf15740201440750 pf15746231290333 pf15748499658000 pf157485011728213 pf157485011728214 pf15748867241400 pf15770602643150 pf15770604768131 pf15781896207390" path="/*"/>
   <nodes xsi:type="pageflow:PFPage" name="pages/home.xhtml" x="338" y="178" id="pf157179117760912" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf15717911776090" path="/pages/home.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="pages/login.xhtml" x="338" y="562" id="pf157179117760913" referenceLink="//@navigationRule.0/@navigationCase.3/@toViewId|" inlinks="pf15717911776091" path="/pages/login.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="pages/events.xhtml" x="338" y="946" id="pf157179117760914" referenceLink="//@navigationRule.0/@navigationCase.4/@toViewId|" inlinks="pf15717911776092" path="/pages/events.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="pages/registration.xhtml" x="338" y="1330" id="pf157179117760915" referenceLink="//@navigationRule.0/@navigationCase.5/@toViewId|" inlinks="pf15717911776093" path="/pages/registration.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="pages/news.xhtml" x="338" y="1714" id="pf157179117760916" referenceLink="//@navigationRule.0/@navigationCase.6/@toViewId|" inlinks="pf15717911776094" path="/pages/news.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="pages/projects.xhtml" x="338" y="2098" id="pf157179117760917" referenceLink="//@navigationRule.0/@navigationCase.7/@toViewId|" inlinks="pf15717911776095" path="/pages/projects.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/projects.xhtml" x="338" y="2098" id="pf157179117760917" referenceLink="//@navigationRule.0/@navigationCase.15/@toViewId|" inlinks="pf15717911776095 pf15770602643150" path="/pages/projects.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="pages/team.xhtml" x="338" y="2482" id="pf157179117760918" referenceLink="//@navigationRule.0/@navigationCase.8/@toViewId|" inlinks="pf15717911776096" path="/pages/team.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="pages/research.xhtml" x="338" y="2866" id="pf157179117760919" referenceLink="//@navigationRule.0/@navigationCase.9/@toViewId|" inlinks="pf15717911776097" path="/pages/research.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="pages/repository.xhtml" x="338" y="3250" id="pf157179117760920" referenceLink="//@navigationRule.0/@navigationCase.10/@toViewId|" inlinks="pf15717911776098" path="/pages/repository.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="pages/licenseTerms.xhtml" x="338" y="3634" id="pf15740201440751" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf15740201440750" path="/pages/licenseTerms.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="pages/perfil.xhtml" x="338" y="4402" id="pf15746231290334" referenceLink="//@navigationRule.0/@navigationCase.11/@toViewId|" inlinks="pf15746231290333" path="/pages/perfil.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="pages/createEvent.xhtml" x="338" y="4786" id="pf15748499658002" referenceLink="//@navigationRule.0/@navigationCase.12/@toViewId|" inlinks="pf15748499658000" path="/pages/createEvent.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="pages/event.xhtml" id="pf157485011728215" referenceLink="//@navigationRule.0/@navigationCase.14/@toViewId|" inlinks="pf157485011728213" path="/pages/event.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/createEvent.xhtml" x="338" y="4786" id="pf15748499658002" referenceLink="//@navigationRule.0/@navigationCase.17/@toViewId|" inlinks="pf15748499658000" path="/pages/createEvent.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/event.xhtml" id="pf157485011728215" referenceLink="//@navigationRule.0/@navigationCase.13/@toViewId|" inlinks="pf157485011728213" path="/pages/event.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="pages/user.xhtml" id="pf157485011728216" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf157485011728214" path="/pages/user.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="pages/becameMember.xhtml" id="pf15748867241401" referenceLink="//@navigationRule.0/@navigationCase.14/@toViewId|" inlinks="pf15748867241400" path="/pages/becameMember.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/project.xhtml" id="pf15770604768142" referenceLink="//@navigationRule.0/@navigationCase.16/@toViewId|" inlinks="pf15770604768131" path="/pages/project.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/createProject.xhtml" id="pf15781896207401" referenceLink="//@navigationRule.0/@navigationCase.17/@toViewId|" inlinks="pf15781896207390" path="/pages/createProject.xhtml"/>
   <links id="pf15717911776090" target="pf157179117760912" source="pf1571604305806112" outcome="home"/>
   <links id="pf15717911776091" target="pf157179117760913" source="pf1571604305806112" outcome="login"/>
   <links id="pf15717911776092" target="pf157179117760914" source="pf1571604305806112" outcome="events"/>
@@ -31,4 +33,7 @@
   <links id="pf157485011728213" target="pf157485011728215" source="pf1571604305806112" outcome="event"/>
   <links id="pf157485011728214" target="pf157485011728216" source="pf1571604305806112" outcome="user"/>
   <links id="pf15748867241400" target="pf15748867241401" source="pf1571604305806112" outcome="becameMember"/>
+  <links id="pf15770602643150" target="pf157179117760917" source="pf1571604305806112" outcome="projects"/>
+  <links id="pf15770604768131" target="pf15770604768142" source="pf1571604305806112" outcome="project"/>
+  <links id="pf15781896207390" target="pf15781896207401" source="pf1571604305806112" outcome="createProject"/>
 </pageflow:Pageflow>

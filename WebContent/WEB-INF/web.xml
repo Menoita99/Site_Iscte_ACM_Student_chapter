@@ -56,16 +56,9 @@
 		<param-value>resources.application</param-value>
 	</context-param>
 
-	<!-- Resource References -->
-
-	<!-- Listeners -->
-	<listener>
-		<listener-class>com.sun.faces.config.ConfigureListener</listener-class>
-	</listener>
-
 	<!-- <filter><filter-name>LoginFilter</filter-name> <filter-class>com.web.LoginPageFilter</filter-class> 
 		</filter> <filter-mapping> <filter-name>LoginFilter</filter-name> <url-pattern>/acm/templates/registration.xhtml</url-pattern> 
 		</filter-mapping> <listener> <listener-class>com.web.SessionListener</listener-class> 
 		</listener> -->
-
+		
 </web-app>

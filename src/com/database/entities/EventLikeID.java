@@ -1,16 +1,18 @@
 package com.database.entities;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 
 import javax.persistence.*;
+
+import lombok.Data;
 
 /**
  * Entity implementation class for Entity: EventLikeID
  *
  */
 @Embeddable
+@Data
 public class EventLikeID implements Serializable {
 
 	
@@ -21,24 +23,4 @@ public class EventLikeID implements Serializable {
 	
 	@Column(nullable = false)
 	private int eventID;
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(eventID, userID);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!(obj instanceof EventLikeID))
-			return false;
-		EventLikeID other = (EventLikeID) obj;
-		return eventID == other.eventID && userID == other.userID;
-	}
-
-	@Override
-	public String toString() {
-		return "EventLikeID [userID=" + userID + ", eventID=" + eventID + "]";
-	}
 }

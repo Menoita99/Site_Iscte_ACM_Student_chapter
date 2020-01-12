@@ -1,0 +1,71 @@
+.top-inclined {
+	-webkit-transform: skewY(4deg);
+	-moz-transform: skewY(4deg);
+	-ms-transform: skewY(4deg);
+	transform: skewY(4deg);
+}
+
+.top-inclined-content {
+	-webkit-transform: skewY(-4deg);
+	-moz-transform: skewY(-4deg);
+	-ms-transform: skewY(-4deg);
+	transform: skewY(-4deg);
+}
+
+.container.shadow {
+	box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.25) !important;
+}
+
+.status {
+	background-color: #909f89;
+	padding: 10px;
+	border-radius: 10px;
+	text-align: center;
+}
+
+.jumbotron.project-jumbotron {
+	background: linear-gradient(135deg, #00b2ff, rgba(189, 6, 193, 0.85));
+	color: white;
+	border-radius: 0px;
+}
+
+#carousel-1 .carousel-inner {
+	max-height: 500px;
+}
+
+.team-card {
+	max-width: 200px;
+	max-height: 250px;
+}
+
+.team-card img {
+	max-width: 125px;
+	max-height: 125px;
+	width: auto;
+	height: 100%;
+	border-radius: 50%;
+}
+
+.userNameLink {
+	text-decoration: none;
+	color: rgb(33, 37, 41);
+	font-size: 20px;
+	margin: 5px auto;
+}
+
+.userNameLink:hover {
+	text-decoration: none;
+	color: #aba9a9;
+	font-size: 20px;
+	margin: 5px auto;
+}
+
+#requirements {
+	margin: 0px 0px 20px ;
+}
+
+@media ( max-width : 400px) {
+	#requirements {
+		margin: 0px 0px 20px -20px;
+	}
+}

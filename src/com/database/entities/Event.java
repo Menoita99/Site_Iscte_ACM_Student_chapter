@@ -44,6 +44,9 @@ public class Event implements Serializable {
 	@Column(length = 300)
 	private String requirements;
 	
+	@Column(length = 500)
+	private String observation;
+	
 	@Column
 	@ElementCollection(targetClass=String.class)
 	@LazyCollection(LazyCollectionOption.FALSE)
@@ -65,6 +68,7 @@ public class Event implements Serializable {
 	
 	@Column()
 	private Double budget;
+	
 	
 	
 	/**
@@ -165,6 +169,22 @@ public class Event implements Serializable {
 	 */
 	public Double getBudget() {
 		return budget;
+	}
+
+
+	/**
+	 * @return the observation
+	 */
+	public String getObservation() {
+		return observation;
+	}
+
+
+	/**
+	 * @param observation the observation to set
+	 */
+	public void setObservation(String observation) {
+		this.observation = observation;
 	}
 
 

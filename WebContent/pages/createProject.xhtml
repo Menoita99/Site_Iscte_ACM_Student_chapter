@@ -1,0 +1,355 @@
+<ui:composition template="base.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="headContent">
+		<h:outputStylesheet library="css" name="createProject.css" />
+	</ui:define>
+
+	<ui:define name="content">
+
+
+	    <section class="header">
+	        <h1 class="display-3 text-center">Create project</h1>
+	    </section>
+	    <section class="white-section">
+	        <div class="container" style="max-width: 730px;padding: 0px;margin-top: 40px;">
+	            
+	            <div class="content" style="margin: 0px 15px;padding: 0px 15px;">  <!-- Header phases-->
+	                <div class="row">
+	                    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 text-center">
+	                        <h3>Details   <i class="icon ion-ios-arrow-forward"></i></h3>
+	                    </div>
+	                    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 text-center">
+	                        <h3>Assets    <i class="icon ion-ios-arrow-forward"></i></h3>
+	                    </div>
+	                    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 text-center">
+	                        <h3>Complete</h3>
+	                    </div>
+	                </div>
+	            </div>
+	        
+	        </div>
+	
+			<div class="container">
+         		<h:messages class="error-label-md" />
+      		</div>
+	        
+	        <h:panelGroup id="phase1">   <!-- Project Details (phase 1) -->
+	        	<h:panelGroup rendered="#{createProjectBean.phase == 1}">
+			        <div class="container" style="max-width: 730px;padding: 0px;">
+			            <div class="content" style="margin: 40px 15px;margin-top: 40px;margin-bottom: 40px;padding: 40px 15px;padding-top: 40px;padding-bottom: 40px;"> 
+			                <h1 style="margin-bottom: 30px;">Project Details</h1>
+			                <h:form>
+			                    <div class="form-group"><label>Title</label>
+			                    	<h:inputText id="title" class="form-control" a:minlength="3" a:maxlength="65" required="true"  requiredMessage="This field must not be empty" value="#{createProjectBean.container.title}"/>
+			                    	<h:message class="error-label-sm" for="title"/>
+		                    	</div>
+			                    <div class="form-group"><label>Description</label>
+			                    	<h:inputTextarea id="description" class="form-control" rows="5" a:minlength="3" a:maxlength="665" required="true" requiredMessage="This field must not be empty" value="#{createProjectBean.container.description}"/>
+		                    		<h:message class="error-label-sm" for="description"/>
+		                    	</div>
+			                    <div class="form-group"><label>Requirements</label>
+			                    	<h:inputTextarea id="requirements" class="form-control" a:minlength="3" a:maxlength="300" rows="5" required="true" requiredMessage="This field must not be empty" value="#{createProjectBean.container.requirements}"/>
+		                    		<h:message class="error-label-sm" for="requirements"/>
+		                    	</div>
+			                    <div class="form-group"><label>Short description</label>
+		                    		<h:inputTextarea id="sdescription" class="form-control" rows="3"  a:minlength="3" a:maxlength="100" required="true" requiredMessage="This field must not be empty" value="#{createProjectBean.container.shortDescription}"/>
+		                   			<h:message class="error-label-sm" for="sdescription"/>
+		                   		</div>
+		                   		 <div class="form-group"><label>Number of members</label>
+		                    		<h:inputText id="members" class="form-control" converterId="javax.faces.Integer" a:type="number" a:step="1" a:min="1" a:placeholder="0" required="true" requiredMessage="This field must not be empty" value="#{createProjectBean.container.maxMembers}">
+		                    			<h:message class="error-label-sm" for="members"/>
+	                    			</h:inputText>
+		                   		</div>
+				                <div class="row">
+				                    <div class="col text-left"/>
+				                    <div class="col text-right">
+				                    	<h:commandLink class="btn btn-primary" actionListener="#{createProjectBean.incrementPhase}"><i class="fa fa-arrow-right"></i></h:commandLink>
+			                    	</div>
+				                </div>
+			                </h:form>
+			            </div>
+			        </div>
+   	        	</h:panelGroup>
+        	</h:panelGroup>
+	        
+	         <h:panelGroup id="phase2">   <!-- Project Details (phase 2) -->
+	        	<h:panelGroup rendered="#{createProjectBean.phase == 2}">
+			        <div class="container" style="max-width: 730px;padding: 0px;">
+			            <div class="content" style="margin: 40px 15px;margin-top: 40px;margin-bottom: 40px;padding: 40px 15px;padding-top: 40px;padding-bottom: 40px;"> <!-- Project Assets (phase 2) -->
+			                <h1 style="margin-bottom: 30px;">Project Assets</h1>
+			               
+			                <h:form enctype="multipart/form-data"><!-- file upload form	 -->
+			                    <div class="form-group"><label>Upload images: </label>
+			                    	<h:outputLabel class="file-label" for="input-file" 	>
+		                        		Choose image <i class="fa fa-image"></i>
+	                        		</h:outputLabel>
+			                        <h:inputFile id="input-file"  class="inputfile" style="max-width: 200px;"
+			                        			 valueChangeListener="#{createProjectBean.addImage}"/>
+			                        <div style="margin-top: 20px;">
+			                        
+			                        	<h:dataTable id ="imageTable" class="table table-striped table-hover table-sm" rowClasses="text-center" value="#{createProjectBean.container.imagePath}" var="image" rendered="#{not empty createProjectBean.container.imagePath}">
+			                        		<h:column>
+			                        			#{image}
+			                        		</h:column>
+			                        		<h:column>
+			                        			<a href="#"><i class="fa fa-remove"></i></a>
+			                        		</h:column>
+			                        	</h:dataTable>
+
+			                        </div>
+			                    </div>
+		                    </h:form>
+		                    
+		                    <h:form>
+			                    <div class="form-group" style="margin-top: 16px;">
+			                        <div class="form-row">
+			                            <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3"><label class="col-form-label">Add participants: <br/></label></div>
+			                            <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
+			                            	<h:inputText class="form-control" a:placeholder="Username or email" value="#{createProjectBean.usernameOrEmail}"/></div>
+			                            <div class="col">
+			                            	<h:commandLink class="btn btn-primary" actionListener="#{createProjectBean.addUser}">
+			                            		<f:ajax render="@form" execute="@form"/>
+			                            		<i class="fa fa-plus"/>
+		                            		</h:commandLink>
+		                            	</div>
+			                        </div>
+			                        <div style="margin-top: 20px;">
+			                            <h:panelGroup id="participantTable">
+											<h:dataTable class="table table-striped table-hover table-sm" rowClasses="text-center" 
+														 value="#{createProjectBean.container.participants}" 
+														 var="p" rendered="#{not empty createProjectBean.container.participants}">
+				                        		<h:column>
+				                        			#{p.username}
+				                        		</h:column>
+				                        		<h:column>
+				                        			<h:commandLink actionListener="#{createProjectBean.removeUser}">
+					                        				<f:attribute name="participant" value="#{p}" />
+					                        				<f:ajax render="@form" execute="@form"/>
+				                        				<i class="fa fa-remove"/>
+				                        			</h:commandLink>
+				                        		</h:column>
+				                        	</h:dataTable>
+			                        	</h:panelGroup>
+
+			                        </div>
+			                    </div>
+		                    </h:form>
+		                    
+		                    <h:form>
+			                    <div class="form-group" style="margin-top: 16px;">
+			                        <div class="form-row">
+			                            <div class="col-2 col-sm-1 col-md-1 col-lg-1 col-xl-1"><label class="col-form-label">Tags:<br/></label></div>
+			                            <div class="col-6 col-sm-7 col-md-7 col-lg-7 col-xl-7">
+			                            	<h:inputText class="form-control" value="#{createProjectBean.tag}" a:placeholder="tag"/>
+			                            </div>
+			                            <div class="col">
+			                            	<h:commandLink class="btn btn-primary" actionListener="#{createProjectBean.addTag}">
+		                            			<f:ajax render="@form" execute="@form"/>
+			                            		<i class="fa fa-plus"></i>
+		                            		</h:commandLink>
+			                            </div>
+			                        </div>
+			                        <div style="margin-top: 20px;">
+			                           
+			                         <h:panelGroup id ="tagTable" >
+										<h:dataTable class="table table-striped table-hover table-sm" rowClasses="text-center" 
+													value="#{createProjectBean.container.tags}" var="t" rendered="#{not empty createProjectBean.container.tags}">
+			                        		<h:column>
+			                        			#{t}
+			                        		</h:column>
+			                        		<h:column>
+			                        			<h:commandLink actionListener="#{createProjectBean.removeTag}">
+			                        				<f:attribute name="tag" value="#{t}" />
+			                        				<f:ajax render="@form" execute="@form"/>
+			                        				<i class="fa fa-remove"/>
+			                        			</h:commandLink>
+			                        		</h:column>
+			                        	</h:dataTable>
+		                        	</h:panelGroup>
+
+			                        </div>
+			                    </div>
+	                    	</h:form>
+		                    
+		                    <h:form>
+			                    <div class="form-group" style="margin-top: 16px;">
+			                        <h4>Budget</h4>
+			                        <div class="form-row">
+			                        
+			                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+			                                <div style="padding-top: 10px;padding-bottom: 10px;">
+			                                	<div class="form-row">
+												    <div class="col"><label class="col-form-label">Material</label></div>
+												</div>
+												<h:inputText class="form-control" value="#{createProjectBean.material.name}" a:placeholder="Material" required="true" requiredMessage="This field must not be empty"/>
+			                                </div>
+			                            </div>
+			                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+			                                <div style="padding-top: 10px;padding-bottom: 10px;">
+			                                    <div class="form-row">
+			                                        <div class="col-5"><label class="col-form-label">Price</label></div>
+			                                        <div class="col-5"><label class="col-form-label">Qt</label></div>
+			                                    </div>
+			                                    <div class="form-row">
+			                                        <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10">
+			                                  	          <div class="form-row">
+			                                                <div class="col-6">
+			                                                	<h:inputText class="form-control" converterId="javax.faces.Double" a:type="number" a:min="0" a:step="0.01"
+			                                                				 a:placeholder="0" value="#{createProjectBean.material.price}" required="true" requiredMessage="This field must not be empty">
+			                                                		<f:validateDoubleRange minimum="0"/>
+			                                                	</h:inputText>
+		                                                	</div>
+			                                                <div class="col-6">
+			                                                	<h:inputText class="form-control" converterId="javax.faces.Integer" a:type="number" a:step="1" a:min="0" 
+			                                                				 a:placeholder="1" value="#{createProjectBean.material.quantity}" required="true" requiredMessage="This field must not be empty">
+			                                                		<f:validateDoubleRange minimum="1"/>
+			                                                	</h:inputText>
+		                                                	</div>
+			                                            </div>
+			                                        </div>
+			                                        <div class="col">
+			                                        	<h:commandLink class="btn btn-primary" actionListener="#{createProjectBean.addMaterial}">
+			                                        		<f:ajax render=":materialform @form" execute="@form"/>
+			                                        		<i class="fa fa-plus"/>
+		                                        		</h:commandLink>
+	                                        		</div>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                        </div>
+		                         </div> 
+	                         </h:form>
+	                         <h:form id="materialform">
+	                        	 <div class="form-group">
+			                        <div style="margin-top: 20px;">
+			                            <h:panelGroup >
+											<h:dataTable class="table table-striped table-hover table-sm" rowClasses="text-center" 
+														value="#{createProjectBean.container.material}" var="m" rendered="#{not empty createProjectBean.container.material}">
+				                        		<h:column>
+				                        			<f:facet name="header">
+				                        				<div style="text-align:center">
+				                        					Material
+		                        						</div>
+		                        					</f:facet>
+				                        			#{m.name}
+				                        		</h:column>
+				                        		<h:column>
+				                        			<f:facet name="header">
+				                        				<div style="text-align:center">
+				                        					Price €
+		                        						</div>
+		                        					</f:facet>
+				                        			#{m.price} €
+				                        		</h:column>
+				                        		<h:column>
+				                        			<f:facet name="header">
+				                        				<div style="text-align:center">
+				                        					Quantity
+		                        						</div>
+		                        					</f:facet>
+				                        			#{m.quantity}
+				                        		</h:column>
+				                        		<h:column>
+				                        		
+				                        			<h:commandLink actionListener="#{createProjectBean.removeMaterial}">
+				                        				<f:attribute name="material" value="#{m}" />
+				                        				<f:ajax render="@form" execute="@form"/>
+				                        				<i class="fa fa-remove"/>
+				                        			</h:commandLink>
+				                        		</h:column>
+				                        	</h:dataTable>
+			                        	  <label><strong>Total : </strong>
+											<h:outputText value="#{createProjectBean.getTotal()}">
+												<f:convertNumber minFractionDigits = "2" />
+											</h:outputText>	
+										  </label> €
+		                        		</h:panelGroup>
+			                        </div>
+			                    </div>
+		                  	</h:form> 
+		                    
+		                    <h:form id="dateForm">
+			                    <div class="form-group" style="margin-top: 16px;">
+			                        <h4>Dates</h4>
+			                        <div class="form-row">
+			                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+			                                <div style="padding-top: 10px;padding-bottom: 10px;">
+				                                <label>DeadLine</label>
+				                                <h:inputText class="form-control" id="deadline" a:type="datetime-local" value="#{createProjectBean.container.deadline}" 
+				                                			style="max-width: 300px;" required="true" requiredMessage="This field must not be empty">
+				                                	<f:validator validatorId="futureDateValidator" />
+			                               			<f:converter converterId="dateTimeConverter" />
+				                               	</h:inputText> 
+				                               	<h:message for="deadline" class="error-label-sm"/>
+			                                </div>
+			                            </div>
+			                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+			                                <div style="padding-top: 10px;padding-bottom: 10px;">
+				                                <label>Subscrition deadline</label>
+				                                <h:inputText id="sdeadline" class="form-control" a:type="datetime-local" value="#{createProjectBean.container.subscriptionDeadline}" 
+				                                			 style="max-width: 300px;" required="true" requiredMessage="This field must not be empty">
+			                               			<f:validator validatorId="futureDateValidator" />
+			                               			<f:converter converterId="dateTimeConverter" />
+	                                			 </h:inputText>
+	                                			 <h:message for="sdeadline" class="error-label-sm"/>
+			                                </div>
+			                            </div>
+			                        </div>
+			                        <h:commandButton class="btn btn-primary" value="Submit dates" />
+			                    </div>
+		                    </h:form>
+			                <div class="row">
+		                    <div class="col text-left">
+			                    <h:form>
+			                    	<h:commandLink class="btn btn-primary" actionListener="#{createProjectBean.decrementPhase}">
+			                    		<i class="fa fa-arrow-left"></i>
+		                    		</h:commandLink>
+                    		    </h:form>
+	                    	</div>
+		                    <div class="col text-right">
+		                    	<h:form>
+			                    	<h:commandLink class="btn btn-primary" actionListener="#{createProjectBean.incrementPhase}">
+			                    		<i class="fa fa-arrow-right"></i>
+		                    		</h:commandLink>
+	                    		</h:form>
+                    		</div>
+			                </div>
+			            </div>
+			        </div>
+	       		</h:panelGroup>
+        	</h:panelGroup>
+	        
+	         <h:panelGroup id="phase3">   <!-- Project Details (phase 3) -->
+	        	<h:panelGroup rendered="#{createProjectBean.phase == 3}">
+			        <div class="container" style="max-width: 730px;padding: 0px;">   <!-- Project Details (phase 3) -->
+			            <div class="content" style="margin: 40px 15px;margin-top: 40px;margin-bottom: 40px;padding: 40px 15px;padding-top: 40px;padding-bottom: 40px;">
+			                <h1 style="margin-bottom: 30px;">Process complete <i class="fa fa-check" style="color: rgba(142,239,45,0.79);"></i></h1>
+			                <p>You have successfully created a project, press button submit, to submit the project and ask for approval from ACM admins.<br/>If everything is alright, it must be accepted otherwise you must be contacted by email, so don't forget to
+			                    check regularly your inbox.<br/>When it got accepted you will receive an email to inform you that the project is now available at the projects page.<br/>Thank you for your participation.<br/><br/>Acm admins.</p>
+			                <div class="row">
+			                    <div class="col text-left">
+								</div>
+			                    <div class="col text-right">
+				                    <h:form>
+				                    	<h:commandLink class="btn btn-primary" actionListener="#{createProjectBean.submitProject}" action="user?rendered=projects">
+				                    		Submit project
+			                    		</h:commandLink>
+		                    		</h:form>
+	                    		</div>
+			                </div>
+			            </div>
+			        </div>
+		        </h:panelGroup>
+        	</h:panelGroup>
+	    </section>
+	</ui:define>
+</ui:composition>

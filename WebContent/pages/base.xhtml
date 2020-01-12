@@ -22,6 +22,7 @@
 		<link rel="stylesheet" href="https://unpkg.com/primeng@4.3.0/resources/themes/omega/theme.css" />
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 		<link rel="stylesheet" href="https://unpkg.com/primeng@4.3.0/resources/primeng.min.css" />
+		
 	</f:facet> 
 
 	<f:facet name="last">
@@ -33,7 +34,7 @@
 		<h:outputStylesheet library="css" name="global.css" /> 
 	
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" />
-	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"/>
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"/>
       	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" />	
 	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"/>
@@ -42,13 +43,12 @@
 		<ui:insert name="headContent"></ui:insert>
 		<!-- Scripts -->	
 			
-	    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
   		<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.js"></script>
-
-		
-		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/js/swiper.jquery.min.js"></script>
 	</f:facet>
+	
 </h:head>
 
 <h:body>
@@ -99,7 +99,7 @@
 										<!-- Logged in image -->
 										<c:if test="${sessionScope.user.imagePath != null}">	<!-- if user has an image  -->
 											<div class="user-icon-container">
-												 <h:graphicImage id="user-icon" value="/resources/files/users/#{sessionScope.user.imagePath}"/>
+											 	<h:graphicImage id="user-icon" value="/resources/files/#{sessionScope.user.imagePath}"/>
 											</div>
 										</c:if>
 										<c:if test="${sessionScope.user.imagePath == null}">	<!-- else  -->
@@ -114,7 +114,7 @@
 									<h:link outcome="user" value="Events">
 										<f:param name="rendered" value="events" />
 									</h:link>
-										<h:link outcome="user" value="Projects">
+									<h:link outcome="user" value="Projects">
 										<f:param name="rendered" value="projects" />
 									</h:link>
 										<h:link outcome="user" value="Research">
@@ -141,59 +141,65 @@
 	</div>
 
 	<!-- FOOTER -->
-	<div id="footer" class="footer-dark">
-		<footer>
-		 <div class="container">  
-			<div class="row">
-				<div class="col-sm-6 col-md-3 item">
-					<h3>Services</h3>
-					<ul>
-						<li><a href="#">Web design</a></li>
-						<li><a href="#">Development</a></li>
-						<li><a href="#">Hosting</a></li>
-					</ul>
+	<ui:insert name="script"></ui:insert>	
+	
+    <ui:debug hotkey="a" />
+	<footer>
+		<div id="footer" class="footer-dark">
+			 <div class="container">  
+				<div class="row">
+					<div class="col-sm-6 col-md-3 item">
+						<h3>Services</h3>
+						<ul>
+							<li><a href="#">Web design</a></li>
+							<li><a href="#">Development</a></li>
+							<li><a href="#">Hosting</a></li>
+						</ul>
+					</div>
+					<div class="col-sm-6 col-md-3 item">
+						<h3>About</h3>
+						<ul>
+							<li><a href="#">Company</a></li>
+							<li><a href="#">Team</a></li>
+							<li><a href="#">Careers</a></li>
+						</ul>
+					</div>
+					<div class="col-md-6 item text">
+						<h3>Company Name</h3>
+						<p>Praesent sed lobortis mi. Suspendisse vel placerat ligula.
+							Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis
+							tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel
+							in justo.</p>
+					</div>
+					<div class="col item social">
+						<h:link a:href="https://www.facebook.com/acm.iscte/"><i class="icon ion-social-facebook"></i></h:link>
+						<h:link a:href="https://twitter.com/iscteacm"><i class="icon ion-social-twitter"></i></h:link>
+						<h:link a:href="http://pt.linkedin.com/in/iscteacmstudentchapter"><i class="icon ion-social-linkedin"></i></h:link>
+						<h:link a:href="https://www.instagram.com/acm.iscte/?hl=pt"><i class="icon ion-social-instagram"></i></h:link>
+						<h:link a:href="https://www.youtube.com/channel/UCwRPrD0Xhu7CeHPbS6OgIFg"><i class="icon ion-social-youtube"></i></h:link>
+						<h:link a:href="http://www.pinterest.com/acmchapter"><i class="icon ion-social-pinterest"></i></h:link>
+						<h:link a:href="https://iscteacm.tumblr.com/"><i class="icon ion-social-tumblr"></i></h:link>
+					</div>
 				</div>
-				<div class="col-sm-6 col-md-3 item">
-					<h3>About</h3>
-					<ul>
-						<li><a href="#">Company</a></li>
-						<li><a href="#">Team</a></li>
-						<li><a href="#">Careers</a></li>
-					</ul>
+				
+				<p class="copyright">ACM copyright © 2019</p>
 				</div>
-				<div class="col-md-6 item text">
-					<h3>Company Name</h3>
-					<p>Praesent sed lobortis mi. Suspendisse vel placerat ligula.
-						Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis
-						tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel
-						in justo.</p>
-				</div>
-				<div class="col item social">
-					<h:link a:href="https://www.facebook.com/acm.iscte/"><i class="icon ion-social-facebook"></i></h:link>
-					<h:link a:href="https://twitter.com/iscteacm"><i class="icon ion-social-twitter"></i></h:link>
-					<h:link a:href="http://pt.linkedin.com/in/iscteacmstudentchapter"><i class="icon ion-social-linkedin"></i></h:link>
-					<h:link a:href="https://www.instagram.com/acm.iscte/?hl=pt"><i class="icon ion-social-instagram"></i></h:link>
-					<h:link a:href="https://www.youtube.com/channel/UCwRPrD0Xhu7CeHPbS6OgIFg"><i class="icon ion-social-youtube"></i></h:link>
-					<h:link a:href="http://www.pinterest.com/acmchapter"><i class="icon ion-social-pinterest"></i></h:link>
-					<h:link a:href="https://iscteacm.tumblr.com/"><i class="icon ion-social-tumblr"></i></h:link>
-				</div>
-			</div>
-			
-			<p class="copyright">ACM copyright © 2019</p>
 			</div>
 		</footer>
-	</div>
+	
 	
 	
 	
 	<!-- Script for bootstrap animations	-->
-	<script>
+	<script type="text/javascript">
 		$(document).ready(function(){
 			AOS.init({ disable: 'mobile' });
 			$('[data-bs-hover-animate]')
 				.mouseenter( function(){ var elem = $(this); elem.addClass('animated ' + elem.attr('data-bs-hover-animate')) })
 				.mouseleave( function(){ var elem = $(this); elem.removeClass('animated ' + elem.attr('data-bs-hover-animate')) });
 		});
+		
+		
 	</script>
 	
 	<h:outputScript library="js" name="base.js"/>

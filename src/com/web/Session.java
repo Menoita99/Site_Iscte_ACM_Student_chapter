@@ -7,7 +7,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
-import com.containers.objects.UserContainer;
+import com.web.containers.UserContainer;
 
 /**
  *This class represents a session 
@@ -173,6 +173,25 @@ public class Session {
 	}
 
 
+	
+	
+	
+	
+	
+	/**
+	 * Redirects to login page
+	 * @param lastPage page to redirected after login
+	 * e.g "user"
+	 */
+	public void redirectToLogin(String lastPage) {
+		setLastPage(lastPage);
+		redirectWithContext("/login");
+	}
+	
+	
+	
+	
+	
 
 
 
