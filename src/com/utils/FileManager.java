@@ -65,4 +65,16 @@ public class FileManager {
 	public static boolean validImage(String path) {
 		return path.matches(imageRegexValidator);
 	}
+
+
+
+
+	/**
+	 * Saves Part objects into projects folder and returns the paths
+	 * @return
+	 */
+	public static List<String> saveProjectFiles(List<Part> parts) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

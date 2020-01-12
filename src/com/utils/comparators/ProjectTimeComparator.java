@@ -23,7 +23,7 @@ public class ProjectTimeComparator implements Comparator<ProjectContainer> {
 	public int compare(ProjectContainer o1, ProjectContainer o2) {
 		int result = 0;
 		if(compareByDeadLine) 
-			result = (int) (o1.getDeadLine().toInstant().getEpochSecond() - o2.getDeadLine().toInstant().getEpochSecond());
+			result = (int) (o1.getDeadline().toInstant().getEpochSecond() - o2.getDeadline().toInstant().getEpochSecond());
 		else
 			result = (int) (o1.getSubscriptionDeadline().toInstant().getEpochSecond() - o2.getSubscriptionDeadline().toInstant().getEpochSecond());
 	

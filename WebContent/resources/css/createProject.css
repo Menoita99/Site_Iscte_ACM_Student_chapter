@@ -48,12 +48,16 @@
   background-color: white;
 }
 
-#file-label:hover {
+.file-label:hover {
   background-color: #65cccc;
   cursor: pointer;
 }
 
-#file-label {
+.file-label {
+  padding-right: 12px;
+  padding-left: 10px;
+  margin-bottom: 0px;
+  margin-left: 10px;
   color: white;
   background-color: rgb(75,175,188);
   display: inline-block;

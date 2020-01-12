@@ -14,6 +14,9 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.database.managers.UserManager;
+import com.web.containers.ProjectContainer;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString.Exclude;
@@ -118,7 +121,7 @@ public class Project implements Serializable {
 	 * @param tags	project tags
 	 * @param imagePath	project images
 	 */
-	public Project(int maxMembers, String title, String description,String requirements, Date deadLine, Date subscriptionDeadline,
+	public Project(int maxMembers, String title, String description, String shortDescription,String requirements, Date deadLine, Date subscriptionDeadline,
 			User manager, List<String> tags, List<String> imagePath) {
 
 		this.maxMembers = maxMembers;
@@ -130,12 +133,36 @@ public class Project implements Serializable {
 		this.manager = manager;
 		this.tags = tags; 
 		this.imagePath = imagePath.stream().map(path -> "projects/"+path).collect(Collectors.toList());
+		this.shortDescription = shortDescription;
 		
 		List<User> participants = new ArrayList<>();
 		participants.add(manager);
 		this.participants = participants;
 	}
 
+
+
+
+
+	public Project(ProjectContainer p) {
+		this.maxMembers = p.getMaxMembers();
+		this.title = p.getTitle();
+		this.description = p.getDescription();
+		this.requirements = p.getRequirements();
+		this.deadLine = p.getDeadline();
+		this.subscriptionDeadline = p.getSubscriptionDeadline();
+		this.manager = UserManager.getUserById(p.getManager().getId());
+		this.tags = p.getTags(); 
+		this.shortDescription = p.getShortDescription();
+		this.participants = p.getParticipants().stream().map(pa ->UserManager.getUserById(pa.getId())).collect(Collectors.toList());
+		this.material = p.getMaterial();
+		if(p.getImagePath().isEmpty()) {
+			this.imagePath = new ArrayList<>();
+			this.imagePath.add("default/ACM_ICON.png");
+		}else
+		this.imagePath = p.getImagePath();
+	}
+	
 
 
 

@@ -25,13 +25,13 @@ public class ProjectManager {
 	 * Creates a project
 	 * if project was created with success it returns the project otherwise it returns null
 	 */
-	public static Project createproject(int maxMembers, String title, String description, String requirements, Date deadLine, Date subscriptionDeadline, 
+	public static Project createproject(int maxMembers, String title, String description, String shortDescription, String requirements, Date deadLine, Date subscriptionDeadline, 
 			int managerID, List<String> tags, List<String> imagePath) {
 		Project p = null;
 
 		try {
 			User manager = UserManager.getUserById(managerID);
-			p = new Project(maxMembers, title, description,requirements, deadLine, subscriptionDeadline, manager, tags, imagePath);
+			p = new Project(maxMembers, title, description, shortDescription,requirements, deadLine, subscriptionDeadline, manager, tags, imagePath);
 			JpaUtil.createEntity(p);
 		}catch (Exception e) {
 			p = null;

@@ -6,13 +6,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.database.entities.Material;
 import com.database.entities.Project;
 import com.database.entities.State;
 import com.database.managers.JpaUtil;
 import com.database.managers.ProjectManager;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.ToString.Exclude;
 
 /**
@@ -21,22 +21,28 @@ import lombok.ToString.Exclude;
  */
 
 @Data
-@NoArgsConstructor
 public class ProjectContainer implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private int id;
-	private int maxMembers;
 	private long likes;
+	
+	private int maxMembers;
+	
 	private String title;
-	private Date deadLine;
+	
+	private Date deadline;
 	private Date subscriptionDeadline;
 	private State state ;
-	private List<String> tags;
+	private List<String> tags = new ArrayList<>();
 	
 	@Exclude
 	private String description;
+	
+	@Exclude
+	private String shortDescription;
+	
 	@Exclude
 	private String requirements;
 	
@@ -45,11 +51,13 @@ public class ProjectContainer implements Serializable {
 	private List<UserContainer> participants;
 	@Exclude
 	@lombok.EqualsAndHashCode.Exclude
-	private List<String> imagePath;
+	private List<String> imagePath = new ArrayList<>();
 	@Exclude
 	@lombok.EqualsAndHashCode.Exclude
 	private UserContainer manager;
-
+	@Exclude
+	@lombok.EqualsAndHashCode.Exclude
+	private List<Material> material;
 	
 	
 	/**
@@ -61,13 +69,15 @@ public class ProjectContainer implements Serializable {
 		this.maxMembers = p.getMaxMembers();
 		this.title  = p.getTitle();
 		this.description  = p.getDescription();
+		this.shortDescription = p.getShortDescription();
 		this.requirements = p.getRequirements();
-		this.deadLine  = p.getDeadLine();
+		this.deadline  = p.getDeadLine();
 		this.subscriptionDeadline  = p.getSubscriptionDeadline();
 		this.state   = p.getState();
 		this.tags  = new ArrayList<>(p.getTags());
 		this.imagePath  = new ArrayList<>(p.getImagePath());
 		this.likes = JpaUtil.executeQuery("Select count(*) from AcmLike l where l.project.id = "+id,Long.class).get(0);
+		this.material = p.getMaterial();
 	}
 
 
@@ -84,17 +94,33 @@ public class ProjectContainer implements Serializable {
 		this.maxMembers = p.getMaxMembers();
 		this.title  = p.getTitle();
 		this.description  = p.getDescription();
+		this.shortDescription = p.getShortDescription();
 		this.requirements = p.getRequirements();
-		this.deadLine  = p.getDeadLine();
+		this.deadline  = p.getDeadLine();
 		this.subscriptionDeadline  = p.getSubscriptionDeadline();
 		this.state   = p.getState();
 		this.tags  = new ArrayList<>(p.getTags());
 		this.imagePath  = new ArrayList<>(p.getImagePath());
 		this.likes = JpaUtil.executeQuery("Select count(*) from AcmLike l where l.project.id = "+id,Long.class).get(0);
+		this.material = p.getMaterial();
 	}
 
 
 
+
+	/**
+	 * 
+	 * @param user
+	 */
+	public ProjectContainer(UserContainer user) {
+		this.manager = user;
+		this.participants = new ArrayList<>();
+		this.participants.add(user);
+		this.material = new ArrayList<>();
+	}
+
+	
+	
 	
 	
 	/**
@@ -115,7 +141,7 @@ public class ProjectContainer implements Serializable {
 	 */
 	public List<UserContainer> getParticipants() {
 		if(participants == null) 
-			participants = new ArrayList<>(ProjectManager.findById(id).getParticipants().stream().map(UserContainer::new).collect(Collectors.toSet()));
+			participants = new ArrayList<>(ProjectManager.findById(id).getParticipants().stream().map(UserContainer::new).collect(Collectors.toList()));
 		return participants;
 	}
 
@@ -134,8 +160,9 @@ public class ProjectContainer implements Serializable {
 		this.maxMembers = p.getMaxMembers();
 		this.title  = p.getTitle();
 		this.description  = p.getDescription();
+		this.shortDescription = p.getShortDescription();
 		this.requirements = p.getRequirements();
-		this.deadLine  = p.getDeadLine();
+		this.deadline  = p.getDeadLine();
 		this.subscriptionDeadline  = p.getSubscriptionDeadline();
 		this.state   = p.getState();
 		this.tags  = new ArrayList<>(p.getTags());
@@ -143,5 +170,12 @@ public class ProjectContainer implements Serializable {
 		this.likes = JpaUtil.executeQuery("Select count(*) from AcmLike l where l.project.id = "+id,Long.class).get(0);
 		this.participants = null;
 		this.manager = null;
+		this.material = p.getMaterial();
 	}
+
+	
+	public void setDeadline(Date d) {
+		this.deadline = d;
+	}
+	
 }
