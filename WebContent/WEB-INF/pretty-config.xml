@@ -91,4 +91,25 @@
 		<pattern value="/createProject" />
 		<view-id value="/pages/createProject.xhtml" />
 	</url-mapping>
+	
+	<url-mapping id="adminDashboard">
+		<pattern value="/adminDashboard" />
+		<view-id value="/pages/admin/adminDashboard.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="adminNews">
+		<pattern value="/adminNews" />
+		<view-id value="/pages/admin/adminNews.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="adminUsers">
+		<pattern value="/adminUsers" />
+		<view-id value="/pages/admin/adminUsers.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="adminProjects">
+		<pattern value="/adminProjects" />
+		<view-id value="/pages/admin/adminProjects.xhtml" />
+	</url-mapping>
+	
 </pretty-config>

@@ -100,7 +100,7 @@ public class Project implements Serializable {
 	private List<String> imagePath;
 	
 	@Exclude
-	@ManyToMany
+	@ManyToMany(cascade=CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(name = "project_material",
 			   joinColumns = @JoinColumn(name = "project_id"),
