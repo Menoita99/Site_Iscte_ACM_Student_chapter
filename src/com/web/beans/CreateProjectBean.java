@@ -56,6 +56,10 @@ public class CreateProjectBean implements Serializable{
 	}
 
 
+	
+	
+	
+	
 	/**
 	 * Increment phase
 	 */
@@ -65,31 +69,28 @@ public class CreateProjectBean implements Serializable{
 	}
 
 
+	
+	
+	
+	
 	/**
 	 * Validates all required components on phase2
 	 */
 	private boolean validatePhase2() {
 		if(phase == 2) {
 			boolean valid = true;
-			FacesContext context = FacesContext.getCurrentInstance();
-			
+
 			if(container.getDeadline() == null ) {
-				FacesMessage msg = new FacesMessage("This field must not be empty");
-				msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-				context.addMessage("dateForm:deadline", msg);
+				sendMessageToComponent("dateForm:deadline", "This field must not be empty");
 				valid = false;
 			}
 			if(container.getSubscriptionDeadline() == null) {
-				FacesMessage msg = new FacesMessage("This field must not be empty");
-				msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-				context.addMessage("dateForm:sdeadline", msg);
+				sendMessageToComponent("dateForm:sdeadline", "This field must not be empty");
 				valid = false;
 			}
-			if(container.getDeadline() == null || container.getSubscriptionDeadline() == null) {
+			if(container.getDeadline() != null && container.getSubscriptionDeadline() != null) {
 				if(container.getDeadline().before(container.getSubscriptionDeadline())) {
-					FacesMessage msg = new FacesMessage("Deadline must be after subscription deadline");
-					msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-					context.addMessage("dateForm:sdeadline", msg);
+					sendMessageToComponent("dateForm:sdeadline", "Deadline must be after subscription deadline");
 					valid = false;
 				}
 			}
@@ -99,6 +100,28 @@ public class CreateProjectBean implements Serializable{
 	}
 
 
+	
+	
+	
+	
+	/**
+	 * Sends a message to component
+	 * 
+	 * @param componentId
+	 * @param message
+	 */
+	private void sendMessageToComponent(String componentId, String message) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		FacesMessage msg = new FacesMessage(message);
+		msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+		context.addMessage(componentId, msg);
+	}
+
+
+	
+	
+	
+	
 	/**
 	 * Decrement phase
 	 */
@@ -108,30 +131,41 @@ public class CreateProjectBean implements Serializable{
 	}
 
 
+
+	
+	
+	
 	/**
 	 * 
 	 * @param part
 	 */
 	public void addImage(ActionEvent event) {
-		System.out.println("SOMETHING NICE TO BE CALLED");
 		uploadedFiles.add(uploadedFile);
 		container.getImagePath().add(uploadedFile.getName());
 	}
 
 
+	
+	
+	
+	
 	/**
 	 * 
 	 */
 	public void addTag(ActionEvent event) {
 		if(!tag.isBlank()) {
 			if(!container.getTags().contains(tag)) {
-				System.out.println("Saving Tag "+tag);
 				container.getTags().add(tag);
 				tag = "";	
 			}
 		}
 	}
 
+
+	
+	
+	
+	
 	/**
 	 * 
 	 * @param event
@@ -142,31 +176,43 @@ public class CreateProjectBean implements Serializable{
 	}
 
 
+	
+	
+	
+	
 	/**
 	 * 
 	 * @param event
 	 */
 	public void addUser(ActionEvent event) {
 		if(!usernameOrEmail.isBlank()) {
-			User u = UserManager.getUserByUsername(usernameOrEmail); //check if there is an user with username 
-			if(u == null) 
-				u = UserManager.getUserByEmail(usernameOrEmail);	//check if there is an user with email ( if didn't found one with username )
+			if(container.getParticipants().size()<container.getMaxMembers()) {
+				
+				User u = UserManager.getUserByUsername(usernameOrEmail); //check if there is an user with username 
+				if(u == null) 
+					u = UserManager.getUserByEmail(usernameOrEmail);	//check if there is an user with email ( if didn't found one with username )
 
-			if(u != null) {
+				if(u != null) {
 
-				UserContainer participant = new UserContainer(u);
-				if(!container.getParticipants().contains(participant))
-					container.getParticipants().add(participant);
+					UserContainer participant = new UserContainer(u);
+					if(!container.getParticipants().contains(participant))
+						container.getParticipants().add(participant);
+					else
+						sendMessageToComponent("participantForm:username", "User already added");//
 
-				usernameOrEmail = "";
-			}else {
-				System.out.println("THERE NO USER IF INPUT GIVEN: "+usernameOrEmail);
-				//THERE NO USER IF INOUT GIVEN
-			}
+					usernameOrEmail = "";
+				}else 
+					sendMessageToComponent("participantForm:username", "User does not exist");
+			}else
+				sendMessageToComponent("participantForm:username", "Maximum number of members reached");
 		}
 	}
 
 
+	
+	
+	
+	
 	/**
 	 * 
 	 * @param event
@@ -176,10 +222,14 @@ public class CreateProjectBean implements Serializable{
 		if(!user.equals(container.getManager()))
 			container.getParticipants().remove(user);
 		else
-			System.out.println("Can't delete manager");
+			sendMessageToComponent("participantForm:username", "Can't remove the manager");
 	}
 
 
+	
+	
+	
+	
 	/**
 	 * 
 	 * @param event
@@ -192,7 +242,10 @@ public class CreateProjectBean implements Serializable{
 	}
 
 
-
+	
+	
+	
+	
 	/**
 	 * 
 	 * @param event
@@ -203,6 +256,10 @@ public class CreateProjectBean implements Serializable{
 	}
 
 
+	
+	
+	
+	
 	/**
 	 * 
 	 * @return
@@ -218,15 +275,18 @@ public class CreateProjectBean implements Serializable{
 	}
 
 
-
+	
+	
+	
+	
 	/**
 	 * Saves project into database
 	 * @param event
 	 */
-	public void submitProject(ActionEvent event) {
+	public String submitProject() {
 		List<String> paths = FileManager.saveProjectFiles(uploadedFiles);
 		container.setImagePath(paths);
-		Project p = new Project(container);
-		JpaUtil.createEntity(p);
+		JpaUtil.createEntity(new Project(container));
+		return  "user?rendered=projects";
 	}
 }

@@ -73,7 +73,7 @@
 			                					value="/resources/files/#{project.imagePath.get(0)}"/>
 			                    <div class="card-body">
 			                        <h4 class="card-title">#{project.title}</h4>
-			                        <p class="card-text">#{project.state}</p>
+			                        <p class="card-text">#{project.shortDescription}</p>
 			                        <p class="card-text">#{project.deadline}</p>
 			                        <p class="card-text"> <ui:repeat var="tag" value="#{project.tags}"> #{tag} </ui:repeat> </p>
 			                        <h:form>

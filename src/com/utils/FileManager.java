@@ -75,6 +75,6 @@ public class FileManager {
 	 */
 	public static List<String> saveProjectFiles(List<Part> parts) {
 		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<String>();
 	}
 }
