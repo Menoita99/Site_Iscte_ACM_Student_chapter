@@ -112,4 +112,9 @@
 		<view-id value="/pages/admin/adminProjects.xhtml" />
 	</url-mapping>
 	
+	<url-mapping id="adminProject">
+		<pattern value="/adminProjects/#{projectId}" />
+		<view-id value="/pages/admin/adminProject.xhtml" />
+	</url-mapping>
+	
 </pretty-config>

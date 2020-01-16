@@ -9,18 +9,25 @@ import com.database.entities.AcmLike;
 import com.database.entities.Project;
 import com.database.entities.ProjectCandidate;
 import com.database.entities.User;
+import com.web.containers.ProjectContainer;
 
 public class ProjectManager {
-
+	
+	
+	
+	
+	
 	/**
 	 * @return return all projects from data base
 	 */
 	public static List<Project> findAll(){
 		return JpaUtil.executeQuery("Select p from Project p", Project.class);
 	}
-
-
-
+	
+	
+	
+	
+	
 	/**
 	 * Creates a project
 	 * if project was created with success it returns the project otherwise it returns null
@@ -45,8 +52,11 @@ public class ProjectManager {
 
 		return p ;
 	}
-
-
+	
+	
+	
+	
+	
 	/**
 	 * @param id
 	 * @return
@@ -59,8 +69,11 @@ public class ProjectManager {
 			em.close();
 		}
 	}
-
-
+	
+	
+	
+	
+	
 	/**
 	 * Creates an object Acmlike with project id and user id given
 	 * if object to be created already exists it returns false;
@@ -80,20 +93,22 @@ public class ProjectManager {
 		}
 		return like;
 	}
-
-
-
+	
+	
+	
+	
+	
 	/**
 	 * @return true if given user already have liked given project
 	 */
 	public static boolean wasLiked(int userId, int projectId) {
 		return ! JpaUtil.executeQuery("Select l from AcmLike l where l.user.id = "+userId +" and l.project.id = "+projectId, AcmLike.class).isEmpty();
 	}
-
-
-
-
-
+	
+	
+	
+	
+	
 	/**
 	 * Removes a given AcmLike
 	 * @param acmLike like to me removed
@@ -101,12 +116,11 @@ public class ProjectManager {
 	public static void dislike(AcmLike acmLike) {
 		JpaUtil.deleteEntity(acmLike);
 	}
-
-
-
-
-
-
+	
+	
+	
+	
+	
 	/**
 	 * Given the user ID it returns all the projects that user liked, 
 	 * if he didn't liked projects it returns an empty list
@@ -114,6 +128,8 @@ public class ProjectManager {
 	public static List<Project> getLikedProjects(int userId) {
 		return JpaUtil.executeQuery("Select l.project from AcmLike l where l.user.id = "+userId,Project.class);
 	}
+	
+	
 	
 	
 	
@@ -126,7 +142,31 @@ public class ProjectManager {
 	}
 	
 	
+	
+	
+	
+	/**
+	 * 
+	 * @param project
+	 */
+	public static void updateProject(ProjectContainer project) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	//----Project Candidate Manager ----//
+	
+	
+	
+	
 	
 	/**
 	 * 
@@ -141,6 +181,13 @@ public class ProjectManager {
 		return cand.isEmpty() ? null : cand.get(0);
 	}
 
+
+	/**
+	 * @return return all candidatures of a project
+	 */
+	public static List<ProjectCandidate> getCandidates(int projectId){
+		return JpaUtil.executeQuery("Select c from ProjectCandidate c where c.project.id = "+projectId, ProjectCandidate.class);
+	}
 
 
 }

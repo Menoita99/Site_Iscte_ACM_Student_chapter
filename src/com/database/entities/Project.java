@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 import java.util.Date;
 import java.util.stream.Collectors;
 
@@ -36,8 +37,13 @@ public class Project implements Serializable {
 	private int id;
 	
 	
-	@Column(nullable = false)
-	private int views = 0;
+	@Exclude
+	@ManyToMany(cascade=CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JoinTable(name = "project_views",
+			   joinColumns = @JoinColumn(name = "project_id"),
+			   inverseJoinColumns = @JoinColumn(name = "view_id"))
+	private List<View> views = new ArrayList<>();
 	
 	
 	@Column(nullable = false)
@@ -61,6 +67,10 @@ public class Project implements Serializable {
 	
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
+	private Date creationDate = new Date(System.currentTimeMillis());
+	
+	@Column(nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date deadLine;
 	
 	
@@ -71,11 +81,11 @@ public class Project implements Serializable {
 	
 	@Column(nullable = false)
 	@Enumerated
-	private State state = State.ON_APPROVAL;  //State.values()[new Random().nextInt(State.values().length)]; to random generate
+	private State state = State.values()[new Random().nextInt(State.values().length-1)]; // State.ON_APPROVAL;  
 
 
 	@Exclude
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(foreignKey = @ForeignKey(name = "FK_PROJECT_MANAGER_ID"), nullable= false)
  	private User manager;
