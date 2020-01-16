@@ -46,12 +46,12 @@ public class ProjectBean implements Serializable{
 				Project p = ProjectManager.findById(Integer.parseInt(id));
 				if(p != null) {
 					project = new ProjectContainer(p);
-
+					ProjectManager.addView(p.getId());
+					
 					if(Session.getInstance().getUser() != null) {
 						ProjectCandidate c = ProjectManager.getCandidature(Session.getInstance().getUser().getId(), project.getId());
 						candidature = c == null ? new ProjectCandidateContainer() : new ProjectCandidateContainer(c);
 					}
-
 				}
 			}
 

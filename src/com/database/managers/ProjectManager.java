@@ -9,6 +9,7 @@ import com.database.entities.AcmLike;
 import com.database.entities.Project;
 import com.database.entities.ProjectCandidate;
 import com.database.entities.User;
+import com.database.entities.View;
 import com.web.containers.ProjectContainer;
 
 public class ProjectManager {
@@ -158,6 +159,23 @@ public class ProjectManager {
 	
 	
 	
+	/**
+	 *Gives a view to given project
+	 *
+	 * @param id project id
+	 */
+	public static void addView(int id) {
+		View v = new View();
+		JpaUtil.createEntity(v);
+		
+		Project project = findById(id);
+		project.getViews().add(v);
+		JpaUtil.mergeEntity(project);
+	}
+	
+	
+	
+	
 	
 	
 	
@@ -188,6 +206,4 @@ public class ProjectManager {
 	public static List<ProjectCandidate> getCandidates(int projectId){
 		return JpaUtil.executeQuery("Select c from ProjectCandidate c where c.project.id = "+projectId, ProjectCandidate.class);
 	}
-
-
 }

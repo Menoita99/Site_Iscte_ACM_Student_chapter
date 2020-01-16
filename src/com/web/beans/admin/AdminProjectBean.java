@@ -6,6 +6,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
+import com.database.entities.Project;
 import com.database.managers.ProjectManager;
 import com.web.Session;
 import com.web.containers.ProjectContainer;
@@ -19,7 +20,7 @@ public class AdminProjectBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private ProjectContainer project;
+	private ProjectContainer project = null;
 	private String managerUsername;
 	
 	
@@ -32,8 +33,11 @@ public class AdminProjectBean implements Serializable {
 
 		try {
 			if(id != null) {
-				project = new ProjectContainer(ProjectManager.findById(Integer.parseInt(id)));
-				managerUsername = project.getManager().getUsername();
+				Project p = ProjectManager.findById(Integer.parseInt(id));
+				if(p != null) {
+					project = new ProjectContainer(p);
+					managerUsername = project.getManager().getUsername();
+				}
 			}
 		}catch(NumberFormatException e) {
 			System.out.println("Couldn't parse "+id);

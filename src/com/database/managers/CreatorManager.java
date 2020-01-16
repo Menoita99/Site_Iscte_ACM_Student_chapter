@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.Random;
 
 import com.database.entities.NewsLetter;
+import com.database.entities.Project;
 import com.database.entities.User;
 
 public class CreatorManager {
@@ -24,16 +25,16 @@ public class CreatorManager {
 	 * Generates Users and events with complete status
 	 */
 	public static void main(String[] args) {
-		createUsers(100);
-		createProject(35);
-		createNews(10);
+		createUsers(300);
+		createProject(70);
+		createNewsLetter(1);
 	}
 
 
 
 
 
-	private static void createNews(int x) {
+	private static void createNewsLetter(int x) {
 		for (int i = 0; i < x; i++) {
 			NewsLetter n = new NewsLetter();
 			n.setEmail(generateRandomPhrases(1)+"@"+generateRandomPhrases(1)+"."+generateRandomPhrases(1));
@@ -72,9 +73,11 @@ public class CreatorManager {
 			Date deadLine = Date.from(LocalDate.now().plusYears(1).plusDays(r.nextInt(20)).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 			Date subscriptionDeadline = Date.from(LocalDate.now().plusDays(10+r.nextInt(20)).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 			
-			System.out.println(ProjectManager.createproject(r.nextInt(9)+1, generateRandomPhrases(r.nextInt(3)+1), generateRandomPhrases(r.nextInt(50)+50),
+			Project p = ProjectManager.createproject(r.nextInt(9)+1, generateRandomPhrases(r.nextInt(3)+1), generateRandomPhrases(r.nextInt(50)+50),
 										generateRandomPhrases(r.nextInt(10)+5),generateRandomPhrases(r.nextInt(30)+10)
-										, deadLine, subscriptionDeadline, r.nextInt((int)users), randomTags(), getRandomEventImages()));
+										, deadLine, subscriptionDeadline, r.nextInt((int)users), randomTags(), getRandomEventImages());
+			if(p == null)
+				i--;
 		}
 	}
 	
