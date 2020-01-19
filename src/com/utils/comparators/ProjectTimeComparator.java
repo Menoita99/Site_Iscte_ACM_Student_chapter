@@ -27,7 +27,7 @@ public class ProjectTimeComparator implements Comparator<ProjectContainer> {
 		else
 			result = (int) (o1.getSubscriptionDeadline().toInstant().getEpochSecond() - o2.getSubscriptionDeadline().toInstant().getEpochSecond());
 	
-		return isAscending  || result ==0 ? result : - result;
+		return isAscending  || result == 0 ? result : - result;
 	}
 
 }

@@ -80,7 +80,15 @@ public class User implements Serializable {
 	@ManyToMany(mappedBy = "participants")
 	private Set<Project> projects = new HashSet<>();
 	
+	@Exclude
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@ManyToMany(mappedBy = "staff")
+	private Set<Event> eventStaff = new HashSet<>();
 	
+	@Exclude
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@ManyToMany(mappedBy = "participants")
+	private Set<Event> eventParticipant = new HashSet<>();
 	
 	
 	/**

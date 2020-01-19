@@ -39,7 +39,7 @@ public class ImageValidator implements Validator {
 
 			if (message!=null && !message.getDetail().isEmpty()) {
 				message.setSeverity(FacesMessage.SEVERITY_ERROR);
-				throw new ValidatorException(message );
+				throw new ValidatorException(message);
 			}
 
 		} catch (Exception ex) {

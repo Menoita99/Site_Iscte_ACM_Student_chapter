@@ -141,7 +141,7 @@ public class UserBean implements Serializable{
 	 */
 	public void dislikeProject(ActionEvent event) {
 		int projectId = (int) event.getComponent().getAttributes().get("projectId");
-		ProjectManager.dislike(ProjectManager.getLikedProject(Session.getInstance().getUser().getId(),projectId));
+		ProjectManager.dislike(projectId, Session.getInstance().getUser().getId());
 		Session.getInstance().getUser().refresh();
 	}
 	

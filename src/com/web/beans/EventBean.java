@@ -5,8 +5,6 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
-import com.database.entities.EventParticipant;
-import com.database.managers.EventManager;
 import com.web.Session;
 import com.web.containers.EventContainer;
 import com.web.containers.UserContainer;
@@ -30,7 +28,7 @@ public class EventBean implements Serializable{
 	 * if event there is no event inside requestMap it returns null
 	 */
 	public EventContainer getEvent() {
-		String id = Session.getInstance().getRequestMap().get("id");
+		String id = Session.getInstance().getRequestMap().get("eventId");
 		
 		if(id == null)
 			id = "" + Session.getInstance().getSessionAtribute("eventID");	
@@ -72,9 +70,6 @@ public class EventBean implements Serializable{
 
 
 		if(!hasJoin()) {
-			EventParticipant ep = EventManager.addParticipant(event.getId(), user.getId(), false);
-			if(ep == null)
-				setErrorMessage("Event is full");
 		}
 
 		return "";
@@ -98,9 +93,6 @@ public class EventBean implements Serializable{
 		if(user == null) return "login";
 
 		if(hasJoin()) {
-			EventParticipant ep = EventManager.removeParticipant(event.getId(), user.getId());
-			if(ep == null)
-				setErrorMessage("An error occurred removing user, if this persists please contact us");
 		}
 
 		return "";
@@ -119,7 +111,7 @@ public class EventBean implements Serializable{
 	public boolean hasJoin() {
 		UserContainer user = Session.getInstance().getUser();
 		if(user == null) return false;
-		return EventManager.isParticipant(event.getId(),user.getId());
+		return false;
 	}
 
 

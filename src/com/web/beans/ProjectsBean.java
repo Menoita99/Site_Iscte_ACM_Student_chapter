@@ -47,7 +47,12 @@ public class ProjectsBean implements Serializable {
 	 * @return return All the State enum values
 	 */
 	public State[] getStates() {
-		return State.values();
+		State[] states = new State[4];
+		states[0] = State.ALL;
+		states[1] = State.RECRUITING;
+		states[2] = State.DEVELOPING;
+		states[3] = State.FINISHED;
+		return states;
 	}
 
 

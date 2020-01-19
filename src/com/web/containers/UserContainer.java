@@ -1,12 +1,11 @@
 package com.web.containers;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.database.entities.User;
-import com.database.managers.EventManager;
 import com.database.managers.ProjectManager;
 import com.database.managers.UserManager;
 
@@ -108,8 +107,8 @@ public class UserContainer implements Serializable {
 	 * This method returns all the events that an user is in  
 	 * only when this method is called will it retrieve information from the database
 	 */
-	public Set<EventContainer> getEvents() {
-		return EventManager.getParticipations(id).stream().map(EventContainer::new).collect(Collectors.toSet());
+	public List<EventContainer> getEvents() {
+		return new ArrayList<EventContainer>();
 	}
 
 

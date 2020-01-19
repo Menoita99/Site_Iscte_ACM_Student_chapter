@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.Set;
 import java.util.Random;
 
+import com.database.entities.Event;
 import com.database.entities.NewsLetter;
 import com.database.entities.Project;
 import com.database.entities.User;
@@ -25,9 +26,49 @@ public class CreatorManager {
 	 * Generates Users and events with complete status
 	 */
 	public static void main(String[] args) {
-		createUsers(300);
+		createUsers(100);
 		createProject(70);
 		createNewsLetter(1);
+		createEvents(70);
+	}
+
+
+
+
+
+	private static void createEvents(int n) {
+		Random r = new Random();
+		for (int i = 0; i < n; i++) {
+			
+			long users = JpaUtil.executeQueryAndGetSingle("Select count(*) from User u", Long.class);
+			
+			List<Date> dates = new ArrayList<>();
+			List<Date> sub = new ArrayList<>();
+			List<Integer> staff = new ArrayList<>();
+			List<String> places = new ArrayList<>();
+			
+			for (int j = 0; j < r.nextInt(5)+1; j++) {
+				staff.add(r.nextInt((int)users));
+				sub.add(Date.from(LocalDate.now().plusDays(10+r.nextInt(20)).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+				dates.add(Date.from(LocalDate.now().plusYears(1).plusDays(r.nextInt(20)).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+				places.add(generateRandomPhrases(r.nextInt(3)+2));
+			}
+			
+			Event e = EventManager.createEvent(r.nextInt(50)+50 
+					, generateRandomPhrases(r.nextInt(3)+1)
+					, generateRandomPhrases(r.nextInt(30)+50)
+					, generateRandomPhrases(r.nextInt(10)+5)
+					, generateRandomPhrases(r.nextInt(5)+5)
+					, getRandomEventImages()
+					, dates
+					, r.nextInt((int)users)
+					, randomTags()
+					, staff
+					, sub
+					, places);
+			if(e==null)
+				i--;
+		}
 	}
 
 
@@ -75,7 +116,7 @@ public class CreatorManager {
 			
 			Project p = ProjectManager.createproject(r.nextInt(9)+1, generateRandomPhrases(r.nextInt(3)+1), generateRandomPhrases(r.nextInt(50)+50),
 										generateRandomPhrases(r.nextInt(10)+5),generateRandomPhrases(r.nextInt(30)+10)
-										, deadLine, subscriptionDeadline, r.nextInt((int)users), randomTags(), getRandomEventImages());
+										, deadLine, subscriptionDeadline, r.nextInt((int)users), randomTags(), getRandomProjectImages());
 			if(p == null)
 				i--;
 		}
@@ -108,6 +149,32 @@ public class CreatorManager {
 		return new ArrayList<String>(images);
 	}
 	
+	
+	
+	
+	
+	
+	
+
+
+
+	/**
+	 * returns a Set of random images from images that are on events directory
+	 */
+	private static List<String> getRandomProjectImages() {
+		Set<String> images = new HashSet<String>();
+
+		File dir = new File("WebContent/resources/files/projects/");
+		int r = new Random().nextInt(5)+1;
+
+		for (int i = 0; i < r; i++) {
+			int img = new Random().nextInt(dir.list().length);
+			if(!images.contains(dir.list()[img]))
+				images.add(dir.list()[img]);
+		}
+
+		return new ArrayList<String>(images);
+	}
 	
 	
 	

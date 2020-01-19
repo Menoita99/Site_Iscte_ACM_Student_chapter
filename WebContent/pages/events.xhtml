@@ -5,157 +5,111 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-    xmlns:p="http://primefaces.org/ui">
-	
+	xmlns:p="http://primefaces.org/ui">
+
 	<ui:define name="headContent">
 		<h:outputStylesheet library="css" name="events.css" />
-		
-		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	</ui:define>
+
+	<ui:define name="content">
+	
+	<section id="event-header">
+        <div class="container">
+            <div class="jumbotron" style="background-color: rgba(255,255,255,0);">
+	            <h1 class="display-4">Event</h1>
+	            <p class="lead">Here you can find all iscte-acm events</p>
+	            <h:form id="search-form" style="margin-top: 20px;margin-bottom: 20px;">
+	                <div class="input-group" style="max-width: 800px;">
+	                    <div class="input-group-prepend"></div>
+	                   		<h:inputText class="form-control" autofocus="on" autocomplete="on" value="#{eventsBean.searchField}"/>
+	                    <div class="input-group-append">
+	                    	<h:commandButton class="btn btn-primary" value="Search!" actionListener="#{eventsBean.search}"/>
+	                    </div>
+	                </div>
+		            <div>
+		            	<a class="btn btn-primary" data-toggle="collapse" aria-expanded="false" aria-controls="collapse-1" href="#collapse-1" role="button" style="margin-top: 20px">
+		            		<i class="fa fa-gear"></i> Filters
+	            		</a>
+		                <div class="collapse" id="collapse-1">
+		                    <div class="container">
+	                            <div class="form-group" >
+	                                <ul class="list-inline">
+	                                    <li class="list-inline-item"><label for="state">State</label></li>
+	                                    <li class="list-inline-item">
+                                            <h:selectOneMenu id="state" class="form-control" value="#{eventsBean.state}" valueChangeListener="#{eventsBean.search}" >
+                                           		<f:selectItems class="dropdown-item" value="#{eventsBean.states}"/> 
+                                           		<f:ajax  render=":projects-container" execute=":search-form"/>
+                                            </h:selectOneMenu>
+	                                    </li>
+	                                    <li class="list-inline-item"><label>Sort:</label></li>
+                                    	<li class="list-inline-item" >
+                                    		<h:selectOneRadio  value="#{eventsBean.ascending}" valueChangeListener="#{eventsBean.sort}">
+                                    			<f:selectItem itemLabel="Ascending" itemValue="#{true}"/>
+                                    			<f:selectItem itemLabel="Descending" itemValue="#{false}" />
+                                    			<f:ajax  render=":projects-container" execute="@this"/>
+                                    		</h:selectOneRadio>
+                                    	</li>
+	                                </ul>
+	                            </div>
+		                    </div>
+		                </div>
+		            </div>
+	            </h:form>
+	        </div>
+        </div>
+    </section>
+   
+   <h:panelGroup id="projects-container">
+	   <h:panelGroup rendered="#{not empty eventsBean.events}">
+		    <div class="container" style="padding-bottom: 100px;">
+		        <div class="row">
+			        <ui:repeat var="event" value="#{eventsBean.events}">
+			             <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4 project-column" data-aos="fade-left" data-aos-duration="1500" data-aos-once="true">
+			                <div class="card">
+			                	<h:graphicImage class="card-img-top w-100 d-block projects-img img-fluid" 
+			                					style="background-size: cover;background-position: top;"
+			                					value="/resources/files/#{event.imagePath.get(0)}"/>
+			                    <div class="card-body">
+			                        <h4 class="card-title">#{event.title}</h4>
+			                        <p class="card-text">#{event.shortDescription}</p>
+			                        <p class="card-text"> <ui:repeat var="tag" value="#{event.tags}"> #{tag} </ui:repeat> </p>
+			                        <h:form>
+				                        <h:button class="btn btn-primary" value="Discover" outcome="event">
+				                        	<f:param name="eventId" value="#{event.id}" />
+				                        </h:button>
+			                        </h:form>
+		                        </div>
+			                </div>
+			            </div>
+			        </ui:repeat>
+		        </div>
+		    </div>
+		    
+		    <nav class="text-monospace pagination">
+		        <ul class="pagination">
+		            <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+		            <li class="page-item"><a class="page-link" href="#">1</a></li>
+		            <li class="page-item"><a class="page-link" href="#">2</a></li>
+		            <li class="page-item"><a class="page-link" href="#">3</a></li>
+		            <li class="page-item"><a class="page-link" href="#">4</a></li>
+		            <li class="page-item"><a class="page-link" href="#">5</a></li>
+		            <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+		        </ul>
+		    </nav>
+		    
+	    </h:panelGroup>
+	    <h:panelGroup rendered="#{empty eventsBean.events}">
+	    	<div class="container" style="text-align: center">
+	   			<h1 class="display-4">No Events Found <i class="fa fa-frown-o"></i> </h1>
+	   		</div>
+	    </h:panelGroup>
+    </h:panelGroup>
+	
 	</ui:define>
 
 
-<!-- Body -->
-	<ui:define name="content">
-		<c:if test="${not empty param['page']}">
-			#{eventsBean.setActualPage(param['page'])}
-		</c:if>
-	
-	  	
-       <header id="event-header">
-            <div class="center-div">
-                <h1>Events</h1>
-                <h:form class="event-search">
-                
-                	<h:outputText class="errorLabel" >#{eventsBean.errorMessage}</h:outputText>
-                
-                    <div class="form-group">
-                        <div class="form-row" style="max-width: 950px;">
-                            <div class="col-11 offset-xl-0">
-                            	<h:inputText class="form-control" type="text" a:placeholder="Search" value="#{eventsBean.searchWord}"/></div>
-                            <div class="col-1">
-                            	<h:commandLink class="btn btn-primary fa fa-search" type="submit" action="#{eventsBean.search()}"/>
-                           	</div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-row d-xl-flex">
-                            <div class="col-auto col-sm-2 col-md-auto col-lg-auto col-xl-auto d-xl-flex">
-                                <p class="text-left">From:</p>
-                            </div>
-                            <div class="col-sm-10 col-md-auto col-lg-auto col-xl-auto d-flex">
-                                <h:inputText class="form-control datepicker" value="#{eventsBean.beginDate}"/>
-                                </div>
-                            <div class="col-sm-2 col-md-auto col-lg-auto col-xl-auto d-xl-flex justify-content-center align-content-center">
-                                <p>To:</p>
-                            </div>
-                            <div class="col-sm-10 col-md-auto col-lg-auto col-xl-auto d-xl-flex">
-                            	<h:inputText class="form-control datepicker" value="#{eventsBean.endDate}"/>
-                            </div>
-                        </div>
-                    </div>
-                </h:form>
-            </div>
-        </header>
-        
-    
-             
-	  		<h:panelGroup id="divData">
 
-				<c:if test="${eventsBean.hasEvents()}">
-
-				    <div class="card-group-container">
-				    	
-				    	<c:forEach items="#{eventsBean.getNumberOfRows()}" var="i">
-				    	
-							 	 <div class="row" data-aos="flip-left" data-aos-duration="1200" data-aos-once="true">
-							 	 
-								 	<c:forEach items="#{eventsBean.getRow(i)}" var="event">
-								 		
-								 		<c:if test="#{not empty event}">
-								 		
-									 		<div class="col-sm-12 col-md-6 col-lg-6 col-xl-4">
-								                    <div class="card event-card rect-border">
-								                  
-								                    	<h:graphicImage class="card-img-top w-100 d-block rect-border" value="/resources/files/#{event.getImage(0)}"/>
-								                        <div class="card-body">
-							                        		
-								                            	<h1 class="card-title">#{event.getTitle()}</h1>
-								                            
-								                            <ul class="list-inline" style="margin: 10px 0 0 0;">
-								                                <li class="list-inline-item"><i class="fa fa-map-marker"></i> #{event.getSoonerPlace()}</li>
-								                            </ul>
-								                            <ul class="list-inline" style="margin: 3px 0 0;">
-								                                <li class="list-inline-item"><i class="fa fa-calendar"></i> #{event.getSoonerDate()}</li>
-								                                <li class="list-inline-item"><i class="fa fa-thumbs-o-up">	 </i>#{event.getLikes()}</li>
-								                            </ul>  
-								                            <h:form>
-									                            <h:button class="btn btn-primary rect-border" type="button" a:data-bs-hover-animate="pulse" value="Discovery" style="margin: 10px 0 0 -1px;" outcome="event">
-									                      	      	<f:param name="id" value="#{event.getId()}" />
-									                            </h:button>
-								                            </h:form>
-							                            </div>
-							                             
-								                    </div>
-								                </div>
-							                
-							                </c:if>
-							                
-								 	</c:forEach>
-								 	
-						 	 	</div>
-						 	 	
-					 	</c:forEach>
-					 	
-					</div> 
-					
-				</c:if>
-			
-				<c:if test="${not eventsBean.hasEvents()}">
-					<h1 class="display-4" style="margin:50px auto 50px auto;width:90%">No Events Found</h1>
-				</c:if>
-					
-			</h:panelGroup>
-			
-			<h:panelGroup rendered="#{eventsBean.hasEvents()}">
-			  	<div class="d-flex pagination-container">
-		               <nav>
-		                   <ul class="pagination">
-			                  
-			                   	<h:link>
-			                       	<li class="page-item"><a class="page-link" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-		                       </h:link>
-		                        <c:forEach var="page" items="#{eventsBean.getPages()}">
-		                        		<li class="page-item">
-		                        			<h:form>
-			                        			<h:commandLink class="page-link" value="#{page}" >
-			                        				<f:param name="page" value="#{page}" />
-			                        			</h:commandLink>
-		                        			</h:form>
-			                        	</li>
-		                        </c:forEach>
-	                    	    <li class="page-item">
-		                    	   <a class="page-link" aria-label="Next"><span aria-hidden="true">»</span></a>
-                    	    	</li>
-		                   </ul>
-		               </nav>
-		          </div>
-			  </h:panelGroup>
-			
-		<script type="text/javascript">
-			
-		    //For calendar
-		    $(".datepicker").datepicker({
-		        inline: true,
-		        showWeek: true,
-		        firstDay: 1,
-		        showAnim: "clip",
-	        	dateFormat:"dd/mm/yy",
-	        	changeMonth: true,
-                changeYear: true
-		    });
-		
-		</script>
+	<ui:define name="scripts">
 	</ui:define>
 
 </ui:composition>

@@ -36,7 +36,6 @@ public class Project implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
-	
 	@Exclude
 	@ManyToMany(cascade=CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.FALSE)
@@ -45,10 +44,8 @@ public class Project implements Serializable {
 			   inverseJoinColumns = @JoinColumn(name = "view_id"))
 	private List<View> views = new ArrayList<>();
 	
-	
 	@Column(nullable = false)
 	private int maxMembers;
-	
 	
 	@Column(length = 65, nullable = false, unique = true)	
 	private String title;
@@ -73,16 +70,13 @@ public class Project implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date deadLine;
 	
-	
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date subscriptionDeadline;
 	
-	
 	@Column(nullable = false)
 	@Enumerated
 	private State state = State.values()[new Random().nextInt(State.values().length-1)]; // State.ON_APPROVAL;  
-
 
 	@Exclude
 	@ManyToOne
@@ -94,7 +88,6 @@ public class Project implements Serializable {
 	@ElementCollection(targetClass=String.class)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<String> tags;
-	
 	
 	@Exclude
 	@ManyToMany
@@ -117,7 +110,13 @@ public class Project implements Serializable {
 			   inverseJoinColumns = @JoinColumn(name = "material_id"))
 	private List<Material> material;
 	
-	
+	@Exclude
+	@ManyToMany(cascade=CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JoinTable(name = "project_likes",
+			   joinColumns = @JoinColumn(name = "project_id"),
+			   inverseJoinColumns = @JoinColumn(name = "like_id"))
+	private List<AcmLike> likes = new ArrayList<>();
 	
 	
 	

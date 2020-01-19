@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 import com.database.entities.Material;
 import com.database.entities.Project;
 import com.database.entities.State;
-import com.database.managers.JpaUtil;
 import com.database.managers.ProjectManager;
 
 import lombok.Data;
@@ -24,8 +23,8 @@ import lombok.ToString.Exclude;
 public class ProjectContainer implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	private long likes;
+
+	private int likes;
 	private int views;
 	private int id;
 	private int maxMembers;
@@ -34,28 +33,28 @@ public class ProjectContainer implements Serializable {
 	private Date subscriptionDeadline;
 	private State state ;
 	private List<String> tags = new ArrayList<>();
-	
+
 	@Exclude
 	private String description;
-	
+
 	@Exclude
 	private String shortDescription;
-	
+
 	@Exclude
 	private String requirements;
-	
+
 	@Exclude
 	@lombok.EqualsAndHashCode.Exclude
 	private List<UserContainer> participants;
-	
+
 	@Exclude
 	@lombok.EqualsAndHashCode.Exclude
 	private List<String> imagePath = new ArrayList<>();
-	
+
 	@Exclude
 	@lombok.EqualsAndHashCode.Exclude
 	private UserContainer manager;
-	
+
 	@Exclude
 	@lombok.EqualsAndHashCode.Exclude
 	private List<Material> material;
@@ -63,12 +62,12 @@ public class ProjectContainer implements Serializable {
 	@Exclude
 	@lombok.EqualsAndHashCode.Exclude
 	private List<ProjectCandidateContainer> candidates;
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 	/**
 	 * Constructor
 	 * @param p project to be used to create an instance of ProjectContainer
@@ -85,15 +84,15 @@ public class ProjectContainer implements Serializable {
 		this.state   = p.getState();
 		this.tags  = new ArrayList<>(p.getTags());
 		this.imagePath  = new ArrayList<>(p.getImagePath());
-		this.likes = JpaUtil.executeQuery("Select count(*) from AcmLike l where l.project.id = "+id,Long.class).get(0);
 		this.material = p.getMaterial();
 		this.views = p.getViews().size();
+		this.likes = p.getLikes().size();
 	}
 
 
 
-	
-	
+
+
 	/**
 	 * Constructor
 	 * @param id project id to be used to create an instance of ProjectContainer
@@ -111,9 +110,9 @@ public class ProjectContainer implements Serializable {
 		this.state   = p.getState();
 		this.tags  = new ArrayList<>(p.getTags());
 		this.imagePath  = new ArrayList<>(p.getImagePath());
-		this.likes = JpaUtil.executeQuery("Select count(*) from AcmLike l where l.project.id = "+id,Long.class).get(0);
 		this.material = p.getMaterial();
 		this.views = p.getViews().size();
+		this.likes = p.getLikes().size();
 	}
 
 
@@ -130,10 +129,10 @@ public class ProjectContainer implements Serializable {
 		this.material = new ArrayList<>();
 	}
 
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * @return returns project manager
 	 */
@@ -153,8 +152,8 @@ public class ProjectContainer implements Serializable {
 		return candidates;
 	}
 
-	
-	
+
+
 	/**
 	 * @return returns project participants
 	 */
@@ -164,9 +163,9 @@ public class ProjectContainer implements Serializable {
 		return participants;
 	}
 
-	
-	
-	
+
+
+
 	/**
 	 * refresh's project
 	 */
@@ -183,11 +182,11 @@ public class ProjectContainer implements Serializable {
 		this.state   = p.getState();
 		this.tags  = new ArrayList<>(p.getTags());
 		this.imagePath  = new ArrayList<>(p.getImagePath());
-		this.likes = JpaUtil.executeQuery("Select count(*) from AcmLike l where l.project.id = "+id,Long.class).get(0);
 		this.participants = null;
 		this.manager = null;
 		this.candidates = null;
 		this.material = p.getMaterial();
 		this.views = p.getViews().size();
+		this.likes = p.getLikes().size();
 	}
 }

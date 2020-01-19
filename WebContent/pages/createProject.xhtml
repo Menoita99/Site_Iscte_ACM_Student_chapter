@@ -87,28 +87,40 @@
 			            <div class="content" style="margin: 40px 15px;margin-top: 40px;margin-bottom: 40px;padding: 40px 15px;padding-top: 40px;padding-bottom: 40px;"> <!-- Project Assets (phase 2) -->
 			                <h1 style="margin-bottom: 30px;">Project Assets</h1>
 			               
-			                <h:form enctype="multipart/form-data"><!-- file upload form	 -->
+			            
 			                	 <h4>Images</h4>
 			                    <div class="form-group"><label>Upload images: </label>
 			                    	<h:outputLabel class="file-label" for="input-file" 	>
 		                        		Choose image <i class="fa fa-image"></i>
 	                        		</h:outputLabel>
-			                        <h:inputFile id="input-file"  class="inputfile" style="max-width: 200px;"
-			                        			 valueChangeListener="#{createProjectBean.addImage}"/>
-			                        <div style="margin-top: 20px;">
-			                        
-			                        	<h:dataTable id ="imageTable" class="table table-striped table-hover table-sm" rowClasses="text-center" value="#{createProjectBean.container.imagePath}" var="image" rendered="#{not empty createProjectBean.container.imagePath}">
-			                        		<h:column>
-			                        			#{image}
-			                        		</h:column>
-			                        		<h:column>
-			                        			<a href="#"><i class="fa fa-remove"></i></a>
-			                        		</h:column>
-			                        	</h:dataTable>
+                        		    
+                        		    <h:form enctype="multipart/form-data" method="POST"><!-- file upload form	 -->
+				                        <h:inputFile id="input-file"  class="inputfile" style="max-width: 200px;" valueChangeListener="#{createProjectBean.addImage}">
+				                        	<f:validator validatorId="ImageValidator" />
+				                        	<f:ajax execute="@form" render="@form :imageTableForm"/>			 
+				                        </h:inputFile>
+				                        <h:message for="input-file" class="error-label-sm"/>
+				                        
+		                           </h:form>
 
+			                        <div style="margin-top: 20px;">
+				                        <h:form id="imageTableForm">
+				                        	<h:dataTable class="table table-striped table-hover table-sm" rowClasses="text-center" value="#{createProjectBean.container.imagePath}" var="image" rendered="#{not empty createProjectBean.container.imagePath}">
+				                        		<h:column>
+				                        			#{image}
+				                        		</h:column>
+				                        		<h:column>
+				                        			<h:commandLink actionListener="#{createProjectBean.removeImage}">
+				                        				<f:attribute name="fileName" value="#{image}" />
+				                        				<f:ajax render="@form" execute="@form"/>
+				                        				<i class="fa fa-remove"/>
+				                        			</h:commandLink>
+				                        		</h:column>
+				                        	</h:dataTable>
+										</h:form>
 			                        </div>
 			                    </div>
-		                    </h:form>
+		                 
 		                    
 		                    <h:form id="participantForm">
 		                        <h4>Participants</h4>

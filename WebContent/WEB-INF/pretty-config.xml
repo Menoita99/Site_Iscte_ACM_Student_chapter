@@ -43,7 +43,7 @@
 	</url-mapping>
 
 	<url-mapping id="event">
-		<pattern value="/events/#{id}" />
+		<pattern value="/events/#{eventId}" />
 		<view-id value="/pages/event.xhtml" />
 	</url-mapping>
 

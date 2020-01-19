@@ -2,11 +2,10 @@ package com.database.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashSet;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.*;
 
@@ -15,22 +14,25 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString.Exclude;
+
 /**
  * Entity implementation class for Entity: EventContainer
  */
 @Entity
-@Table(name = "event")
+@Table
+@Data
+@NoArgsConstructor
 public class Event implements Serializable {
+
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "event_id")
 	private int id;
-	
-	@Column(nullable = false)
-	private int views = 0;	
 	
 	@Column(nullable = false)
 	private int vacancies;
@@ -38,240 +40,111 @@ public class Event implements Serializable {
 	@Column(length = 65, nullable = false, unique = true)	
 	private String title;
 	
-	@Column(length = 750, nullable = false)
+	@Exclude
+	@Column(length = 665, nullable = false)	
 	private String description;
 	
-	@Column(length = 300)
+	@Exclude
+	@Column(length = 100, nullable = false)	
+	private String shortDescription;
+	
+	@Exclude
+	@Column(length = 300, nullable = false)	
 	private String requirements;
 	
-	@Column(length = 500)
-	private String observation;
+	@Column(nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date creationDate = new Date(System.currentTimeMillis());
 	
-	@Column
+	@Exclude
 	@ElementCollection(targetClass=String.class)
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private Set<String> imagePath = new LinkedHashSet<>();
+	private List<String> imagePath;
 	
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(foreignKey = @ForeignKey(name = "FK_EVENT_USER_ID"), nullable= false)
  	private User manager;
  	
-	@Column()
 	@ElementCollection(targetClass=String.class)
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private Set<String> tags = new LinkedHashSet<>();
+	private List<String> tags;
 	
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
-	private State state;
+	private State state = State.ON_APPROVAL;
 	
-	@Column()
-	private Double budget;
+	@Exclude
+	@ManyToMany(cascade=CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JoinTable(name = "event_material",
+			   joinColumns = @JoinColumn(name = "event_id"),
+			   inverseJoinColumns = @JoinColumn(name = "material_id"))
+	private List<Material> material = new ArrayList<>();
+	
+	@Exclude
+	@ManyToMany(cascade=CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JoinTable(name = "event_views",
+			   joinColumns = @JoinColumn(name = "event_id"),
+			   inverseJoinColumns = @JoinColumn(name = "view_id"))
+	private List<View> views = new ArrayList<>();
+	
+	@Exclude
+	@ManyToMany
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JoinTable(name = "event_participants",
+			   joinColumns = @JoinColumn(name = "event_id"),
+			   inverseJoinColumns = @JoinColumn(name = "user_id"))
+	private List<User> participants  = new ArrayList<>();
+	
+	@Exclude
+	@ManyToMany
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JoinTable(name = "event_staff",
+			   joinColumns = @JoinColumn(name = "event_id"),
+			   inverseJoinColumns = @JoinColumn(name = "user_id"))
+	private List<User> staff;
+	
+	@Exclude
+	@ManyToMany(cascade=CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JoinTable(name = "event_likes",
+			   joinColumns = @JoinColumn(name = "event_id"),
+			   inverseJoinColumns = @JoinColumn(name = "like_id"))
+	private List<AcmLike> likes  = new ArrayList<>();
+	
+	@Exclude
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy = "event",cascade=CascadeType.ALL)
+	private List<EventInfo> infos = new ArrayList<>();
 	
 	
-	
 	/**
-	 * This method adds an image to imagePath
-	 * @param image image path
+	 * @param vacancies
+	 * @param title
+	 * @param description
+	 * @param shortDescription
+	 * @param requirements
+	 * @param imagePath
+	 * @param dates
+	 * @param manager
+	 * @param tags
+	 * @param material
+	 * @param staff
+	 * @param subscriptionDeadlines 
 	 */
-	public void addImage(String image) {
-		imagePath.add(image);
-	}
-	
-	
-	/**
-	 * Add all tags from a Collection 
-	 * @param tags collection with tags to be added
-	 */
-	public void addAllTags(Collection<String> tags) {
-		this.tags.addAll(tags);
-	}
-	
-	
-	/**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
-
-	/**
-	 * @return the views
-	 */
-	public int getViews() {
-		return views;
-	}
-
-	/**
-	 * @return the vacancies
-	 */
-	public int getVacancies() {
-		return vacancies;
-	}
-
-	/**
-	 * @return the title
-	 */
-	public String getTitle() {
-		return title;
-	}
-
-	/**
-	 * @return the description
-	 */
-	public String getDescription() {
-		return description;
-	}
-
-	/**
-	 * @return the imagePath
-	 */
-	public List<String> getImagePath() {
-		List<String> list = new ArrayList<String>();
-		list.addAll(imagePath);
-		return list;
-	}
-
-	/**
-	 * @return the manager
-	 */
-	public User getManager() {
-		return manager;
-	}
-
-	/**
-	 * @return the tags
-	 */
-	public List<String> getTags() {
-		List<String> list = new ArrayList<String>();
-		list.addAll(tags);
-		return list;
-	}
-
-	/**
-	 * @return the state
-	 */
-	public State getState() {
-		return state;
-	}
-
-	/**
-	 * @return the requirements
-	 */
-	public String getRequirements() {
-		return requirements;
-	}
-
-
-	/**
-	 * @return the budget
-	 */
-	public Double getBudget() {
-		return budget;
-	}
-
-
-	/**
-	 * @return the observation
-	 */
-	public String getObservation() {
-		return observation;
-	}
-
-
-	/**
-	 * @param observation the observation to set
-	 */
-	public void setObservation(String observation) {
-		this.observation = observation;
-	}
-
-
-	/**
-	 * @param budget the budget to set
-	 */
-	public void setBudget(Double budget) {
-		this.budget = budget;
-	}
-
-
-	/**
-	 * @param requirements the requirements to set
-	 */
-	public void setRequirements(String requirements) {
-		this.requirements = requirements;
-	}
-
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	/**
-	 * @param views the views to set
-	 */
-	public void setViews(int views) {
-		this.views = views;
-	}
-
-	/**
-	 * @param vacancies the vacancies to set
-	 */
-	public void setVacancies(int vacancies) {
+	public Event(int vacancies, String title, String description, String shortDescription, String requirements,
+			List<String> imagePath, User manager, List<String> tags, List<User> staff) {
 		this.vacancies = vacancies;
-	}
-
-	/**
-	 * @param title the title to set
-	 */
-	public void setTitle(String title) {
 		this.title = title;
-	}
-
-	/**
-	 * @param description the description to set
-	 */
-	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	/**
-	 * @param imagePath the imagePath to set
-	 */
-	public void setImagePath(Set<String> imagePath) {
-		this.imagePath = imagePath;
-	}
-
-	/**
-	 * @param manager the manager to set
-	 */
-	public void setManager(User manager) {
+		this.shortDescription = shortDescription;
+		this.requirements = requirements;
+		this.imagePath =  imagePath.stream().map(path -> "events/"+path).collect(Collectors.toList());;
 		this.manager = manager;
-	}
-
-	/**
-	 * @param tags the tags to set
-	 */
-	public void setTags(Set<String> tags) {
 		this.tags = tags;
-	}
-
-	/**
-	 * @param state the state to set
-	 */
-	public void setState(State state) {
-		this.state = state;
-	}
-
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(budget, description, id, imagePath, manager, requirements, state, tags, title, vacancies,
-				views);
+		this.staff = staff;
 	}
 
 
@@ -282,20 +155,19 @@ public class Event implements Serializable {
 		if (!(obj instanceof Event))
 			return false;
 		Event other = (Event) obj;
-		return Objects.equals(budget, other.budget) && Objects.equals(description, other.description) && id == other.id
-				&& Objects.equals(imagePath, other.imagePath) && Objects.equals(manager, other.manager)
-				&& Objects.equals(requirements, other.requirements) && state == other.state
+		return Objects.equals(creationDate, other.creationDate) && Objects.equals(description, other.description)
+				&& id == other.id && Objects.equals(infos, other.infos)
+				&& Objects.equals(requirements, other.requirements)
+				&& Objects.equals(shortDescription, other.shortDescription) && state == other.state
 				&& Objects.equals(tags, other.tags) && Objects.equals(title, other.title)
-				&& vacancies == other.vacancies && views == other.views;
+				&& vacancies == other.vacancies;
 	}
 
 
 	@Override
-	public String toString() {
-		return "Event [id=" + id + ", views=" + views + ", vacancies=" + vacancies + ", title=" + title
-				+ ", description=" + description + ", requirements=" + requirements + ", imagePath=" + imagePath
-				+ ", manager=" + manager + ", tags=" + tags + ", state=" + state + ", budget=" + budget + "]";
+	public int hashCode() {
+		return Objects.hash(creationDate, description, id, infos, requirements, shortDescription, state, tags, title,
+				vacancies);
 	}
-
 
 }
