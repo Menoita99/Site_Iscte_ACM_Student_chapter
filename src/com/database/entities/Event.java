@@ -145,6 +145,7 @@ public class Event implements Serializable {
 		this.manager = manager;
 		this.tags = tags;
 		this.staff = staff;
+		this.staff.add(manager);
 	}
 
 

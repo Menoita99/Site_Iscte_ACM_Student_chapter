@@ -85,8 +85,8 @@ public class UserContainer implements Serializable {
 	 * @return return a list with projects that user is a participant
 	 */
 	public List<ProjectContainer> getJoinedProjects(){
-		if(joinedProjects == null)
-			this.joinedProjects = UserManager.getUserById(id).getProjects().stream().map(ProjectContainer::new).collect(Collectors.toList());
+//		if(joinedProjects == null)
+//			this.joinedProjects = UserManager.getUserById(id).getProjects().stream().map(ProjectContainer::new).collect(Collectors.toList());
 		return joinedProjects;
 	}
 

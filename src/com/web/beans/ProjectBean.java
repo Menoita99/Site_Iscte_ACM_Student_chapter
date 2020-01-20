@@ -54,7 +54,7 @@ public class ProjectBean implements Serializable{
 			}
 
 		}catch(Exception e) {
-			System.err.println("(EventBean)[getEvent] Error parsing id or there is no project with the given id "+id+" : error type -> "+e.getClass());
+			System.err.println("(ProjectBean) Error parsing id or there is no project with the given id "+id+" : error type -> "+e.getClass());
 		}
 	}
 
@@ -112,15 +112,21 @@ public class ProjectBean implements Serializable{
 
 
 	/**
-	 * 
+	 * Creates or edit candidature
 	 */
 	public void submitCandidature() {
+		if(Session.getInstance().getUser() == null) { 
+			redirectToLogin();
+			return;
+		}
 		try {
 			if(candidature.getUser() == null && candidature.getProject() == null) {
+				//creates candidature
 				candidature.setUser(Session.getInstance().getUser());
 				candidature.setProject(project);
 				JpaUtil.createEntity(new ProjectCandidate(candidature));
 			}else {
+				//Edit candidature
 				ProjectCandidate p = ProjectManager.getCandidature(candidature.getUser().getId(), candidature.getProject().getId());
 				p.setMotivation(candidature.getText());
 				p.setDate(new Date(System.currentTimeMillis()));

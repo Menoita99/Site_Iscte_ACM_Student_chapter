@@ -160,8 +160,6 @@ public class ProjectManager {
 	 */
 	public static void addView(int id) {
 		View v = new View();
-		JpaUtil.createEntity(v);
-
 		Project project = findById(id);
 		project.getViews().add(v);
 		JpaUtil.mergeEntity(project);

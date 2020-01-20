@@ -15,9 +15,10 @@ public class EventInfoContainer implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private int id;
-	private Date eventDate;
+	private Date startEventDate;
 	private Date joinDate;
 	private String place;
+	private Date duration;
 	
 	@Exclude
 	@lombok.ToString.Exclude
@@ -25,9 +26,10 @@ public class EventInfoContainer implements Serializable{
 	
 	public EventInfoContainer(EventInfo ei) {
 		this.id = ei.getId();
-		this.eventDate = ei.getEventDate();
+		this.startEventDate = ei.getStartEventDate();
 		this.joinDate = ei.getJoinDate();
 		this.place = ei.getPlace();
+		
 	}
 	
 	

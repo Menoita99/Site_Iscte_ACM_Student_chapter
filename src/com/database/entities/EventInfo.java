@@ -19,7 +19,7 @@ import org.hibernate.annotations.OnDeleteAction;
  *
  */
 @Entity
-//@Table(name="event_info")
+@Table(name="event_info")
 @Data
 @NoArgsConstructor
 public class EventInfo implements Serializable {
@@ -32,7 +32,11 @@ public class EventInfo implements Serializable {
 	
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date eventDate;
+	private Date startEventDate;
+	
+	@Column(nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date endEventDate;
 	
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -56,8 +60,9 @@ public class EventInfo implements Serializable {
 	 * @param place
 	 * @param event
 	 */
-	public EventInfo(Date eventDate, Date joinDate, String place, Event event) {
-		this.eventDate = eventDate;
+	public EventInfo(Date startEventDate,Date endEventDate, Date joinDate, String place, Event event) {
+		this.startEventDate = startEventDate;
+		this.endEventDate = endEventDate;
 		this.joinDate = joinDate;
 		this.place = place;
 		this.event = event;

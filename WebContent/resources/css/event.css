@@ -63,3 +63,27 @@ section {
 	text-align: center;
 	margin: 0 auto;	
 }
+
+.top-inclined {
+	-webkit-transform: skewY(4deg);
+	-moz-transform: skewY(4deg);
+	-ms-transform: skewY(4deg);
+	transform: skewY(4deg);
+}
+
+.top-inclined-content {
+	-webkit-transform: skewY(-4deg);
+	-moz-transform: skewY(-4deg);
+	-ms-transform: skewY(-4deg);
+	transform: skewY(-4deg);
+}
+
+#requirements {
+	margin: 0px 0px 20px ;
+}
+
+@media ( max-width : 400px) {
+	#requirements {
+		margin: 0px 0px 20px -20px;
+	}
+}

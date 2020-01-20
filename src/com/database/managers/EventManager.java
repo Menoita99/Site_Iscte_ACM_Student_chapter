@@ -1,6 +1,5 @@
 package com.database.managers;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,6 +9,7 @@ import javax.persistence.EntityManager;
 import com.database.entities.Event;
 import com.database.entities.EventInfo;
 import com.database.entities.User;
+import com.database.entities.View;
 
 /**
  *
@@ -26,10 +26,11 @@ public class EventManager {
 
 	/**
 	 * Creates an event
+	 * @param endDates 
 	 */
 	public static Event createEvent(int vacancies, String title, String description, String shortDescription, 
 			String requirements, List<String> imagePath, List<Date> dates, int managerID, List<String> tags, 
-			List<Integer> staffn, List<Date> subscriptionDeadlines, List<String> places){
+			List<Integer> staffn, List<Date> subscriptionDeadlines, List<String> places, List<Date> endDates){
 
 		Event p = null;
 		
@@ -39,13 +40,10 @@ public class EventManager {
 			
 			p = new Event(vacancies, title, description, shortDescription, requirements, imagePath, manager, tags, staff);
 			
-			JpaUtil.createEntity(p);
+			for (int i = 0; i < places.size(); i++) 
+				p.getInfos().add(new EventInfo(dates.get(i),endDates.get(i),subscriptionDeadlines.get(i),places.get(i),p));
 			
-			for (int i = 0; i < places.size(); i++) {
-				EventInfo ei = new EventInfo(dates.get(i),subscriptionDeadlines.get(i),places.get(i),p);
-				p.getInfos().add( ei);
-				JpaUtil.createEntity(ei);
-			}
+			JpaUtil.createEntity(p);
 			
 		}catch (Exception e) {
 			p=null;
@@ -94,7 +92,9 @@ public class EventManager {
 
 
 
-
+	/**
+	 * @return return all events
+	 */
 	public static List<Event> findAll() {
 		return JpaUtil.executeQuery("Select e from Event e", Event.class);
 	}
@@ -103,7 +103,9 @@ public class EventManager {
 
 
 
-
+	/**
+	 *
+	 */
 	public static EventInfo getInfo(int id) {
 		EntityManager em = JpaUtil.getEntityManager();
 		try{
@@ -111,6 +113,22 @@ public class EventManager {
 		}finally {
 			em.close();
 		}
+	}
+
+
+
+
+
+	/**
+	 *Gives a view to given event
+	 *
+	 * @param id project id
+	 */
+	public static void addView(int id) {
+		View v = new View();
+		Event event = getEventById(id);
+		event.getViews().add(v);
+		JpaUtil.mergeEntity(event);
 	}
 
 

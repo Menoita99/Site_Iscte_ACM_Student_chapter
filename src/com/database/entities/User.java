@@ -1,19 +1,13 @@
 package com.database.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Date;
-import java.util.Set;
 
 import javax.persistence.*;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString.Exclude;
 
 /**
  * Entity implementation class for Entity: UserContainer
@@ -75,20 +69,20 @@ public class User implements Serializable {
 	@Column(nullable = false,length = 64, unique = true)
 	private String activationKey;
 	
-	@Exclude
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@ManyToMany(mappedBy = "participants")
-	private Set<Project> projects = new HashSet<>();
-	
-	@Exclude
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@ManyToMany(mappedBy = "staff")
-	private Set<Event> eventStaff = new HashSet<>();
-	
-	@Exclude
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@ManyToMany(mappedBy = "participants")
-	private Set<Event> eventParticipant = new HashSet<>();
+//	@Exclude
+//	@LazyCollection(LazyCollectionOption.FALSE)
+//	@ManyToMany(mappedBy = "participants")
+//	private Set<Project> projects = new HashSet<>();
+//	
+//	@Exclude
+//	@LazyCollection(LazyCollectionOption.FALSE)
+//	@ManyToMany(mappedBy = "staff")
+//	private Set<Event> eventStaff = new HashSet<>();
+//	
+//	@Exclude
+//	@LazyCollection(LazyCollectionOption.FALSE)
+//	@ManyToMany(mappedBy = "participants")
+//	private Set<Event> eventParticipant = new HashSet<>();
 	
 	
 	/**

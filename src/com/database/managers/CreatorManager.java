@@ -2,6 +2,7 @@ package com.database.managers;
 
 import java.io.File;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.HashSet;
 import java.util.List;
@@ -26,7 +27,7 @@ public class CreatorManager {
 	 * Generates Users and events with complete status
 	 */
 	public static void main(String[] args) {
-		createUsers(100);
+		createUsers(300);
 		createProject(70);
 		createNewsLetter(1);
 		createEvents(70);
@@ -43,6 +44,7 @@ public class CreatorManager {
 			long users = JpaUtil.executeQueryAndGetSingle("Select count(*) from User u", Long.class);
 			
 			List<Date> dates = new ArrayList<>();
+			List<Date> enddates = new ArrayList<>();
 			List<Date> sub = new ArrayList<>();
 			List<Integer> staff = new ArrayList<>();
 			List<String> places = new ArrayList<>();
@@ -50,8 +52,10 @@ public class CreatorManager {
 			for (int j = 0; j < r.nextInt(5)+1; j++) {
 				staff.add(r.nextInt((int)users));
 				sub.add(Date.from(LocalDate.now().plusDays(10+r.nextInt(20)).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
-				dates.add(Date.from(LocalDate.now().plusYears(1).plusDays(r.nextInt(20)).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
 				places.add(generateRandomPhrases(r.nextInt(3)+2));
+				LocalDateTime day = LocalDate.now().plusYears(1).plusDays(r.nextInt(20)).atStartOfDay();
+				dates.add(Date.from(day.atZone(ZoneId.systemDefault()).toInstant()));
+				enddates.add(Date.from(day.plusHours(1).atZone(ZoneId.systemDefault()).toInstant()));
 			}
 			
 			Event e = EventManager.createEvent(r.nextInt(50)+50 
@@ -65,7 +69,9 @@ public class CreatorManager {
 					, randomTags()
 					, staff
 					, sub
-					, places);
+					, places
+					, enddates);
+			
 			if(e==null)
 				i--;
 		}
