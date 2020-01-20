@@ -5,144 +5,40 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
-import com.database.entities.EventParticipant;
 import com.database.managers.EventManager;
 import com.web.Session;
 import com.web.containers.EventContainer;
-import com.web.containers.UserContainer;
+
+import lombok.Data;
 
 @ManagedBean
 @RequestScoped
+@Data
 public class EventBean implements Serializable{
 
 	private static final long serialVersionUID = 1L; 
 
 	private EventContainer event = null;
 
-	private String errorMessage;
-
-	
-	
-	
-
 	/**
-	 * @return return the event there is in request map
-	 * if event there is no event inside requestMap it returns null
+	 * Search for event id to set event
 	 */
-	public EventContainer getEvent() {
-		String id = Session.getInstance().getRequestMap().get("id");
-		
+	public EventBean() {
+		String id = Session.getInstance().getRequestMap().get("eventId");
+
 		if(id == null)
-			id = "" + Session.getInstance().getSessionAtribute("eventID");	
+			id = "" + Session.getInstance().getSessionAtribute("eventId");	
 		
 		try {
-			
-			if(id != null && !id.isBlank() && (event == null || Integer.parseInt(id) != event.getId()))
-				event = new EventContainer(Integer.parseInt(id));
-			
+			if(id != null && !id.isBlank()) {
+				event = new EventContainer(EventManager.getEventById(Integer.parseInt(id)));
+				if(event != null)
+					EventManager.addView(event.getId());
+			}
 		}catch(Exception e) {
-			System.err.println("(EventBean)[getEvent] Error parsing id or there is no event with the given event id "+id+" : error type -> "+e.getClass());
-			event=null;
+			e.printStackTrace();
 		}
 		
-		return event;
 	}
-
-
-
-
-
-	/**
-	 * if user isn't logged it will redirect user to login page to perform the login
-	 * 
-	 * When user is logged it will verify if he is already a participant ,
-	 * and in case he's not it will add him to database.
-	 * 
-	 * In case event is full it will display an error message
-	 * 
-	 */
-	public String join() {
-		UserContainer user = Session.getInstance().getUser();
-
-		if(user == null) {
-			Session.getInstance().setLastPage("event");
-			Session.getInstance().setSessionAtribute("eventID", event.getId());
-			return "login";
-		}
-
-
-		if(!hasJoin()) {
-			EventParticipant ep = EventManager.addParticipant(event.getId(), user.getId(), false);
-			if(ep == null)
-				setErrorMessage("Event is full");
-		}
-
-		return "";
-	}
-
-
-
-
-
-
-
-	/**
-	 * if user isn't logged it will redirect user to login page to perform the login
-	 * 
-	 * When user is logged it will verify if he is already a participant ,
-	 * and in case he's it will remove him from database.
-	 */
-	public String removeJoin() {
-		UserContainer user = Session.getInstance().getUser();
-
-		if(user == null) return "login";
-
-		if(hasJoin()) {
-			EventParticipant ep = EventManager.removeParticipant(event.getId(), user.getId());
-			if(ep == null)
-				setErrorMessage("An error occurred removing user, if this persists please contact us");
-		}
-
-		return "";
-	}
-
-
-
-
-
-
-
-	/**
-	 * @return return false if user isn't logged or if user isn't a participant of this event
-	 * 			otherwise returns true.
-	 */
-	public boolean hasJoin() {
-		UserContainer user = Session.getInstance().getUser();
-		if(user == null) return false;
-		return EventManager.isParticipant(event.getId(),user.getId());
-	}
-
-
-
-
-
-
-	/**
-	 * @return the erroMessage
-	 */
-	public String getErrorMessage() {
-		return errorMessage;
-	}
-
-
-
-
-
-
-	/**
-	 * @param erroMessage the erroMessage to set
-	 */
-	public void setErrorMessage(String erroMessage) {
-		this.errorMessage = erroMessage;
-	}
+	
 }

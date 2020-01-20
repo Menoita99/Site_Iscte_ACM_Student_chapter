@@ -10,11 +10,462 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="content">
+
+		<c:set var="project" value="#{adminProjectBean.project}"/>
 	
-	    	<h1 class="display-4" style="margin:20px; text-align: center">
-				In making
-   			</h1>
+		<c:if test="#{adminProjectBean.project != null}">
+
+            <div class="container-fluid composition">
+                <div class="d-sm-flex justify-content-between align-items-center mb-4">
+                    <h3 class="text-dark mb-0">Project title</h3><a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a></div>
+                
+                <div style="margin-bottom: 20px;"> <!-- Header -->
+                    <div class="card shadow py-2" style="margin: 0 auto;">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-9">
+                                   	<canvas id="lineChart" /> 
+                                </div>
+                                <div class="col">
+                                    <div class="card shadow border-left-primary py-2" style="margin-bottom: 10px;">
+                                        <div class="card-body">
+                                            <div class="row align-items-center no-gutters">
+                                                <div class="col mr-2">
+                                                    <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>Views (monthly)</span></div>
+                                                    <div class="text-dark font-weight-bold h5 mb-0"><span>$40,000</span></div>
+                                                </div>
+                                                <div class="col-auto"><i class="fas fa-calendar fa-2x text-gray-300"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <div class="card shadow border-left-info py-2" style="margin-bottom: 10px;">
+                                        <div class="card-body">
+                                            <div class="row align-items-center no-gutters">
+                                                <div class="col mr-2">
+                                                    <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>Views (monthly)</span></div>
+                                                    <div class="text-dark font-weight-bold h5 mb-0"><span>$40,000</span></div>
+                                                </div>
+                                                <div class="col-auto"><i class="fas fa-calendar fa-2x text-gray-300"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card shadow border-left-success py-2" style="margin-bottom: 10px;">
+                                        <div class="card-body">
+                                            <div class="row align-items-center no-gutters">
+                                                <div class="col mr-2">
+                                                    <div class="text-uppercase text-success font-weight-bold text-xs mb-1"><span>Budget (annual)</span></div>
+                                                    <div class="text-dark font-weight-bold h5 mb-0"><span>€215,000</span></div>
+                                                </div>
+                                                <div class="col-auto"><i class="fas fa-euro-sign fa-2x text-gray-300"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card shadow border-left-warning py-2" style="margin-bottom: 10px;">
+                                        <div class="card-body">
+                                            <div class="row align-items-center no-gutters">
+                                                <div class="col mr-2">
+                                                    <div class="text-uppercase text-warning font-weight-bold text-xs mb-1"><span>candidaturas Requests</span></div>
+                                                    <div class="text-dark font-weight-bold h5 mb-0"><span>18</span></div>
+                                                </div>
+                                                <div class="col-auto"><i class="fas fa-comments fa-2x text-gray-300"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 20px;"> <!-- Details -->
+                    <div class="card shadow py-2" style="margin: 0 auto;">
+                        <div class="card-body">
+                            <div>
+                                <h1>Details</h1>
+                            </div>
+                            <h:form>
+                                <div class="form-row">
+                                    <div class="col"><label>Title</label><h:inputText class="form-control" value="#{adminProjectBean.project.title}"/></div>
+                                    <div class="col"><label>Manager</label><h:inputText class="form-control" value="#{adminProjectBean.managerUsername}"/></div>
+                                </div>
+                                <div class="form-row" style="margin-top: 10px;">
+                                    <div class="col"><label>Deadline</label>
+                                    	<h:inputText class="form-control" a:type="datetime-local" value="#{adminProjectBean.project.deadline}">
+                                    		<f:converter converterId="dateTimeConverter"/>
+                                    	</h:inputText>
+                                   	</div>
+                                    <div class="col"><label>S deadline</label>
+                                    	<h:inputText class="form-control" a:type="datetime-local" value="#{adminProjectBean.project.subscriptionDeadline}">
+                                    		<f:converter converterId="dateTimeConverter"/>
+                                    	</h:inputText>
+                                  	</div>
+                                    <div class="col"><label>Max Members</label>
+                                    	<h:inputText class="form-control" a:type="number" a:step="1" a:min="1" value="#{adminProjectBean.project.maxMembers}"/>
+                                    </div>
+                                </div>
+                                <div class="form-row" style="margin-top: 10px;">
+                                    <div class="col">
+                                    	<label>Requirements</label>
+                                    	<h:inputTextarea class="form-control" rows="3" value="#{adminProjectBean.project.requirements}"/>
+                                   	</div>
+                                    <div class="col">
+                                    	<label>Short Description</label>
+                                    	<h:inputTextarea class="form-control" rows="3" value="#{adminProjectBean.project.shortDescription}"/>
+                                   	</div>
+                                </div>
+                                <div style="margin-top: 10px;">
+                                	<label>Description</label>
+                               		<h:inputTextarea class="form-control" rows="5" value="#{adminProjectBean.project.description}"/>
+                               	</div>
+                           
+                            <h:commandLink class="btn btn-info btn-icon-split" style="margin-top: 10px;" actionListener="#{adminProjectBean.saveDeatils}">
+                            	<f:ajax render="@form" execute="@form"/>
+                            	<span class="text-white-50 icon"><i class="fas fa-save"></i></span><span class="text-white text">Save</span>
+                            </h:commandLink>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 20px;"> <!-- Participants -->
+                    <div class="card shadow py-2" style="margin: 0 auto;">
+                        <div class="card-body">
+                            <div>
+                                <h1>Participants<br/></h1>
+                            </div>
+                            <h:form>
+                                <ul class="list-group">
+                                	<c:forEach var="part" items="#{adminProjectBean.project.participants}">
+                                		<li class="list-group-item">
+                                            <div class="form-row">
+                                                <div class="col">
+                                                	<h:graphicImage class="border rounded-circle img-profile" a:width="40px" a:height="40px" value="/resources/files/#{part.imagePath}" />
+                                                	<span>#{part.username}</span>
+                                               	</div>
+                                                <div class="col text-right"> 
+                                                	<h:commandLink class="link"> <!-- TODO -->
+                                                		<f:ajax render="@form" execute="@form" />
+                                                		<i class="fa fa-close"/>
+                                                	</h:commandLink>
+                                               	</div>
+                                            </div>
+                                   		</li>
+                                		
+                                	</c:forEach>
+                                </ul>
+                            </h:form>
+                            <a class="btn btn-info btn-icon-split" role="button" style="margin-top: 10px;" onclick="showAndHideAddUser()">
+                            	<span class="text-white-50 icon"><i class="fas fa-plus"></i></span><span class="text-white text">Add new user</span>
+                           	</a>
+	                        <div id="addUser" class="off">    
+	                            <h:form>
+	                            	<label>User</label>
+	                                <div class="form-row">
+	                                    <div class="col"><input class="form-control" type="text" placeholder="Username or email"/></div>
+	                                    <div class="col-1"><button class="btn btn-primary" type="button" ><i class="fa fa-plus"/></button></div>
+	                                </div>
+	                            </h:form>
+	                        </div>    
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 20px;"> <!-- Material -->
+                    <div class="card shadow py-2" style="margin: 0 auto;">
+                        <div class="card-body">
+                            <div>
+                                <h1>Material</h1>
+                            </div>
+                            <h:form class="text-center">
+                                <div class="table-responsive">
+                                	<h:dataTable class="table table-hover" value="#{adminProjectBean.project.material}" var="m">
+		                        		<h:column>
+		                        			<f:facet name="header">
+		                        				<div style="text-align:center">
+		                        					Material
+                        						</div>
+                        					</f:facet>
+		                        			#{m.name}
+		                        		</h:column>
+		                        		<h:column>
+		                        			<f:facet name="header">
+		                        				<div style="text-align:center">
+		                        					Price €
+                        						</div>
+                        					</f:facet>
+		                        			#{m.price} €
+		                        		</h:column>
+		                        		<h:column>
+		                        			<f:facet name="header">
+		                        				<div style="text-align:center">
+		                        					Quantity
+                        						</div>
+                        					</f:facet>
+		                        			#{m.quantity}
+		                        		</h:column>
+		                        		<h:column>
+		                        			<f:facet name="header">
+		                        				<div style="text-align:center">
+		                        					Total
+                        						</div>
+                        					</f:facet>
+                        					0.00
+		                        		</h:column>
+		                        		<h:column>
+		                        			<h:commandLink class="link" > <!-- TODO -->
+		                        				<f:attribute name="material" value="#{m}" />
+		                        				<f:ajax render="@form" execute="@form"/>
+		                        				<i class="fa fa-remove"/>
+		                        			</h:commandLink>
+		                        		</h:column>
+		                        	</h:dataTable>
+                                </div>
+                            </h:form>
+                            <p><strong>Total: </strong>0.00 €</p>
+                            <a class="btn btn-info btn-icon-split" role="button" style="margin-top: 10px;" onclick="showAndHideAddMaterial()">
+                            	<span class="text-white-50 icon"><i class="fas fa-plus"></i></span>
+                            	<span class="text-white text">Add new Material</span>
+                           	</a>
+                           	<div id="addMaterial" class="off">
+	                            <h:form><!-- TODO -->
+	                                <div class="form-row">
+	                                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+	                                        <div style="padding-top: 10px;padding-bottom: 10px;">
+	                                            <div class="form-row">
+	                                                <div class="col"><label class="col-form-label">Material</label></div>
+	                                            </div><input class="form-control" type="text"/></div>
+	                                    </div>
+	                                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+	                                        <div style="padding-top: 10px;padding-bottom: 10px;">
+	                                            <div class="form-row">
+	                                                <div class="col-5"><label class="col-form-label">Price</label></div>
+	                                                <div class="col-5"><label class="col-form-label">Qt</label></div>
+	                                            </div>
+	                                            <div class="form-row">
+	                                                <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10">
+	                                                    <div class="form-row">
+	                                                        <div class="col-6"><input class="form-control" type="number" min="1" placeholder="0"/></div>
+	                                                        <div class="col-6"><input class="form-control" type="number" step="1" min="0" placeholder="0"/></div>
+	                                                    </div>
+	                                                </div>
+	                                                <div class="col"><button class="btn btn-primary" type="button"><i class="fa fa-plus"></i></button></div>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 20px;"> <!-- Images -->
+                    <div class="card shadow py-2" style="margin: 0 auto;">
+                        <div class="card-body">
+                            <div>
+                                <h1>Images</h1>
+                            </div>
+                            <h:form>
+                                <div class="table-responsive text-center">
+                                	<h:dataTable class="table table-hover" value="#{adminProjectBean.project.imagePath}" var="img">
+		                        		<h:column>
+		                        			<f:facet name="header">
+		                        				<div style="text-align:center">
+		                        					Image
+                        						</div>
+                        					</f:facet>
+		                        			<h:graphicImage a:width="100" value="/resources/files/#{img}"/>
+		                        		</h:column>
+		                        		<h:column>
+		                        			<f:facet name="header">
+		                        				<div style="text-align:center">
+		                        					Name
+                        						</div>
+                        					</f:facet>
+		                        			#{img} 
+		                        		</h:column>
+		                        		<h:column>
+		                        			<f:facet name="header">
+		                        				<div style="text-align:center">
+		                        					Size
+                        						</div>
+                        					</f:facet>
+		                        			0.00 kb
+		                        		</h:column>
+		                        		<h:column>
+		                        			<h:commandLink class="link" > <!-- TODO " -->
+		                        				<f:attribute name="material" value="#{m}" />
+		                        				<f:ajax render="@form" execute="@form"/>
+		                        				<i class="fa fa-remove"/>
+		                        			</h:commandLink>
+		                        		</h:column>
+		                        	</h:dataTable>
+                                </div>
+                                <a class="btn btn-info btn-icon-split" role="button" style="margin-top: 10px;">
+                                	<span class="text-white-50 icon"><i class="fas fa-plus"></i></span><span class="text-white text">Add new Image</span>
+                                </a>
+                           </h:form>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 20px;"> <!-- Tags -->
+                    <div class="card shadow py-2" style="margin: 0 auto;">
+                        <div class="card-body">
+                            <div>
+                                <h1>Tags</h1>
+                            </div>
+                            <h:form>
+                                <ul class="list-group">
+                                	<c:forEach var="tag"  items="#{adminProjectBean.project.tags}">
+	                                   <li class="list-group-item">
+	                                       <div>
+	                                           <div class="form-row">
+	                                               <div class="col">#{tag}</div>
+	                                               <div class="col text-right link"><i class="fa fa-close"/></div>
+	                                           </div>
+	                                       </div>
+	                                   </li>
+                                    </c:forEach>
+                                </ul>
+                            </h:form>
+                            <a class="btn btn-info btn-icon-split" role="button" style="margin-top: 10px;" onclick="showAndHideAddTag()">
+                            	<span class="text-white-50 icon"><i class="fas fa-plus"></i></span>
+                            	<span class="text-white text">Add new tag</span>
+                           	</a>
+	                        <div class="off" id="addTag">
+	                            <h:form>
+	                            	<label>Tag</label>
+	                                <div class="form-row">
+	                                    <div class="col"><input class="form-control" type="text"/></div>
+	                                    <div class="col-1"><button class="btn btn-primary" type="button"><i class="fa fa-plus"></i></button></div>
+	                                </div>
+	                            </h:form>
+                           </div>   
+                        </div>
+                    </div>
+                </div>
+               
+                <div style="margin-bottom: 20px;"> <!-- Candidates -->
+                    <div class="card shadow py-2" style="margin: 0 auto;">
+                        <div class="card-body">
+                            <div>
+                                <h1>Candidates<br/></h1>
+                            </div>
+                            <div class="table-responsive text-center">
+                            	<h:form>
+	                               	<h:dataTable class="table table-hover" value="#{adminProjectBean.project.candidates}" var="c">
+		                        		<h:column>
+		                        			<f:facet name="header">
+		                        				<div style="text-align:center">
+		                        					User
+	                       						</div>
+	                       					</f:facet>
+	                       					<h:graphicImage class="border rounded-circle img-profile" a:width="40px" a:height="40px" value="/resources/files/#{c.user.imagePath}"/>
+		                        			<span> #{c.user.username}</span>
+		                        		</h:column>
+		                        		<h:column>
+		                        			<f:facet name="header">
+		                        				<div style="text-align:center">
+		                        					Motivation letter
+	                       						</div>
+	                       					</f:facet>
+		                        			#{c.text}
+		                        		</h:column>
+		                        		<h:column>
+		                        			<f:facet name="header">
+		                        				<div style="text-align:center">
+		                        					Date
+	                       						</div>
+	                       					</f:facet>
+		                        			#{c.date}
+		                        		</h:column>
+		                        		<h:column>
+		                        			<h:commandLink class="link" > <!-- TODO -->
+		                        				<f:attribute name="material" value="#{m}" />
+		                        				<f:ajax render="@form" execute="@form"/>
+		                        				<i class="fa fa-remove"/>
+		                        			</h:commandLink>
+		                        		</h:column>
+		                        	</h:dataTable>
+	                        	</h:form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+   	</c:if>
 	
+	<c:if test="#{adminProjectBean.project == null}">
+		<h1 style="margin-top: 50px; text-align: center">
+			Project not Found <i class="fa fa-frown-o"></i>
+		</h1>
+	</c:if>
+
 	</ui:define>
 	
+	
+	<ui:define name="scripts">
+		<!-- Line Chart  -->
+		<script>
+			var ctxL = document.getElementById("lineChart").getContext('2d');
+		    var myLineChart = new Chart(ctxL, {
+		      type: 'line',
+		      data: {
+		        labels: ["January", "February", "March", "April", "May", "June", "July"],
+		        datasets: [
+		          {
+		            label: "Views",
+		            data: [0, 65, 45, 65, 35, 65, 0],
+		            backgroundColor: [ 'rgba(246,248,253, 0.2)', ],
+		            borderColor: [ '#4e73df', ],
+		            borderWidth: 2,
+		            pointBorderColor: "#4e73df", 
+		            pointBackgroundColor: "rgba(78,115,223, 0.5)",
+		          },
+		          {
+		            label: "Likes",
+		            data: [0, 25, 35, 15, 45, 5, 3],
+		            backgroundColor: [ 'rgb(255,230,230,0.5)', ],
+		            borderColor: [ 'rgba(255, 179, 179,1)', ],
+		            borderWidth: 2,
+		            pointBorderColor: "rgba(255, 179, 179,0.5)", 
+		            pointBackgroundColor: "rgb(255,230,230,0.5)",
+		          }
+		        ]
+		      },
+		      options: {
+		        responsive: true
+		      }
+		    });
+	    </script>
+	
+		<!-- Hide and show forms -->
+		<script>
+			function showAndHideAddUser(){
+				showAndHideComponent('addUser');
+			}
+			
+			function showAndHideAddMaterial(){
+				showAndHideComponent('addMaterial');
+			}
+			
+			function showAndHideAddTag(){
+				showAndHideComponent('addTag');
+			}
+			
+			function showAndHideComponent(id) {
+				var element = document.getElementById(id);
+				if(element.classList.contains('on')){
+					element.classList.add("off");
+					element.classList.remove("on");
+				}else{
+					element.classList.add("on");
+					element.classList.remove("off");
+				}
+			}
+			
+		</script>
+	</ui:define>
 </ui:composition>

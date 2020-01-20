@@ -11,10 +11,40 @@
 
 	<ui:define name="content">
 	
-	    	<h1 class="display-4" style="margin:20px; text-align: center">
-				In making
-   			</h1>
+    	<div style="margin-bottom: 20px;">
+			<div class="card shadow py-2">
+				<div class="card-body">
+					 <table class="table table-hover text-center">
+                         <thead>
+                             <tr>
+                                 <th>Project title</th>
+                                 <th>Data</th>
+                                 <th>Edit</th>
+                             </tr>
+                         </thead>
+                         <tbody>
+                             <tr>
+                                 <td><a class="text-dark" href="#" data-toggle="modal" data-target="#project-modal">Modal</a></td>
+                                 <td>02/52/2020</td>
+                                 <td><i class="fa fa-remove"/></td>
+                             </tr>
+                             <tr>
+                                 <td>Test project</td>
+                                 <td>02/06/2020</td>
+                                 <td><i class="fa fa-remove"/></td>
+                             </tr>
+                         </tbody>
+                     </table>
+				</div>
+			</div>
+		</div>
 	
+	</ui:define>
+	
+	<ui:define name="scripts">
+		<script>
+			$('.table').DataTable();
+		</script>
 	</ui:define>
 	
 </ui:composition>

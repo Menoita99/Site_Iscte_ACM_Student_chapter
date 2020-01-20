@@ -98,6 +98,25 @@
 			<to-view-id>/pages/createProject.xhtml</to-view-id>
 		</navigation-case>
 		
+		<navigation-case>
+			<from-outcome>adminDashboard</from-outcome>
+			<to-view-id>/pages/admin/adminDashboard.xhtml</to-view-id>
+		</navigation-case>
+	
+		<navigation-case>
+			<from-outcome>adminNews</from-outcome>
+			<to-view-id>/pages/admin/adminNews.xhtml</to-view-id>
+		</navigation-case>
+	
+		<navigation-case>
+			<from-outcome>adminProjects</from-outcome>
+			<to-view-id>/pages/admin/adminProjects.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>adminUsers</from-outcome>
+			<to-view-id>/pages/admin/adminUsers.xhtml</to-view-id>
+		</navigation-case>
+	
 	</navigation-rule>
-
 </faces-config>

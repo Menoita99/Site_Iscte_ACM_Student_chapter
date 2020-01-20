@@ -43,7 +43,7 @@
 	</url-mapping>
 
 	<url-mapping id="event">
-		<pattern value="/events/#{id}" />
+		<pattern value="/events/#{eventId}" />
 		<view-id value="/pages/event.xhtml" />
 	</url-mapping>
 
@@ -110,6 +110,11 @@
 	<url-mapping id="adminProjects">
 		<pattern value="/adminProjects" />
 		<view-id value="/pages/admin/adminProjects.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="adminProject">
+		<pattern value="/adminProjects/#{projectId}" />
+		<view-id value="/pages/admin/adminProject.xhtml" />
 	</url-mapping>
 	
 </pretty-config>

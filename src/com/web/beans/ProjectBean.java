@@ -2,13 +2,11 @@ package com.web.beans;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
-import com.database.entities.AcmLike;
 import com.database.entities.Project;
 import com.database.entities.ProjectCandidate;
 import com.database.managers.JpaUtil;
@@ -46,17 +44,17 @@ public class ProjectBean implements Serializable{
 				Project p = ProjectManager.findById(Integer.parseInt(id));
 				if(p != null) {
 					project = new ProjectContainer(p);
+					ProjectManager.addView(p.getId());
 
 					if(Session.getInstance().getUser() != null) {
 						ProjectCandidate c = ProjectManager.getCandidature(Session.getInstance().getUser().getId(), project.getId());
 						candidature = c == null ? new ProjectCandidateContainer() : new ProjectCandidateContainer(c);
 					}
-
 				}
 			}
 
 		}catch(Exception e) {
-			System.err.println("(EventBean)[getEvent] Error parsing id or there is no project with the given id "+id+" : error type -> "+e.getClass());
+			System.err.println("(ProjectBean) Error parsing id or there is no project with the given id "+id+" : error type -> "+e.getClass());
 		}
 	}
 
@@ -71,8 +69,7 @@ public class ProjectBean implements Serializable{
 	public boolean wasLiked() {
 		if(Session.getInstance().getUser() == null)
 			return false;
-
-		return ProjectManager.wasLiked(Session.getInstance().getUser().getId(), project.getId());
+		return ProjectManager.wasLiked(project.getId(),Session.getInstance().getUser().getId());
 	}
 
 
@@ -90,14 +87,11 @@ public class ProjectBean implements Serializable{
 			return;
 		}
 
-		List<AcmLike> likes = JpaUtil.executeQuery("Select l from AcmLike l where l.user.id = "+Session.getInstance().getUser().getId()
-				+" and l.project.id = "+project.getId(), AcmLike.class);
-
-		if(likes.isEmpty())
-			ProjectManager.like(project.getId(),Session.getInstance().getUser().getId());
+		if(ProjectManager.wasLiked(project.getId(),Session.getInstance().getUser().getId())) 
+			ProjectManager.dislike(project.getId(),Session.getInstance().getUser().getId());
 		else
-			ProjectManager.dislike(likes.get(0));
-
+			ProjectManager.like(project.getId(),Session.getInstance().getUser().getId());
+		
 		project.refresh();
 	}
 
@@ -118,15 +112,21 @@ public class ProjectBean implements Serializable{
 
 
 	/**
-	 * 
+	 * Creates or edit candidature
 	 */
 	public void submitCandidature() {
+		if(Session.getInstance().getUser() == null) { 
+			redirectToLogin();
+			return;
+		}
 		try {
 			if(candidature.getUser() == null && candidature.getProject() == null) {
+				//creates candidature
 				candidature.setUser(Session.getInstance().getUser());
 				candidature.setProject(project);
 				JpaUtil.createEntity(new ProjectCandidate(candidature));
 			}else {
+				//Edit candidature
 				ProjectCandidate p = ProjectManager.getCandidature(candidature.getUser().getId(), candidature.getProject().getId());
 				p.setMotivation(candidature.getText());
 				p.setDate(new Date(System.currentTimeMillis()));
@@ -135,8 +135,6 @@ public class ProjectBean implements Serializable{
 		}catch (Exception e) {
 			System.out.println("(EventBean)[submitCandidature] candidature: "+candidature +" \nproject:  "+project);
 			e.printStackTrace();
-			//new facesMessage
-			// TODO: handle exception
 		}
 	}
 

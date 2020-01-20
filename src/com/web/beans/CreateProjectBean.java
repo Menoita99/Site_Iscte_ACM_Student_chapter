@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.servlet.http.Part;
 
 import com.database.entities.Material;
@@ -134,17 +135,34 @@ public class CreateProjectBean implements Serializable{
 
 	
 	
+	/**
+	 * @param e
+	 */
+	public void addImage(ValueChangeEvent e) {
+		if(e.getNewValue() instanceof Part) {
+			uploadedFile = (Part) e.getNewValue();
+			uploadedFiles.add(uploadedFile);
+			container.getImagePath().add(uploadedFile.getSubmittedFileName());
+		}
+	}
+	
+	
 	
 	/**
 	 * 
-	 * @param part
+	 * @param e
 	 */
-	public void addImage(ActionEvent event) {
-		uploadedFiles.add(uploadedFile);
-		container.getImagePath().add(uploadedFile.getName());
+	public void removeImage(ActionEvent e) {
+		String fileName = (String) e.getComponent().getAttributes().get("fileName");
+		container.getImagePath().remove(fileName);
+		for (Part part : uploadedFiles) {
+			if(part.getSubmittedFileName().equals(fileName)) {
+				uploadedFiles.remove(part);
+				return;
+			}
+		}
 	}
-
-
+	
 	
 	
 	

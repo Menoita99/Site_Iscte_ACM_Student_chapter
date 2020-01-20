@@ -1,9 +1,10 @@
 package com.utils;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,13 +46,9 @@ public class FileManager {
 
 		for (Part part : files) {
 			if(!part.getContentType().matches(typeRegex)) {
-				InputStream input = part.getInputStream();
-				Files.copy(input, Paths.get(ROOT_PATH +"/events/"));
-				input.close();
-				paths.add("/events/"+ part.getName());
 			}
 		}
-		
+
 		return paths;
 	}
 
@@ -74,7 +71,33 @@ public class FileManager {
 	 * @return
 	 */
 	public static List<String> saveProjectFiles(List<Part> parts) {
-		// TODO Auto-generated method stub
-		return new ArrayList<String>();
+		List<String> paths = new ArrayList<>();
+
+		//		File uploads = new File(properties.getProperty("upload.location"));
+		File uploads = new File(ROOT_PATH+File.separator+"projects");
+
+		for (Part part : parts) {
+
+			if(part.getContentType().matches(typeRegex)) {
+
+				try(InputStream input = part.getInputStream()) {
+					
+					String fileName =part.getSubmittedFileName();
+					String name = fileName.substring(0,fileName.lastIndexOf('.'));
+					String extension = fileName.substring(fileName.lastIndexOf('.'), fileName.length());
+
+					File file = File.createTempFile(name+"-", extension , uploads);
+
+					Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+					paths.add("projects/"+file.getName());
+
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+
+		}
+		return paths;
 	}
 }

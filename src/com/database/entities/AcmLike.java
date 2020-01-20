@@ -10,6 +10,9 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 
 /**
  * Entity implementation class for Entity: AcmLike
@@ -24,46 +27,21 @@ public class AcmLike implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column
 	private int id;
-	
-	@Exclude
-	@ManyToOne
-	@JoinColumn(foreignKey = @ForeignKey(name = "FK_USER_LIKE_ID"), nullable= false)
-	private User user;
 	
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date date =  new Date(System.currentTimeMillis());
-
+	private Date date = new Date(System.currentTimeMillis());
+	
+	@lombok.EqualsAndHashCode.Exclude
 	@Exclude
 	@ManyToOne
-	@JoinColumn(foreignKey = @ForeignKey(name = "FK_PROJECT_LIKE_ID"), nullable= true)
-	private Project project = null;
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JoinColumn(foreignKey = @ForeignKey(name = "FK_USER_LIKE_ID"), nullable= false)
+	private User user;
 	
 	
-	@Exclude
-	@ManyToOne
-	@JoinColumn(foreignKey = @ForeignKey(name = "FK_EVENT_LIKE_ID"), nullable= true)
-	private Event event = null;
-	
-	
-	/**
-	 * @param user
-	 * @param project
-	 */
-	public AcmLike(User user, Project project) {
-		this.user = user;
-		this.project = project;
-	}
-	
-	
-	/**
-	 * @param user
-	 * @param event
-	 */
-	public AcmLike(User user,Event event) {
-		this.user = user;
-		this.event = event;
+	public AcmLike(User u) {
+		this.user = u;
 	}
 }

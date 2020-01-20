@@ -22,7 +22,7 @@
                 <h2 class="text-center">News</h2>
                 <p class="text-center">Nunc luctus in metus eget fringilla. Aliquam sed justo ligula. Vestibulum nibh erat, pellentesque ut laoreet vitae. </p>
             </div>
-            <div class="buttons"><a class="btn btn-primary" role="button" href="#">Subscribe</a></div>
+            <div class="buttons"><a class="btn btn-primary" role="button" href="#">Subscribe</a></div><!-- modal to subscribe -->
         </div>
     </div>
     <div class="container">
@@ -30,42 +30,21 @@
             <div class="col" style="max-width: 100%;">
                 <div>
                     <ul class="list-group" style="padding: auto;margin: auto;">
-                        <li class="list-group-item">
-                            <div>
-                                <h1 class="display-3"><strong>Lorem Ipsum</strong><br></br></h1>
-                                <p class="lead"><br></br>Fusce id velit ut tortor pretium. Morbi enim nunc faucibus a pellentesque sit amet porttitor. Ut tortor pretium viverra suspendisse potenti nullam ac. Nulla facilisi etiam dignissim diam quis. Platea dictumst vestibulum
-                                    rhoncus est. Ultrices dui sapien eget mi proin sed libero enim. Dignissim suspendisse in est ante in. Pharetra vel turpis nunc eget lorem dolor sed viverra. Elementum nibh tellus molestie nunc non blandit massa enim
-                                    nec. Semper viverra nam libero justo laoreet sit amet cursus. Gravida cum sociis natoque penatibus et magnis dis. Libero nunc consequat interdum varius sit amet mattis vulputate. Egestas pretium aenean pharetra magna
-                                    ac placerat.<br></br><br></br></p>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div>
-                                <h1 class="display-3"><strong>Lorem Ipsum</strong><br></br></h1>
-                                <p class="lead"><br></br>Fusce id velit ut tortor pretium. Morbi enim nunc faucibus a pellentesque sit amet porttitor. Ut tortor pretium viverra suspendisse potenti nullam ac. Nulla facilisi etiam dignissim diam quis. Platea dictumst vestibulum
-                                    rhoncus est. Ultrices dui sapien eget mi proin sed libero enim. Dignissim suspendisse in est ante in. Pharetra vel turpis nunc eget lorem dolor sed viverra. Elementum nibh tellus molestie nunc non blandit massa enim
-                                    nec. Semper viverra nam libero justo laoreet sit amet cursus. Gravida cum sociis natoque penatibus et magnis dis. Libero nunc consequat interdum varius sit amet mattis vulputate. Egestas pretium aenean pharetra magna
-                                    ac placerat.<br></br><br></br></p>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div>
-                                <h1 class="display-3"><strong>Lorem Ipsum</strong><br></br></h1>
-                                <p class="lead"><br></br>Fusce id velit ut tortor pretium. Morbi enim nunc faucibus a pellentesque sit amet porttitor. Ut tortor pretium viverra suspendisse potenti nullam ac. Nulla facilisi etiam dignissim diam quis. Platea dictumst vestibulum
-                                    rhoncus est. Ultrices dui sapien eget mi proin sed libero enim. Dignissim suspendisse in est ante in. Pharetra vel turpis nunc eget lorem dolor sed viverra. Elementum nibh tellus molestie nunc non blandit massa enim
-                                    nec. Semper viverra nam libero justo laoreet sit amet cursus. Gravida cum sociis natoque penatibus et magnis dis. Libero nunc consequat interdum varius sit amet mattis vulputate. Egestas pretium aenean pharetra magna
-                                    ac placerat.<br></br><br></br></p>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div>
-                                <h1 class="display-3"><strong>Lorem Ipsum</strong><br></br></h1>
-                                <p class="lead"><br></br>Fusce id velit ut tortor pretium. Morbi enim nunc faucibus a pellentesque sit amet porttitor. Ut tortor pretium viverra suspendisse potenti nullam ac. Nulla facilisi etiam dignissim diam quis. Platea dictumst vestibulum
-                                    rhoncus est. Ultrices dui sapien eget mi proin sed libero enim. Dignissim suspendisse in est ante in. Pharetra vel turpis nunc eget lorem dolor sed viverra. Elementum nibh tellus molestie nunc non blandit massa enim
-                                    nec. Semper viverra nam libero justo laoreet sit amet cursus. Gravida cum sociis natoque penatibus et magnis dis. Libero nunc consequat interdum varius sit amet mattis vulputate. Egestas pretium aenean pharetra magna
-                                    ac placerat.<br></br><br></br></p>
-                            </div>
-                        </li>
+                    	<c:if test="#{not empty newsBean.news}">
+	                    	<c:forEach items="#{newsBean.news}" var="n">
+		                        <li class="list-group-item">
+		                            <div>
+		                                <h1 class="display-3"><strong>#{n.title}</strong><br></br></h1>
+		                                <p class="lead"><br>#{n.description}</br><br></br></p>
+		                            </div>
+		                        </li>
+	                       	</c:forEach>
+                       	</c:if>
+                       	<c:if test="#{empty newsBean.news}">
+	                       	<h1 style="margin: 50px auto">
+								Sorry, We haven't found news :'( <br/> Try again later
+							</h1>
+                       	</c:if>
                     </ul>
                 </div>
             </div>
