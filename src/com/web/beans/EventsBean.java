@@ -2,6 +2,8 @@ package com.web.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,8 +12,11 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 
+import com.database.entities.Event;
 import com.database.entities.State;
 import com.database.managers.EventManager;
+import com.database.managers.JpaUtil;
+import com.utils.comparators.StringComparator;
 import com.web.containers.EventContainer;
 
 import lombok.Data;
@@ -34,7 +39,14 @@ public class EventsBean implements Serializable{
 	
 	public EventsBean() {
 		events = EventManager.findAll().stream().map(EventContainer::new).collect(Collectors.toList());
-		//comparador
+		
+		Collections.sort(events,new Comparator<EventContainer>() {
+
+			@Override
+			public int compare(EventContainer o1, EventContainer o2) {
+				return new StringComparator(ascending).compare(o1.getTitle(), o2.getTitle());
+			}
+		});
 	}
 	
 	
@@ -59,8 +71,14 @@ public class EventsBean implements Serializable{
 	 * @param event
 	 */
 	public void sort (ValueChangeEvent event) {
-//		ascending = (boolean) event.getNewValue();
-//		Collections.sort(projects, new ProjectTimeComparator(true,ascending));
+		ascending = (boolean) event.getNewValue();
+		Collections.sort(events,new Comparator<EventContainer>() {
+
+			@Override
+			public int compare(EventContainer o1, EventContainer o2) {
+				return new StringComparator(ascending).compare(o1.getTitle(), o2.getTitle());
+			}
+		});
 	}
 
 
@@ -79,8 +97,8 @@ public class EventsBean implements Serializable{
 	 * @param event
 	 */
 	public void search(ValueChangeEvent event) { 
-//		state = (State) event.getNewValue();
-//		search();
+		state = (State) event.getNewValue();
+		search();
 	}
 
 
@@ -90,15 +108,22 @@ public class EventsBean implements Serializable{
 	 * It will see if the pattern searchField appears on tags or on title and will compare project state.
 	 */
 	private void search() {
-//		String query = "Select distinct p from Project p join p.tags t where ( t like '%"+searchField+"%' or p.title like '%"+searchField+"%' ) ";
-//
-//		if(state != State.ALL) query += " and p.state = "+state.ordinal();
-//
-//		projects = JpaUtil.executeQuery(query, Project.class)
-//				.stream()
-//				.map(ProjectContainer::new)
-//				.collect(Collectors.toList());
-//		
-//		Collections.sort(projects, new ProjectTimeComparator(true,ascending));
+		String query = "Select distinct e from Event e join e.tags t where ( lower(t) like lower('%"+searchField+"%')"
+					 + " or lower(e.title) like lower('%"+searchField+"%') ) ";
+
+		if(state != State.ALL) query += " and e.state = "+state.ordinal();
+
+		events = JpaUtil.executeQuery(query, Event.class)
+				.stream()
+				.map(EventContainer::new)
+				.collect(Collectors.toList());
+		
+		Collections.sort(events,new Comparator<EventContainer>() {
+
+			@Override
+			public int compare(EventContainer o1, EventContainer o2) {
+				return new StringComparator(ascending).compare(o1.getTitle(), o2.getTitle());
+			}
+		});
 	}
 }

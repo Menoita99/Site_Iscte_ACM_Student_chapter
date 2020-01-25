@@ -77,16 +77,15 @@ public class ProjectManager {
 	public static AcmLike like(int projectId, int userId) {
 		Project p = findById(projectId);
 		User u = UserManager.getUserById(userId);
-		
-		for(AcmLike l : p.getLikes())
-			if(l.getUser().equals(u))
-				return null;
-		
+
+		if(wasLiked(projectId, userId))
+			return null;
+
 		AcmLike like = new AcmLike(u);
-		
+
 		p.getLikes().add(like);
 		JpaUtil.mergeEntity(p);
-		
+
 		return like;
 	}
 
@@ -101,14 +100,13 @@ public class ProjectManager {
 	 */
 	public static void dislike(int projectId, int userId) {
 		Project p = findById(projectId);
-		
-		for(AcmLike l : p.getLikes()) {
-			if(l.getUser().getId() == userId) {
-				p.getLikes().remove(l);
-				JpaUtil.mergeEntity(p);
-				JpaUtil.deleteEntity(l);
-				return;
-			}
+
+		List<AcmLike> result = JpaUtil.executeQuery("Select l from Project p join p.likes l where l.user.id = "+userId+" and p.id= "+projectId, AcmLike.class);
+		if(!result.isEmpty()) {
+			AcmLike l = result.get(0);
+			p.getLikes().remove(l);
+			JpaUtil.mergeEntity(p);
+			JpaUtil.deleteEntity(l);
 		}
 	}
 
@@ -165,19 +163,15 @@ public class ProjectManager {
 		JpaUtil.mergeEntity(project);
 	}
 
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * @return return if  user has liked the given project
 	 */
 	public static boolean wasLiked(int projectId, int userId) {
-		Project p = ProjectManager.findById(projectId);
-		for(AcmLike l : p.getLikes())
-			if(l.getUser().getId() == userId)
-				return true;
-		return false;
+		return !JpaUtil.executeQuery("Select p from Project p join p.likes l where l.user.id = "+ userId +" and p.id= "+projectId, Project.class).isEmpty();
 	}
 
 

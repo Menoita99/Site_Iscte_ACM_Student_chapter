@@ -55,57 +55,28 @@
 		                </div>
 		                <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
 		                    <ul class="list-group" style="margin-top: 20px;">
-		                        <li class="list-group-item" style="padding-top: 12px;padding-right: 20px;padding-bottom: 0px;color: rgba(33,37,41,0.79);">
-		                            <div>
+		                    	<c:forEach items="#{event.infos}" var="info">
+			                        <li class="list-group-item" style="padding-top: 12px;padding-right: 20px;padding-bottom: 0px;color: rgba(33,37,41,0.79);">
 		                                <div class="row">
 		                                    <div class="col-4 text-center">
-		                                        <h1 class="display-4 text-center" style="color: rgb(0,0,0);">14</h1>
-		                                        <p class="lead text-center" style="font-size: 21px;">FEV</p>
+		                                        <h1 class="display-4 text-center" style="color: rgb(0,0,0);">#{info.startEventDate.getDayOfMonth()}</h1>
+		                                        <p class="lead text-center" style="font-size: 21px;">#{info.startEventDate.getMonth().toString().substring(0,3)}</p>
 		                                    </div>
 		                                    <div class="col-8">
 		                                        <ul class="list-unstyled text-left">
-		                                            <li style="margin-bottom: 5px;"><i class="fa fa-map-marker" style="color: #212529;"/> Av alguma cenalkn kldalkwm</li>
-		                                            <li style="margin-bottom: 5px;"><i class="fa fa-calendar" style="color: #212529;"/> February, 13 friday</li>
-		                                            <li style="margin-bottom: 5px;"><i class="fa fa-clock-o" style="color: #212529;"/> 14:00</li>
+		                                            <li style="margin-bottom: 5px;"><i class="fa fa-map-marker" style="color: #212529;"/> #{info.place}</li>
+		                                            <li style="margin-bottom: 5px;"><i class="fa fa-calendar" style="color: #212529;"/> #{info.startEventDate.getMonth().toString().toLowerCase()},#{info.startEventDate.getDayOfMonth()} #{info.startEventDate.getDayOfWeek().toString().toLowerCase()}</li>
+		                                            <li style="margin-bottom: 5px;"><i class="fa fa-clock-o" style="color: #212529;"/> 
+			                                           <c:if test="#{info.startEventDate.hour lt 10}"> 0#{info.startEventDate.hour.toString()}</c:if>
+			                                           <c:if test="#{info.startEventDate.hour gt 9}"> #{info.startEventDate.hour.toString()}</c:if>
+			                                           <c:if test="#{info.startEventDate.minute lt 10}">:0#{info.startEventDate.minute}</c:if>
+			                                           <c:if test="#{info.startEventDate.minute gt 9}">:#{info.startEventDate.minute}</c:if>
+		                                           </li>
 		                                        </ul>
 		                                    </div>
 		                                </div>
-		                            </div>
-		                        </li>
-		                        <li class="list-group-item" style="padding-top: 12px;padding-right: 20px;padding-bottom: 0px;color: rgba(33,37,41,0.79);">
-		                            <div>
-		                                <div class="row">
-		                                    <div class="col-4 text-center">
-		                                        <h1 class="display-4 text-center" style="color: rgb(0,0,0);">14</h1>
-		                                        <p class="lead text-center" style="font-size: 21px;">FEV</p>
-		                                    </div>
-		                                    <div class="col-8">
-		                                        <ul class="list-unstyled text-left">
-		                                            <li style="margin-bottom: 5px;"><i class="fa fa-map-marker" style="color: #212529;"/> Av alguma cenalkn kldalkwm</li>
-		                                            <li style="margin-bottom: 5px;"><i class="fa fa-calendar" style="color: #212529;"/> February, 13 friday</li>
-		                                            <li style="margin-bottom: 5px;"><i class="fa fa-clock-o" style="color: #212529;"/> 14:00</li>
-		                                        </ul>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                        </li>
-		                        <li class="list-group-item" style="padding-top: 12px;padding-right: 20px;padding-bottom: 0px;color: rgba(33,37,41,0.79);">
-		                            <div>
-		                                <div class="row">
-		                                    <div class="col-4 text-center">
-		                                        <h1 class="display-4 text-center" style="color: rgb(0,0,0);">14</h1>
-		                                        <p class="lead text-center" style="font-size: 21px;">FEV</p>
-		                                    </div>
-		                                    <div class="col-8">
-		                                        <ul class="list-unstyled text-left">
-		                                            <li style="margin-bottom: 5px;"><i class="fa fa-map-marker" style="color: #212529;"/> Av alguma cenalkn kldalkwm</li>
-		                                            <li style="margin-bottom: 5px;"><i class="fa fa-calendar" style="color: #212529;"/> February, 13 friday</li>
-		                                            <li style="margin-bottom: 5px;"><i class="fa fa-clock-o" style="color: #212529;"/> 14:00</li>
-		                                        </ul>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                        </li>
+			                        </li>
+		                        </c:forEach>
 		                    </ul>
 		                </div>
 		            </div>
@@ -121,11 +92,23 @@
 		        <div class="jumbotron jumbotron-fluid top-inclined" style="padding: 32px;margin-left: -15px;margin-right: -15px;padding-bottom: 64px;padding-top: 64px;">
 		            <div class="top-inclined-content">
 		                <div>
-		                    <h1 class="display-4" style="padding: 0px;margin: 0px 0px 20px;">Requirements</h1>
-		                    <div class="row">
+		                    <div class="row" style="margin-top:20px;margin-bottom:20px">
 		                        <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
-		                            <p class="lead"><br/>#{event.requirements}<br/><br/></p><button class="btn btn-primary join-btn"
-		                                type="button">Like <i class="fa fa-thumbs-o-up"></i></button></div>
+		                        	<h1 class="display-4" style="padding: 0px;margin: 0px 0px 20px;">Requirements</h1>
+		                            <p class="lead">
+		                            	<br/>#{event.requirements}<br/><br/>
+	                            	</p>
+	                            	<h:form id="like-form">
+			                        	<h:commandLink class="btn btn-primary join-btn" actionListener="#{eventBean.likeOrDislikeAction}" rendered="${not eventBean.wasLiked()}">
+			                         		<f:ajax execute="@this" render=":like-form :likes-header"/>
+			                         		Like <i class="fa fa-thumbs-o-up"></i>
+			                        	</h:commandLink>
+			                        	<h:commandLink class="btn btn-danger" actionListener="#{eventBean.likeOrDislikeAction}" rendered="#{eventBean.wasLiked()}">
+			                        		<f:ajax execute="@this" render=":like-form :likes-header"/>
+			                        		Unlike <i class="fa fa-thumbs-o-down"></i>
+			                        	</h:commandLink>
+			                        </h:form>
+                            	</div>
 		                        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4" style="margin-top: 10px;">
 		                            <div class="card">
 		                                <div class="card-header">
@@ -141,7 +124,7 @@
 		            </div>
 		        </div>
 		        <section class="white-section" style="padding: 20px 20px 20px 50px;margin-top: 40px;">
-		            <h1 class="display-4" style="padding: 0px;margin: 0px 0px 20px;">Team</h1>
+		            <h1 class="display-4" style="padding: 0px;margin: 0px 0px 20px;">Staff</h1>
 		            <div class="row">
        	            	<ui:repeat var="user" value="#{event.staff}">
 			                <div class="col-sm-6 col-md-4 col-lg-2 col-xl-2 text-center">

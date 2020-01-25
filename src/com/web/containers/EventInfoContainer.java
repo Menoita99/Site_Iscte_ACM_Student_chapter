@@ -1,6 +1,8 @@
 package com.web.containers;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 import com.database.entities.EventInfo;
@@ -15,10 +17,14 @@ public class EventInfoContainer implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private int id;
-	private Date startEventDate;
+	private LocalDateTime startEventDate;
 	private Date joinDate;
 	private String place;
+	
 	private Date duration;
+	private int day;
+	
+	
 	
 	@Exclude
 	@lombok.ToString.Exclude
@@ -26,11 +32,12 @@ public class EventInfoContainer implements Serializable{
 	
 	public EventInfoContainer(EventInfo ei) {
 		this.id = ei.getId();
-		this.startEventDate = ei.getStartEventDate();
+		this.startEventDate = ei.getStartEventDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 		this.joinDate = ei.getJoinDate();
 		this.place = ei.getPlace();
-		
+//		startEventDate.get
 	}
+	
 	
 	
 	public EventContainer getEvent() {

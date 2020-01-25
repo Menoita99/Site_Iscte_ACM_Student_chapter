@@ -1,6 +1,8 @@
 package com.web.containers;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,6 +10,7 @@ import com.database.entities.Event;
 import com.database.entities.Material;
 import com.database.entities.State;
 import com.database.managers.EventManager;
+import com.utils.comparators.NearestFutureComparator;
 
 import lombok.Data;
 import lombok.ToString.Exclude;
@@ -56,6 +59,11 @@ public class EventContainer implements Serializable {
 	@lombok.EqualsAndHashCode.Exclude
 	private List<EventInfoContainer> infos;
 	
+	
+	
+	
+	
+	
 	public EventContainer(Event e){
 		this.id = e.getId();
 		this.vacancies = e.getVacancies();
@@ -70,6 +78,10 @@ public class EventContainer implements Serializable {
 		this.tags = e.getTags();
 		this.material = e.getMaterial();
 	}
+	
+	
+	
+	
 	
 	
 	public EventContainer(int id){
@@ -89,41 +101,70 @@ public class EventContainer implements Serializable {
 	}
 
 	
+	
+	
+	
 	public UserContainer getManager() {
 		if(manager == null) 
 			manager = new UserContainer(EventManager.getEventById(id).getManager());
 		return manager;
 	}
 
-
+	
+	
+	
 	
 	/**
 	 * @return returns event staff
 	 */
 	public List<UserContainer> getStaff() {
 		if(staff == null) 
-			staff = EventManager.getEventById(id).getStaff().stream().map(UserContainer::new).collect(Collectors.toList());
+			staff = EventManager.getStaff(id).stream().map(UserContainer::new).collect(Collectors.toList());
 		return staff;
 	}
+
 	
 	
-	
-	/**
-	 * @return returns event participants
-	 */
-	public List<UserContainer> getParticipants() {
-		if(participants == null) 
-			participants = EventManager.getEventById(id).getParticipants().stream().map(UserContainer::new).collect(Collectors.toList());
-		return participants;
-	}
 	
 	
 	/**
 	 * @return returns event participants
 	 */
 	public List<EventInfoContainer> getInfos() {
-		if(infos == null) 
+		if(infos == null) { 
 			infos = EventManager.getEventById(id).getInfos().stream().map(EventInfoContainer::new).collect(Collectors.toList());
+			Collections.sort(infos, new Comparator<EventInfoContainer>() {
+
+				@Override
+				public int compare(EventInfoContainer o1, EventInfoContainer o2) {
+					return new NearestFutureComparator().compare(java.sql.Timestamp.valueOf(o1.getStartEventDate()),java.sql.Timestamp.valueOf(o2.getStartEventDate()));
+				}
+			});
+		}
 		return infos;
+	}
+
+	
+	
+	
+	
+	public void refresh() {
+		Event e = EventManager.getEventById(id);
+		this.id = e.getId();
+		this.vacancies = e.getVacancies();
+		this.likes = e.getLikes().size();
+		this.views = e.getViews().size();
+		this.title = e.getTitle();
+		this.description = e.getDescription();
+		this.shortDescription = e.getShortDescription();
+		this.requirements = e.getRequirements();
+		this.state = e.getState();
+		this.imagePath = e.getImagePath();
+		this.tags = e.getTags();
+		this.material = e.getMaterial();
+		this.staff = null;
+		this.infos = null;
+		this.participants = null;
+		this.manager = null;
 	}
 }

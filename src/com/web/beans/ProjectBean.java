@@ -77,9 +77,10 @@ public class ProjectBean implements Serializable{
 
 
 	/**
-	 * if there is no user logged in this method will redirect user to login page.
-	 * This method "likes" an project if user didn't already liked the project or
-	 * "dislikes", that mean it will remove or add an like object to database.
+	 * if there is no user logged in, this method will redirect user to login page.
+	 * This method give a "like" to project if user didn't already liked it.
+	 * if user already liked the project it will "dislike", 
+	 * that means it will remove or add an like object to database.
 	 */
 	public void likeOrDislikeAction(ActionEvent event) {
 		if(Session.getInstance().getUser() == null) { 
