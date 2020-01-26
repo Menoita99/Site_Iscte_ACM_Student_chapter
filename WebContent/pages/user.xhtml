@@ -8,20 +8,20 @@
 	xmlns:o="http://omnifaces.org/ui"
 	xmlns:of="http://omnifaces.org/functions"
 	xmlns:p="http://primefaces.org/ui">
-	
+
 	<ui:define name="headContent">
 		<h:outputStylesheet library="css" name="user.css" />
 	</ui:define>
 <div style="background-color: #fcfcfc;">
 	<ui:define name="content">
-	
+
 	<c:if test="${param['rendered'] != null}">
 		#{ userBean.setRendered(param['rendered'])}
 	</c:if>
 
 	<c:set var="user" value="#{userBean.user}" />
 
-		<div> 
+		<div>
 	        <div class="container" style="margin-bottom: 50px;margin-top:20px;">
 	            <div class="row">
 	                  <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4" style="padding: 0px;">
@@ -42,7 +42,7 @@
                     	</div>
 	                
 	                <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8">
-	                
+
 	                <h:panelGroup id="definitions" >
 	                	<h:panelGroup rendered="#{ userBean.rendered == 'definitions'}">
 	                	
@@ -168,7 +168,7 @@
 		               
 		               	</h:panelGroup>
 	               	</h:panelGroup>
-	               	
+
 	               	<h:panelGroup id="events" >
 	         			<h:panelGroup rendered="#{ userBean.rendered == 'events'}">
          					<div class="card shadow mb-3">
@@ -179,7 +179,7 @@
 	                            	<c:if test="#{empty user.getEvents()}">
 		                      			<h2 class="display-4" style="font-size: 30px;text-align: center;">You don't have any events joined, try to create or dicover one!!!<br/><br/></h2>
 		                      		</c:if>
-		                      		
+
 		                             <div class="row text-center" style="margin-top: 30px;">
 									    <div class="col">
 									    	<h:link class="btn btn-primary"  outcome="createEvent"> <i class="fa fa-plus"></i> Create Event</h:link>
@@ -192,7 +192,7 @@
 	                        </div>
 	               		</h:panelGroup>
 	               	</h:panelGroup>
-	               	
+
 	      	     	<h:panelGroup id="projects" >
 	         			<h:panelGroup rendered="#{ userBean.rendered == 'projects'}">
 							   <div class="card shadow mb-3">
@@ -280,7 +280,7 @@
 													<div style="text-align:center">
 				                        				<h:link class="text-dark" a:data-toggle="modal" a:data-target="#project-modal" value="#{p.title}"/>
 													</div>
-																	                        			
+
 				                        			<div class="modal fade" role="dialog" tabindex="-1" id="project-modal">
 												        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
 												            <div class="modal-content">
@@ -336,7 +336,7 @@
 				                        						<i class="fa fa-thumbs-down hover-red"/>
 				                        					</h:commandLink>
 				                        				</h:form>
-				                        				
+
 				                        			</div>
 				                        		</h:column>
 				                        	</h:dataTable>
@@ -354,7 +354,7 @@
 				                 </div>
 	               		</h:panelGroup>
 	               	</h:panelGroup>
-	               	
+
 	      	     	<h:panelGroup id="research" >
 	         			<h:panelGroup rendered="#{ userBean.rendered == 'research'}">
 	         					<div class="card shadow mb-3">
@@ -366,7 +366,7 @@
 				                 </div>
 	               		</h:panelGroup>
 	               	</h:panelGroup>
-	               	
+
 	                </div>
 	            </div>
 	        </div>
