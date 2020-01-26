@@ -7,10 +7,10 @@
 <persistence-unit name="acmDB">
 	<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<properties>
-			<property name="javax.persistence.jdbc.url"
+			<property name="javax.persistence.jdbc.url" 
 			value="jdbc:mysql://localhost/acmdb?useUnicode=TRUE&amp;useJDBCCompliantTimezoneShift=TRUE&amp;useLegacyDatetimeCode=FALSE&amp;serverTimezone=UTC&amp;autoReconnect=TRUE" />
-			<property name="javax.persistence.jdbc.user" value="root" /><!-- sessionVariables=storage_engine=InnoDB&amp; -->
-			<property name="javax.persistence.jdbc.password" value="superdias321" />
+			<property name="javax.persistence.jdbc.user" value="server" />
+			<property name="javax.persistence.jdbc.password" value="0001@bombS" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
 			<property name="hibernate.show_sql" value="false" />
@@ -18,5 +18,5 @@
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 		</properties>
 	</persistence-unit>
-
+	
 </persistence>

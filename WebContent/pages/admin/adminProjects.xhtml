@@ -22,10 +22,23 @@
                             <div class="card-body">
                                 <div class="row align-items-center no-gutters">
                                     <div class="col mr-2">
-                                        <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>views  (monthly)</span></div>
-                                        <div class="text-dark font-weight-bold h5 mb-0"><span>356</span></div>
+                                        <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>views  (per month)</span></div>
+                                        <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminProjectsBean.viewsMonth}</span></div>
                                     </div>
                                     <div class="col-auto"><i class="far fa-eye fa-2x text-gray-300"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                       <div class="col-md-6 col-xl-3 mb-4">
+                        <div class="card shadow border-left-info py-2">
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col mr-2">
+                                        <div class="text-uppercase text-info font-weight-bold text-xs mb-1"><span>likes (per month)</span></div>
+                                        <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminProjectsBean.likesMonth}</span></div>
+                                    </div>
+                                    <div class="col-auto"><i class="fas fa-clipboard-list fa-2x text-gray-300"></i></div>
                                 </div>
                             </div>
                         </div>
@@ -35,32 +48,10 @@
                             <div class="card-body">
                                 <div class="row align-items-center no-gutters">
                                     <div class="col mr-2">
-                                        <div class="text-uppercase text-success font-weight-bold text-xs mb-1"><span>Projects on going</span></div>
-                                        <div class="text-dark font-weight-bold h5 mb-0"><span>5</span></div>
+                                        <div class="text-uppercase text-success font-weight-bold text-xs mb-1"><span>Projects developing</span></div>
+                                        <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminProjectsBean.projectsDeveloping}</span></div>
                                     </div>
                                     <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-xl-3 mb-4">
-                        <div class="card shadow border-left-info py-2">
-                            <div class="card-body">
-                                <div class="row align-items-center no-gutters">
-                                    <div class="col mr-2">
-                                        <div class="text-uppercase text-info font-weight-bold text-xs mb-1"><span>Tasks</span></div>
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col-auto">
-                                                <div class="text-dark font-weight-bold h5 mb-0 mr-3"><span>50%</span></div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="progress progress-sm">
-                                                    <div class="progress-bar bg-info" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;"><span class="sr-only">50%</span></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-auto"><i class="fas fa-clipboard-list fa-2x text-gray-300"></i></div>
                                 </div>
                             </div>
                         </div>
@@ -71,7 +62,7 @@
                                 <div class="row align-items-center no-gutters">
                                     <div class="col mr-2">
                                         <div class="text-uppercase text-warning font-weight-bold text-xs mb-1"><span>Pending projects </span></div>
-                                        <div class="text-dark font-weight-bold h5 mb-0"><span>18</span></div>
+                                        <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminProjectsBean.pendingProjects}</span></div>
                                     </div>
                                     <div class="col-auto"><i class="fas fa-comments fa-2x text-gray-300"></i></div>
                                 </div>
@@ -97,7 +88,7 @@
                     <div class="card shadow py-2">
                         <div class="card-body ">
                             <h1 class="display-3 text-center">Projects</h1>
-	                            <h:dataTable class="table table-hover text-center text-center table-responsive" value="#{adminProjectsBean.projects}" var="p">
+	                            <h:dataTable class="table table-hover text-center text-center table-responsive" value="#{adminProjectsBean.projects}" var="p" id="table">
 	                            	<h:column>
 	                            		<f:facet name="header">#Id</f:facet>
 	                            		#{p.id}
@@ -136,11 +127,17 @@
 	                            	</h:column>
 	                            	<h:column>
 	                            		<f:facet name="header">Edit</f:facet>
-	                            		<i class="fa fa-remove"/>
+	                            		<h:form>
+		                            		<h:commandLink class="link" actionListener="#{adminProjectsBean.removeProject}">
+					                        	<f:attribute name="projectId" value="#{p.id}"/>
+					                        	<f:ajax render=":table" execute="@this"/>
+					                        	<i class="fa fa-remove"/>
+					                        </h:commandLink>
 	                           		    <h:link class="link" outcome="adminProject">
 				                        	<f:param name="projectId" value="#{p.id}" />
 				                        	<i class="fa fa-eye"/>
 				                        </h:link>
+				                        </h:form>
 	                            	</h:column>
 	                            </h:dataTable>
                         </div>
@@ -158,22 +155,32 @@
 		<!-- lineChart -->
 		<script>
 			var ctxL = document.getElementById("lineChartViews").getContext('2d');
-		    var gradientFill = ctxL.createLinearGradient(0, 0, 0, 290);
-		    gradientFill.addColorStop(0, "rgba(78,115,223, 1)");
-		    gradientFill.addColorStop(1, "rgba(78,115,223, 0.1)");
+// 		    var gradientFill = ctxL.createLinearGradient(0, 0, 0, 290);
+// 		    gradientFill.addColorStop(0, "rgba(78,115,223, 1)");
+// 		    gradientFill.addColorStop(1, "rgba(78,115,223, 0.1)");
 		    var myLineChart = new Chart(ctxL, {
 		      type: 'line',
 		      data: {
-		        labels: ["January", "February", "March", "April", "May", "June", "July"],
+		        labels: [<c:forEach items="#{adminProjectsBean.getLastMonths()}" var="m"> "#{m}", </c:forEach>],
 		        datasets: [
 		          {
 		            label: "Projects views",
-		            data: [0, 65, 45, 65, 35, 65, 0],
-		            backgroundColor: gradientFill,
-		            borderColor: [ 'rgb(78,115,223)', ],
+		            data: [<c:forEach items="#{adminProjectsBean.getLastMonthsViews()}" var="d"> #{d}, </c:forEach>],
+		            //backgroundColor: gradientFill,
+		            backgroundColor: [ 'rgba(246,248,253, 0.2)', ],
+		            borderColor: [ '#4e73df', ],
 		            borderWidth: 2,
-		            pointBorderColor: "#fff",
-		            pointBackgroundColor: "rgba(78,115,223, 0.1)",
+		            pointBorderColor: "#4e73df", 
+		            pointBackgroundColor: "rgba(78,115,223, 0.5)",
+		          },
+		          {
+		            label: "Likes",
+		            data: [<c:forEach items="#{adminProjectsBean.getLastMonthsLikes()}" var="d"> #{d}, </c:forEach>],
+		            backgroundColor: [ 'rgb(255,230,230,0.5)', ],
+		            borderColor: [ 'rgba(255, 179, 179,1)', ],
+		            borderWidth: 2,
+		            pointBorderColor: "rgba(255, 179, 179,0.5)", 
+		            pointBackgroundColor: "rgb(255,230,230,0.5)",
 		          }
 		        ]
 		      },
@@ -192,11 +199,11 @@
 		    var myLineChart = new Chart(ctxL, {
 		      type: 'bar',
 		      data: {
-		        labels: ["January", "February", "March", "April", "May", "June", "July"],
+		        labels: [ <c:forEach items="#{adminProjectsBean.getLastMonths()}" var="m"> "#{m}", </c:forEach> ],
 		        datasets: [
 		          {
 		            label: "Projects created",
-		            data: [0, 65, 45, 65, 35, 65, 0],
+		            data: [<c:forEach items="#{adminProjectsBean.getLastMonthsProjectsCreated()}" var="d"> #{d}, </c:forEach>],
 		            backgroundColor: gradientFill,
 		            borderColor: [ 'rgb(78,115,223)', ],
 		            borderWidth: 2,
