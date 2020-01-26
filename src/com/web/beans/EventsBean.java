@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
@@ -37,16 +38,10 @@ public class EventsBean implements Serializable{
 	private boolean ascending = true;
 	
 	
-	public EventsBean() {
+	@PostConstruct
+	public void init() {
 		events = EventManager.findAll().stream().map(EventContainer::new).collect(Collectors.toList());
-		
-		Collections.sort(events,new Comparator<EventContainer>() {
-
-			@Override
-			public int compare(EventContainer o1, EventContainer o2) {
-				return new StringComparator(ascending).compare(o1.getTitle(), o2.getTitle());
-			}
-		});
+		Collections.sort(events,(EventContainer o1, EventContainer o2)->new StringComparator(ascending).compare(o1.getTitle(), o2.getTitle()));
 	}
 	
 	

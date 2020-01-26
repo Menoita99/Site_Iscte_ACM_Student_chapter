@@ -75,7 +75,7 @@
 			                        <h4 class="card-title">#{project.title}</h4>
 			                        <p class="card-text">#{project.shortDescription}</p>
 			                        <p class="card-text">#{project.deadline}</p>
-			                        <p class="card-text"> <ui:repeat var="tag" value="#{project.tags}"> #{tag} </ui:repeat> </p>
+			                        <p class="card-text"> <ui:repeat var="tag" value="#{project.tags}"> <span class="tag"> #{tag} </span> </ui:repeat> </p>
 			                        <h:form>
 				                        <h:button class="btn btn-primary" value="Discover" outcome="project">
 				                        	<f:param name="projectID" value="#{project.getId()}" />
@@ -102,7 +102,7 @@
 		    
 	    </h:panelGroup>
 	    <h:panelGroup rendered="#{empty projectsBean.projects}">
-	    	<div class="container" style="text-align: center">
+	    	<div class="container" style="text-align: center; margin:100px auto">
 	   			<h1 class="display-4">No Projects Found <i class="fa fa-frown-o"></i> </h1>
 	   		</div>
 	    </h:panelGroup>

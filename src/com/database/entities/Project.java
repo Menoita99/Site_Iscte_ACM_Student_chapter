@@ -35,45 +35,45 @@ public class Project implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	
+
 	@Exclude
 	@ManyToMany(cascade=CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(name = "project_views",
-			   joinColumns = @JoinColumn(name = "project_id"),
-			   inverseJoinColumns = @JoinColumn(name = "view_id"))
+	joinColumns = @JoinColumn(name = "project_id"),
+	inverseJoinColumns = @JoinColumn(name = "view_id"))
 	private List<View> views = new ArrayList<>();
-	
+
 	@Column(nullable = false)
 	private int maxMembers;
-	
+
 	@Column(length = 65, nullable = false, unique = true)	
 	private String title;
-	
+
 	@Exclude
 	@Column(length = 665, nullable = false)	
 	private String description;
-	
+
 	@Exclude
 	@Column(length = 100, nullable = false)	
 	private String shortDescription;
-	
+
 	@Exclude
 	@Column(length = 300, nullable = false)	
 	private String requirements;
-	
+
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date creationDate = new Date(System.currentTimeMillis());
-	
+
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date deadLine;
-	
+
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date subscriptionDeadline;
-	
+
 	@Column(nullable = false)
 	@Enumerated
 	private State state = State.values()[new Random().nextInt(State.values().length-1)]; // State.ON_APPROVAL;  
@@ -82,44 +82,44 @@ public class Project implements Serializable {
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(foreignKey = @ForeignKey(name = "FK_PROJECT_MANAGER_ID"), nullable= false)
- 	private User manager;
-	
+	private User manager;
+
 	@Exclude
 	@ElementCollection(targetClass=String.class)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<String> tags;
-	
+
 	@Exclude
 	@ManyToMany
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(name = "project_participants",
-			   joinColumns = @JoinColumn(name = "project_id"),
-			   inverseJoinColumns = @JoinColumn(name = "user_id"))
+	joinColumns = @JoinColumn(name = "project_id"),
+	inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<User> participants;
-	
+
 	@Exclude
 	@ElementCollection(targetClass=String.class)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<String> imagePath;
-	
+
 	@Exclude
 	@ManyToMany(cascade=CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(name = "project_material",
-			   joinColumns = @JoinColumn(name = "project_id"),
-			   inverseJoinColumns = @JoinColumn(name = "material_id"))
+	joinColumns = @JoinColumn(name = "project_id"),
+	inverseJoinColumns = @JoinColumn(name = "material_id"))
 	private List<Material> material;
-	
+
 	@Exclude
 	@ManyToMany(cascade=CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(name = "project_likes",
-			   joinColumns = @JoinColumn(name = "project_id"),
-			   inverseJoinColumns = @JoinColumn(name = "like_id"))
+	joinColumns = @JoinColumn(name = "project_id"),
+	inverseJoinColumns = @JoinColumn(name = "like_id"))
 	private List<AcmLike> likes = new ArrayList<>();
-	
-	
-	
+
+
+
 	/**
 	 * @param maxMembers number of maximum members of a team
 	 * @param title	project title
@@ -143,7 +143,7 @@ public class Project implements Serializable {
 		this.tags = tags; 
 		this.imagePath = imagePath.stream().map(path -> "projects/"+path).collect(Collectors.toList());
 		this.shortDescription = shortDescription;
-		
+
 		List<User> participants = new ArrayList<>();
 		participants.add(manager);
 		this.participants = participants;
@@ -169,9 +169,9 @@ public class Project implements Serializable {
 			this.imagePath = new ArrayList<>();
 			this.imagePath.add("default/ACM_ICON.png");
 		}else
-		this.imagePath = p.getImagePath();
+			this.imagePath = p.getImagePath();
 	}
-	
+
 
 
 

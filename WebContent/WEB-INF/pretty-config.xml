@@ -32,8 +32,13 @@
 		<view-id value="/pages/team.xhtml" />
 	</url-mapping>
 
+	<url-mapping id="researches">
+		<pattern value="/researches" />
+		<view-id value="/pages/researches.xhtml" />
+	</url-mapping>
+	
 	<url-mapping id="research">
-		<pattern value="/research" />
+		<pattern value="/researches/#{researchID}" />
 		<view-id value="/pages/research.xhtml" />
 	</url-mapping>
 

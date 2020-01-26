@@ -49,10 +49,6 @@ public class EventContainer implements Serializable {
 	
 	@Exclude
 	@lombok.EqualsAndHashCode.Exclude
-	private List<UserContainer> participants;
-	
-	@Exclude
-	@lombok.EqualsAndHashCode.Exclude
 	private List<UserContainer> staff;
 	
 	@Exclude
@@ -164,7 +160,6 @@ public class EventContainer implements Serializable {
 		this.material = e.getMaterial();
 		this.staff = null;
 		this.infos = null;
-		this.participants = null;
 		this.manager = null;
 	}
 }

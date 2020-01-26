@@ -3,12 +3,14 @@ package com.database.entities;
 import com.database.entities.Investigator;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString.Exclude;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import javax.persistence.*;
 
@@ -22,6 +24,7 @@ import org.hibernate.annotations.LazyCollectionOption;
  */
 @Entity
 @Data
+@NoArgsConstructor
 public class Research implements Serializable {
 
 	private static final long serialVersionUID = 1L;   
@@ -92,4 +95,34 @@ public class Research implements Serializable {
 			   joinColumns = @JoinColumn(name = "research_id"),
 			   inverseJoinColumns = @JoinColumn(name = "view_id"))
 	private List<View> views = new ArrayList<>();
+	
+	
+	@Enumerated
+	private ResearchType type;
+
+
+	
+	
+	
+	/**
+	 * @param investigator
+	 * @param title
+	 * @param description
+	 * @param shortDescription
+	 * @param requirements
+	 * @param tags
+	 * @param imagePath
+	 * @param type
+	 */
+	public Research(Investigator investigator, String title, String description, String shortDescription,
+			String requirements, List<String> tags, List<String> imagePath, ResearchType type) {
+		this.investigator = investigator;
+		this.title = title;
+		this.description = description;
+		this.shortDescription = shortDescription;
+		this.requirements = requirements;
+		this.tags = tags;
+		this.imagePath = imagePath.stream().map(path -> "research/"+path).collect(Collectors.toList());
+		this.type = type;
+	}
 }

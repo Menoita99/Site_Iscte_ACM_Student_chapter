@@ -42,7 +42,7 @@ public class EventInfoContainer implements Serializable{
 	
 	public EventContainer getEvent() {
 		if(event == null)
-			 event = new EventContainer(EventManager.getInfo(id).getEvent());
+			 event = new EventContainer(EventManager.findInfo(id).getEvent());
 		return event;
 	}
 }

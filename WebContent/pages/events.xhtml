@@ -72,7 +72,7 @@
 			                    <div class="card-body">
 			                        <h4 class="card-title">#{event.title}</h4>
 			                        <p class="card-text">#{event.shortDescription}</p>
-			                        <p class="card-text"> <ui:repeat var="tag" value="#{event.tags}"> #{tag} </ui:repeat> </p>
+			                        <p class="card-text"> <ui:repeat var="tag" value="#{event.tags}"> <span class="tag"> #{tag} </span> </ui:repeat> </p>
 			                        <h:form>
 				                        <h:button class="btn btn-primary" value="Discover" outcome="event">
 				                        	<f:param name="eventId" value="#{event.id}" />
@@ -99,7 +99,7 @@
 		    
 	    </h:panelGroup>
 	    <h:panelGroup rendered="#{empty eventsBean.events}">
-	    	<div class="container" style="text-align: center">
+	    	<div class="container" style="text-align: center; margin:100px auto">
 	   			<h1 class="display-4">No Events Found <i class="fa fa-frown-o"></i> </h1>
 	   		</div>
 	    </h:panelGroup>

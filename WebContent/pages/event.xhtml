@@ -112,11 +112,36 @@
 		                        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4" style="margin-top: 10px;">
 		                            <div class="card">
 		                                <div class="card-header">
-		                                    <h5 class="mb-0">Next dates</h5>
+		                                    <h5 class="mb-0">Dates</h5>
 		                                </div>
 		                                <div class="card-body">
-		                                    <p class="card-text" style="color: rgb(67,70,74);">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p><button class="btn btn-primary join-btn" type="button"
-		                                        data-target="#candidature-modal" data-toggle="modal"> <i class="fa fa-plus"></i> Join </button></div>
+		                                	<h:form>
+			                                    <div class="table-responsive" >
+			                                    	<h:dataTable value="#{event.infos}" var="info" class="table">
+			                                    		<h:column>
+			                                    			#{info.startEventDate.getYear()} #{info.startEventDate.getMonth().toString().toLowerCase()} #{info.startEventDate.getDayOfMonth()} 
+			                                    		</h:column>
+			                                    		<h:column>
+		                                    				<h:commandLink class="btn btn-primary join-btn" actionListener="#{eventBean.addParticipant}" rendered="${not eventBean.isParticipant(info.id)}">
+								                        		<f:ajax execute="@form" render="@form"/>
+								                        		<f:attribute name="eventInfoId" value="#{info.id}" />
+								                        		<i class="fa fa-plus"/> Join 
+								                        	</h:commandLink>
+								                        	<h:commandLink class="btn btn-danger" actionListener="#{eventBean.removeParticipant}" rendered="${eventBean.isParticipant(info.id)}">
+									                        		<f:ajax execute="@form" render="@form"/>
+									                        		<f:attribute name="eventInfoId" value="#{info.id}" /> 
+									                        		Cancel 
+								                        	</h:commandLink>
+			                                    		</h:column>
+			                                    		
+			                                    	</h:dataTable>
+		                                    	</div>
+		                                    	 <h:commandLink class="btn btn-primary join-btn" actionListener="#{eventBean.addParticipantToAll}">
+					                        		<f:ajax execute="@form" render="@form"/>
+					                        		<i class="fa fa-plus"/> Join all
+					                        	</h:commandLink>
+	                                    	 </h:form>
+                                    	</div>
 		                            </div>
 		                        </div>
 		                    </div>
@@ -142,29 +167,11 @@
 		            </div>
 		        </section>
 		    </div>
-		    <div class="modal fade" role="dialog" tabindex="-1" id="candidature-modal">
-		        <div class="modal-dialog" role="document">
-		            <div class="modal-content">
-		                <div class="modal-header">
-		                    <h1 class="modal-title">Candidature</h1><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-		                <div class="modal-body">
-		                    <p>Write a short text about your self, your skils and motivations do join in this project. Take into account the requirements required.<br/><br/></p>
-		                    <form>
-		                        <div class="form-group"><textarea class="form-control form-control-lg" rows="5" style="font-size: 16px;"></textarea></div>
-		                    </form>
-		                    <div class="text-left"><button class="btn btn-primary" type="button">Submit</button></div>
-		                </div>
-		            </div>
-		        </div>
-		    </div>
-
-
-
 		</c:if>
 
 		<c:if test="#{empty event}">
 
-			<h1 class="display-4" style="margin: 20px auto; text-align: center">
+			<h1 class="display-4" style="margin: 100px auto; text-align: center; margin:100px auto">
 				<i class="fa fa-close"/> Event not found
 			</h1>
 

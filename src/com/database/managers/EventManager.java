@@ -72,6 +72,22 @@ public class EventManager {
 		}
 	}
 
+	
+	
+	
+	
+	/**
+	 * @param infoId eventInfo id
+	 * @return returns the eventInfo with the given id
+	 */
+	public static EventInfo findEventInfo(int infoId) {
+		EntityManager em = JpaUtil.getEntityManager();
+		try{
+			return em.find(EventInfo.class,infoId);
+		}finally {
+			em.close();
+		}
+	}
 
 
 
@@ -105,9 +121,9 @@ public class EventManager {
 
 
 	/**
-	 *
+	 *return the Event Info with the given event info id
 	 */
-	public static EventInfo getInfo(int id) {
+	public static EventInfo findInfo(int id) {
 		EntityManager em = JpaUtil.getEntityManager();
 		try{
 			return em.find(EventInfo.class,id);
@@ -189,8 +205,25 @@ public class EventManager {
 
 
 
-	public static void main(String[] args) {
-		System.out.println(JpaUtil.executeQuery("Select l from Event e join e.likes l where l.user.id = 301 and e.id= 15", AcmLike.class));
+
+
+	/**
+	 * @return return the staff members of an event
+	 */
+	public static List<User> getStaff(int id) {
+		return JpaUtil.executeQuery("Select distinct u from Event e join e.infos i join i.staff u where e.id = "+id, User.class);
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * @return return all participants of an event
+	 */
+	public static List<User> getParticipants(int id) {
+		return JpaUtil.executeQuery("Select distinct u from Event e join e.infos i join i.participants u where e.id = "+id, User.class);
 	}
 
 
@@ -198,15 +231,9 @@ public class EventManager {
 
 
 	/**
-	 * 
-	 * @param id
-	 * @return
+	 * @return return if a user is participant of an EventInfo
 	 */
-	public static List<User> getStaff(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public static boolean isParticipantOfInfo(int infoId, int userId) {
+		return !JpaUtil.executeQuery("Select distinct i from EventInfo i join i.participants p where i.id = "+infoId+" and p.id = "+userId, EventInfo.class).isEmpty();
 	}
-
-
-
 }

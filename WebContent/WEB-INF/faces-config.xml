@@ -54,6 +54,11 @@
 		</navigation-case>
 
 		<navigation-case>
+			<from-outcome>researches</from-outcome>
+			<to-view-id>/pages/researches.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
 			<from-outcome>research</from-outcome>
 			<to-view-id>/pages/research.xhtml</to-view-id>
 		</navigation-case>

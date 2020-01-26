@@ -3,6 +3,7 @@ package com.database.entities;
 import com.database.entities.User;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString.Exclude;
 
 import java.io.Serializable;
@@ -18,6 +19,7 @@ import org.hibernate.annotations.OnDeleteAction;
  */
 @Entity
 @Data
+@NoArgsConstructor
 public class Investigator implements Serializable {
 
 	private static final long serialVersionUID = 1L;   
@@ -31,12 +33,22 @@ public class Investigator implements Serializable {
 	@Exclude
 	@lombok.EqualsAndHashCode.Exclude
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn(foreignKey = @ForeignKey(name = "FK_INVESTIGATOR_USER_ID"), nullable= false, name="user_id")
+	@JoinColumn(foreignKey = @ForeignKey(name = "FK_INVESTIGATOR_USER_ID"), nullable= false, name="user_id",unique = true)
 	private User user;
 	
-	private String institution;
+	private String institution;//ADD MOR INFO TO THIS CLASS
 	
-	@Enumerated
-	private ResearchType type;
+	
+	
+	/**
+	 * @param id
+	 * @param user
+	 * @param institution
+	 * @param type
+	 */
+	public Investigator( User user, String institution) {
+		this.user = user;
+		this.institution = institution;
+	}
    
 }

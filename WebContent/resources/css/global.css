@@ -50,4 +50,17 @@ p {
 	background-color: white !important;
 }
 
+.join-btn {
+  background-color: rgba(89,134,251,0.76);
+  border: none;
+}
+
+.tag {
+  border-radius: 5px;
+  padding: 5px 5px;
+  color: white;
+  background-color: rgba(179, 236, 255,1);
+  margin-top: 100px;
+  margin-right: 2px;
+}
 

@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
@@ -35,12 +36,12 @@ public class ProjectsBean implements Serializable {
 	private String searchField = "";
 	private boolean ascending = true;
 
-
-	public ProjectsBean() {
+	
+	@PostConstruct
+	public void init() {
 		projects = ProjectManager.findAll().stream().map(ProjectContainer::new).collect(Collectors.toList());
 		Collections.sort(projects, new ProjectTimeComparator(true,ascending));
 	}
-
 
 
 	/**

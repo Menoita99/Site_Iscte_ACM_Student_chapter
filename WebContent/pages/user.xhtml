@@ -12,7 +12,7 @@
 	<ui:define name="headContent">
 		<h:outputStylesheet library="css" name="user.css" />
 	</ui:define>
-
+<div style="background-color: #fcfcfc;">
 	<ui:define name="content">
 	
 	<c:if test="${param['rendered'] != null}">
@@ -24,248 +24,160 @@
 		<div> 
 	        <div class="container" style="margin-bottom: 50px;margin-top:20px;">
 	            <div class="row">
-	                <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4" style="padding: 0px 0px 30px 0px;">
-	                    <div id="user-menu" style="padding: 30px;margin-right: 0;">
-	                        <div class="image-container">
-	                        	<c:if test="${not empty user.imagePath}">
-	                        		<h:graphicImage class="img-fluid" a:loading="lazy" a:alt="user_image" value="/resources/files/#{user.imagePath}"/>
-                        		</c:if>
-                        		<c:if test="${empty user.imagePath}">
-                        			<center>
-                        				<i class="fa fa-user-circle-o" style="color: white; font-size: 200px;"/>
-                     				</center>
-                        		</c:if>
-	                       	</div>
-	                        <ul class="list-group" style="margin-top: 20px;">
-	                            <li class="list-group-item">
-	                            	<h:form>
-	                            		<center>
-		                            		<h:commandLink class="link" value="Definitions" action="#{ userBean.setRendered('definitions')}"/>
-		                            	</center>	
-	                            	</h:form>
-	                            </li>
-	                             <li class="list-group-item">
-	                            	<h:form>
-	                            		<center>
-		                            		<h:commandLink class="link" value="Events" action="#{ userBean.setRendered('events')}"/>
-	                            		</center>
-	                            	</h:form>
-	                            </li>
-	                             <li class="list-group-item">
-	                            	<h:form>
-	                            		<center>
-		                            		<h:commandLink class="link" value="Projects" action="#{ userBean.setRendered('projects')}"/>
-		                            	</center>	
-	                            	</h:form>
-	                            </li>
-	                             <li class="list-group-item">
-	                            	<h:form>
-		                            	<center>
-		                            		<h:commandLink class="link" value="Research" action="#{ userBean.setRendered('research')}"/>
-	                            		</center>
-	                            	</h:form>
-	                            </li>
-	                        </ul>
-	                        <h:form>
-	                            <h:link class="btn btn-primary" style="margin-top:10px;width:100%" outcome="becameMember">
-	                        		<i class="fa fa-plus"></i> Become a member
-	                       	   </h:link>
-                       	   </h:form>
-	                    </div>
-	                </div>
+	                  <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4" style="padding: 0px;">
+	                        <div class="card mb-3">
+	                            <div class="card-body text-center shadow">
+	                            	<h:graphicImage class="rounded-circle mb-3 mt-4" a:loading="lazy" a:alt="user_image" a:width="160" a:height="160" value="/resources/files/#{user.imagePath}"/>
+	                                <div class="mb-3"><button class="btn btn-primary btn-sm" type="button">Change Photo</button></div>
+	                                <div class="list-group">	
+	                                	<h:form>
+		                                <h:commandLink class="list-group-item list-group-item-action" action="#{ userBean.setRendered('definitions')}"><span class="text-capitalize text-muted">Settings</span></h:commandLink>
+		                                <h:commandLink class="list-group-item list-group-item-action" action="#{ userBean.setRendered('events')}"> <span class="text-capitalize text-muted">Events</span></h:commandLink>
+	                                    <h:commandLink class="list-group-item list-group-item-action" action="#{ userBean.setRendered('projects')}"><span class="text-capitalize text-muted">Projects</span></h:commandLink>
+	                                    <h:commandLink class="list-group-item list-group-item-action" action="#{ userBean.setRendered('research')}"><span class="text-capitalize text-muted">Research</span></h:commandLink>
+	                                    </h:form>
+                                    </div>
+	                            </div>
+	                        </div>
+                    	</div>
 	                
 	                <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8">
 	                
 	                <h:panelGroup id="definitions" >
 	                	<h:panelGroup rendered="#{ userBean.rendered == 'definitions'}">
-		                    <div class="content  def" style="padding: 30px;">
-			                        <h1 class="display-4 text-center" style="margin-bottom: 30px;">Definitions</h1>
-			                        
-			                        <h:outputText value="#{userBean.definitionsErrorMessage}" class="error-label-md" style="margin-bottom:10px"/>
-			                       
-			                        <h:form>
-			                            <div class="form-group">
-			                                <div class="form-row">
-			                                    <div class="col-md-2 col-lg-2 col-xl-2">
-			                                    	<label class="col-form-label">Email</label>
-		                                    	</div>
-			                                    <div class="col-md-10 col-lg-10 col-xl-10">
-			                                    
-			                                    	<h:inputText class="form-control" a:type="email" a:placeholder="#{user.email}" value="#{userBean.email}" 
-			                                    	validatorMessage="Invalid email" id="email"  a:maxlength="70" a:minlength="6">
-														<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>		
+	                	
+	                		 <div class="card shadow mb-3">
+	                            <div class="card-header py-3">
+	                                <h1 class="display-4" style="font-size: 30px;">Settings</h1>
+	                            </div>
+	                            <div class="card-body">
+	                                <h:form>
+	                                    <div class="form-group">
+	                                    	<label for="email">
+	                                    		<strong>Email Address</strong>
+	                                    	</label>
+	                                    	<h:inputText class="form-control" a:type="email" a:placeholder="user@example.com" validatorMessage="Invalid email" id="email"  a:maxlength="70" a:minlength="6">
+												<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>		
+											</h:inputText>
+											<h:message for="email" class="error-label-sm" />
+                                    	</div>
+	                                    <div class="form-row">
+	                                        <div class="col">
+	                                            <div class="form-group">
+		                                            <label for="first_name">
+		                                            	<strong>First Name</strong>
+		                                            </label>
+		                                            <h:inputText class="form-control" a:placeholder="John" validatorMessage="Frist name must have only letters" id="first_name">
+														<f:validateRegex pattern="[a-zA-Z]*"/>
+													</h:inputText>
+													<h:message for="first_name" class="error-label-sm" />
+	                                            </div>
+	                                        </div>
+	                                        <div class="col">
+	                                            <div class="form-group">
+	                                            	<label for="last_name">
+	                                            		<strong>Last Name</strong>
+	                                            	</label>
+	                                            	<h:inputText class="form-control" a:placeholder="Asgard" 
+			                                            	validatorMessage="last name must have only letters" id="last_name">
+															<f:validateRegex pattern="[a-zA-Z]*"/>
+													</h:inputText>
+													<h:message for="last_name" class="error-label-sm" />
+                                            	</div>
+	                                        </div>
+	                                    </div>
+	                                    <div class="form-row">
+	                                        <div class="col">
+	                                            <div class="form-group">
+		                                            <label for="cell_phone">
+		                                            	<strong>Cell Phone</strong>
+		                                            </label>
+	                                            	<h:inputText class="form-control" a:type="tel" a:placeholder="cellphone"
+									                 	validatorMessage="cell phone must have only 9 numbers" id="cell_phone" a:maxlength="9" a:minlength="9">
+														<f:validateRegex pattern="[0-9]{9}"/>
 													</h:inputText>
 													
-													<h:message for="email" class="error-label-sm" />
-		                                    	</div>
-			                                </div>
-			                            </div>
-			                            <div class="form-group">
-			                                <div class="form-row">
-			                                    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-			                                        <div class="form-row">
-			                                            <div class="col-md-3 col-lg-4 col-xl-4">
-			                                            	<label class="col-form-label">First Name</label>
-		                                            	</div>
-			                                            <div class="col-md-9 col-lg-8 col-xl-8">
-			                                            	<h:inputText class="form-control" a:placeholder="#{user.firstName}" value="#{userBean.firstName}"
-			                                            	 validatorMessage="Frist name must have only letters" id="fristName">
-																<f:validateRegex pattern="[a-zA-Z]*"/>
-															</h:inputText>
-															<h:message for="fristName" class="error-label-sm" />
-		                                            	</div>
-			                                        </div>
-			                                    </div>
-			                                    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-			                                        <div class="form-row">
-			                                            <div class="col-md-3 col-lg-4 col-xl-4">
-			                                            	<label class="col-form-label">Last Name<br/></label>
-		                                            	</div>
-			                                            <div class="col-md-9 col-lg-8 col-xl-8">
-			                                            	<h:inputText class="form-control" a:placeholder="#{user.lastName}" value="#{userBean.lastName}"
-			                                            	validatorMessage="last name must have only letters" id="lastName">
-																<f:validateRegex pattern="[a-zA-Z]*"/>
-															</h:inputText>
-															
-															<h:message for="lastName" class="error-label-sm" />
-		                                            	</div>
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                            </div>
-			                            <div class="form-group">
-			                                <div class="form-row">
-			                                    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-			                                        <div class="form-row">
-			                                            <div class="col-md-3 col-lg-4 col-xl-4">
-			                                            	<label class="col-form-label">Cell Phone</label>
-		                                            	</div>
-			                                            <div class="col-md-9 col-lg-8 col-xl-8">
-			                                            
-			                                            	<h:inputText class="form-control" a:type="tel" a:placeholder="#{user.cellPhone}" value="#{userBean.cellPhone}"
-											                 validatorMessage="cell phone must have only 9 numbers" id="cellPhone" a:maxlength="9" a:minlength="9">
-																<f:validateRegex pattern="[0-9]{9}"/>
-															</h:inputText>
-															
-															<h:message for="cellPhone" class="error-label-sm" />
-															
-			                                            </div>
-			                                        </div>
-			                                    </div>
-			                                    <div class="col-lg-6 col-xl-6">
-			                                        <div class="form-row">
-			                                            <div class="col-md-3 col-lg-4 col-xl-4">
-			                                            	<label class="col-form-label">Course<br/></label>
-		                                            	</div>
-			                                            <div class="col-md-9 col-lg-8 col-xl-8">
-			                                            	<h:inputText class="form-control" a:placeholder="#{user.course}" value="#{userBean.course}"/>
-		                                            	</div>
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                            </div>
-			                            <div class="form-group">
-			                                <div class="form-row">
-			                                    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-			                                        <div class="form-row">
-			                                            <div class="col-md-3 col-lg-4 col-xl-4">
-			                                            	<label class="col-form-label">Username</label>
-		                                            	</div>
-			                                            <div class="col-md-9 col-lg-8 col-xl-8">
-			                                            	<h:inputText class="form-control" a:placeholder="#{user.username}" value="#{userBean.username}"
-															validatorMessage="Invalid username" id="username"  a:maxlength="60" a:minlength="6">
-															<f:validateRegex pattern="[a-zA-Z0-9]{4,}"/>		
-														</h:inputText>
-														
-														<h:message for="username" class="error-label-sm" />
-		                                            	</div>
-			                                        </div>
-			                                    </div>
-			                                    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
-			                                        <div class="form-row">
-			                                            <div class="col-md-3 col-lg-4 col-xl-4">
-			                                            	<label class="col-form-label">Password<br/></label>
-		                                            	</div>
-			                                            <div class="col-md-9 col-lg-8 col-xl-8">
-			                                            	<h:inputSecret class="form-control" a:placeholder="New password" value="#{userBean.newPassword}"
-			                                            	validatorMessage="Password must be between 8 and 64 characters long" id="newPassword">
-			                                            		<f:validateRegex pattern=".{8,64}"/>	
-			                                           		 </h:inputSecret>	
-		                                            	</div>
-		                                            	<h:message for="newPassword" class="error-label-sm" />
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                            </div>
-			                            <div class="form-group">
-			                                <div class="form-row">
-			                                    <div class="col-sm-12">
-			                                        <div class="form-row">
-			                                            <div class="col-sm-3 col-md-3 col-lg-2 col-xl-2">
-			                                            	<h:commandButton class="btn btn-primary" value="Save" update="@form" action="#{userBean.saveChanges()}"/>
-		                                            	</div>
-			                                            <div class="col-sm-9 col-md-9 col-lg-4 col-xl-4">
-			                                            	<h:inputSecret id="password" class="form-control" a:placeholder="Password" value="#{userBean.password}" required="true" 
+													<h:message for="cell_phone" class="error-label-sm" />
+                                            	</div>
+	                                        </div>
+	                                        <div class="col">
+	                                            <div class="form-group">
+	                                            	<label for="course">	
+	                                            		<strong>Course</strong>
+                                            		</label>
+                                            		<h:inputText class="form-control" a:placeholder="course" is="course"/>
+                                           		</div>
+	                                        </div>
+	                                    </div>
+	                                    <div class="form-row">
+	                                        <div class="col">
+	                                            <div class="form-group">
+		                                            <label for="username">
+		                                            	<strong>Username</strong>
+		                                            </label>
+		                                            <h:inputText class="form-control" a:placeholder="#{user.username}"
+														validatorMessage="Invalid username" id="username"  a:maxlength="60" a:minlength="6">
+														<f:validateRegex pattern="[a-zA-Z0-9]{4,}"/>		
+													</h:inputText>
+													
+													<h:message for="username" class="error-label-sm" />
+	                                            </div>
+	                                        </div>
+	                                        <div class="col">
+	                                            <div class="form-group">
+	                                            	<label for="newPassword">	
+	                                            		<strong>New Password</strong>
+                                            		</label>
+                                            		 <h:inputSecret class="form-control" a:placeholder="New password"
+		                                            	validatorMessage="Password must be between 8 and 64 characters long" id="newPassword">
+	                                            		 <f:validateRegex pattern=".{8,64}"/>	
+	                                           		 </h:inputSecret>	
+	                                           		 <h:message for="newPassword" class="error-label-sm" />
+                                           		</div>
+	                                        </div>
+	                                    </div>
+	                                    <div class="form-group">
+	                                        <div class="form-row">
+	                                            <div class="col-3 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+	                                            	<h:commandButton class="btn btn-primary" value="Save Settings" update="@form" action="#{userBean.saveChanges()}"/>
+                                            	</div>
+	                                            <div class="col-9 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+	                                             <h:inputSecret id="password" class="form-control" a:placeholder="Password" value="#{userBean.password}" required="true" 
 			                                            	requiredMessage="Password is required to save changes"/>
-			                                            	 <h:message for="password" class="error-label-sm" />
-		                                            	</div>
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                               
-			                            </div>
-			                        </h:form>
-			                      
-			                  	</div>
+                                            	 <h:message for="password" class="error-label-sm" />
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                </h:form>
+	                            </div>
+	                        </div>
+		               		
+		               		<div class="card shadow mb-3">
+	                            <div class="card-header py-3">
+	                                <h1 class="display-4" style="font-size: 30px;">Want to be more?</h1>
+	                            </div>
+	                            <div class="card-body text-left">
+	                                <div class="marginTop10">
+	                                    <p>If you have pation for tecnology and would like to find others with the same love acm is the rigth place for you. We are a group of people that love to learn and that want to create new things that will put a smile
+	                                        on other people. </p><button class="btn btn-primary" type="button">Become an Acm member</button></div>
+	                                <div class="marginTop10">
+	                                    <p>If you are a teacher that have a research and demand or have the possibility to increase your team, here we can share your research. We are sure that here you will find what you are looking for.</p><button class="btn btn-primary"
+	                                        type="button">Become an investigator</button></div>
+	                            </div>
+	                        </div>
+		               
 		               	</h:panelGroup>
 	               	</h:panelGroup>
 	               	
 	               	<h:panelGroup id="events" >
 	         			<h:panelGroup rendered="#{ userBean.rendered == 'events'}">
-		                    <div class="content">
-		                        <h1 class="display-4 text-center" style="margin-bottom: 30px;">Events</h1>
-		                        
-		                        <div role="tablist" id="accordion-1">
-		                        	
-		                        	<c:forEach items="#{user.getEvents()}" var="event" varStatus="loopStatus">
-		                        	
-		                        		<div class="card">
-		                        		
-			                                <div class="card-header" role="tab">
-			                                    <h5 class="mb-0">
-			                                    	<a data-toggle="collapse" aria-expanded="true" aria-controls="accordion-1 .item-#{loopStatus.index + 1}" href="#accordion-1 .item-#{loopStatus.index + 1}">#{event.title}</a>
-			                                    </h5>
-			                                </div>
-			                                
-			                                <div class="collapse #{(loopStatus.index + 1) == 1 ? 'show ' : ''}item-#{loopStatus.index + 1}" role="tabpanel" data-parent="#accordion-1">
-			                                
-			                                    <div class="card-body">
-			                                    
-				                                    <c:forEach items="#{event.infos}" var="info" varStatus="loopStatus1">
-				                      
-														<div>
-				                                            <ul class="list-inline">
-				                                                <li class="list-inline-item"><i class="fa fa-map-marker"></i> #{info.getPlace()}</li>
-				                                                <li class="list-inline-item"><i class="fa fa-calendar"></i> #{info.getStartDateDay()} #{info.getStartDateMonth()}</li>
-				                                                <li class="list-inline-item"><i class="fa fa-clock-o"></i>#{info.getStartDateHours()} - #{info.getEndDateHours()}</li>
-				                                            </ul>
-			                                               <h:form>
-									                            <h:button class="btn btn-primary rect-border" a:data-bs-hover-animate="pulse" value="See event" outcome="event">
-									                      	      	<f:param name="id" value="#{event.getId()}" />
-									                            </h:button>
-								                           </h:form>
-			                                            </div>
-							                        
-						                            </c:forEach>
-			                                        
-			                                    </div>
-			                                </div>
-			                            </div>
-               			              	
-		                      		</c:forEach> 
-		                      		
-		                      		<c:if test="#{empty user.getEvents()}">
-		                      			<h2 class="text-center" contenteditable="true">You don't have any events joined, try to create or dicover one!!!<br/><br/></h2>
+         					<div class="card shadow mb-3">
+	                            <div class="card-header py-3">
+	                                <h1 class="display-4" style="font-size: 30px;">Events</h1>
+	                            </div>
+	                            <div class="card-body">
+	                            	<c:if test="#{empty user.getEvents()}">
+		                      			<h2 class="display-4" style="font-size: 30px;text-align: center;">You don't have any events joined, try to create or dicover one!!!<br/><br/></h2>
 		                      		</c:if>
 		                      		
 		                             <div class="row text-center" style="margin-top: 30px;">
@@ -276,88 +188,87 @@
 									    	<h:link class="btn btn-primary"  outcome="events"><i class="fa fa-search"></i> Discover Events</h:link>
 									    </div>
 									</div>
-									
-		                        </div>
-		                    </div>
+	                            </div>
+	                        </div>
 	               		</h:panelGroup>
 	               	</h:panelGroup>
 	               	
 	      	     	<h:panelGroup id="projects" >
 	         			<h:panelGroup rendered="#{ userBean.rendered == 'projects'}">
-								
-								<div class="content"> <!-- Joined Projects -->
-								   <div style="margin-top: 10px;">
-				                        <h1 class="display-4 text-center" style="margin-bottom: 30px;">Joined Projects</h1>
-				                        <h:panelGroup class="table-responsive" rendered="#{not empty user.joinedProjects}">
-				                        
-				                        	<h:dataTable class="table table-hover" value="#{user.joinedProjects}" var="p" >
-				                        		<h:column>
-				                        			<f:facet name="header">Project title</f:facet>
-
-				                        			<h:link class="text-dark" a:data-toggle="modal" a:data-target="#project-modal" value="#{p.title}"/>
-				                        			
-				                        			<div class="modal fade" role="dialog" tabindex="-1" id="project-modal">
-												        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
-												            <div class="modal-content">
-												                <div class="modal-header">
-												                <h4 class="display-4 modal-title">#{p.title}</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-												                <div class="modal-body">
-												                    <h4>Description</h4>
-												                    <p><br/>#{p.description}<br/><br/></p>
-												                    <h4>Requirements</h4>
-												                    <p><br/>#{p.requirements}<br/><br/></p>
-												                    <h4>Dates</h4>
-												                    <br/>
-												                    <p>Dead line : #{p.deadline.toString().substring(0,16)}</p>
-												                    <p>Candidature dead line : #{p.subscriptionDeadline.toString().substring(0,16)}</p>
-												                    <div class="text-center">
-											                    	    <h:form>
-													                        <h:button class="btn btn-primary" value="Discover" outcome="project">
-													                        	<f:param name="projectID" value="#{p.id}" />
-													                        </h:button>
-												                        </h:form>
-												                        <br/>
-												                	</div>
-												                	<div class="modal-footer">
-												                		<button class="btn btn-light" type="button" data-dismiss="modal">Close</button>
-												                		<!-- <button class="btn btn-primary" type="button">Save</button> -->
+							   <div class="card shadow mb-3">
+						              <div class="card-header py-3">
+						                  <h1 class="display-4" style="font-size: 30px;">My joined projects</h1>
+						              </div>
+						              <div class="card-body text-left">
+							              <h:panelGroup class="table-responsive" rendered="#{not empty user.joinedProjects}">
+					                        	<h:dataTable class="table table-hover" value="#{user.joinedProjects}" var="p" >
+					                        		<h:column>
+					                        			<f:facet name="header">Project title</f:facet>
+	
+					                        			<h:link class="text-dark" a:data-toggle="modal" a:data-target="#project-modal" value="#{p.title}"/>
+					                        			
+					                        			<div class="modal fade" role="dialog" tabindex="-1" id="project-modal">
+													        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+													            <div class="modal-content">
+													                <div class="modal-header">
+													                <h4 class="display-4 modal-title">#{p.title}</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+													                <div class="modal-body">
+													                    <h4>Description</h4>
+													                    <p><br/>#{p.description}<br/><br/></p>
+													                    <h4>Requirements</h4>
+													                    <p><br/>#{p.requirements}<br/><br/></p>
+													                    <h4>Dates</h4>
+													                    <br/>
+													                    <p>Dead line : #{p.deadline.toString().substring(0,16)}</p>
+													                    <p>Candidature dead line : #{p.subscriptionDeadline.toString().substring(0,16)}</p>
+													                    <div class="text-center">
+												                    	    <h:form>
+														                        <h:button class="btn btn-primary" value="Discover" outcome="project">
+														                        	<f:param name="projectID" value="#{p.id}" />
+														                        </h:button>
+													                        </h:form>
+													                        <br/>
+													                	</div>
+													                	<div class="modal-footer">
+													                		<button class="btn btn-light" type="button" data-dismiss="modal">Close</button>
+													                		<!-- <button class="btn btn-primary" type="button">Save</button> -->
+												                		</div>
 											                		</div>
-										                		</div>
-												            </div>
-												        </div>
-												    </div>
-												    
-			                        			</h:column>
-				                        		<h:column>
-				                        			<f:facet name="header">Date</f:facet>
-				                        			#{p.deadline.toString().substring(0,16)}
-			                        			</h:column>
-				                        		<h:column>
-				                        			<f:facet name="header">Edit</f:facet>
-				                        			<i class="fa fa-remove"/>
-				                        		</h:column>
-				                        	</h:dataTable>
-				                        </h:panelGroup>
-				                    </div>
+													            </div>
+													        </div>
+													    </div>
+													    
+				                        			</h:column>
+					                        		<h:column>
+					                        			<f:facet name="header">Date</f:facet>
+					                        			#{p.deadline.toString().substring(0,16)}
+				                        			</h:column>
+					                        		<h:column>
+					                        			<f:facet name="header">Edit</f:facet>
+					                        			<i class="fa fa-remove"/>
+					                        		</h:column>
+					                        	</h:dataTable>
+				                         </h:panelGroup>
+			                         	<c:if test="#{empty user.joinedProjects}">
+			                      			<h2 class="display-4" style="font-size: 30px;text-align: center;margin-bottom:20px">You don't have any projects joined, try to create or discover one!!!<br/></h2>
+			                      			<div class="row text-center" style="margin: 30px; auto">
+											    <div class="col">
+											    	<h:link class="btn btn-primary" outcome="createProject"> <i class="fa fa-plus"></i> Create Project</h:link>
+										    	</div>
+											    <div class="col">
+											    	<h:link class="btn btn-primary"  outcome="projects"><i class="fa fa-search"></i> Discover Projects</h:link>
+											    </div>
+											</div>
+			                      		</c:if>
+						              </div>
+						          </div>
 
-
-									<c:if test="#{empty user.joinedProjects}">
-		                      			<h2 class="text-center" contenteditable="true">You don't have any projects joined, try to create or discover one!!!<br/></h2>
-		                      		</c:if>
-		                      		
-		                             <div class="row text-center" style="margin-top: 30px;">
-									    <div class="col">
-									    	<h:link class="btn btn-primary" outcome="createProject"> <i class="fa fa-plus"></i> Create Project</h:link>
-								    	</div>
-									    <div class="col">
-									    	<h:link class="btn btn-primary"  outcome="projects"><i class="fa fa-search"></i> Discover Projects</h:link>
-									    </div>
-									</div>
-								</div>	
-
-								<div class="content " style="margin-top: 10px;"><!-- Liked Projects -->
-				                        <h1 class="display-4 text-center" style="margin-bottom: 30px;">Liked Projects</h1>
-				                        <h:panelGroup id="likes-table" class="table-responsive" rendered="#{not empty user.likedProjects}">
+							   <div class="card shadow mb-3">
+				                     <div class="card-header py-3">
+				                         <h1 class="display-4" style="font-size: 30px;">My liked projects</h1>
+				                     </div>
+				                     <div class="card-body text-left">
+				                     	<h:panelGroup id="likes-table" class="table-responsive" rendered="#{not empty user.likedProjects}">
 				                        
 				                        	<h:dataTable class="table table-hover" value="#{user.likedProjects}" var="p" >
 				                        		<h:column>
@@ -432,59 +343,27 @@
 				                        </h:panelGroup>
 
 										<c:if test="#{empty user.likedProjects}">
-			                      			<h2 class="text-center" contenteditable="true">You didn't liked any project <i class="fa fa-frown-o"/></h2>
-			                      			<h2 class="text-center" contenteditable="true">Try to discover one!!!<br/></h2>
+			                      			<h2 class="display-4" style="font-size: 30px;text-align: center;">You didn't liked any project <i class="fa fa-frown-o"/></h2>
+			                      			<h2 class="display-4" style="font-size: 30px;text-align: center;">Try to discover one!!!<br/></h2>
 		                      		
 		                      				<div style="text-align:center;margin-top:40px">
 		                      					<h:link class="btn btn-primary"  outcome="projects"><i class="fa fa-search"></i> Discover Projects</h:link>
 		                      				</div>
 										</c:if>
-									</div>
+				                     </div>
+				                 </div>
 	               		</h:panelGroup>
 	               	</h:panelGroup>
 	               	
 	      	     	<h:panelGroup id="research" >
 	         			<h:panelGroup rendered="#{ userBean.rendered == 'research'}">
-		                    <div class="content">
-		                        <h1 class="display-4 text-center" style="margin-bottom: 30px;">Research</h1>
-		                        <div role="tablist" id="accordion-1">
-		                            <div class="card">
-		                                <div class="card-header" role="tab">
-		                                    <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="true" aria-controls="accordion-1 .item-1" href="#accordion-1 .item-1">Event title</a></h5>
-		                                </div>
-		                                <div class="collapse show item-1" role="tabpanel" data-parent="#accordion-1">
-		                                    <div class="card-body">
-		                                        <div>
-		                                            <ul class="list-inline">
-		                                                <li class="list-inline-item"><i class="fa fa-map-marker"></i> Avenida das forças armadas (ISCTE-IUL)</li>
-		                                                <li class="list-inline-item"><i class="fa fa-calendar"></i> 03/07/2020</li>
-		                                                <li class="list-inline-item"><i class="fa fa-clock-o"></i> 20: 30 - 00:30</li>
-		                                            </ul><button class="btn btn-primary" type="button">See event</button></div>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="card">
-		                                <div class="card-header" role="tab">
-		                                    <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-2" href="#accordion-1 .item-2">Accordion Item</a></h5>
-		                                </div>
-		                                <div class="collapse item-2" role="tabpanel" data-parent="#accordion-1">
-		                                    <div class="card-body">
-		                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <div class="card">
-		                                <div class="card-header" role="tab">
-		                                    <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-3" href="#accordion-1 .item-3">Accordion Item</a></h5>
-		                                </div>
-		                                <div class="collapse item-3" role="tabpanel" data-parent="#accordion-1">
-		                                    <div class="card-body">
-		                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                        </div>
-		                    </div>
+	         					<div class="card shadow mb-3">
+				                     <div class="card-header py-3">
+				                         <h1 class="display-4" style="font-size: 30px;">Research</h1>
+				                     </div>
+				                     <div class="card-body text-left">
+				                     </div>
+				                 </div>
 	               		</h:panelGroup>
 	               	</h:panelGroup>
 	               	
@@ -492,5 +371,7 @@
 	            </div>
 	        </div>
 	    </div>
+			
 	</ui:define>
+ </div>
 </ui:composition>
