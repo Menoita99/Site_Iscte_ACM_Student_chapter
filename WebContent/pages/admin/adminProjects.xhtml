@@ -11,7 +11,6 @@
 
 	<ui:define name="content">
 	
-		<c:set var="project" value="#{adminProjectBean.project}"/>
 	
 		<div class="d-sm-flex justify-content-between align-items-center mb-4">
                 <h3 class="text-dark mb-0">Projects</h3>
@@ -88,7 +87,7 @@
                     <div class="card shadow py-2">
                         <div class="card-body ">
                             <h1 class="display-3 text-center">Projects</h1>
-	                            <h:dataTable class="table table-hover text-center text-center table-responsive" value="#{adminProjectsBean.projects}" var="p" id="table">
+	                            <h:dataTable class="table table-hover text-center" value="#{adminProjectsBean.projects}" var="p" id="table">
 	                            	<h:column>
 	                            		<f:facet name="header">#Id</f:facet>
 	                            		#{p.id}
@@ -218,4 +217,7 @@
 		    });
 	    </script>
 	</ui:define>
+
+
+
 </ui:composition>

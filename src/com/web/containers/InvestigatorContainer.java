@@ -2,7 +2,7 @@ package com.web.containers;
 
 import java.io.Serializable;
 
-import com.database.entities.ResearchType;
+import com.database.entities.Investigator;
 
 import lombok.Data;
 
@@ -14,6 +14,11 @@ public class InvestigatorContainer implements Serializable{
 	private int id;
 	private UserContainer user;
 	private String institution;
-	private ResearchType type;
 	
+	
+	public InvestigatorContainer(Investigator in) {
+		this.id= in.getId();
+		this.user =  new UserContainer(in.getUser());
+		this.institution = in.getInstitution();
+	}
 }

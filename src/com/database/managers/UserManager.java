@@ -1,6 +1,5 @@
 package com.database.managers;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Date;
 import java.util.Random;
@@ -23,6 +22,15 @@ public class UserManager {
 	private static String ACCEPTABLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-";
 
 	
+	
+	
+	
+	/**
+	 * @return returns all users
+	 */
+	public static List<User> findAll() {
+		return JpaUtil.executeQuery("Select u from User u", User.class);
+	}
 
 
 	
@@ -39,15 +47,9 @@ public class UserManager {
 				JpaUtil.createEntity(user);
 			}catch (Exception e) {
 				user = null;
-				System.out.println("-------------------ERROR CREATING USER-------------------");
-				System.out.println();
-				System.out.println(e.getMessage());
-				System.out.println();
 				e.printStackTrace();
-				System.out.println("------------------------------------------------------------");
 			}
 		}
-		
 		return user;
 	}
 
@@ -245,84 +247,11 @@ public class UserManager {
 		JpaUtil.mergeEntity(user);
 	}
 
-	
-
 
 	
-
-	public static void updateUser(UserContainer userContainer) {
-		//TODO
-	}
-
 	
-
-
 	
-
-	public static void removeImage(String imagePath,User user) {
-		//TODO
-	}
-
 	
-
-
-	
-
-	public static void removeAllImage(Collection<String> imagePath,User user) {
-		//TODO
-	}
-
-	
-
-
-	
-
-	public static void addImage(String imagePath,User user) {
-		//TODO
-	}
-
-	
-
-
-	
-
-	public static void addAllImage(Collection<String> imagePath,User user) {
-		//TODO
-	}
-
-	
-
-
-	
-
-	public static void setMainImage(String imagePath,User user){
-		//TODO
-	}
-
-	
-
-
-	
-
-	public static void deleteUser(User user) {
-		//TODO
-	}
-
-	
-
-
-	
-
-	public static void desactivateUser(User user) {
-		//CHANGE KEY
-		//TODO
-	}
-
-	
-
-
-	
-
 	/**
 	 * This method generates a random key with ACCEPTABLE_CHARS with
 	 * KEY_LENGTH that isn't present in data base

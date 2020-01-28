@@ -19,88 +19,45 @@
 	<c:set var="user" value="#{userBean.getUserPerfil()}" />
 	
 	<c:if test="#{not empty user}">
+	
+		<c:set var="img"  value="#{user.imagePath}"/>
 
-	    <div class="container">
-	        <section>
-	            <div id="landing-section">
-		            
-		            <div class="row">
-					    <div class="col">
-						     <c:if test="#{not empty user.imagePath}">
-					            <div class="user-image" style="margin-left: 50px;">
-					        		<h:graphicImage value="/resources/files/#{user.imagePath}" />
-				        		</div>
-				           	</c:if>
-				           	 <c:if test="#{empty user.imagePath}">
-			           			<i class="fa fa-user-circle-o" style="color: white; font-size: 150px;margin-left: 50px;margin-top: 30px"/>
-			       		   </c:if>
-					    </div>
-					    <div class="col">
-			                <h1 class="display-4" id="username">#{user.firstName} #{user.lastName}</h1>
-			                
-			                <c:if test="#{user.isMember() and !user.isAdmin()}">
-			                	<p class="lead text-right" style="padding-right: 50px;">ACM Member</p>
-			                </c:if>
-			           		<c:if test="#{user.isAdmin()}">
-			           			<p class="lead text-right" style="padding-right: 50px;">ACM Admin</p>
-			           		</c:if>	
-					    </div>
-					</div>
-	            
+        <div class="container" style="max-width: 1000px;padding-right: 5px;padding-left: 5px;">
+	        <div class="perfil-header" style="height: 200px;background-color: rgba(173,201,220,0.53);">
+	            <h1 class="display-4" style="padding-top: 19px;padding-left: 20px;color: rgb(255,255,255);">#{user.firstName} #{user.lastName}</h1>
+            	<c:if test="#{user.isAdmin()}">
+	            	<p class="lead" style="padding-left: 20px;color: rgb(255,255,255);">Admin</p>
+            	</c:if>
+	        </div>
+	        <div class="text-center" style="margin-top: -80px;">
+	            <div class="rounded-circle" id="img_perfil" style="height: 160px;width: 160px;background-size: cover;background-position: center;margin: 0 auto;background-image:url('#{request.contextPath}/resources/files/#{user.imagePath}');"/>
+	        </div>
+	        <div style="margin-top: -80px;padding-top: 100px;padding-bottom: 20px;">
+	            <div class="card shadow mb-3">
+	                <div class="card-header py-3">
+	                    <h1 class="display-4" style="font-size: 30px;">Info</h1>
+	                </div>
+	                <div class="card-body"></div>
 	            </div>
-	           
-	        </section>
-	        <section style="margin-top: 60px;">
-	            <h1 class="display-4 text-center">Events</h1>
-	            <div role="tablist" id="accordion-1">
-	            
-	            
-	            <c:forEach items="#{user.getEvents()}" var="event" varStatus="loopStatus">
-	            
-	            	<div class="card">
-	            		<div class="card-header" role="tab">
-	                        <h5 class="mb-0">
-	                        	<a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-1" href="#accordion-1 .item-#{loopStatus.index + 1}">#{event.title}</a>
-                       		</h5>
-	                    </div>
-	                    <div class="collapse item-#{loopStatus.index + 1}" role="tabpanel" data-parent="#accordion-1">
-	                        <div class="card-body">
-	                        
-                     			 <div class="row">
-                  			 		<div class="col-xl-4">
-                                        <div class="image-conatiner">
-                                        	<h:graphicImage value="/resources/files/#{event.images.get(0)}"/>
-                                       	</div>
-                                    </div>
-                                    <div class="col-xl-8">	
-                                        <div class="col list-col">
-	                                      <ul class="list-unstyled" style="font-size: 18px;color: rgba(33,37,41,0.83);line-height: 30px;">
-	                                      
-			                                      <c:forEach items="#{event.infos}" var="info" varStatus="loopStatus1">
-		                                                <li class="list-inline-item"><i class="fa fa-map-marker"></i> #{info.getPlace()}</li>
-		                                                <li class="list-inline-item"><i class="fa fa-calendar"></i> #{info.getStartDateDay()} #{info.getStartDateMonth()}</li>
-		                                                <li class="list-inline-item"><i class="fa fa-clock-o"></i>#{info.getStartDateHours()} - #{info.getEndDateHours()}</li>
-                                                </c:forEach>
-                                                
-                                            </ul>
-	                                         <h:form>
-					                            <h:button class="btn btn-primary rect-border" a:data-bs-hover-animate="pulse" value="See event" outcome="event">
-					                      	      	<f:param name="id" value="#{event.getId()}" />
-					                            </h:button>
-				                             </h:form>
-                                        </div>
-                                    </div>
-                      			 </div>
-                      			 
-                           </div>
-	                    </div>
-	            	</div>
-	            
-	            </c:forEach>
-	                
-	                
+	            <div class="card shadow mb-3">
+	                <div class="card-header py-3">
+	                    <h1 class="display-4" style="font-size: 30px;">Projects</h1>
+	                </div>
+	                <div class="card-body"></div>
 	            </div>
-	        </section>
+	            <div class="card shadow mb-3">
+	                <div class="card-header py-3">
+	                    <h1 class="display-4" style="font-size: 30px;">Events</h1>
+	                </div>
+	                <div class="card-body"></div>
+	            </div>
+	            <div class="card shadow mb-3">
+	                <div class="card-header py-3">
+	                    <h1 class="display-4" style="font-size: 30px;">Research</h1>
+	                </div>
+	                <div class="card-body"></div>
+	            </div>
+	        </div>
 	    </div>
     
     </c:if>

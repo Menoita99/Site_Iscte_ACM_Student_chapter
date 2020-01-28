@@ -11,63 +11,64 @@
 
 	<ui:define name="content">
 	
+	
 		<div class="d-sm-flex justify-content-between align-items-center mb-4">
-                <h3 class="text-dark mb-0">User</h3>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-xl-3 mb-4">
-                <div class="card shadow border-left-primary py-2">
-                    <div class="card-body">
-                        <div class="row align-items-center no-gutters">
-                            <div class="col mr-2">
-                                <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>views  (per month)</span></div>
-                                <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminProjectsBean.viewsMonth}</span></div>
+                <h3 class="text-dark mb-0">Researches</h3>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <div class="card shadow border-left-primary py-2">
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col mr-2">
+                                        <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>views  (per month)</span></div>
+                                        <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminProjectsBean.viewsMonth}</span></div>
+                                    </div>
+                                    <div class="col-auto"><i class="far fa-eye fa-2x text-gray-300"></i></div>
+                                </div>
                             </div>
-                            <div class="col-auto"><i class="far fa-eye fa-2x text-gray-300"></i></div>
+                        </div>
+                    </div>
+                       <div class="col-md-6 col-xl-3 mb-4">
+                        <div class="card shadow border-left-info py-2">
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col mr-2">
+                                        <div class="text-uppercase text-info font-weight-bold text-xs mb-1"><span>likes (per month)</span></div>
+                                        <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminProjectsBean.likesMonth}</span></div>
+                                    </div>
+                                    <div class="col-auto"><i class="fas fa-clipboard-list fa-2x text-gray-300"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <div class="card shadow border-left-success py-2">
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col mr-2">
+                                        <div class="text-uppercase text-success font-weight-bold text-xs mb-1"><span>Projects developing</span></div>
+                                        <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminProjectsBean.projectsDeveloping}</span></div>
+                                    </div>
+                                    <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <div class="card shadow border-left-warning py-2">
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col mr-2">
+                                        <div class="text-uppercase text-warning font-weight-bold text-xs mb-1"><span>Pending projects </span></div>
+                                        <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminProjectsBean.pendingProjects}</span></div>
+                                    </div>
+                                    <div class="col-auto"><i class="fas fa-comments fa-2x text-gray-300"></i></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-               <div class="col-md-6 col-xl-3 mb-4">
-                <div class="card shadow border-left-info py-2">
-                    <div class="card-body">
-                        <div class="row align-items-center no-gutters">
-                            <div class="col mr-2">
-                                <div class="text-uppercase text-info font-weight-bold text-xs mb-1"><span>likes (per month)</span></div>
-                                <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminProjectsBean.likesMonth}</span></div>
-                            </div>
-                            <div class="col-auto"><i class="fas fa-clipboard-list fa-2x text-gray-300"></i></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-xl-3 mb-4">
-                <div class="card shadow border-left-success py-2">
-                    <div class="card-body">
-                        <div class="row align-items-center no-gutters">
-                            <div class="col mr-2">
-                                <div class="text-uppercase text-success font-weight-bold text-xs mb-1"><span>Projects developing</span></div>
-                                <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminProjectsBean.projectsDeveloping}</span></div>
-                            </div>
-                            <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-xl-3 mb-4">
-                <div class="card shadow border-left-warning py-2">
-                    <div class="card-body">
-                        <div class="row align-items-center no-gutters">
-                            <div class="col mr-2">
-                                <div class="text-uppercase text-warning font-weight-bold text-xs mb-1"><span>Pending projects </span></div>
-                                <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminProjectsBean.pendingProjects}</span></div>
-                            </div>
-                            <div class="col-auto"><i class="fas fa-comments fa-2x text-gray-300"></i></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
                 <div style="margin-bottom: 30px;">
                     <div class="card shadow py-2" style="margin: 0 auto;">
                         <div class="card-body">
@@ -85,69 +86,46 @@
                 <div style="margin-bottom: 30px;">
                     <div class="card shadow py-2">
                         <div class="card-body ">
-                            <h1 class="display-3 text-center">Users</h1>
-	                            <h:dataTable class="table table-hover text-center table-responsive" value="#{adminUserBean.users}" var="u" id="table">
+                            <h1 class="display-3 text-center">Researches</h1>
+	                            <h:dataTable class="table table-hover text-center" value="#{adminResearchesBean.researches}" var="r" id="table">
 	                            	<h:column>
 	                            		<f:facet name="header">#Id</f:facet>
-	                            		#{u.id}
+	                            		#{r.id}
 	                            	</h:column>
 	                            	<h:column>
-	                            		<f:facet name="header">Username</f:facet>
-	                            		#{u.username}
-	                            	</h:column>
-	                            	<h:column >
-	                            		<f:facet name="header">Email</f:facet>
-	                            		<p style="max-width:100px">#{u.email}</p>
+	                            		<f:facet name="header">Title</f:facet>
+	                            		#{r.title}
 	                            	</h:column>
 	                            	<h:column>
-	                            		<f:facet name="header">First Name</f:facet>
-	                            		#{u.firstName}
+	                            		<f:facet name="header">State</f:facet>
+	                            		#{r.state}
 	                            	</h:column>
 	                            	<h:column>
-	                            		<f:facet name="header">Last Name</f:facet>
-	                            		#{u.lastName}
+	                            		<f:facet name="header">Type</f:facet>
+	                            		#{r.type}
 	                            	</h:column>
 	                            	<h:column>
-	                            		<f:facet name="header">Last log</f:facet>
-	                            		#{u.lastLog.toString().substring(0,16)}
+	                            		<f:facet name="header">Investigator</f:facet>
+	                            		#{r.investigator.user.username}
 	                            	</h:column>
 	                            	<h:column>
-	                            		<f:facet name="header">Active</f:facet>
-	                            		<h:panelGroup rendered="#{u.isActive()}">
-	                            			<i class="fa fa-check"></i>
-                            			</h:panelGroup>
-                            			<h:panelGroup rendered="${not u.isActive()}">
-	                            			<i class="fa fa-close"></i>
-                            			</h:panelGroup>
+	                            		<f:facet name="header">Views</f:facet>
+	                            		#{r.views}
 	                            	</h:column>
 	                            	<h:column>
-	                            		<f:facet name="header">Acm Member</f:facet>
-	                            		<h:panelGroup rendered="#{u.isMember()}">
-	                            			<i class="fa fa-check"></i>
-                            			</h:panelGroup>
-                            			<h:panelGroup rendered="${not u.isMember()}">
-	                            			<i class="fa fa-close"></i>
-                            			</h:panelGroup>
-	                            	</h:column>
-	                            	<h:column>
-	                            		<f:facet name="header">Admin</f:facet>
-	                            		<h:panelGroup rendered="#{u.isAdmin()}">
-	                            			<i class="fa fa-check"></i>
-                            			</h:panelGroup>
-                            			<h:panelGroup rendered="${not u.isAdmin()}">
-	                            			<i class="fa fa-close"></i>
-                            			</h:panelGroup>
+	                            		<f:facet name="header">Likes</f:facet>
+	                            		#{r.likes}
 	                            	</h:column>
 	                            	<h:column>
 	                            		<f:facet name="header">Edit</f:facet>
 	                            		<h:form>
-		                            		<h:commandLink class="link" >
-					                        	<f:attribute name="userId" value="#{u.id}"/>
+		                            		<h:commandLink class="link">
+					                        	<f:attribute name="projectId" value="#{r.id}"/>
 					                        	<f:ajax render=":table" execute="@this"/>
 					                        	<i class="fa fa-remove"/>
 					                        </h:commandLink>
 	                           		    <h:link class="link" >
-				                        	<f:param name="userId" value="#{u.id}" />
+				                        	<f:param name="projectId" value="#{r.id}" />
 				                        	<i class="fa fa-eye"/>
 				                        </h:link>
 				                        </h:form>
@@ -157,7 +135,6 @@
                     </div>
                 </div>
 	</ui:define>
-	
 	
 	<ui:define name="scripts">
 		<script>
@@ -230,5 +207,4 @@
 		    });
 	    </script>
 	</ui:define>
-
 </ui:composition>

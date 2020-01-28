@@ -101,15 +101,27 @@
   background-color: rgba(115,148,197,0.7);
 }
 
+.top-inclined {
+  -webkit-transform: skewY(4deg);
+  -moz-transform: skewY(4deg);
+  -ms-transform: skewY(4deg);
+  transform: skewY(4deg);
+}
 
-
+.top-inclined-content {
+  -webkit-transform: skewY(-4deg);
+  -moz-transform: skewY(-4deg);
+  -ms-transform: skewY(-4deg);
+  transform: skewY(-4deg);
+}
 
 #promo {
   text-align: center;
   padding: 40px;
-  background: url("#{resource['img:laptop-1209008_1280.jpg']}");
+  background: url("#{resource['img:alex-kotliarskyi-QBpZGqEMsKg-unsplash.jpg']}");
   background-size: cover;
   padding-top: 60px;
+  background-position: center;
 }
 
 

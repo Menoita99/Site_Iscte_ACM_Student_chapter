@@ -2,6 +2,7 @@ package com.web.beans;
 
 import java.io.Serializable;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
@@ -39,15 +40,17 @@ public class UserBean implements Serializable{
 	private String definitionsErrorMessage;
 
 	
-	public UserBean() {
+	@PostConstruct
+	public void init() {
 		user = Session.getInstance().getUser();
 		if(user == null)
 			Session.getInstance().redirectToLogin("user");
 		else
 			user.refresh();
 	}
-
-
+	
+	
+	
 	/**
 	 * If there is an valid userID in request map it returns the correspondent
 	 * UserContainer object otherwise returns null

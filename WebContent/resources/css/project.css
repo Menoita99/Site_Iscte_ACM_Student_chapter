@@ -1,16 +1,3 @@
-.top-inclined {
-	-webkit-transform: skewY(4deg);
-	-moz-transform: skewY(4deg);
-	-ms-transform: skewY(4deg);
-	transform: skewY(4deg);
-}
-
-.top-inclined-content {
-	-webkit-transform: skewY(-4deg);
-	-moz-transform: skewY(-4deg);
-	-ms-transform: skewY(-4deg);
-	transform: skewY(-4deg);
-}
 
 .container.shadow {
 	box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.25) !important;

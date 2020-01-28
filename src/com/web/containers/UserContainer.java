@@ -2,6 +2,7 @@ package com.web.containers;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,8 +34,10 @@ public class UserContainer implements Serializable {
 	private String course;
 	private String cellPhone;
 	private String username;
+	private Date lastLog;
 	private boolean isMember;
 	private boolean isAdmin;
+	private boolean isActive;
 	@Exclude
 	@lombok.EqualsAndHashCode.Exclude
 	private List<ProjectContainer> joinedProjects;
@@ -47,7 +50,6 @@ public class UserContainer implements Serializable {
 	
 	public UserContainer(int id) {
 		User user = UserManager.getUserById(id);
-		
 		this.id = user.getId();
 		this.imagePath = user.getImagePath();
 		this.email = user.getEmail();
@@ -58,6 +60,8 @@ public class UserContainer implements Serializable {
 		this.username = user.getUsername();
 		this.isMember = user.isMember();
 		this.isAdmin = user.isAdmin();
+		this.lastLog = user.getLast_log();
+		this.isActive = user.isActive();
 	}
 
 
@@ -75,6 +79,8 @@ public class UserContainer implements Serializable {
 		this.username = user.getUsername();
 		this.isMember = user.isMember();
 		this.isAdmin = user.isAdmin();
+		this.lastLog = user.getLast_log();
+		this.isActive = user.isActive();
 	}
 
 

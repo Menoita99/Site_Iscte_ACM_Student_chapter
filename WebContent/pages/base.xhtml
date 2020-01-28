@@ -99,7 +99,9 @@
 										<!-- Logged in image -->
 										<c:if test="${sessionScope.user.imagePath != null}">	<!-- if user has an image  -->
 											<div class="user-icon-container">
-											 	<h:graphicImage id="user-icon" value="/resources/files/#{sessionScope.user.imagePath}"/>
+												<div class="rounded-circle" style="height: 40px;background-image:url('#{request.contextPath}/resources/files/#{sessionScope.user.imagePath}');
+		                    						width: 40px;background-size: cover;background-position: center;"/>
+											 	
 											</div>
 										</c:if>
 										<c:if test="${sessionScope.user.imagePath == null}">	<!-- else  -->

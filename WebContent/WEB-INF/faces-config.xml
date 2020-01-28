@@ -122,6 +122,11 @@
 			<from-outcome>adminUsers</from-outcome>
 			<to-view-id>/pages/admin/adminUsers.xhtml</to-view-id>
 		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>adminResearches</from-outcome>
+			<to-view-id>/pages/admin/adminResearches.xhtml</to-view-id>
+		</navigation-case>
 	
 	</navigation-rule>
 </faces-config>

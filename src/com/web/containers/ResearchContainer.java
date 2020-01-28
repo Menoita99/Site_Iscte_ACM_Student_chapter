@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.database.entities.Research;
+import com.database.entities.ResearchType;
 import com.database.entities.State;
 import com.database.entities.User;
 
@@ -25,7 +26,8 @@ public class ResearchContainer implements Serializable{
 	private List<String> imagePath;
 	private int likes;
 	private int views;
-
+	private ResearchType type;
+	
 	@Exclude
 	@lombok.EqualsAndHashCode.Exclude
 	private InvestigatorContainer investigator = null;
@@ -48,5 +50,8 @@ public class ResearchContainer implements Serializable{
 		imagePath = r.getImagePath();
 		likes = r.getLikes().size();
 		views = r.getViews().size();
+		investigator = new InvestigatorContainer(r.getInvestigator());
+		type = r.getType();
 	}
+	
 }

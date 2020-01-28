@@ -9,11 +9,45 @@
 	xmlns:of="http://omnifaces.org/functions"
 	xmlns:p="http://primefaces.org/ui">
 
+	<ui:define name="headContent">
+		<style>
+			#repository-header {
+			  background: rgba(0,142,203,0.7);
+			  color: white;
+			  border-radius: 0px;
+			}
+		</style>
+	</ui:define>
+
 	<ui:define name="content">
 
-		<h1 style="margin: 50px auto">
-			IN MAKING :)
-		</h1>
+	    <section id="repository-header" style="height: 200px;margin-bottom: 50px;">
+	        <h1 class="display-3 text-center" style="padding: 50px;">Repository</h1>
+	    </section>
+	    <div class="container">
+	        <div class="row">
+	            <div class="col-xl-4">
+	                <div class="card shadow mb-3">
+	                    <div class="card-header py-3">
+	                        <h1 class="display-4" style="font-size: 30px;">Menu</h1>
+	                    </div>
+	                    <div class="card-body"></div>
+	                    <div class="list-group list-group-flush text-center"><a class="list-group-item list-group-item-action"><span>List Group Item 1</span></a><a class="list-group-item list-group-item-action"><span>List Group Item 2</span></a><a class="list-group-item list-group-item-action"><span>List Group Item 3</span></a></div>
+	                </div>
+	            </div>
+	            <div class="col">
+	                <div class="card shadow mb-3">
+	                    <div class="card-body">
+	                        <div class="row">
+	                            <div class="col-2 text-center align-self-center"><i class="fa fa-folder" style="font-size: 70px;color: rgb(198,208,218);"></i>
+	                                <p>Dir</p>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
 
 	</ui:define>
 </ui:composition>

@@ -35,10 +35,6 @@ public class AdminProjectsBean implements Serializable{
 	private double viewsMonth;
 	
 	
-	
-	
-	
-	
 	@PostConstruct
 	public void init() {
 		projects = ProjectManager.findAll().stream().map(ProjectContainer::new).collect(Collectors.toList());

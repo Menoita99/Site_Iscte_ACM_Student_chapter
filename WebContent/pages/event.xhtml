@@ -154,7 +154,8 @@
        	            	<ui:repeat var="user" value="#{event.staff}">
 			                <div class="col-sm-6 col-md-4 col-lg-2 col-xl-2 text-center">
 			                    <div class="team-card" style="padding: 20px;text-align:center">
-			                    	<h:graphicImage value="/resources/files/#{user.imagePath}" />
+   			                    	<div class="rounded-circle" style="height: 125px;background-image:url('#{request.contextPath}/resources/files/#{user.imagePath}');
+		                    				width: 125px;background-size: cover;background-position: center;"/>
 			                    	<h:form>
 			                       		<h:link class="userNameLink"  value="#{user.username}" outcome="perfil">
 			                       			<f:param value="#{user.id}" name="userID"/>
