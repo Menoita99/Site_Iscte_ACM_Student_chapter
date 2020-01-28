@@ -61,7 +61,7 @@ public class ProjectContainer implements Serializable {
 
 	@Exclude
 	@lombok.EqualsAndHashCode.Exclude
-	private List<ProjectCandidateContainer> candidates;
+	private List<CandidateContainer> candidates;
 
 
 
@@ -146,9 +146,9 @@ public class ProjectContainer implements Serializable {
 	/**
 	 * @return returns project candidate
 	 */
-	public List<ProjectCandidateContainer> getCandidates() {
+	public List<CandidateContainer> getCandidates() {
 		if(candidates == null) 
-			candidates = ProjectManager.getCandidates(id).stream().map(ProjectCandidateContainer::new).collect(Collectors.toList());
+			candidates = ProjectManager.getCandidates(id).stream().map(CandidateContainer::new).collect(Collectors.toList());
 		return candidates;
 	}
 

@@ -101,8 +101,8 @@ public class CreatorManager {
 				enddates.add(Date.from(day.plusHours(1).atZone(ZoneId.systemDefault()).toInstant()));
 			}
 			
-			Event e = EventManager.createEvent(r.nextInt(50)+50 
-					, generateRandomPhrases(r.nextInt(3)+1)
+			Event e = EventManager.createEvent( 
+					 generateRandomPhrases(r.nextInt(3)+1)
 					, generateRandomPhrases(r.nextInt(30)+50)
 					, generateRandomPhrases(r.nextInt(10)+5)
 					, generateRandomPhrases(r.nextInt(5)+5)

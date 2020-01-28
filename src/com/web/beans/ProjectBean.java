@@ -1,18 +1,18 @@
 package com.web.beans;
 
 import java.io.Serializable;
-import java.util.Date;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
+import com.database.entities.Candidate;
 import com.database.entities.Project;
-import com.database.entities.ProjectCandidate;
 import com.database.managers.JpaUtil;
 import com.database.managers.ProjectManager;
 import com.web.Session;
-import com.web.containers.ProjectCandidateContainer;
+import com.web.containers.CandidateContainer;
 import com.web.containers.ProjectContainer;
 
 import lombok.Data;
@@ -25,14 +25,12 @@ public class ProjectBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private ProjectContainer project = null;
-	private ProjectCandidateContainer candidature;
+	private CandidateContainer candidature;
 
 
 
-	/**
-	 * Constructor
-	 */
-	public ProjectBean() {
+	@PostConstruct
+	public void init() {
 		String id = Session.getInstance().getRequestMap().get("projectID");
 
 		if(id == null)
@@ -47,8 +45,8 @@ public class ProjectBean implements Serializable{
 					ProjectManager.addView(p.getId());
 
 					if(Session.getInstance().getUser() != null) {
-						ProjectCandidate c = ProjectManager.getCandidature(Session.getInstance().getUser().getId(), project.getId());
-						candidature = c == null ? new ProjectCandidateContainer() : new ProjectCandidateContainer(c);
+						Candidate c = ProjectManager.getCandidature(Session.getInstance().getUser().getId(), project.getId());
+						candidature = c == null ? new CandidateContainer() : new CandidateContainer(c);
 					}
 				}
 			}
@@ -57,7 +55,6 @@ public class ProjectBean implements Serializable{
 			System.err.println("(ProjectBean) Error parsing id or there is no project with the given id "+id+" : error type -> "+e.getClass());
 		}
 	}
-
 
 
 
@@ -121,20 +118,17 @@ public class ProjectBean implements Serializable{
 			return;
 		}
 		try {
-			if(candidature.getUser() == null && candidature.getProject() == null) {
-				//creates candidature
-				candidature.setUser(Session.getInstance().getUser());
-				candidature.setProject(project);
-				JpaUtil.createEntity(new ProjectCandidate(candidature));
-			}else {
-				//Edit candidature
-				ProjectCandidate p = ProjectManager.getCandidature(candidature.getUser().getId(), candidature.getProject().getId());
-				p.setMotivation(candidature.getText());
-				p.setDate(new Date(System.currentTimeMillis()));
+			if(ProjectManager.getCandidature(Session.getInstance().getUser().getId(), project.getId()) == null) {
+				Project p = ProjectManager.findById(project.getId());
+				p.getCandidates().add(new Candidate(candidature));
 				JpaUtil.mergeEntity(p);
 			}
+			else {
+				Candidate c = ProjectManager.getCandidature(Session.getInstance().getUser().getId(), project.getId());
+				c.update(c);
+				JpaUtil.mergeEntity(c);
+			}
 		}catch (Exception e) {
-			System.out.println("(EventBean)[submitCandidature] candidature: "+candidature +" \nproject:  "+project);
 			e.printStackTrace();
 		}
 	}

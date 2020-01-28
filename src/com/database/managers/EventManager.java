@@ -29,7 +29,7 @@ public class EventManager {
 	 * Creates an event
 	 * @param endDates 
 	 */
-	public static Event createEvent(int vacancies, String title, String description, String shortDescription, 
+	public static Event createEvent( String title, String description, String shortDescription, 
 			String requirements, List<String> imagePath, List<Date> dates, int managerID, List<String> tags, 
 			List<Integer> staffn, List<Date> subscriptionDeadlines, List<String> places, List<Date> endDates){
 
@@ -39,7 +39,7 @@ public class EventManager {
 			User manager = UserManager.getUserById(managerID);
 			List <User> staff = staffn.stream().map(id -> UserManager.getUserById(id)).collect(Collectors.toList());
 			
-			p = new Event(vacancies, title, description, shortDescription, requirements, imagePath, manager, tags);
+			p = new Event( title, description, shortDescription, requirements, imagePath, manager, tags);
 			
 			for (int i = 0; i < places.size(); i++) 
 				p.getInfos().add(new EventInfo(dates.get(i),endDates.get(i),subscriptionDeadlines.get(i),places.get(i),p,staff));

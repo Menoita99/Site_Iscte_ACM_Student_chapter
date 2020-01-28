@@ -21,7 +21,6 @@ public class EventContainer implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private int id;
-	private int vacancies;
 	private int likes;
 	private int views;
 	private String title;
@@ -62,7 +61,6 @@ public class EventContainer implements Serializable {
 	
 	public EventContainer(Event e){
 		this.id = e.getId();
-		this.vacancies = e.getVacancies();
 		this.likes = e.getLikes().size();
 		this.views = e.getViews().size();
 		this.title = e.getTitle();
@@ -83,7 +81,6 @@ public class EventContainer implements Serializable {
 	public EventContainer(int id){
 		Event e = EventManager.getEventById(id);
 		this.id = e.getId();
-		this.vacancies = e.getVacancies();
 		this.likes = e.getLikes().size();
 		this.views = e.getViews().size();
 		this.title = e.getTitle();
@@ -147,7 +144,6 @@ public class EventContainer implements Serializable {
 	public void refresh() {
 		Event e = EventManager.getEventById(id);
 		this.id = e.getId();
-		this.vacancies = e.getVacancies();
 		this.likes = e.getLikes().size();
 		this.views = e.getViews().size();
 		this.title = e.getTitle();

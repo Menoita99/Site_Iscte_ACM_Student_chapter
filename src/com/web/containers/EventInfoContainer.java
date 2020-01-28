@@ -17,6 +17,7 @@ public class EventInfoContainer implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private int id;
+	private int vacancies;
 	private LocalDateTime startEventDate;
 	private Date joinDate;
 	private String place;
@@ -35,7 +36,7 @@ public class EventInfoContainer implements Serializable{
 		this.startEventDate = ei.getStartEventDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 		this.joinDate = ei.getJoinDate();
 		this.place = ei.getPlace();
-//		startEventDate.get
+		this.vacancies = ei.getVacancies();
 	}
 	
 	

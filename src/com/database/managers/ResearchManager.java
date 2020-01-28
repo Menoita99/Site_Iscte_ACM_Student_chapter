@@ -4,10 +4,14 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import com.database.entities.AcmLike;
+import com.database.entities.Candidate;
 import com.database.entities.Investigator;
 import com.database.entities.Research;
 import com.database.entities.ResearchType;
 import com.database.entities.User;
+import com.database.entities.View;
+import com.web.containers.CandidateContainer;
 
 public class ResearchManager {
 	
@@ -102,5 +106,112 @@ public class ResearchManager {
 	 */
 	public static List<Research> findAllResearches() {
 		return JpaUtil.executeQuery("Select r from Research r ", Research.class);
+	}
+
+
+
+
+
+	/**
+	 * @param id
+	 */
+	public static void addView(int id) {
+		View v = new View();
+		Research r = findResearch(id);
+		r.getViews().add(v);
+		JpaUtil.mergeEntity(r);
+		
+	}
+
+
+
+
+	/**
+	 * 
+	 * @param userId
+	 * @param researchId
+	 * @return
+	 */
+	public static Candidate getCandidature(int userId, int researchId) {
+		List<Candidate> cand =  JpaUtil.executeQuery("Select c from Research r join r.candidates c where r.id = "
+				 +researchId+" and c.user.id = "+userId, Candidate.class);
+		return cand.isEmpty() ? null : cand.get(0);
+	}
+
+
+
+
+	/**
+	 * @return return if  user has liked the given research
+	 */
+	public static boolean wasLiked(int researchId, int userId) {
+		return !JpaUtil.executeQuery("Select r from Research r join r.likes l where l.user.id = "+ userId +" and r.id= "+researchId, Research.class).isEmpty();
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Creates an object Acmlike with research id and user id given
+	 * if object to be created already exists it returns false;
+	 */
+	public static AcmLike like(int researchId, int userId) {
+		Research r = findResearch(researchId);
+		User u = UserManager.getUserById(userId);
+
+		if(wasLiked(researchId, userId))
+			return null;
+
+		AcmLike like = new AcmLike(u);
+
+		r.getLikes().add(like);
+		JpaUtil.mergeEntity(r);
+
+		return like;
+	}
+
+
+
+
+
+
+	/**
+	 * Removes the like that user gave.
+	 * If user didn't like the research, won't do nothing
+	 */
+	public static void dislike(int researchId, int userId) {
+		Research p = findResearch(researchId);
+
+		List<AcmLike> result = JpaUtil.executeQuery("Select l from Research r join r.likes l where l.user.id = "+userId+" and r.id= "+researchId, AcmLike.class);
+		if(!result.isEmpty()) {
+			AcmLike l = result.get(0);
+			p.getLikes().remove(l);
+			JpaUtil.mergeEntity(p);
+			JpaUtil.deleteEntity(l);
+		}
+	}
+
+
+
+
+	/**
+	 * Creates a candidate from given research
+	 * @param researchId research id
+	 */
+	public static Candidate createCandidate(int researchId, CandidateContainer candidature) {
+		Candidate c = null;
+		try {
+			Research r = ResearchManager.findResearch(researchId);
+			c = new Candidate(candidature);
+			JpaUtil.createEntity(c);
+			
+			r.getCandidates().add(c);
+			JpaUtil.mergeEntity(r);
+		}catch(Exception e ) {
+			e.printStackTrace();
+			c = null;
+		}
+		return c ;
 	}
 }

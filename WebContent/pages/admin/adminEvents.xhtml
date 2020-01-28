@@ -11,7 +11,7 @@
 
 	<ui:define name="content">
 		<div class="d-sm-flex justify-content-between align-items-center mb-4">
-                <h3 class="text-dark mb-0">Projects</h3>
+                <h3 class="text-dark mb-0">Events</h3>
                 </div>
                 <div class="row">
                     <div class="col-md-6 col-xl-3 mb-4">
@@ -84,54 +84,46 @@
                 <div style="margin-bottom: 30px;">
                     <div class="card shadow py-2">
                         <div class="card-body ">
-                            <h1 class="display-3 text-center">Projects</h1>
-	                            <h:dataTable class="table table-hover text-center" value="#{adminProjectsBean.projects}" var="p" id="table">
+                            <h1 class="display-3 text-center">Events</h1>
+	                            <h:dataTable class="table table-hover text-center" value="#{adminEventsBean.events}" var="e" id="table">
 	                            	<h:column>
 	                            		<f:facet name="header">#Id</f:facet>
-	                            		#{p.id}
+	                            		#{e.id}
 	                            	</h:column>
 	                            	<h:column>
 	                            		<f:facet name="header">Title</f:facet>
-	                            		#{p.title}
+	                            		#{e.title}
 	                            	</h:column>
 	                            	<h:column>
 	                            		<f:facet name="header">Manager</f:facet>
-	                            		#{p.manager.username}
+	                            		#{e.manager.username}
 	                            	</h:column>
 	                            	<h:column>
-	                            		<f:facet name="header">Max Members</f:facet>
-	                            		#{p.maxMembers}
+	                            		<f:facet name="header">Days(Infos)</f:facet>
+	                            		#{e.infos.size()}
 	                            	</h:column>
 	                            	<h:column>
 	                            		<f:facet name="header">State</f:facet>
-	                            		#{p.state}
-	                            	</h:column>
-	                            	<h:column>
-	                            		<f:facet name="header">Deadline</f:facet>
-	                            		#{p.deadline.toString().substring(0,16)}
-	                            	</h:column>
-	                            	<h:column>
-	                            		<f:facet name="header">Subscrition Deadline</f:facet>
-	                            		#{p.subscriptionDeadline.toString().substring(0,16)}
+	                            		#{e.state}
 	                            	</h:column>
 	                            	<h:column>
 	                            		<f:facet name="header">Views</f:facet>
-	                            		#{p.views}
+	                            		#{e.views}
 	                            	</h:column>
 	                            	<h:column>
 	                            		<f:facet name="header">Likes</f:facet>
-	                            		#{p.likes}
+	                            		#{e.likes}
 	                            	</h:column>
 	                            	<h:column>
 	                            		<f:facet name="header">Edit</f:facet>
 	                            		<h:form>
-		                            		<h:commandLink class="link" actionListener="#{adminProjectsBean.removeProject}">
-					                        	<f:attribute name="projectId" value="#{p.id}"/>
+		                            		<h:commandLink class="link">
+					                        	<f:attribute name="projectId" value="#{e.id}"/>
 					                        	<f:ajax render=":table" execute="@this"/>
 					                        	<i class="fa fa-remove"/>
 					                        </h:commandLink>
-	                           		    <h:link class="link" outcome="adminProject">
-				                        	<f:param name="projectId" value="#{p.id}" />
+	                           		    <h:link class="link">
+				                        	<f:param name="projectId" value="#{e.id}" />
 				                        	<i class="fa fa-eye"/>
 				                        </h:link>
 				                        </h:form>
@@ -215,4 +207,6 @@
 		    });
 	    </script>
 	</ui:define>
+	
+	
 </ui:composition>

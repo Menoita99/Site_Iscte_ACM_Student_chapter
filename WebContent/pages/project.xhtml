@@ -28,12 +28,12 @@
 			                        	
 			                   		<c:if test="#{loopStatus.index == 0}">
 			                    		<div class="carousel-item active">
-			                    			<h:graphicImage class="img-fluid w-100 d-block" value="/resources/files/#{image}" style=" object-fit: cover; object-fit: cover;"/>
+			                    			<h:graphicImage class="img-fluid w-100 d-block" value="/resources/files/#{image}" style="object-fit: cover;"/>
 			                   			</div>
 			    			        </c:if>
 			        			    <c:if test="#{loopStatus.index != 0}">
 			        			        <div class="carousel-item">
-			                    			<h:graphicImage class="img-fluid w-100 d-block" value="/resources/files/#{image}" style=" object-fit: cover; object-fit: cover; align:center;"/>
+			                    			<h:graphicImage class="img-fluid w-100 d-block" value="/resources/files/#{image}" style="object-fit: cover; align:center;"/>
 			                   			</div>
 			        			    </c:if>
 			        			              	
@@ -148,7 +148,7 @@
 	                    <p>Write a short text about yourself, about your skills and motivations to join in this project. Take into account the requirements.<br/></p>
 	                    <h:form>
 	                        <div class="form-group">
-	                        	<h:inputTextarea class="form-control form-control-lg" rows="5" a:placeholder="Motivation letter..." style="font-size: 16px;" value="#{projectBean.candidature.text}" escape="true"/>
+	                        	<h:inputTextarea class="form-control form-control-lg" rows="5" a:placeholder="Motivation letter..." style="font-size: 16px;" value="#{projectBean.candidature.motivation}" escape="true"/>
 	                       	</div>
 		                    <div class="text-left">
 		                    	<h:commandLink class="btn btn-primary" value="Submit" action="#{projectBean.submitCandidature}"/>

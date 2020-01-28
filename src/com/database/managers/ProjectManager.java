@@ -6,8 +6,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import com.database.entities.AcmLike;
+import com.database.entities.Candidate;
 import com.database.entities.Project;
-import com.database.entities.ProjectCandidate;
 import com.database.entities.User;
 import com.database.entities.View;
 import com.web.containers.ProjectContainer;
@@ -192,10 +192,9 @@ public class ProjectManager {
 	 * @param projectId
 	 * @return
 	 */
-	public static ProjectCandidate getCandidature(int userId , int projectId) {
-		List<ProjectCandidate> cand = JpaUtil.executeQuery("Select c from ProjectCandidate c where c.user.id = "+userId
-				+" and c.project.id = "+projectId, ProjectCandidate.class);
-
+	public static Candidate getCandidature(int userId , int projectId) {
+		List<Candidate> cand =  JpaUtil.executeQuery("Select c from Project p join p.candidates c where p.id = "
+													 +projectId+" and c.user.id = "+userId, Candidate.class);
 		return cand.isEmpty() ? null : cand.get(0);
 	}
 
@@ -203,8 +202,8 @@ public class ProjectManager {
 	/**
 	 * @return return all candidatures of a project
 	 */
-	public static List<ProjectCandidate> getCandidates(int projectId){
-		return JpaUtil.executeQuery("Select c from ProjectCandidate c where c.project.id = "+projectId, ProjectCandidate.class);
+	public static List<Candidate> getCandidates(int projectId){
+		return JpaUtil.executeQuery("Select c from  Project p join p.candidates c where p.id = "+projectId, Candidate.class);
 	}
 
 

@@ -99,6 +99,15 @@ public class Research implements Serializable {
 	
 	@Enumerated
 	private ResearchType type;
+	
+	@Exclude
+	@lombok.EqualsAndHashCode.Exclude
+	@ManyToMany(cascade=CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JoinTable(name = "research_candidates",
+	joinColumns = @JoinColumn(name = "research_id"),
+	inverseJoinColumns = @JoinColumn(name = "candidate_id"))
+	private List<Candidate> candidates = new ArrayList<>();
 
 
 	

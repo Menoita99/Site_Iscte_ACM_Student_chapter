@@ -34,9 +34,6 @@ public class Event implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(nullable = false)
-	private int vacancies;
-	
 	@Column(length = 65, nullable = false, unique = true)	
 	private String title;
 	
@@ -125,9 +122,8 @@ public class Event implements Serializable {
 	 * @param staff
 	 * @param subscriptionDeadlines 
 	 */
-	public Event(int vacancies, String title, String description, String shortDescription, String requirements,
+	public Event(String title, String description, String shortDescription, String requirements,
 			List<String> imagePath, User manager, List<String> tags) {
-		this.vacancies = vacancies;
 		this.title = title;
 		this.description = description;
 		this.shortDescription = shortDescription;

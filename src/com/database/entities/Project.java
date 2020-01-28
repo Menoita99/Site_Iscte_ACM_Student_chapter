@@ -3,7 +3,6 @@ package com.database.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 import java.util.Date;
 import java.util.stream.Collectors;
@@ -37,6 +36,7 @@ public class Project implements Serializable {
 	private int id;
 
 	@Exclude
+	@lombok.EqualsAndHashCode.Exclude
 	@ManyToMany(cascade=CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(name = "project_views",
@@ -80,6 +80,7 @@ public class Project implements Serializable {
 
 	@Exclude
 	@ManyToOne
+	@lombok.EqualsAndHashCode.Exclude
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(foreignKey = @ForeignKey(name = "FK_PROJECT_MANAGER_ID"), nullable= false)
 	private User manager;
@@ -91,6 +92,7 @@ public class Project implements Serializable {
 
 	@Exclude
 	@ManyToMany
+	@lombok.EqualsAndHashCode.Exclude
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(name = "project_participants",
 	joinColumns = @JoinColumn(name = "project_id"),
@@ -98,11 +100,13 @@ public class Project implements Serializable {
 	private List<User> participants;
 
 	@Exclude
+	@lombok.EqualsAndHashCode.Exclude
 	@ElementCollection(targetClass=String.class)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<String> imagePath;
 
 	@Exclude
+	@lombok.EqualsAndHashCode.Exclude
 	@ManyToMany(cascade=CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(name = "project_material",
@@ -111,12 +115,23 @@ public class Project implements Serializable {
 	private List<Material> material;
 
 	@Exclude
+	@lombok.EqualsAndHashCode.Exclude
 	@ManyToMany(cascade=CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(name = "project_likes",
 	joinColumns = @JoinColumn(name = "project_id"),
 	inverseJoinColumns = @JoinColumn(name = "like_id"))
 	private List<AcmLike> likes = new ArrayList<>();
+	
+	
+	@Exclude
+	@lombok.EqualsAndHashCode.Exclude
+	@ManyToMany(cascade=CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JoinTable(name = "project_candidates",
+	joinColumns = @JoinColumn(name = "project_id"),
+	inverseJoinColumns = @JoinColumn(name = "candidate_id"))
+	private List<Candidate> candidates = new ArrayList<>();
 
 
 
@@ -170,34 +185,6 @@ public class Project implements Serializable {
 			this.imagePath.add("default/ACM_ICON.png");
 		}else
 			this.imagePath = p.getImagePath();
-	}
-
-
-
-
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(deadLine, description, imagePath, maxMembers, requirements, state, subscriptionDeadline, tags, title, views);
-	}
-
-
-
-
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!(obj instanceof Project))
-			return false;
-		Project other = (Project) obj;
-		return Objects.equals(deadLine, other.deadLine) && Objects.equals(description, other.description)
-				&& Objects.equals(imagePath, other.imagePath) && maxMembers == other.maxMembers
-				&& Objects.equals(requirements, other.requirements) && state == other.state
-				&& Objects.equals(subscriptionDeadline, other.subscriptionDeadline) && Objects.equals(tags, other.tags)
-				&& Objects.equals(title, other.title) && views == other.views;
 	}
 }
 

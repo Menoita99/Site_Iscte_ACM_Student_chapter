@@ -36,6 +36,9 @@ public class EventInfo implements Serializable {
 	private int id;
 	
 	@Column(nullable = false)
+	private int vacancies;
+	
+	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date startEventDate;
 	
