@@ -21,27 +21,27 @@
                         <div class="row align-items-center no-gutters">
                             <div class="col mr-2">
                                 <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>views  (per month)</span></div>
-                                <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminProjectsBean.viewsMonth}</span></div>
+                                <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminUsersBean.viewsMonth}</span></div>
                             </div>
                             <div class="col-auto"><i class="far fa-eye fa-2x text-gray-300"></i></div>
                         </div>
                     </div>
                 </div>
             </div>
-               <div class="col-md-6 col-xl-3 mb-4">
+                <div class="col-md-6 col-xl-3 mb-4">
                 <div class="card shadow border-left-info py-2">
                     <div class="card-body">
                         <div class="row align-items-center no-gutters">
                             <div class="col mr-2">
                                 <div class="text-uppercase text-info font-weight-bold text-xs mb-1"><span>likes (per month)</span></div>
-                                <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminProjectsBean.likesMonth}</span></div>
+                                <ui:remove> <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminUsersBean.likesMonth}</span></div></ui:remove>
                             </div>
                             <div class="col-auto"><i class="fas fa-clipboard-list fa-2x text-gray-300"></i></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-xl-3 mb-4">
+             <div class="col-md-6 col-xl-3 mb-4">
                 <div class="card shadow border-left-success py-2">
                     <div class="card-body">
                         <div class="row align-items-center no-gutters">
@@ -54,7 +54,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-xl-3 mb-4">
+             <div class="col-md-6 col-xl-3 mb-4">
                 <div class="card shadow border-left-warning py-2">
                     <div class="card-body">
                         <div class="row align-items-center no-gutters">
@@ -173,11 +173,11 @@
 		    var myLineChart = new Chart(ctxL, {
 		      type: 'line',
 		      data: {
-		        labels: [<c:forEach items="#{adminProjectsBean.getLastMonths()}" var="m"> "#{m}", </c:forEach>],
+		        labels: [<c:forEach items="#{adminUsersBean.getLastMonths()}" var="m"> "#{m}", </c:forEach>],
 		        datasets: [
 		          {
 		            label: "Projects views",
-		            data: [<c:forEach items="#{adminProjectsBean.getLastMonthsViews()}" var="d"> #{d}, </c:forEach>],
+		            data: [<c:forEach items="#{adminUsersBean.getLastMonthsViews()}" var="d"> #{d}, </c:forEach>],
 		            //backgroundColor: gradientFill,
 		            backgroundColor: [ 'rgba(246,248,253, 0.2)', ],
 		            borderColor: [ '#4e73df', ],
@@ -187,7 +187,7 @@
 		          },
 		          {
 		            label: "Likes",
-		            data: [<c:forEach items="#{adminProjectsBean.getLastMonthsLikes()}" var="d"> #{d}, </c:forEach>],
+		            data: [<c:forEach items="#{adminUsersBean.getLastMonthsLikes()}" var="d"> #{d}, </c:forEach>],
 		            backgroundColor: [ 'rgb(255,230,230,0.5)', ],
 		            borderColor: [ 'rgba(255, 179, 179,1)', ],
 		            borderWidth: 2,
@@ -211,11 +211,11 @@
 		    var myLineChart = new Chart(ctxL, {
 		      type: 'bar',
 		      data: {
-		        labels: [ <c:forEach items="#{adminProjectsBean.getLastMonths()}" var="m"> "#{m}", </c:forEach> ],
+		        labels: [ <c:forEach items="#{adminUsersBean.getLastMonths()}" var="m"> "#{m}", </c:forEach> ],
 		        datasets: [
 		          {
 		            label: "Projects created",
-		            data: [<c:forEach items="#{adminProjectsBean.getLastMonthsProjectsCreated()}" var="d"> #{d}, </c:forEach>],
+		            data: [<c:forEach items="#{adminUsersBean.getLastMonthsUsersCreated()}" var="d"> #{d}, </c:forEach>],
 		            backgroundColor: gradientFill,
 		            borderColor: [ 'rgb(78,115,223)', ],
 		            borderWidth: 2,

@@ -22,7 +22,7 @@
                                 <div class="row align-items-center no-gutters">
                                     <div class="col mr-2">
                                         <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>views  (per month)</span></div>
-                                        <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminProjectsBean.viewsMonth}</span></div>
+                                        <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminResearchesBean.viewsMonth}</span></div>
                                     </div>
                                     <div class="col-auto"><i class="far fa-eye fa-2x text-gray-300"></i></div>
                                 </div>
@@ -35,7 +35,7 @@
                                 <div class="row align-items-center no-gutters">
                                     <div class="col mr-2">
                                         <div class="text-uppercase text-info font-weight-bold text-xs mb-1"><span>likes (per month)</span></div>
-                                        <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminProjectsBean.likesMonth}</span></div>
+                                        <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminResearchesBean.likesMonth}</span></div>
                                     </div>
                                     <div class="col-auto"><i class="fas fa-clipboard-list fa-2x text-gray-300"></i></div>
                                 </div>
@@ -47,8 +47,8 @@
                             <div class="card-body">
                                 <div class="row align-items-center no-gutters">
                                     <div class="col mr-2">
-                                        <div class="text-uppercase text-success font-weight-bold text-xs mb-1"><span>Projects developing</span></div>
-                                        <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminProjectsBean.projectsDeveloping}</span></div>
+                                        <div class="text-uppercase text-success font-weight-bold text-xs mb-1"><span>Researches developing</span></div>
+                                        <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminResearchesBean.researchesDeveloping}</span></div>
                                     </div>
                                     <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></div>
                                 </div>
@@ -60,8 +60,8 @@
                             <div class="card-body">
                                 <div class="row align-items-center no-gutters">
                                     <div class="col mr-2">
-                                        <div class="text-uppercase text-warning font-weight-bold text-xs mb-1"><span>Pending projects </span></div>
-                                        <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminProjectsBean.pendingProjects}</span></div>
+                                        <div class="text-uppercase text-warning font-weight-bold text-xs mb-1"><span>Pending researches </span></div>
+                                        <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminResearchesBean.pendingResearches}</span></div>
                                     </div>
                                     <div class="col-auto"><i class="fas fa-comments fa-2x text-gray-300"></i></div>
                                 </div>
@@ -74,7 +74,7 @@
                         <div class="card-body">
                         	 <div class="row">
 							    <div class="col-6">
-							        <canvas id="barChartCreatedProjects"/>
+							        <canvas id="barChartCreatedResearches"/>
 							    </div>
 							    <div class="col-6">
 							        <canvas id="lineChartViews"/>
@@ -150,11 +150,11 @@
 		    var myLineChart = new Chart(ctxL, {
 		      type: 'line',
 		      data: {
-		        labels: [<c:forEach items="#{adminProjectsBean.getLastMonths()}" var="m"> "#{m}", </c:forEach>],
+		        labels: [<c:forEach items="#{adminResearchesBean.getLastMonths()}" var="m"> "#{m}", </c:forEach>],
 		        datasets: [
 		          {
-		            label: "Projects views",
-		            data: [<c:forEach items="#{adminProjectsBean.getLastMonthsViews()}" var="d"> #{d}, </c:forEach>],
+		            label: "Researches views",
+		            data: [<c:forEach items="#{adminResearchesBean.getLastMonthsViews()}" var="d"> #{d}, </c:forEach>],
 		            //backgroundColor: gradientFill,
 		            backgroundColor: [ 'rgba(246,248,253, 0.2)', ],
 		            borderColor: [ '#4e73df', ],
@@ -164,7 +164,7 @@
 		          },
 		          {
 		            label: "Likes",
-		            data: [<c:forEach items="#{adminProjectsBean.getLastMonthsLikes()}" var="d"> #{d}, </c:forEach>],
+		            data: [<c:forEach items="#{adminResearchesBean.getLastMonthsLikes()}" var="d"> #{d}, </c:forEach>],
 		            backgroundColor: [ 'rgb(255,230,230,0.5)', ],
 		            borderColor: [ 'rgba(255, 179, 179,1)', ],
 		            borderWidth: 2,
@@ -181,18 +181,18 @@
 	    
 		<!-- Bar chart -->
 	    <script>
-			var ctxL = document.getElementById("barChartCreatedProjects").getContext('2d');
+			var ctxL = document.getElementById("barChartCreatedResearches").getContext('2d');
 		    var gradientFill = ctxL.createLinearGradient(0, 0, 0, 290);
 		    gradientFill.addColorStop(0, "rgba(78,115,223, 1)");
 		    gradientFill.addColorStop(1, "rgba(78,115,223, 0.3)");
 		    var myLineChart = new Chart(ctxL, {
 		      type: 'bar',
 		      data: {
-		        labels: [ <c:forEach items="#{adminProjectsBean.getLastMonths()}" var="m"> "#{m}", </c:forEach> ],
+		        labels: [ <c:forEach items="#{adminResearchesBean.getLastMonths()}" var="m"> "#{m}", </c:forEach> ],
 		        datasets: [
 		          {
-		            label: "Projects created",
-		            data: [<c:forEach items="#{adminProjectsBean.getLastMonthsProjectsCreated()}" var="d"> #{d}, </c:forEach>],
+		            label: "Researches created",
+		            data: [<c:forEach items="#{adminResearchesBean.getLastMonthsResearchesCreated()}" var="d"> #{d}, </c:forEach>],
 		            backgroundColor: gradientFill,
 		            borderColor: [ 'rgb(78,115,223)', ],
 		            borderWidth: 2,

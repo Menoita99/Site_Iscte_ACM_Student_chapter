@@ -8,6 +8,7 @@ import lombok.ToString.Exclude;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -50,6 +51,10 @@ public class Research implements Serializable {
 	@Exclude
 	@Column(length = 100, nullable = false)	
 	private String shortDescription;
+	
+	@Column(nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date creationDate = new Date(System.currentTimeMillis());
 	
 	@Exclude
 	@Column(length = 300, nullable = false)	

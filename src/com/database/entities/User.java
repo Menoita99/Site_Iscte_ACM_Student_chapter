@@ -26,6 +26,10 @@ public class User implements Serializable {
 	@Column( nullable = false, unique = true)
 	private int id;
 	
+	@Column(nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date creationDate = new Date(System.currentTimeMillis());
+	
 	@Column(length = 60 , nullable = false, unique = true)
 	private String email;
 	
