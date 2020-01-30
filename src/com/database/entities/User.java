@@ -2,12 +2,20 @@ package com.database.entities;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import com.web.containers.UserContainer;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString.Exclude;
 
 /**
  * Entity implementation class for Entity: UserContainer
@@ -62,12 +70,22 @@ public class User implements Serializable {
 	private boolean isMember = false;   
 	
 	private boolean isActive= false;  	
-
-	@Column(nullable = false)
-	private int views = 0;  			
+	
+	@Exclude
+	@Column(length = 665, nullable = false)	
+	private String about;
 	
 	@Column(nullable = false,length = 64, unique = true)
 	private String activationKey;
+	
+	@Exclude
+	@lombok.EqualsAndHashCode.Exclude
+	@ManyToMany(cascade=CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JoinTable(name = "user_views",
+	joinColumns = @JoinColumn(name = "user_id"),
+	inverseJoinColumns = @JoinColumn(name = "view_id"))
+	private List<View> views = new ArrayList<>();
 	
 //	@Exclude
 //	@LazyCollection(LazyCollectionOption.FALSE)
@@ -98,7 +116,7 @@ public class User implements Serializable {
 	 * @param isMember
 	 */
 	public User(String email, String password, String imagePath, String course, String fristName, String lastName,
-			String cellPhone, String username, boolean isAdmin, boolean isMember,String activationKey) {
+			String cellPhone, String username, boolean isAdmin, boolean isMember,String activationKey,String about) {
 		this.email = email;
 		this.password = password;
 		this.imagePath = "users/"+imagePath;
@@ -110,6 +128,7 @@ public class User implements Serializable {
 		this.isAdmin = isAdmin;
 		this.isMember = isMember;
 		this.activationKey = activationKey;
+		this.about = about;
 	}
 
 
@@ -124,7 +143,7 @@ public class User implements Serializable {
 	 * @param username
 	 */
 	public User(String email, String password, String imagePath, String fristName, String lastName, String username
-			,String activationKey) {
+			,String activationKey,String about) {
 		this.email = email;
 		this.password = password;
 		this.imagePath = "users/"+imagePath;
@@ -156,6 +175,24 @@ public class User implements Serializable {
 	
 	
 	
+	public void update(UserContainer update) {
+		if(update.getEmail() != null && !update.getEmail().isEmpty())
+			email = update.getEmail();
+		if(update.getFirstName() != null && !update.getFirstName().isEmpty())
+			fristName = update.getFirstName();
+		if(update.getLastName() != null && !update.getLastName().isEmpty())
+			lastName = update.getLastName();
+		if(update.getCellPhone() != null && !update.getCellPhone().isEmpty())
+			cellPhone = update.getCellPhone();
+		if(update.getCourse() != null && !update.getCourse().isEmpty())
+			course = update.getCourse();
+		if(update.getUsername() != null && !update.getUsername().isEmpty())
+			username = update.getUsername();
+	}
+	
+	
+	
+	
 	
 	
 	@Override
@@ -182,4 +219,8 @@ public class User implements Serializable {
 		return Objects.hash(activationKey, cellPhone, course, email, fristName, imagePath, isActive, isAdmin, isMember,
 				lastName, last_log, password, username, views);
 	}
+
+
+
+
 }

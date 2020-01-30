@@ -120,7 +120,6 @@ public class ResearchManager {
 		Research r = findResearch(id);
 		r.getViews().add(v);
 		JpaUtil.mergeEntity(r);
-		
 	}
 
 
@@ -204,8 +203,6 @@ public class ResearchManager {
 		try {
 			Research r = ResearchManager.findResearch(researchId);
 			c = new Candidate(candidature);
-			JpaUtil.createEntity(c);
-			
 			r.getCandidates().add(c);
 			JpaUtil.mergeEntity(r);
 		}catch(Exception e ) {

@@ -3,10 +3,11 @@ package com.web.beans;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.persistence.EntityManager;
 
 import com.database.entities.User;
 import com.database.managers.JpaUtil;
@@ -24,120 +25,77 @@ public class UserBean implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	private String email;
-	private String firstName;
-	private String lastName;
-	private String cellPhone;
-	private String course;
-	private String username;
-	private String newPassword;
-	private String password;
-
 	private UserContainer user;
-
+	private UserContainer update = new UserContainer();
+	
+	private String username;
+	private String email;
+	private String password;
+	private String newPassword;
+	
 	private String rendered = "definitions";
 
-	private String definitionsErrorMessage;
 
-	
+
 	@PostConstruct
 	public void init() {
 		user = Session.getInstance().getUser();
-		if(user == null)
-			Session.getInstance().redirectToLogin("user");
-		else
+		if(user == null) 
+			Session.getInstance().redirectToLogin("user"); 	//redirect to login
+		else 
 			user.refresh();
 	}
+
 	
 	
 	
 	/**
-	 * If there is an valid userID in request map it returns the correspondent
-	 * UserContainer object otherwise returns null
+	 * verify if username already exist
 	 */
-	public UserContainer getUserPerfil() {
-		UserContainer perfil = null;
-		String id = Session.getInstance().getRequestMap().get("userID");
-		if(id != null && !id.isBlank()) {
-			User u = UserManager.getUserById(Integer.parseInt(id));
-			if(u != null)
-				perfil = new UserContainer(u);
-		}
-
-		return perfil;
+	public void setUsername(String username) {
+		if(UserManager.getUserByUsername(username)!= null) 
+			sendMessageToComponent(":definitions:def_form:username","Username already exist");
+		else 
+			update.setUsername(username);	
 	}
 
-
-	/**
-	 * Saves changes and commits them to data base.
-	 */
-	public String saveChanges() {
-		User userUpdate = UserManager.getUserById(user.getId());
-
-		if(userUpdate.getPassword().equals(password)) {
-
-			EntityManager em = JpaUtil.getEntityManager();
-
-			em.getTransaction().begin();
-
-			if(email != null && !email.isBlank()) 				//Sets user email
-				userUpdate.setEmail(email);
-
-			if(firstName != null && !firstName.isBlank())  		//Sets user first name
-				userUpdate.setFristName(firstName);
-
-			if(lastName != null && !lastName.isBlank())  		//Sets user last name
-				userUpdate.setLastName(lastName);
-
-			if(cellPhone != null && !cellPhone.isBlank())  		//Sets user cell phone
-				userUpdate.setCellPhone(cellPhone);
-
-			if(course != null && !course.isBlank()) 			//Sets user course
-				userUpdate.setCourse(course);
-
-			if(username != null && !username.isBlank())  		//Sets user username
-				userUpdate.setUsername(username);
-
-			if(newPassword != null && !newPassword.isBlank())  	//Sets user newPassword
-				userUpdate.setPassword(newPassword);
-
-			em.merge(userUpdate);
-			em.flush();
-			em.getTransaction().commit();
-
-			user = new UserContainer(userUpdate);
-			Session.getInstance().setUser(user);					//commits changes
-
-			clearForm();
-		}else {
-			setDefinitionsErrorMessage("Password is incorrect");
-		}
-		return "";
-	}
+	
 	
 	
 	/**
-	 * This method cleans the values that remain in the user form
+	 * verify if email already exist
 	 */
-	private void clearForm() {
-		this.email = null;
-		this.cellPhone = null;
-		this.course = null;
-		this.firstName = null;
-		this.lastName = null;;
-		this.newPassword = null;
-		this.password = null;
-		this.username = null;
+	public void setEmail(String email) {
+		if(UserManager.getUserByUsername(email)!= null) 
+			sendMessageToComponent(":definitions:def_form:email","Email already exist");
+		else 
+			update.setEmail(email);	
+	}
+
+	
+	
+	
+	/**
+	 * Updates user 
+	 */
+	public void saveChanges(ActionEvent e) {
+		User u = UserManager.emailLogin(user.getEmail(), password);
+		if(u != null) {
+			if(newPassword != null && !newPassword.isEmpty())
+				u.setPassword(newPassword);
+			u.update(update);
+			JpaUtil.mergeEntity(u);
+			user.refresh();
+			update = new UserContainer(); //cleans form
+		}else
+			sendMessageToComponent(":def_form:password","Password is incorrect");
+		
 	}
 	
 	
 	
+
 	
-	
-	
-	
-	
-	//------------------//
 	
 	/**
 	 *Dislikes project 
@@ -150,9 +108,42 @@ public class UserBean implements Serializable{
 	
 	
 	
+
+	
+	
+	/**
+	 *Dislikes project 
+	 */
+	public void dislikeResearch(ActionEvent event) {
+		//TODO
+	}
+	
+	
+	
+
+	
+	
+	/**
+	 *Dislikes project 
+	 */
+	public void dislikeLike(ActionEvent event) {
+		//TODO
+	}
 	
 	
 	
 	
 	
+	/**
+	 * Sends a message to component
+	 * 
+	 * @param componentId
+	 * @param message
+	 */
+	private void sendMessageToComponent(String componentId, String message) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		FacesMessage msg = new FacesMessage(message);
+		msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+		context.addMessage(componentId, msg);
+	}
 }

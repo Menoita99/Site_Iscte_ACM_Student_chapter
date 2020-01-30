@@ -74,7 +74,7 @@
 			                    <div class="card-body">
 			                        <h4 class="card-title">#{research.title}</h4>
 			                        <p class="card-text">#{research.shortDescription}</p>
-			                        <p class="card-text"> <ui:repeat var="tag" value="#{research.tags}"><span class="tag"> #{tag} </span></ui:repeat> </p>
+			                        <p class="card-text" ><ui:repeat var="tag" value="#{research.tags}"><span class="tag"> #{tag} </span></ui:repeat></p>
 			                        <h:form>
 				                        <h:button class="btn btn-primary" value="Discover" outcome="research">
 				                        	<f:param name="researchID" value="#{research.getId()}" />
@@ -89,13 +89,13 @@
 		    
 		    <nav class="text-monospace pagination">
 		        <ul class="pagination">
-		            <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-		            <li class="page-item"><a class="page-link" href="#">1</a></li>
-		            <li class="page-item"><a class="page-link" href="#">2</a></li>
-		            <li class="page-item"><a class="page-link" href="#">3</a></li>
-		            <li class="page-item"><a class="page-link" href="#">4</a></li>
-		            <li class="page-item"><a class="page-link" href="#">5</a></li>
-		            <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+		        	<li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+		        	<c:forEach begin="1" end="#{researchesBean.totalPages}" var="i">
+		        		 <li class="page-item">
+		        		 	<a class="page-link" href="#">#{i}</a>
+	        		 	</li>
+		        	</c:forEach>
+		        	<li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
 		        </ul>
 		    </nav>
 		    

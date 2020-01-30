@@ -28,8 +28,6 @@ public class ResearchBean implements Serializable {
 	private CandidateContainer candidature;
 	
 	
-	
-	
 	@PostConstruct
 	public void init() {
 		String id = Session.getInstance().getRequestMap().get("researchID");
@@ -121,6 +119,7 @@ public class ResearchBean implements Serializable {
 		}
 		try {
 			if(ResearchManager.getCandidature(Session.getInstance().getUser().getId(), research.getId()) == null) {
+				candidature.setUser(Session.getInstance().getUser());
 				ResearchManager.createCandidate(research.getId(),candidature);
 			}
 			else {

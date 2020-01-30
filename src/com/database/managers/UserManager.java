@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import com.database.entities.User;
+import com.database.entities.View;
 import com.web.containers.UserContainer;
 
 /**
@@ -61,21 +62,16 @@ public class UserManager {
 	/**
 	 * Creates an user, if user already exits it returns null
 	 */
-	public static User createUser(String email, String password, String imagePath, String fristName, String lastName, String username) {
+	public static User createUser(String email, String password, String imagePath, String fristName, String lastName, String username,String about) {
 		User user = null;
 		if(getUserByEmail(email)==null && getUserByUsername(username)==null) {	//verifies if user already exits
 			
 			try {
-				user = new User(email,password,imagePath,fristName,lastName,username,generateActivationKey());									
+				user = new User(email,password,imagePath,fristName,lastName,username,generateActivationKey(),about);									
 				JpaUtil.createEntity(user);
 			}catch (Exception e) {
 				user = null;
-				System.out.println("-------------------ERROR CREATING USER-------------------");
-				System.out.println();
-				System.out.println(e.getMessage());
-				System.out.println();
 				e.printStackTrace();
-				System.out.println("------------------------------------------------------------");
 			}
 		}
 		
@@ -107,7 +103,7 @@ public class UserManager {
 	 */
 	public static User emailLogin(String email, String password ) {
 		List<User> results = JpaUtil.executeQuery("SELECT u FROM User u WHERE u.email = '"+email+"' "+
-												  " and u.password = '"+password+"' ", User.class);																					//get results
+												  " and u.password = '"+password+"' ", User.class);																					
 		if(!results.isEmpty()) {
 			updateLastLog(results.get(0));
 			return results.get(0);
@@ -127,7 +123,7 @@ public class UserManager {
 	 */
 	public static User usernameLogin(String username, String password ) {
 		List<User> user = JpaUtil.executeQuery("SELECT u FROM User u WHERE u.username = '"+username+"' "+
-													 " and u.password = '"+password+"' ", User.class);																			//get results
+													 " and u.password = '"+password+"' ", User.class);																			
 		if(!user.isEmpty()) {
 			updateLastLog(user.get(0));
 			return user.get(0);
@@ -163,8 +159,8 @@ public class UserManager {
 	 */
 	public static User getUserByActivationKey(String activationKey) {
 		List<User> results = JpaUtil.executeQuery("SELECT u FROM User u WHERE u.activationKey = "
-												+ "'"+activationKey+"' ", User.class);																							//get results
-		return  results.isEmpty() ? null : results.get(0);																				 	//return user
+												+ "'"+activationKey+"' ", User.class);																							
+		return  results.isEmpty() ? null : results.get(0);																				 	
 	}
 
 	
@@ -177,14 +173,14 @@ public class UserManager {
 	 * otherwise returns the user instance
 	 */
 	public static User getUserByUsername(String username) {
-		EntityManager manager = JpaUtil.getEntityManager();					//get's manager instance
+		EntityManager manager = JpaUtil.getEntityManager();					
 
-		TypedQuery<User> query = manager.createQuery( "SELECT u FROM User u WHERE u.username = '"+username+"' ", User.class);		//creates query
-		List<User> results = query.getResultList();																					//get results
+		TypedQuery<User> query = manager.createQuery( "SELECT u FROM User u WHERE u.username = '"+username+"' ", User.class);		
+		List<User> results = query.getResultList();																					
 
 		manager.close();	
 
-		return  results.isEmpty() ? null :results.get(0);																			//return user
+		return  results.isEmpty() ? null :results.get(0);																			
 	}
 
 	
@@ -198,8 +194,8 @@ public class UserManager {
 	 */
 	public static User getUserByEmail(String email) {
 		List<User> results = JpaUtil.executeQuery("SELECT u FROM User u WHERE u.email = "
-												+ "'"+email+"' ", User.class);																					//get results
-		return results.isEmpty() ? null : results.get(0);																			//return user
+												+ "'"+email+"' ", User.class);																					
+		return results.isEmpty() ? null : results.get(0);																			
 	}
 
 	
@@ -266,5 +262,19 @@ public class UserManager {
 		}while(getUserByActivationKey(key) != null);												//verifies if key already exits
 
 		return key;
+	}
+
+
+
+	
+	
+	/**
+	 * Adds a view to the given user
+	 */
+	public static void addView(int id) {
+		View v = new View();
+		User u = getUserById(id);
+		u.getViews().add(v);
+		JpaUtil.mergeEntity(u);
 	}
 }

@@ -16,7 +16,7 @@
 
 	<ui:define name="content">
 	
-	<c:set var="user" value="#{userBean.getUserPerfil()}" />
+	<c:set var="user" value="#{perfilBean.user}" />
 	
 	<c:if test="#{not empty user}">
 	
@@ -36,26 +36,109 @@
 	            <div class="card shadow mb-3">
 	                <div class="card-header py-3">
 	                    <h1 class="display-4" style="font-size: 30px;">Info</h1>
+                    
 	                </div>
-	                <div class="card-body"></div>
+	                <div class="card-body text-center">
+	                  	<strong>Name</strong>
+	                    <p>#{user.firstName} #{user.lastName}</p>
+						<strong>Email</strong>
+	                    <p>#{user.email}</p>
+	                    <strong>About</strong>
+	                    <c:if test="#{not empty user.about}">
+	                    	<p>#{user.about}</p>
+	                    </c:if>
+	                    <c:if test="#{empty user.about}">
+	                    	 <p>#{user.firstName} hasn't written anything about himself</p>
+	                    </c:if>
+	                </div>
 	            </div>
 	            <div class="card shadow mb-3">
 	                <div class="card-header py-3">
 	                    <h1 class="display-4" style="font-size: 30px;">Projects</h1>
 	                </div>
-	                <div class="card-body"></div>
+	                <div class="card-body">
+	                	<h:dataTable class="table table-hover text-center" value="#{user.joinedProjects}" var="project" rendered="#{not empty user.joinedProjects}">
+                       		<h:column>
+                       			<f:facet name="header">
+                       				<div style="text-align:center">
+                       					Title
+               						</div>
+               					</f:facet>
+                       			#{project.title}
+                       		</h:column>
+                       		<h:column>
+                       			<f:facet name="header">
+                       				<div style="text-align:center">
+                       					State
+               						</div>
+               					</f:facet>
+                       			#{project.state} 
+                       		</h:column>
+                       	</h:dataTable>
+                       	<c:if test="#{empty user.joinedProjects}">
+                       		<h1 class="display-2 text-center" style="font-size: 30px;">#{user.firstName} didn't joined any projects</h1>
+                       	</c:if>
+	                </div>
 	            </div>
 	            <div class="card shadow mb-3">
 	                <div class="card-header py-3">
 	                    <h1 class="display-4" style="font-size: 30px;">Events</h1>
 	                </div>
-	                <div class="card-body"></div>
+	                <div class="card-body">
+	                
+	                	<h:dataTable class="table table-hover text-center" value="#{user.joinedProjects}" var="event" rendered="#{not empty user.joinedProjects}">
+                       		<h:column>
+                       			<f:facet name="header">
+                       				<div style="text-align:center">
+                       					Title
+               						</div>
+               					</f:facet>
+                       			#{event.title}
+                       		</h:column>
+                       		<h:column>
+                       			<f:facet name="header">
+                       				<div style="text-align:center">
+                       					State
+               						</div>
+               					</f:facet>
+                       			#{event.state} 
+                       		</h:column>
+                       	</h:dataTable>
+                       	<c:if test="#{empty user.joinedProjects}">
+                       		<h1 class="display-2 text-center" style="font-size: 30px;">#{user.firstName} didn't joined any events</h1>
+                       	</c:if>
+	                
+	                </div>
 	            </div>
 	            <div class="card shadow mb-3">
 	                <div class="card-header py-3">
 	                    <h1 class="display-4" style="font-size: 30px;">Research</h1>
 	                </div>
-	                <div class="card-body"></div>
+	                <div class="card-body">
+	                
+	                	<h:dataTable class="table table-hover text-center" value="#{user.joinedProjects}" var="research" rendered="#{not empty user.joinedProjects}">
+                       		<h:column>
+                       			<f:facet name="header">
+                       				<div style="text-align:center">
+                       					Title
+               						</div>
+               					</f:facet>
+                       			#{research.title}
+                       		</h:column>
+                       		<h:column>
+                       			<f:facet name="header">
+                       				<div style="text-align:center">
+                       					State
+               						</div>
+               					</f:facet>
+                       			#{research.state} 
+                       		</h:column>
+                       	</h:dataTable>
+                       	<c:if test="#{empty user.joinedProjects}">
+                       		<h1 class="display-2 text-center" style="font-size: 30px;">#{user.firstName} didn't joined any researches</h1>
+                       	</c:if>
+	                
+	                </div>
 	            </div>
 	        </div>
 	    </div>
@@ -64,9 +147,9 @@
     
     <c:if test="#{empty user}">
     	
-    		<h1 class="display-4" style="margin:20px; text-align: center">
-    			<i class="fa fa-close"></i> User not found 
-   			</h1>
+   		<h1 style="margin-top: 50px; text-align: center">
+			User not Found <i class="fa fa-frown-o"></i>
+		</h1>
     		
    </c:if> 
     

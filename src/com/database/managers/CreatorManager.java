@@ -140,9 +140,10 @@ public class CreatorManager {
 	 * Creates n Users
 	 */
 	private static void createUsers(int n) {
+		Random r = new Random();
 		for (int i = 0; i < n ;  i++) {
 			String email = generateRandomPhrases(1)+"@"+generateRandomPhrases(1)+"."+generateRandomPhrases(1);
-			User user = UserManager.createUser(email, "123456789", getRandomUserImage() , generateRandomPhrases(1),generateRandomPhrases(1), generateRandomPhrases(1));
+			User user = UserManager.createUser(email, "123456789", getRandomUserImage() , generateRandomPhrases(1),generateRandomPhrases(1), generateRandomPhrases(1),generateRandomPhrases(r.nextInt(30)+50));
 			if(user == null)
 				i--;
 		}

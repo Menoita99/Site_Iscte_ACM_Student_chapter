@@ -26,7 +26,8 @@ public class UserContainer implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private int id; 		
+	private int id; 	
+	private int views;
 	private String imagePath;
 	private String email;
 	private String firstName;
@@ -34,6 +35,7 @@ public class UserContainer implements Serializable {
 	private String course;
 	private String cellPhone;
 	private String username;
+	private String about;
 	private Date lastLog;
 	private boolean isMember;
 	private boolean isAdmin;
@@ -43,7 +45,19 @@ public class UserContainer implements Serializable {
 	private List<ProjectContainer> joinedProjects;
 	@Exclude
 	@lombok.EqualsAndHashCode.Exclude
+	private List<EventContainer> joinedEvents;
+	@Exclude
+	@lombok.EqualsAndHashCode.Exclude
+	private List<ResearchContainer> joinedResearches;
+	@Exclude
+	@lombok.EqualsAndHashCode.Exclude
 	private List<ProjectContainer> likedProjects;
+	@Exclude
+	@lombok.EqualsAndHashCode.Exclude
+	private List<EventContainer> likedEvents;
+	@Exclude
+	@lombok.EqualsAndHashCode.Exclude
+	private List<ResearchContainer> likedResearches;
 	
 	
 	
@@ -51,6 +65,7 @@ public class UserContainer implements Serializable {
 	public UserContainer(int id) {
 		User user = UserManager.getUserById(id);
 		this.id = user.getId();
+		this.views = user.getViews().size();
 		this.imagePath = user.getImagePath();
 		this.email = user.getEmail();
 		this.firstName = user.getFristName();
@@ -62,6 +77,7 @@ public class UserContainer implements Serializable {
 		this.isAdmin = user.isAdmin();
 		this.lastLog = user.getLast_log();
 		this.isActive = user.isActive();
+		this.about = user.getAbout();
 	}
 
 
@@ -70,6 +86,7 @@ public class UserContainer implements Serializable {
 	
 	public UserContainer(User user) {
 		this.id = user.getId();
+		this.views = user.getViews().size();
 		this.imagePath = user.getImagePath();
 		this.email = user.getEmail();
 		this.firstName = user.getFristName();
@@ -81,6 +98,7 @@ public class UserContainer implements Serializable {
 		this.isAdmin = user.isAdmin();
 		this.lastLog = user.getLast_log();
 		this.isActive = user.isActive();
+		this.about = user.getAbout();
 	}
 
 
@@ -125,6 +143,7 @@ public class UserContainer implements Serializable {
 	 */
 	public void refresh() {
 		User user = UserManager.getUserById(id);
+		this.views = user.getViews().size();
 		this.id = user.getId();
 		this.imagePath = user.getImagePath();
 		this.email = user.getEmail();
@@ -135,7 +154,12 @@ public class UserContainer implements Serializable {
 		this.username = user.getUsername();
 		this.isMember = user.isMember();
 		this.isAdmin = user.isAdmin();
+		this.about = user.getAbout();
 		this.likedProjects = null;
+		this.likedEvents = null;
+		this.likedResearches = null;
 		this.joinedProjects = null;
+		this.joinedEvents = null;
+		this.joinedResearches = null;
 	}
 }
