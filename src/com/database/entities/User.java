@@ -76,7 +76,7 @@ public class User implements Serializable {
 	private boolean isActive= false;  	
 	
 	@Exclude
-	@Column(length = 665, nullable = false)	
+	@Column(length = 665)	
 	private String about;
 	
 	@Column(nullable = false,length = 64, unique = true)
@@ -155,6 +155,7 @@ public class User implements Serializable {
 		this.lastName = lastName;
 		this.username = username;
 		this.activationKey = activationKey;
+		this.about = about;
 	}
 	
 	

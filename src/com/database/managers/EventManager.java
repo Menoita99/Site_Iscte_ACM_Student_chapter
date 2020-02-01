@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import com.database.entities.AcmLike;
 import com.database.entities.Event;
 import com.database.entities.EventInfo;
+import com.database.entities.State;
 import com.database.entities.User;
 import com.database.entities.View;
 
@@ -115,6 +116,26 @@ public class EventManager {
 	public static List<Event> findAll() {
 		return JpaUtil.executeQuery("Select e from Event e", Event.class);
 	}
+	
+	
+	
+	
+	
+	/**
+	 * @return return all events
+	 */
+	public static List<Event> findAllAccepted() {
+		String query = "Select e from Event e Where ";
+		
+		List<State> acceptanceStates = State.getAcceptanceStates();
+		for (int i = 0; i < acceptanceStates.size(); i++) {
+			query += " e.state = "+acceptanceStates.get(i).ordinal();
+			if(i != acceptanceStates.size()-1)
+				query+=" or ";
+		}
+		return JpaUtil.executeQuery(query, Event.class);
+	}
+	
 
 
 

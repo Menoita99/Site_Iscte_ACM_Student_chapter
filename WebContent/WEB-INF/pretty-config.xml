@@ -97,6 +97,11 @@
 		<view-id value="/pages/createProject.xhtml" />
 	</url-mapping>
 	
+	<url-mapping id="createResearch">
+		<pattern value="/createResearch" />
+		<view-id value="/pages/createResearch.xhtml" />
+	</url-mapping>
+	
 	<url-mapping id="adminDashboard">
 		<pattern value="/adminDashboard" />
 		<view-id value="/pages/admin/adminDashboard.xhtml" />

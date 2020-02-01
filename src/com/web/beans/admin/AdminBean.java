@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 
 import com.web.Session;
 import com.web.containers.UserContainer;
@@ -12,7 +12,7 @@ import com.web.containers.UserContainer;
 import lombok.Data;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 @Data
 public class AdminBean implements Serializable{
 

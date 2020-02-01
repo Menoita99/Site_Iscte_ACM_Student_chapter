@@ -16,7 +16,7 @@
 	
 		<div id="promo" >
 	        <div class="jumbotron" style="background-color: rgba(233,236,239,0.89);">
-	        	<div data-aos="fade-up" data-aos-duration="1000" data-aos-once="true">
+	        	<div data-aos="fade-right" data-aos-duration="1000" data-aos-once="true">
 		            <h1 >Association for Computing Machinery</h1>
 		            <p >
 		            	Fusce venenatis tincidunt est, a dignissim metus fringilla ut. Donec sit amet facilisis velit, vel rutrum libero. Sed molestie, eros ac ultricies semper, 
@@ -24,13 +24,13 @@
 		                consectetur. Integer volutpat quam sit amet arcu dictum suscipit. Ut pellentesque quis 
 		                lorem at imperdiet. Etiam finibus condimentum aliquet. Vivamus in molestie felis.
 	                </p>
-		           	<a class="btn btn-primary info-button" role="button" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" href="#">Learn more</a>
+		           	<h:link class="btn btn-primary info-button" data-aos="fade-right" data-aos-duration="1000" data-aos-once="true" outcome="team">Learn more</h:link>
 	        	</div>
 	        </div>
 	    </div>
 	    
 	    <section style="background-color: rgba(255,255,255,0.65);">
-	        <div class="container site-section" data-aos="zoom-in-up" data-aos-duration="1000" data-aos-once="true" id="why">
+	        <div class="container site-section" data-aos="fade-left" data-aos-duration="1000" data-aos-once="true" id="why">
 	            <h1>Objectivos</h1>
 	            <div class="row">
 	                <div class="col-md-4 item"><i class="fas fa-trophy"></i>
@@ -50,162 +50,247 @@
 	    </section>
 	    <section class="top-inclined" style="background-color: rgb(228,241,247);padding-bottom: 100px;padding-top: 80px;">
 	        <div class="container top-inclined-content">
+	        	<div data-aos="fade-right" data-aos-duration="1000" data-aos-once="true" >
 	            <h1 class="display-3 text-center" style="padding-top: 20px;padding-bottom: 40px;">Activities</h1>
 	            <div class="row">
 	                <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+	                    <h1 class="display-4 text-left">Projects</h1>
+	                    <div class="carousel slide" data-ride="carousel" id="carousel-1">
+	                        <div class="carousel-inner white-section" role="listbox">
+	                         	<c:forEach items="#{adminDashboardBean.projects}" var="project" varStatus="loopStatus">
+			                        	
+			                   		<c:if test="#{loopStatus.index == 0}">
+			                    		<div class="carousel-item active">
+			                    			<div class="card">
+				                    			<h:graphicImage class="w-100 d-block" a:loading="lazy" value="/resources/files/#{project.imagePath.get(0)}" style="object-fit: cover;" height="235px"/>
+					                    		<div class="card-body">
+			                                        <h4 class="card-title">#{project.title}</h4>
+			                                        <p class="card-text">#{project.shortDescription}</p>
+			                                        <p class="card-text">#{project.likes} <i class="fa fa-thumbs-o-up"/></p>
+	                                                <h:button class="btn btn-primary" value="Discover" outcome="project" style="text-align:center">
+							                        	<f:param name="projectID" value="#{project.getId()}" />
+							                        </h:button>
+		                                         </div>
+	                                         </div>
+			                   			</div>
+			    			        </c:if>
+			        			    <c:if test="#{loopStatus.index != 0}">
+			        			        <div class="carousel-item">
+			        			        	<div class="card" style="height: 100%">
+				                    			<h:graphicImage a:loading="lazy" class="w-100 d-block" value="/resources/files/#{project.imagePath.get(0)}" style="object-fit: cover;" height="235px"/>
+					                    		<div class="card-body">
+			                                        <h4 class="card-title">#{project.title}</h4>
+			                                        <p class="card-text">#{project.shortDescription}</p>
+			                                        <p class="card-text">#{project.likes} <i class="fa fa-thumbs-o-up"/></p>
+	                                                <h:button class="btn btn-primary" value="Discover" outcome="project" style="text-align:center">
+							                        	<f:param name="projectID" value="#{project.getId()}" />
+							                        </h:button>
+		                                         </div>
+	                                         </div>
+			                   			</div>
+			        			    </c:if>
+			        			              	
+			               		</c:forEach> 
+	                        </div>
+	                        <div><a class="carousel-control-prev" href="#carousel-1" role="button" data-slide="prev"><span class="carousel-control-prev-icon"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next" href="#carousel-1" role="button"
+	                                data-slide="next"><span class="carousel-control-next-icon"></span><span class="sr-only">Next</span></a></div>
+	                    </div>
+	                </div>
+	                <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
 	                    <h1 class="display-4 text-left">Events</h1>
-	                    <div class="carousel slide" data-ride="carousel" id="carousel-1">
-	                        <div class="carousel-inner" role="listbox">
-	                            <div class="carousel-item active"><img class="w-100 d-block" src="assets/img/work-731198_1920.jpg" alt="Slide Image"/>
-	                                <div class="card">
-	                                    <div class="card-body">
-	                                        <h4 class="card-title">Title</h4>
-	                                        <h6 class="text-muted card-subtitle mb-2">Subtitle</h6>
-	                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p><a class="card-link" href="#">Link</a><a class="card-link"
-	                                            href="#">Link</a></div>
-	                                </div>
-	                            </div>
-	                            <div class="carousel-item"><img class="w-100 d-block" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" alt="Slide Image"/>
-	                                <div class="card">
-	                                    <div class="card-body">
-	                                        <h4 class="card-title">Title</h4>
-	                                        <h6 class="text-muted card-subtitle mb-2">Subtitle</h6>
-	                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p><a class="card-link" href="#">Link</a><a class="card-link"
-	                                            href="#">Link</a></div>
-	                                </div>
-	                            </div>
-	                            <div class="carousel-item"><img class="w-100 d-block" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" alt="Slide Image"/>
-	                                <div class="card">
-	                                    <div class="card-body">
-	                                        <h4 class="card-title">Title</h4>
-	                                        <h6 class="text-muted card-subtitle mb-2">Subtitle</h6>
-	                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p><a class="card-link" href="#">Link</a><a class="card-link"
-	                                            href="#">Link</a></div>
-	                                </div>
-	                            </div>
+	                    <div class="carousel slide" data-ride="carousel" id="carousel-2">
+	                        <div class="carousel-inner white-section" role="listbox">
+	                         	<c:forEach items="#{adminDashboardBean.events}" var="event" varStatus="loopStatus">
+			                        	
+			                   		<c:if test="#{loopStatus.index == 0}">
+			                    		<div class="carousel-item active">
+			                    			<div class="card">
+				                    			<h:graphicImage a:loading="lazy" class="w-100 d-block" value="/resources/files/#{event.imagePath.get(0)}" style="object-fit: cover;" height="235px"/>
+					                    		<div class="card-body">
+			                                        <h4 class="card-title">#{event.title}</h4>
+			                                        <p class="card-text">#{event.shortDescription}</p>
+			                                        <p class="card-text">#{event.likes} <i class="fa fa-thumbs-o-up"/></p>
+	                                                <h:button class="btn btn-primary" value="Discover" outcome="event" style="text-align:center">
+							                        	<f:param name="eventId" value="#{event.getId()}" />
+							                        </h:button>
+		                                         </div>
+	                                         </div>
+			                   			</div>
+			    			        </c:if>
+			        			    <c:if test="#{loopStatus.index != 0}">
+			        			        <div class="carousel-item">
+			        			        	<div class="card">
+				                    			<h:graphicImage a:loading="lazy" class="w-100 d-block" value="/resources/files/#{event.imagePath.get(0)}" style="object-fit: cover;" height="235px"/>
+					                    		<div class="card-body">
+			                                        <h4 class="card-title">#{event.title}</h4>
+			                                        <p class="card-text">#{event.shortDescription}</p>
+			                                        <p class="card-text">#{event.likes} <i class="fa fa-thumbs-o-up"/></p>
+	                                                <h:button class="btn btn-primary" value="Discover" outcome="event" style="text-align:center">
+							                        	<f:param name="eventId" value="#{event.getId()}" />
+							                        </h:button>
+		                                         </div>
+	                                         </div>
+			                   			</div>
+			        			    </c:if>
+			        			              	
+			               		</c:forEach> 
 	                        </div>
-	                        <div><a class="carousel-control-prev" href="#carousel-1" role="button" data-slide="prev"><span class="carousel-control-prev-icon"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next" href="#carousel-1" role="button"
-	                                data-slide="next"><span class="carousel-control-next-icon"></span><span class="sr-only">Next</span></a></div>
-	                        <ol class="carousel-indicators">
-	                            <li data-target="#carousel-1" data-slide-to="0" class="active"></li>
-	                            <li data-target="#carousel-1" data-slide-to="1"></li>
-	                            <li data-target="#carousel-1" data-slide-to="2"></li>
-	                        </ol>
+	                        <div>
+		                        <a class="carousel-control-prev" href="#carousel-2" role="button" data-slide="prev">
+		                        	<span class="carousel-control-prev-icon"></span>
+		                        	<span class="sr-only">Previous</span>
+	                        	</a>
+	                        	<a class="carousel-control-next" href="#carousel-2" role="button" data-slide="next">
+	                        		<span class="carousel-control-next-icon">
+	                        		</span><span class="sr-only">Next</span>
+	                       		</a>
+                       		</div>
 	                    </div>
 	                </div>
 	                <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
-	                    <h1>Projects</h1>
-	                    <div class="carousel slide" data-ride="carousel" id="carousel-1">
-	                        <div class="carousel-inner" role="listbox">
-	                            <div class="carousel-item active"><img class="w-100 d-block" src="assets/img/startup-3267505_1920.jpg" alt="Slide Image"/>
-	                                <div class="card">
-	                                    <div class="card-body">
-	                                        <h4 class="card-title">Title</h4>
-	                                        <h6 class="text-muted card-subtitle mb-2">Subtitle</h6>
-	                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p><a class="card-link" href="#">Link</a>
-	                                        <a class="card-link"  href="#">Link</a></div>
-	                                </div>
-	                            </div>
-	                            <div class="carousel-item"><img class="w-100 d-block" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" alt="Slide Image"/>
-	                                <div class="card">
-	                                    <div class="card-body">
-	                                        <h4 class="card-title">Title</h4>
-	                                        <h6 class="text-muted card-subtitle mb-2">Subtitle</h6>
-	                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p><a class="card-link" href="#">Link</a><a class="card-link"
-	                                            href="#">Link</a></div>
-	                                </div>
-	                            </div>
-	                            <div class="carousel-item"><img class="w-100 d-block" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" alt="Slide Image"/>
-	                                <div class="card">
-	                                    <div class="card-body">
-	                                        <h4 class="card-title">Title</h4>
-	                                        <h6 class="text-muted card-subtitle mb-2">Subtitle</h6>
-	                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p><a class="card-link" href="#">Link</a><a class="card-link"
-	                                            href="#">Link</a></div>
-	                                </div>
-	                            </div>
+	                    <h1 class="display-4 text-left">Researches</h1>
+	                    <div class="carousel slide" data-ride="carousel" id="carousel-3">
+	                        <div class="carousel-inner white-section" role="listbox">
+	                         	<c:forEach items="#{adminDashboardBean.researches}" var="research" varStatus="loopStatus">
+			                        	
+			                   		<c:if test="#{loopStatus.index == 0}">
+			                    		<div class="carousel-item active">
+			                    			<div class="card">
+				                    			<h:graphicImage a:loading="lazy" class="w-100 d-block" value="/resources/files/#{research.imagePath.get(0)}" style="object-fit: cover;" height="235px"/>
+					                    		<div class="card-body">
+			                                        <h4 class="card-title">#{research.title}</h4>
+			                                        <p class="card-text">#{research.shortDescription}</p>
+			                                        <p class="card-text">#{research.likes} <i class="fa fa-thumbs-o-up"/></p>
+			                                        <div class="text-center">
+		                                                <h:button class="btn btn-primary" value="Discover" outcome="research" >
+								                        	<f:param name="researchID" value="#{research.getId()}" />
+								                        </h:button>
+							                        </div>
+		                                         </div>
+	                                         </div>
+			                   			</div>
+			    			        </c:if>
+			        			    <c:if test="#{loopStatus.index != 0}">
+			        			        <div class="carousel-item">
+			        			        	<div class="card">
+				                    			<h:graphicImage a:loading="lazy" class="w-100 d-block" value="/resources/files/#{research.imagePath.get(0)}" style="object-fit: cover;" height="235px"/>
+					                    		<div class="card-body">
+			                                        <h4 class="card-title">#{research.title}</h4>
+			                                        <p class="card-text">#{research.shortDescription}</p>
+			                                        <p class="card-text">#{research.likes} <i class="fa fa-thumbs-o-up"/></p>
+			                                        <div class="text-center">
+		                                                <h:button class="btn btn-primary" value="Discover" outcome="research" >
+								                        	<f:param name="researchID" value="#{research.getId()}" />
+								                        </h:button>
+							                        </div>
+		                                         </div>
+	                                         </div>
+			                   			</div>
+			        			    </c:if>
+			        			              	
+			               		</c:forEach> 
 	                        </div>
-	                        <div><a class="carousel-control-prev" href="#carousel-1" role="button" data-slide="prev"><span class="carousel-control-prev-icon"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next" href="#carousel-1" role="button"
-	                                data-slide="next"><span class="carousel-control-next-icon"></span><span class="sr-only">Next</span></a></div>
-	                        <ol class="carousel-indicators">
-	                            <li data-target="#carousel-1" data-slide-to="0" class="active"></li>
-	                            <li data-target="#carousel-1" data-slide-to="1"></li>
-	                            <li data-target="#carousel-1" data-slide-to="2"></li>
-	                        </ol>
-	                    </div>
-	                </div>
-	                <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
-	                    <h1>Research</h1>
-	                    <div class="carousel slide" data-ride="carousel" id="carousel-1">
-	                        <div class="carousel-inner" role="listbox">
-	                            <div class="carousel-item active"><img class="w-100 d-block" src="assets/img/star-sky.jpg" alt="Slide Image"/>
-	                                <div class="card">
-	                                    <div class="card-body">
-	                                        <h4 class="card-title">Title</h4>
-	                                        <h6 class="text-muted card-subtitle mb-2">Subtitle</h6>
-	                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p><a class="card-link" href="#">Link</a><a class="card-link"
-	                                            href="#">Link</a></div>
-	                                </div>
-	                            </div>
-	                            <div class="carousel-item"><img class="w-100 d-block" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" alt="Slide Image"/>
-	                                <div class="card">
-	                                    <div class="card-body">
-	                                        <h4 class="card-title">Title</h4>
-	                                        <h6 class="text-muted card-subtitle mb-2">Subtitle</h6>
-	                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p><a class="card-link" href="#">Link</a><a class="card-link"
-	                                            href="#">Link</a></div>
-	                                </div>
-	                            </div>
-	                            <div class="carousel-item"><img class="w-100 d-block" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" alt="Slide Image"/>
-	                                <div class="card">
-	                                    <div class="card-body">
-	                                        <h4 class="card-title">Title</h4>
-	                                        <h6 class="text-muted card-subtitle mb-2">Subtitle</h6>
-	                                        <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p><a class="card-link" href="#">Link</a><a class="card-link"
-	                                            href="#">Link</a></div>
-	                                </div>
-	                            </div>
-	                        </div>
-	                        <div><a class="carousel-control-prev" href="#carousel-1" role="button" data-slide="prev"><span class="carousel-control-prev-icon"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next" href="#carousel-1" role="button"
-	                                data-slide="next"><span class="carousel-control-next-icon"></span><span class="sr-only">Next</span></a></div>
-	                        <ol class="carousel-indicators">
-	                            <li data-target="#carousel-1" data-slide-to="0" class="active"></li>
-	                            <li data-target="#carousel-1" data-slide-to="1"></li>
-	                            <li data-target="#carousel-1" data-slide-to="2"></li>
-	                        </ol>
-	                    </div>
+	                        <div>
+		                        <a class="carousel-control-prev" href="#carousel-3" role="button" data-slide="prev">
+		                        	<span class="carousel-control-prev-icon"></span>
+		                        	<span class="sr-only">Previous</span>
+	                        	</a>
+	                        	<a class="carousel-control-next" href="#carousel-3" role="button" data-slide="next">
+	                        		<span class="carousel-control-next-icon">
+	                        		</span><span class="sr-only">Next</span>
+	                       		</a>
+                       		</div>
+                   		</div>
 	                </div>
 	            </div>
+	        	</div>
 	        </div>
 	    </section>
-	    <section style="background-color: rgb(255,255,255);">
-	        <div class="container site-section" data-aos="zoom-in-up" data-aos-duration="1000" data-aos-once="true" id="why">
-	            <div>
-	                <h1>Our Goals</h1>
-	                <div class="row">
-	                    <div class="col-md-4 item"><i class="fas fa-trophy"></i>
-	                        <h2>Be the best</h2>
-	                        <p>Aenean augue massa, maximus dignissim turpis sit amet, dictum scelerisque dolor.</p>
-	                    </div>
-	                    <div class="col-md-4 item"><i class="fas fa-people-carry"></i>
-	                        <h2>Learn</h2>
-	                        <p>Aenean augue massa, maximus dignissim turpis sit amet, dictum scelerisque dolor.</p>
-	                    </div>
-	                    <div class="col-md-4 item"><i class="fas fa-user-graduate"></i>
-	                        <h2>Have fun!</h2>
-	                        <p>Aenean augue massa, maximus dignissim turpis sit amet, dictum scelerisque dolor.</p>
-	                    </div>
-	                </div>
-	            </div>
+	    <section style="background-color: rgb(255,255,255);padding-top: 70px;padding-bottom: 70px;">
+	        <div class="container site-section" data-aos="fade-left" data-aos-duration="1000" data-aos-once="true" id="why">
+             <div>
+                <h2 class="display-2 text-center" style="margin-bottom: 50px;">Testimonials</h2>
+                <div class="carousel slide" data-ride="carousel" id="carousel-4">
+                    <div class="carousel-inner" role="listbox">
+                        <div class="carousel-item active">
+                            <div>
+                                <div class="row">
+                                    <div class="col offset-3">
+                                        <h3 style="margin: 0px;padding: 0px;">Project manager at acm</h3>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-3 offset-1">
+                                        <div class="rounded-circle" style="width: 170px;height: 170px;background-image:url('#{request.contextPath}/resources/img/Rui.jpg');background-size: cover;background-position: center;margin: 0 auto;margin-top: 10px;"></div>
+                                    </div>
+                                    <div class="col-xl-7 text-center" style="padding-top: 20px;">
+                                        <p><br></br>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consectetur, dolor eget rutrum tempor, ante erat bibendum justo, et viverra nisl quam id erat. Fusce id tortor lorem. Curabitur rhoncus tincidunt
+                                            odio, non mattis quam bibendum non. Nulla a orci vitae felis accumsan mollis nec eu orci."<br></br></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div>
+                                <div class="row">
+                                    <div class="col offset-3">
+                                        <h3 style="margin: 0px;padding: 0px;">Project manager at acm</h3>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-3 offset-1">
+                                        <div class="rounded-circle" style="width: 170px;height: 170px;background-image:url('#{request.contextPath}/resources/img/3.jpg');background-size: cover;background-position: center;margin: 0 auto;margin-top: 10px;"></div>
+                                    </div>
+                                    <div class="col-xl-7 text-center" style="padding-top: 20px;">
+                                        <p><br></br>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consectetur, dolor eget rutrum tempor, ante erat bibendum justo, et viverra nisl quam id erat. Fusce id tortor lorem. Curabitur rhoncus tincidunt
+                                            odio, non mattis quam bibendum non. Nulla a orci vitae felis accumsan mollis nec eu orci."<br></br></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div>
+                                <div class="row">
+                                    <div class="col offset-3">
+                                        <h3 style="margin: 0px;padding: 0px;">Project manager at acm</h3>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-3 offset-1">
+                                        <div class="rounded-circle" style="width: 170px;height: 170px;background-image:url('#{request.contextPath}/resources/img/2.jpg');background-size: cover;background-position: center;margin: 0 auto;margin-top: 10px;"></div>
+                                    </div>
+                                    <div class="col-xl-7 text-center" style="padding-top: 20px;">
+                                        <p><br></br>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consectetur, dolor eget rutrum tempor, ante erat bibendum justo, et viverra nisl quam id erat. Fusce id tortor lorem. Curabitur rhoncus tincidunt
+                                            odio, non mattis quam bibendum non. Nulla a orci vitae felis accumsan mollis nec eu orci."<br></br></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div><a class="carousel-control-prev" href="#carousel-4" role="button" data-slide="prev"><span class="carousel-control-prev-icon"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next" href="#carousel-4" role="button"
+                            data-slide="next"><span class="carousel-control-next-icon"></span><span class="sr-only">Next</span></a></div>
+                    <ol class="carousel-indicators">
+                        <li data-target="#carousel-2" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel-2" data-slide-to="1"></li>
+                        <li data-target="#carousel-2" data-slide-to="2"></li>
+                    </ol>
+                </div>
+            </div>
 	        </div>
 	    </section>
 	    <section class="top-inclined" style="z-index: -1;background-color: rgb(228,241,247);padding-bottom: 100px;padding-top: 50px;">
 	        <div class="container top-inclined-content">
-	            <h1 class="display-3 text-center" style="padding-top: 20px;padding-bottom: 40px;">Follow us</h1>
-	            <div class="row text-center">
-	                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"><iframe src="https://www.instagram.com/p/Bzqnjr4AH3J/embed" allowtransparency="true" frameborder="0" scrolling="no" width="320" height="550"></iframe></div>
-	                <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4"><iframe src="https://www.instagram.com/p/Bzqnjr4AH3J/embed" allowtransparency="true" frameborder="0" scrolling="no" width="320" height="550"></iframe></div>
-	            </div>
+	        	<div  data-aos="fade-right" data-aos-duration="1000" data-aos-once="true">
+		            <h1 class="display-3 text-center" style="padding-top: 20px;padding-bottom: 40px;">Follow us</h1>
+		            <div class="row text-center">
+	            		<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+	            			<iframe src="#{adminDashboardBean.instagramPost1}embed" allowtransparency="true" frameborder="0" scrolling="no" width="320" height="550"/>
+	           			</div>
+	           			<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+	           				<iframe src="#{adminDashboardBean.instagramPost2}embed" allowtransparency="true" frameborder="0" scrolling="no" width="320" height="550"/>
+	           			</div>
+					</div>
+				</div>
 	        </div>
 	    </section>
 	    <div class="newsletter-subscribe" style="background-color: rgb(255,255,255);padding-top: 100px;">

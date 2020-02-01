@@ -1,0 +1,119 @@
+<ui:composition template="base.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+    xmlns:p="http://primefaces.org/ui">
+    
+	<ui:define name="headContent">
+		<h:outputStylesheet library="css" name="researches.css" />
+		<h:outputStylesheet library="css" name="createProject.css" />
+	</ui:define>
+	
+	<ui:define name="content">
+		
+	    <section id="research-header">
+	        <h1 class="display-3 text-center" style="min-height: 200px;padding: 55px 0px;margin-bottom: 0px;">Create research</h1>
+	    </section>
+		
+	    <section class="white-section">
+	        <div class="container" style="max-width: 730px;padding: 0px;margin-top: 40px;">
+	            
+	            <div class="content" style="margin: 0px 15px;padding: 0px 15px;">  <!-- Header phases-->
+	                <div class="row">
+	                    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 text-center">
+	                        <h3>Details   <i class="icon ion-ios-arrow-forward"></i></h3>
+	                    </div>
+	                    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 text-center">
+	                        <h3>Assets    <i class="icon ion-ios-arrow-forward"></i></h3>
+	                    </div>
+	                    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 text-center">
+	                        <h3>Complete</h3>
+	                    </div>
+	                </div>
+	            </div>
+	        
+	        </div>
+	
+			<div class="container">
+         		<h:messages class="error-label-md" />
+      		</div>
+		
+			<h:panelGroup id="phase1">   <!-- Project Details (phase 1) -->
+		        	<h:panelGroup ><!-- rendered="#{createProjectBean.phase == 1}" -->
+				        <div class="container" style="max-width: 730px;padding: 0px;">
+				            <div class="content" style="margin: 40px 15px;margin-top: 40px;margin-bottom: 40px;padding: 40px 15px;padding-top: 40px;padding-bottom: 40px;"> 
+				                <h1 style="margin-bottom: 30px;">Research Details</h1>
+				                <h:form>
+				                    <div class="form-group"><label>Title</label>
+				                    	<h:inputText id="title" class="form-control" a:minlength="3" a:maxlength="65" required="true"  requiredMessage="This field must not be empty" value="#{createProjectBean.container.title}"/>
+				                    	<h:message class="error-label-sm" for="title"/>
+			                    	</div>
+				                    <div class="form-group"><label>Description</label>
+				                    	<h:inputTextarea id="description" class="form-control" rows="5" a:minlength="3" a:maxlength="665" required="true" requiredMessage="This field must not be empty" value="#{createProjectBean.container.description}"/>
+			                    		<h:message class="error-label-sm" for="description"/>
+			                    	</div>
+				                    <div class="form-group"><label>Requirements</label>
+				                    	<h:inputTextarea id="requirements" class="form-control" a:minlength="3" a:maxlength="300" rows="5" required="true" requiredMessage="This field must not be empty" value="#{createProjectBean.container.requirements}"/>
+			                    		<h:message class="error-label-sm" for="requirements"/>
+			                    	</div>
+				                    <div class="form-group"><label>Short description</label>
+			                    		<h:inputTextarea id="sdescription" class="form-control" rows="3"  a:minlength="3" a:maxlength="100" required="true" requiredMessage="This field must not be empty" value="#{createProjectBean.container.shortDescription}"/>
+			                   			<h:message class="error-label-sm" for="sdescription"/>
+			                   		</div>
+					                <div class="row">
+					                    <div class="col text-left"/>
+					                    <div class="col text-right">
+					                    	<h:commandLink class="btn btn-primary" actionListener="#{createProjectBean.incrementPhase}"><i class="fa fa-arrow-right"></i></h:commandLink>
+				                    	</div>
+					                </div>
+				                </h:form>
+				            </div>
+				        </div>
+	   	        	</h:panelGroup>
+	        	</h:panelGroup>
+		
+		
+		
+		
+		
+		
+		
+			<h:panelGroup id="phase3">   <!-- Project Details (phase 3) -->
+		        	<h:panelGroup > <!-- rendered="#{createProjectBean.phase == 3}" -->
+				        <div class="container" style="max-width: 730px;padding: 0px;">   <!-- Project Details (phase 3) -->
+				            <div class="content" style="margin: 40px 15px;margin-top: 40px;margin-bottom: 40px;padding: 40px 15px;padding-top: 40px;padding-bottom: 40px;">
+				                <h1 style="margin-bottom: 30px;">Process complete <i class="fa fa-check" style="color: rgba(142,239,45,0.79);"></i></h1>
+				                <p>You have successfully created a project, press button submit, to submit the project and ask for approval from ACM admins.<br/>If everything is alright, it must be accepted otherwise you must be contacted by email, so don't forget to
+				                    check regularly your inbox.<br/>When it got accepted you will receive an email to inform you that the project is now available at the projects page.<br/>Thank you for your participation.<br/><br/>Acm admins.</p>
+				                <div class="row">
+				                    <div class="col text-left">
+									</div>
+				                    <div class="col text-right">
+					                    <h:form>
+					                    	<h:commandLink class="btn btn-primary" action="#{createProjectBean.submitProject}" >
+					                    		Submit project
+				                    		</h:commandLink>
+			                    		</h:form>
+		                    		</div>
+				                </div>
+				            </div>
+				        </div>
+			        </h:panelGroup>
+	        	</h:panelGroup>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		</section>
+	</ui:define>
+</ui:composition>

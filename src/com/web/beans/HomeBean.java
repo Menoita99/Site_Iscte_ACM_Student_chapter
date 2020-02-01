@@ -2,14 +2,17 @@ package com.web.beans;
 
 import java.util.List;
 
+import javax.faces.bean.ViewScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 
 import com.database.entities.NewsLetter;
 import com.database.managers.JpaUtil;
 
+import lombok.Data;
+
 @ManagedBean
-@RequestScoped
+@ViewScoped
+@Data
 public class HomeBean {
 	
 	private String email;
@@ -43,74 +46,5 @@ public class HomeBean {
 		}
 		
 		return null;
-	}
-
-	
-	
-	
-	
-	
-	
-	
-	/**
-	 * @return the email
-	 */
-	public String getEmail() {
-		return email;
-	}
-
-	
-	
-	
-	
-	/**
-	 * @return the errorMessage
-	 */
-	public String getErrorMessage() {
-		return errorMessage;
-	}
-
-	
-	
-	
-	
-	/**
-	 * @return the infoMessage
-	 */
-	public String getInfoMessage() {
-		return infoMessage;
-	}
-
-	
-	
-	
-	
-	/**
-	 * @param infoMessage the infoMessage to set
-	 */
-	public void setInfoMessage(String infoMessage) {
-		this.infoMessage = infoMessage;
-	}
-
-	
-	
-	
-	
-	/**
-	 * @param errorMessage the errorMessage to set
-	 */
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
-	}
-
-	
-	
-	
-	
-	/**
-	 * @param email the email to set
-	 */
-	public void setEmail(String email) {
-		this.email = email;
 	}
 }

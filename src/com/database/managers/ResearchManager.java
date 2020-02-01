@@ -9,6 +9,7 @@ import com.database.entities.Candidate;
 import com.database.entities.Investigator;
 import com.database.entities.Research;
 import com.database.entities.ResearchType;
+import com.database.entities.State;
 import com.database.entities.User;
 import com.database.entities.View;
 import com.web.containers.CandidateContainer;
@@ -210,5 +211,24 @@ public class ResearchManager {
 			c = null;
 		}
 		return c ;
+	}
+
+
+
+
+
+	/**
+	 * @return return all accepted events
+	 */
+	public static List<Research> findAllAccepted() {
+		String query = "Select r from Research r Where ";
+		
+		List<State> acceptanceStates = State.getAcceptanceStates();
+		for (int i = 0; i < acceptanceStates.size(); i++) {
+			query += " r.state = "+acceptanceStates.get(i).ordinal();
+			if(i != acceptanceStates.size()-1)
+				query+=" or ";
+		}
+		return JpaUtil.executeQuery(query, Research.class);
 	}
 }

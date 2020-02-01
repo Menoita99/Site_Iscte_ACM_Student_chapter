@@ -39,7 +39,7 @@ public class ProjectsBean implements Serializable {
 	
 	@PostConstruct
 	public void init() {
-		projects = ProjectManager.findAll().stream().map(ProjectContainer::new).collect(Collectors.toList());
+		projects = ProjectManager.findAllAccepted().stream().map(ProjectContainer::new).collect(Collectors.toList());
 		Collections.sort(projects, new ProjectTimeComparator(true,ascending));
 	}
 
@@ -95,7 +95,18 @@ public class ProjectsBean implements Serializable {
 	private void search() {
 		String query = "Select distinct p from Project p join p.tags t where ( t like '%"+searchField+"%' or p.title like '%"+searchField+"%' ) ";
 
-		if(state != State.ALL) query += " and p.state = "+state.ordinal();
+		if(state != State.ALL) 
+			query += " and p.state = "+state.ordinal();
+		else {
+			List<State> acceptanceStates = State.getAcceptanceStates();
+			query+=" and ( ";
+			for (int i = 0; i < acceptanceStates.size(); i++) {
+				query += " p.state = "+acceptanceStates.get(i).ordinal();
+				if(i != acceptanceStates.size()-1)
+					query+=" or ";
+			}
+			query+= " ) ";
+		}
 
 		projects = JpaUtil.executeQuery(query, Project.class)
 				.stream()

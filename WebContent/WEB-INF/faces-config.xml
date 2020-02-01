@@ -104,6 +104,11 @@
 		</navigation-case>
 		
 		<navigation-case>
+			<from-outcome>createResearch</from-outcome>
+			<to-view-id>/pages/createResearch.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
 			<from-outcome>adminDashboard</from-outcome>
 			<to-view-id>/pages/admin/adminDashboard.xhtml</to-view-id>
 		</navigation-case>

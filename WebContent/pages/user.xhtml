@@ -30,12 +30,17 @@
                                 <div class="mb-3"><button class="btn btn-primary btn-sm" type="button">Change Photo</button></div>
                                 <div class="list-group">	
                                 	<h:form>
-	                                <h:commandLink class="list-group-item list-group-item-action" action="#{ userBean.setRendered('definitions')}"><span class="text-capitalize text-muted">Settings</span></h:commandLink>
-	                                <h:commandLink class="list-group-item list-group-item-action" action="#{ userBean.setRendered('events')}"> <span class="text-capitalize text-muted">Events</span></h:commandLink>
-                                    <h:commandLink class="list-group-item list-group-item-action" action="#{ userBean.setRendered('projects')}"><span class="text-capitalize text-muted">Projects</span></h:commandLink>
-                                    <h:commandLink class="list-group-item list-group-item-action" action="#{ userBean.setRendered('research')}"><span class="text-capitalize text-muted">Research</span></h:commandLink>
+		                                <h:commandLink class="list-group-item list-group-item-action" action="#{ userBean.setRendered('definitions')}"><span class="text-capitalize text-muted">Settings</span></h:commandLink>
+		                                <h:commandLink class="list-group-item list-group-item-action" action="#{ userBean.setRendered('events')}"> <span class="text-capitalize text-muted">Events</span></h:commandLink>
+	                                    <h:commandLink class="list-group-item list-group-item-action" action="#{ userBean.setRendered('projects')}"><span class="text-capitalize text-muted">Projects</span></h:commandLink>
+	                                    <h:commandLink class="list-group-item list-group-item-action" action="#{ userBean.setRendered('research')}"><span class="text-capitalize text-muted">Research</span></h:commandLink>
                                     </h:form>
-                                   </div>
+                               </div>
+                               <c:if test="#{user.isAdmin()}">
+	                               <div class="text-center mb-3" style="margin-top:20px">
+	                               		<h:link class="btn btn-primary btn-sm"  outcome="adminDashboard">Admin page</h:link>
+	                               </div>
+                               </c:if>
                             </div>
                         </div>
                    	</div>
@@ -134,6 +139,14 @@
                                           		</div>
                                         </div>
                                     </div>
+                                     <div class="form-group">
+                                    	<label for="about">
+                                    		<strong>Description about me</strong>
+                                    	</label>
+                                    	<h:inputTextarea class="form-control" rows="5">
+                                   		</h:inputTextarea>
+										<h:message for="about" class="error-label-sm" />
+                                   	</div>
                                     <div class="form-group">
                                         <div class="form-row">
                                             <div class="col-3 col-sm-2 col-md-2 col-lg-2 col-xl-2">
@@ -172,7 +185,7 @@
          			<h:panelGroup rendered="#{ userBean.rendered == 'events'}">
         					<div class="card shadow mb-3">
                             <div class="card-header py-3">
-                                <h1 class="display-4" style="font-size: 30px;">Events</h1>
+                                <h1 class="display-4" style="font-size: 30px;">My joined events</h1>
                             </div>
                             <div class="card-body">
                             	<c:if test="#{empty user.getEvents()}">
@@ -181,7 +194,7 @@
 
 	                             <div class="row text-center" style="margin-top: 30px;">
 								    <div class="col">
-								    	<h:link class="btn btn-primary"  outcome="createEvent"> <i class="fa fa-plus"></i> Create Event</h:link>
+								    	<h:link class="btn btn-primary"> <i class="fa fa-plus"></i> Create Event</h:link>
 							    	</div>
 								    <div class="col">
 								    	<h:link class="btn btn-primary"  outcome="events"><i class="fa fa-search"></i> Discover Events</h:link>
@@ -410,10 +423,15 @@
 		                      			<h2 class="display-4" style="font-size: 30px;text-align: center;margin-bottom:20px">You don't have any research joined, try to create or discover one!!!<br/></h2>
 		                      			<div class="row text-center" style="margin: 30px; auto">
 										    <div class="col">
-										    	<h:link class="btn btn-primary" outcome="createProject"> <i class="fa fa-plus"></i> Create Project</h:link>
+										    	<c:if test="#{user.isMember() or user.isAdmin()}">
+										    		<h:link class="btn btn-primary" outcome="createResearch"> <i class="fa fa-plus"></i> Create Research</h:link>
+										    	</c:if>
+										    	<c:if test="#{not (user.isMember() or user.isAdmin())}">
+										    		<a data-target="#error-modal" data-toggle="modal" class="btn btn-primary" style="color:white"><i class="fa fa-plus"></i> Create Research</a>
+										    	</c:if>
 									    	</div>
 										    <div class="col">
-										    	<h:link class="btn btn-primary"  outcome="projects"><i class="fa fa-search"></i> Discover Projects</h:link>
+										    	<h:link class="btn btn-primary"  outcome="researches"><i class="fa fa-search"></i> Discover Researches</h:link>
 										    </div>
 										</div>
 		                      		</c:if>
@@ -499,7 +517,16 @@
                 </div>
             </div>
         </div>
-			
+	     <div role="dialog" tabindex="-1" class="modal fade" id="error-modal">
+		    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+		        <div class="modal-content">
+		            <div class="modal-body text-center">
+		                <h1 class="display-4" style="font-size: 40px;color: rgb(47,47,47);"><i class="fa fa-frown-o"></i> Sorry, only acm members can access this page</h1>
+	                	<button class="btn btn-light" type="button" data-dismiss="modal">Close</button>
+                	</div>
+		        </div>
+		    </div>
+		</div>
 	</ui:define>
  </div>
 </ui:composition>

@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import com.database.entities.AcmLike;
 import com.database.entities.Candidate;
 import com.database.entities.Project;
+import com.database.entities.State;
 import com.database.entities.User;
 import com.database.entities.View;
 import com.web.containers.ProjectContainer;
@@ -23,6 +24,25 @@ public class ProjectManager {
 	 */
 	public static List<Project> findAll(){
 		return JpaUtil.executeQuery("Select p from Project p", Project.class);
+	}
+	
+	
+	
+	
+	
+	/**
+	 * @return return all accepted events
+	 */
+	public static List<Project> findAllAccepted() {
+		String query = "Select p from Project p Where ";
+		
+		List<State> acceptanceStates = State.getAcceptanceStates();
+		for (int i = 0; i < acceptanceStates.size(); i++) {
+			query += " p.state = "+acceptanceStates.get(i).ordinal();
+			if(i != acceptanceStates.size()-1)
+				query+=" or ";
+		}
+		return JpaUtil.executeQuery(query, Project.class);
 	}
 
 
