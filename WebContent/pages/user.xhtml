@@ -143,7 +143,7 @@
                                     	<label for="about">
                                     		<strong>Description about me</strong>
                                     	</label>
-                                    	<h:inputTextarea class="form-control" rows="5">
+                                    	<h:inputTextarea class="form-control" rows="5" a:placeholder="#{user.about}" value="#{userBean.update.about}">
                                    		</h:inputTextarea>
 										<h:message for="about" class="error-label-sm" />
                                    	</div>
@@ -194,10 +194,10 @@
 
 	                             <div class="row text-center" style="margin-top: 30px;">
 								    <div class="col">
-								    	<h:link class="btn btn-primary"> <i class="fa fa-plus"></i> Create Event</h:link>
+								    	<h:link class="btn btn-primary"> <i class="fa fa-plus"/> Create Event</h:link>
 							    	</div>
 								    <div class="col">
-								    	<h:link class="btn btn-primary"  outcome="events"><i class="fa fa-search"></i> Discover Events</h:link>
+								    	<h:link class="btn btn-primary"  outcome="events"><i class="fa fa-search"/> Discover Events</h:link>
 								    </div>
 								</div>
                             </div>
@@ -521,7 +521,7 @@
 		    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
 		        <div class="modal-content">
 		            <div class="modal-body text-center">
-		                <h1 class="display-4" style="font-size: 40px;color: rgb(47,47,47);"><i class="fa fa-frown-o"></i> Sorry, only acm members can access this page</h1>
+		                <h1 class="display-4" style="font-size: 40px;color: rgb(47,47,47);"><i class="fa fa-frown-o"></i> Sorry, you don't have permission access this page.</h1>
 	                	<button class="btn btn-light" type="button" data-dismiss="modal">Close</button>
                 	</div>
 		        </div>

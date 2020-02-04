@@ -91,20 +91,6 @@ public class User implements Serializable {
 	inverseJoinColumns = @JoinColumn(name = "view_id"))
 	private List<View> views = new ArrayList<>();
 	
-//	@Exclude
-//	@LazyCollection(LazyCollectionOption.FALSE)
-//	@ManyToMany(mappedBy = "participants")
-//	private Set<Project> projects = new HashSet<>();
-//	
-//	@Exclude
-//	@LazyCollection(LazyCollectionOption.FALSE)
-//	@ManyToMany(mappedBy = "staff")
-//	private Set<Event> eventStaff = new HashSet<>();
-//	
-//	@Exclude
-//	@LazyCollection(LazyCollectionOption.FALSE)
-//	@ManyToMany(mappedBy = "participants")
-//	private Set<Event> eventParticipant = new HashSet<>();
 	
 	
 	/**
@@ -193,6 +179,8 @@ public class User implements Serializable {
 			course = update.getCourse();
 		if(update.getUsername() != null && !update.getUsername().isEmpty())
 			username = update.getUsername();
+		if(update.getAbout() != null && !update.getAbout().isEmpty())
+			about = update.getAbout();
 	}
 	
 	

@@ -1,6 +1,7 @@
 package com.database.managers;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 
@@ -47,14 +48,17 @@ public class ResearchManager {
 	 * @param tags 
 	 * @param imagePath 
 	 * @param type 
+	 * @param institutions 
+	 * @param usefullLinks 
 	 * @param investigatorId 
 	 * @return
 	 */
-	public static Research createResearch( int investigatorId, String title, String description, String shortDescription, String requirements,
-										 List<String> tags, List<String> imagePath, ResearchType type) {
+	public static Research createResearch( List<Integer> investigatorsId, String title, String description, String shortDescription, String requirements,
+										 List<String> tags, List<String> imagePath, ResearchType type, List<String> institutions, List<String> usefullLinks) {
 		Research re = null;
 		try {
-			re = new Research(findInvestigator(investigatorId), title, description, shortDescription, requirements, tags, imagePath, type);
+			re = new Research(institutions,usefullLinks,investigatorsId.stream().map(id -> findInvestigator(id)).collect(Collectors.toList())
+							, title, description, shortDescription, requirements, tags, imagePath, type);
 			JpaUtil.createEntity(re);
 		} catch (Exception e) {
 			re = null;
@@ -230,5 +234,16 @@ public class ResearchManager {
 				query+=" or ";
 		}
 		return JpaUtil.executeQuery(query, Research.class);
+	}
+
+
+
+
+	/**
+	 * @param id user id
+	 * @return return if an user is an invetigator
+	 */
+	public static boolean isInvestigator(int id) {
+		return !JpaUtil.executeQuery("Select i from Investigator i where i.user.id = "+id, Investigator.class).isEmpty();
 	}
 }

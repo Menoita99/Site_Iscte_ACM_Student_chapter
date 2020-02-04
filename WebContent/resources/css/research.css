@@ -20,3 +20,16 @@
   width: 100%;
 }
 
+.userNameLink {
+	text-decoration: none;
+	color: rgb(33, 37, 41);
+	font-size: 20px;
+	margin: 5px auto;
+}
+
+.userNameLink:hover {
+	text-decoration: none;
+	color: #aba9a9;
+	font-size: 20px;
+	margin: 5px auto;
+}

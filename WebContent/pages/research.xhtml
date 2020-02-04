@@ -71,8 +71,22 @@
 	                    <div class="row">
 	                        <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
 	                           <p class="lead">
-	                        	#{research.requirements}
-	                        </p>
+	                        		#{research.requirements}
+	                        	</p>
+	                        	<c:if test="#{not empty research.usefulllinks}">
+		                        	<br></br>
+		                        	<h3 class="lead">
+		                        		Academic Links
+		                        	</h3>
+		                        	<ui:repeat var="url" value="#{research.usefulllinks}">
+		                        		<a href="#{url}" class="link">#{url}</a>
+		                        		<br></br>
+		                        	</ui:repeat>
+		                        	<br></br>
+		                        	<br></br>
+		                        	<br></br>
+	                        	</c:if>
+	                        	
 	                        <h:form id="like-form">
 	                        	<h:commandLink class="btn btn-primary join-btn" actionListener="#{researchBean.likeOrDislikeAction}" rendered="${not researchBean.wasLiked()}">
 	                         		<f:ajax execute="@this" render=":like-form :likes-header"/>
@@ -121,13 +135,22 @@
 	        <section style="padding: 20px 20px 20px 50px;margin-top: 40px;">
 	            <h1 class="display-4" style="padding: 0px;margin: 0px 0px 20px;">Investigator</h1>
 	            <div class="row">
-	                <div class="col-sm-6 col-md-4 col-lg-2 col-xl-2 text-center">
-	                    <div class="team-card" style="padding: 20px;text-align:center">
-	                       <div class="rounded-circle" style="height: 125px;background-image:url('#{request.contextPath}/resources/files/#{research.investigator.user.imagePath}');
-		                    				width: 125px;background-size: cover;background-position: center;"/>
-              				<h5 style="margin: 5px auto;">#{research.investigator.user.firstName} #{research.investigator.user.lastName}</h5>
-	                    </div>
-	                </div>
+	            
+	           		<ui:repeat var="investigator" value="#{research.investigators}">
+	            
+		                <div class="col-sm-6 col-md-4 col-lg-2 col-xl-2 text-center">
+		                    <div class="team-card" style="padding: 20px;text-align:center">
+		                       <div class="rounded-circle" style="height: 125px;
+		                       					background-image:url('#{request.contextPath}/resources/files/#{investigator.user.imagePath}');
+			                    				width: 125px;background-size: cover;background-position: center;"/>
+	              				<h:link class="userNameLink"  value="#{investigator.user.firstName} #{investigator.user.lastName}" outcome="perfil">
+	                       			<f:param value="#{investigator.user.id}" name="userID"/>
+	                       		</h:link>
+		                    </div>
+		                </div>
+	                
+	                </ui:repeat>
+	                
 	            </div>
 	        </section>
 	    </div>

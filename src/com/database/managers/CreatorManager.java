@@ -48,14 +48,21 @@ public class CreatorManager {
 		for (int i = 0; i < n; i++) {
 			long inv = JpaUtil.executeQueryAndGetSingle("Select count(*) from Investigator i", Long.class);
 			
-			Research re = ResearchManager.createResearch(r.nextInt((int)inv),
+			List<Integer> invs = new ArrayList<>();
+			for (int j = 0; j < r.nextInt(3)+1; j++) 
+				invs.add(r.nextInt((int)inv));
+			
+			
+			Research re = ResearchManager.createResearch(invs,
 											generateRandomPhrases(r.nextInt(3)+1),
 											generateRandomPhrases(r.nextInt(30)+50),
 											generateRandomPhrases(r.nextInt(10)+5),
 											generateRandomPhrases(r.nextInt(5)+5),
 											randomTags(),
 											getRandomEventImages(),
-											ResearchType.values()[r.nextInt(ResearchType.values().length)]);
+											ResearchType.values()[r.nextInt(ResearchType.values().length)],
+											List.of(generateRandomPhrases(1),generateRandomPhrases(1)),
+											List.of(generateRandomPhrases(r.nextInt(5)+5),generateRandomPhrases(r.nextInt(5)+5)));
 			if(re==null)
 				i--;
 		}

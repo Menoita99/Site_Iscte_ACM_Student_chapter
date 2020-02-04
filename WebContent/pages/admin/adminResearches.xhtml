@@ -105,8 +105,10 @@
 	                            		#{r.type}
 	                            	</h:column>
 	                            	<h:column>
-	                            		<f:facet name="header">Investigator</f:facet>
-	                            		#{r.investigator.user.username}
+	                            		<f:facet name="header">Investigators</f:facet>
+	                            		<ui:repeat var="investigator" value="#{r.investigators}">
+	                            			#{investigator.user.username} 
+	                            		</ui:repeat>
 	                            	</h:column>
 	                            	<h:column>
 	                            		<f:facet name="header">Views</f:facet>

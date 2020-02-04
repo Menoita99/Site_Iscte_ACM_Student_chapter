@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -44,10 +45,8 @@ public class CreateProjectBean implements Serializable{
 	private Material material = new Material();
 
 
-
-
-
-	public CreateProjectBean() {
+	@PostConstruct
+	public void init() {
 		UserContainer user = Session.getInstance().getUser();
 		if(user == null)
 			Session.getInstance().redirectToLogin("createProject");
@@ -55,6 +54,7 @@ public class CreateProjectBean implements Serializable{
 			container  = new ProjectContainer(user);
 		}
 	}
+
 
 
 	

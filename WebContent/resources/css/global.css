@@ -77,3 +77,17 @@ p {
   margin-right: 2px;
 }
 
+.link {
+	text-decoration: none;
+	color: rgb(67, 70, 74,0.7);
+	font-size: 18px;
+	margin: 5px auto;
+}
+
+.link:hover {
+	text-decoration: none;
+	color: #aba9a9;
+	font-size: 18px;
+	margin: 5px auto;
+}
+
