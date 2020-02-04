@@ -28,29 +28,38 @@ private static final long serialVersionUID = 1L;
 	
 	private List<UserContainer> users;
 	
+	private Long totalUsers;
+	
 	private double viewsMonth;
+	private double mediaUsersCreatedMonth;
+	
 	
 	@PostConstruct
 	public void init() {
 		users = UserManager.findAll().stream().map(UserContainer::new).collect(Collectors.toList());
 		
-		viewsMonth = getViewsPerMonth();
+		totalUsers = JpaUtil.executeQuery("Select count(*) from User", Long.class).get(0);
+		mediaUsersCreatedMonth = mediaUsersCreatedMonth();
 	}
 	
 
 	
+
+	
+	
+	
 	/**
-	 * @return return the average views per month
+	 * 
+	 * @return media of users created per month
 	 */
-	private double getViewsPerMonth() {
-//		LocalDateTime begin = LocalDateTime.of(2020, 1, 1, 0, 0);
-//		LocalDateTime now = LocalDateTime.now();
-//		LocalDateTime date = begin.minusYears(now.getYear());
-//		double allViews = JpaUtil.executeQuery("Select count(*) from User p join p.views v", Long.class).get(0);
-//		double total = date.getYear() * 12 + date.getMonthValue();
-//		return allViews/total;
-		return 1;
+	private double mediaUsersCreatedMonth() {
+		LocalDateTime begin = LocalDateTime.of(2020, 1, 1, 0, 0);
+		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime date = begin.minusYears(now.getYear());
+		double total = date.getYear() * 12 + date.getMonthValue() + 1;
+		return totalUsers/total;
 	}
+
 	
 	
 	
@@ -92,6 +101,36 @@ private static final long serialVersionUID = 1L;
 			later = later.plusMonths(1);
 		}
 		return months;
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Return all the hours in a day
+	 * e.g 0, 1, 2, 3, 4 ... 23
+	 */
+	public List<Integer> getAllHours(){
+		List<Integer> hours = new ArrayList<>();
+		for(int i = 0; i < 24; i++) {
+			hours.add(i);
+		}
+		return hours;
+	}
+	
+	
+	
+	
+	
+	
+	public List<Long> getLoginCounts(){
+		List<Long> count = new ArrayList<>();
+		for (int i = 0; i < 24; i++) {
+			count.add(JpaUtil.executeQuery("Select count(*) from User u where HOUR (u.last_log) = " + i, Long.class).get(0));
+		}
+		return count;
 	}
 	
 	
