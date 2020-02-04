@@ -20,8 +20,8 @@
                     <div class="card-body">
                         <div class="row align-items-center no-gutters">
                             <div class="col mr-2">
-                                <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>views  (per month)</span></div>
-                                <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminUsersBean.viewsMonth}</span></div>
+                                <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>Users created (media per month)</span></div>
+                                <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminUsersBean.mediaUsersCreatedMonth}</span></div>
                             </div>
                             <div class="col-auto"><i class="far fa-eye fa-2x text-gray-300"></i></div>
                         </div>
@@ -59,8 +59,8 @@
                     <div class="card-body">
                         <div class="row align-items-center no-gutters">
                             <div class="col mr-2">
-                                <div class="text-uppercase text-warning font-weight-bold text-xs mb-1"><span>Pending projects </span></div>
-                                <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminProjectsBean.pendingProjects}</span></div>
+                                <div class="text-uppercase text-warning font-weight-bold text-xs mb-1"><span>Total Users </span></div>
+                                <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminUsersBean.totalUsers}</span></div>
                             </div>
                             <div class="col-auto"><i class="fas fa-comments fa-2x text-gray-300"></i></div>
                         </div>
@@ -86,7 +86,7 @@
                     <div class="card shadow py-2">
                         <div class="card-body ">
                             <h1 class="display-3 text-center">Users</h1>
-	                            <h:dataTable class="table table-hover text-center table-responsive" value="#{adminUserBean.users}" var="u" id="table">
+	                            <h:dataTable class="table table-hover text-center table-responsive" value="#{adminUsersBean.users}" var="u" id="table">
 	                            	<h:column>
 	                            		<f:facet name="header">#Id</f:facet>
 	                            		#{u.id}
@@ -173,26 +173,17 @@
 		    var myLineChart = new Chart(ctxL, {
 		      type: 'line',
 		      data: {
-		        labels: [<c:forEach items="#{adminUsersBean.getLastMonths()}" var="m"> "#{m}", </c:forEach>],
+		        labels: [<c:forEach items="#{adminUsersBean.getAllHours()}" var="m"> "#{m}", </c:forEach>],
 		        datasets: [
 		          {
-		            label: "Projects views",
-		            data: [<c:forEach items="#{adminUsersBean.getLastMonthsViews()}" var="d"> #{d}, </c:forEach>],
+		            label: "Number of logins",
+		            data: [<c:forEach items="#{adminUsersBean.getLoginCounts()}" var="d"> #{d}, </c:forEach>],
 		            //backgroundColor: gradientFill,
 		            backgroundColor: [ 'rgba(246,248,253, 0.2)', ],
 		            borderColor: [ '#4e73df', ],
 		            borderWidth: 2,
 		            pointBorderColor: "#4e73df", 
 		            pointBackgroundColor: "rgba(78,115,223, 0.5)",
-		          },
-		          {
-		            label: "Likes",
-		            data: [<c:forEach items="#{adminUsersBean.getLastMonthsLikes()}" var="d"> #{d}, </c:forEach>],
-		            backgroundColor: [ 'rgb(255,230,230,0.5)', ],
-		            borderColor: [ 'rgba(255, 179, 179,1)', ],
-		            borderWidth: 2,
-		            pointBorderColor: "rgba(255, 179, 179,0.5)", 
-		            pointBackgroundColor: "rgb(255,230,230,0.5)",
 		          }
 		        ]
 		      },
@@ -214,7 +205,7 @@
 		        labels: [ <c:forEach items="#{adminUsersBean.getLastMonths()}" var="m"> "#{m}", </c:forEach> ],
 		        datasets: [
 		          {
-		            label: "Projects created",
+		            label: "Users created",
 		            data: [<c:forEach items="#{adminUsersBean.getLastMonthsUsersCreated()}" var="d"> #{d}, </c:forEach>],
 		            backgroundColor: gradientFill,
 		            borderColor: [ 'rgb(78,115,223)', ],
