@@ -239,11 +239,12 @@ public class ResearchManager {
 
 
 
-	/**
-	 * @param id user id
-	 * @return return if an user is an invetigator
-	 */
-	public static boolean isInvestigator(int id) {
-		return !JpaUtil.executeQuery("Select i from Investigator i where i.user.id = "+id, Investigator.class).isEmpty();
+
+
+
+
+	public static Investigator findInvestigatorByUserId(int id) {
+		return JpaUtil.executeQuery("Select i from Investigator i where i.user.id = "+id, Investigator.class).get(0);
 	}
+	
 }

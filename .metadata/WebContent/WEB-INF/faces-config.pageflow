@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15695392528690" configfile="/Site ACM/WebContent/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="2482" id="pf1571604305806112" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15717911776090 pf15717911776091 pf15717911776092 pf15717911776093 pf15717911776094 pf15717911776095 pf15717911776096 pf15717911776098 pf15740201440750 pf15746231290333 pf15748499658000 pf157485011728213 pf157485011728214 pf15748867241400 pf15770602643150 pf15770604768131 pf15781896207390 pf15791445337070 pf15791445337071 pf15791445599845 pf15791445798577 pf15799847384462 pf15800482258480 pf15801751847470 pf15802162753891 pf15805739962411" path="/*"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="2482" id="pf1571604305806112" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15717911776090 pf15717911776091 pf15717911776092 pf15717911776093 pf15717911776094 pf15717911776095 pf15717911776096 pf15717911776098 pf15740201440750 pf15746231290333 pf15748499658000 pf157485011728213 pf157485011728214 pf15748867241400 pf15770602643150 pf15770604768131 pf15781896207390 pf15791445337070 pf15791445337071 pf15791445599845 pf15791445798577 pf15799847384462 pf15800482258480 pf15801751847470 pf15802162753891 pf15805739962411 pf15808588885852" path="/*"/>
   <nodes xsi:type="pageflow:PFPage" name="pages/home.xhtml" x="338" y="178" id="pf157179117760912" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf15717911776090" path="/pages/home.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="pages/login.xhtml" x="338" y="562" id="pf157179117760913" referenceLink="//@navigationRule.0/@navigationCase.3/@toViewId|" inlinks="pf15717911776091" path="/pages/login.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="pages/events.xhtml" x="338" y="946" id="pf157179117760914" referenceLink="//@navigationRule.0/@navigationCase.4/@toViewId|" inlinks="pf15717911776092" path="/pages/events.xhtml"/>
@@ -16,16 +16,17 @@
   <nodes xsi:type="pageflow:PFPage" name="pages/user.xhtml" id="pf157485011728216" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf157485011728214" path="/pages/user.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="pages/becameMember.xhtml" id="pf15748867241401" referenceLink="//@navigationRule.0/@navigationCase.15/@toViewId|" inlinks="pf15748867241400" path="/pages/becameMember.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="pages/project.xhtml" id="pf15770604768142" referenceLink="//@navigationRule.0/@navigationCase.17/@toViewId|" inlinks="pf15770604768131" path="/pages/project.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="pages/createProject.xhtml" id="pf15781896207401" referenceLink="//@navigationRule.0/@navigationCase.19/@toViewId|" inlinks="pf15781896207390" path="/pages/createProject.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="pages/admin/adminDashboard.xhtml" id="pf15791445337072" referenceLink="//@navigationRule.0/@navigationCase.19/@toViewId|" inlinks="pf15791445337070" path="/pages/admin/adminDashboard.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="pages/admin/adminNews.xhtml" id="pf15791445337073" referenceLink="//@navigationRule.0/@navigationCase.20/@toViewId|" inlinks="pf15791445337071" path="/pages/admin/adminNews.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="pages/admin/adminUsers.xhtml" id="pf15791445599846" referenceLink="//@navigationRule.0/@navigationCase.22/@toViewId|" inlinks="pf15791445599845" path="/pages/admin/adminUsers.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="pages/admin/adminProjects.xhtml" id="pf15791445798578" referenceLink="//@navigationRule.0/@navigationCase.21/@toViewId|" inlinks="pf15791445798577" path="/pages/admin/adminProjects.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/createProject.xhtml" id="pf15781896207401" referenceLink="//@navigationRule.0/@navigationCase.18/@toViewId|" inlinks="pf15781896207390" path="/pages/createProject.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/admin/adminDashboard.xhtml" id="pf15791445337072" referenceLink="//@navigationRule.0/@navigationCase.20/@toViewId|" inlinks="pf15791445337070" path="/pages/admin/adminDashboard.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/admin/adminNews.xhtml" id="pf15791445337073" referenceLink="//@navigationRule.0/@navigationCase.21/@toViewId|" inlinks="pf15791445337071" path="/pages/admin/adminNews.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/admin/adminUsers.xhtml" id="pf15791445599846" referenceLink="//@navigationRule.0/@navigationCase.23/@toViewId|" inlinks="pf15791445599845" path="/pages/admin/adminUsers.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/admin/adminProjects.xhtml" id="pf15791445798578" referenceLink="//@navigationRule.0/@navigationCase.22/@toViewId|" inlinks="pf15791445798577" path="/pages/admin/adminProjects.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="pages/researches.xhtml" id="pf15799847384463" referenceLink="//@navigationRule.0/@navigationCase.9/@toViewId|" inlinks="pf15799847384462" path="/pages/researches.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="pages/research.xhtml" id="pf15800482258491" referenceLink="//@navigationRule.0/@navigationCase.10/@toViewId|" inlinks="pf15800482258480" path="/pages/research.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="pages/admin/adminResearches.xhtml" id="pf15801751847481" referenceLink="//@navigationRule.0/@navigationCase.23/@toViewId|" inlinks="pf15801751847470" path="/pages/admin/adminResearches.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="pages/admin/adminEvents.xhtml" id="pf15802162753912" referenceLink="//@navigationRule.0/@navigationCase.24/@toViewId|" inlinks="pf15802162753891" path="/pages/admin/adminEvents.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/admin/adminResearches.xhtml" id="pf15801751847481" referenceLink="//@navigationRule.0/@navigationCase.24/@toViewId|" inlinks="pf15801751847470" path="/pages/admin/adminResearches.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/admin/adminEvents.xhtml" id="pf15802162753912" referenceLink="//@navigationRule.0/@navigationCase.26/@toViewId|" inlinks="pf15802162753891" path="/pages/admin/adminEvents.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="pages/createResearch.xhtml" id="pf15805739962412" referenceLink="//@navigationRule.0/@navigationCase.19/@toViewId|" inlinks="pf15805739962411" path="/pages/createResearch.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/unauthorizationError.xhtml" id="pf15808588885863" referenceLink="//@navigationRule.0/@navigationCase.26/@toViewId|" inlinks="pf15808588885852" path="/pages/unauthorizationError.xhtml"/>
   <links id="pf15717911776090" target="pf157179117760912" source="pf1571604305806112" outcome="home"/>
   <links id="pf15717911776091" target="pf157179117760913" source="pf1571604305806112" outcome="login"/>
   <links id="pf15717911776092" target="pf157179117760914" source="pf1571604305806112" outcome="events"/>
@@ -52,4 +53,5 @@
   <links id="pf15801751847470" target="pf15801751847481" source="pf1571604305806112" outcome="adminResearches"/>
   <links id="pf15802162753891" target="pf15802162753912" source="pf1571604305806112" outcome="adminEvents"/>
   <links id="pf15805739962411" target="pf15805739962412" source="pf1571604305806112" outcome="createResearch"/>
+  <links id="pf15808588885852" target="pf15808588885863" source="pf1571604305806112" outcome="unauthorizationError"/>
 </pageflow:Pageflow>

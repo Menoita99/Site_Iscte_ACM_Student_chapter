@@ -65,9 +65,12 @@ public class User implements Serializable {
 	@Column(length = 50 , nullable = false, unique = true)
 	private String username;
 	
-	@Column(nullable = false)
+	
+	@Exclude
+	@ElementCollection(targetClass=Date.class)
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date last_log = new Date(System.currentTimeMillis());
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<Date> logs = new ArrayList<>();
 	
 	private boolean isAdmin = false;	
 	
@@ -119,6 +122,7 @@ public class User implements Serializable {
 		this.isMember = isMember;
 		this.activationKey = activationKey;
 		this.about = about;
+		this.logs.add( new Date(System.currentTimeMillis()));
 	}
 
 
@@ -142,6 +146,7 @@ public class User implements Serializable {
 		this.username = username;
 		this.activationKey = activationKey;
 		this.about = about;
+		this.logs.add( new Date(System.currentTimeMillis()));
 	}
 	
 	
@@ -160,6 +165,7 @@ public class User implements Serializable {
 		this.lastName = lastName;
 		this.username = username;
 		this.activationKey = activationKey;
+		this.logs.add( new Date(System.currentTimeMillis()));
 	}
 	
 	
@@ -199,7 +205,6 @@ public class User implements Serializable {
 				&& Objects.equals(course, other.course) && Objects.equals(email, other.email)
 				&& Objects.equals(fristName, other.fristName) && Objects.equals(imagePath, other.imagePath)
 				&& isActive == other.isActive && isAdmin == other.isAdmin && isMember == other.isMember
-				&& Objects.equals(lastName, other.lastName) && Objects.equals(last_log, other.last_log)
 				&& Objects.equals(password, other.password) && Objects.equals(username, other.username)
 				&& views == other.views;
 	}
@@ -210,7 +215,7 @@ public class User implements Serializable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(activationKey, cellPhone, course, email, fristName, imagePath, isActive, isAdmin, isMember,
-				lastName, last_log, password, username, views);
+				lastName, password, username, views);
 	}
 
 

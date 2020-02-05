@@ -34,10 +34,8 @@ public class CreateProjectBean implements Serializable{
 
 	private ProjectContainer container;
 	private int phase = 1;
-
 	private Part uploadedFile;
 	private List<Part> uploadedFiles = new ArrayList<>();
-
 	private String tag ="";
 
 	private String usernameOrEmail = "";

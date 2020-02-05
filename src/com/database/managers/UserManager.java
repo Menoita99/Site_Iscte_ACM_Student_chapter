@@ -234,12 +234,11 @@ public class UserManager {
 	
 
 	/** 
-	 * Set's Last_log to LocalDateTime.now()
-	 * 
+	 * updates last log
 	 * @param user that must be updated
 	 */
 	private static void updateLastLog(User user) {
-		user.setLast_log(new Date(System.currentTimeMillis()));
+		user.getLogs().add(new Date(System.currentTimeMillis()));
 		JpaUtil.mergeEntity(user);
 	}
 

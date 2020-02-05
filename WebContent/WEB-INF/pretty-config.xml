@@ -137,4 +137,8 @@
 		<view-id value="/pages/admin/adminEvents.xhtml" />
 	</url-mapping>
 	
+	<url-mapping id="unauthorizationError">
+		<pattern value="/unauthorizationError" />
+		<view-id value="/pages/unauthorizationError.xhtml" />
+	</url-mapping>
 </pretty-config>

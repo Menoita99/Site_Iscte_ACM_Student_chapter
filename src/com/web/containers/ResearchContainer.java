@@ -1,6 +1,7 @@
 package com.web.containers;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,11 +12,9 @@ import com.database.entities.User;
 import com.database.managers.ResearchManager;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.ToString.Exclude;
 
 @Data
-@NoArgsConstructor
 public class ResearchContainer implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -37,16 +36,16 @@ public class ResearchContainer implements Serializable{
 	@lombok.EqualsAndHashCode.Exclude
 	private List<InvestigatorContainer> investigators;
 	@Exclude
-	private List<String> tags;
+	private List<String> tags = new ArrayList<>();
 	@Exclude
-	private List<String> imagePath;
+	private List<String> imagePath = new ArrayList<>();
 	@Exclude
 	@lombok.EqualsAndHashCode.Exclude
-	private List<User> participants = null;
+	private List<User> participants;
 	@Exclude
-	private List<String> usefulllinks;
+	private List<String> usefulllinks = new ArrayList<>();
 	@Exclude
-	private List<String> institutions;
+	private List<String> institutions = new ArrayList<>();
 	
 	
 	
@@ -67,6 +66,17 @@ public class ResearchContainer implements Serializable{
 		usefulllinks = r.getUsefullLinks();
 	}
 
+	
+	
+	
+	
+	
+	public ResearchContainer(InvestigatorContainer inv) {
+		participants  = new ArrayList<>();
+		investigators  = new ArrayList<>();
+		investigators.add(inv);
+	}
+	
 
 
 

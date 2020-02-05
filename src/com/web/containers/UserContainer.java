@@ -75,7 +75,7 @@ public class UserContainer implements Serializable {
 		this.username = user.getUsername();
 		this.isMember = user.isMember();
 		this.isAdmin = user.isAdmin();
-		this.lastLog = user.getLast_log();
+		this.lastLog = user.getLogs().get(user.getLogs().size()-1);
 		this.isActive = user.isActive();
 		this.about = user.getAbout();
 	}
@@ -96,7 +96,7 @@ public class UserContainer implements Serializable {
 		this.username = user.getUsername();
 		this.isMember = user.isMember();
 		this.isAdmin = user.isAdmin();
-		this.lastLog = user.getLast_log();
+		this.lastLog = user.getLogs().get(user.getLogs().size()-1);
 		this.isActive = user.isActive();
 		this.about = user.getAbout();
 	}

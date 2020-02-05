@@ -138,5 +138,9 @@
 			<to-view-id>/pages/admin/adminEvents.xhtml</to-view-id>
 		</navigation-case>
 	
+		<navigation-case>
+			<from-outcome>unauthorizationError</from-outcome>
+			<to-view-id>/pages/unauthorizationError.xhtml</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 </faces-config>
