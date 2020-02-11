@@ -165,7 +165,7 @@
 		                            	</div>
 			                            <div class="col">
 			                            	<h:commandLink class="btn btn-primary" actionListener="#{createResearchBean.addInvestigator}">
-			                            		<f:ajax render="@form" execute="@form"/>
+			                            		<f:ajax render="@form :institutionsForm:institutionsTable" execute="@form"/>
 			                            		<i class="fa fa-plus"/>
 		                            		</h:commandLink>
 		                            	</div>
@@ -183,8 +183,8 @@
 				                        		</h:column>
 				                        		<h:column>
 				                        			<h:commandLink actionListener="#{createResearchBean.removeInvestigator}">
-					                        				<f:attribute name="participant" value="#{i}" />
-					                        				<f:ajax render="@form" execute="@form"/>
+					                        				<f:attribute name="investigator" value="#{i}" />
+					                        				<f:ajax render="@form :institutionsForm:institutionsTable" execute="@form"/>
 				                        				<i class="fa fa-remove"/>
 				                        			</h:commandLink>
 				                        		</h:column>
@@ -341,14 +341,14 @@
 				        <div class="container" style="max-width: 730px;padding: 0px;">   <!-- Project Details (phase 3) -->
 				            <div class="content" style="margin: 40px 15px;margin-top: 40px;margin-bottom: 40px;padding: 40px 15px;padding-top: 40px;padding-bottom: 40px;">
 				                <h1 style="margin-bottom: 30px;">Process complete <i class="fa fa-check" style="color: rgba(142,239,45,0.79);"></i></h1>
-				                <p>You have successfully created a project, press button submit, to submit the project and ask for approval from ACM admins.<br/>If everything is alright, it must be accepted otherwise you must be contacted by email, so don't forget to
-				                    check regularly your inbox.<br/>When it got accepted you will receive an email to inform you that the project is now available at the projects page.<br/>Thank you for your participation.<br/><br/>Acm admins.</p>
+				                <p>You have successfully created a research, press button submit, to submit the project and ask for approval from ACM admins.<br/>If everything is alright, it must be accepted otherwise you must be contacted by email, so don't forget to
+				                    check regularly your inbox.<br/>When it got accepted you will receive an email to inform you that the project is now available at the researches page.<br/>Thank you for your collaboration.<br/><br/>Acm admins.</p>
 				                <div class="row">
 				                    <div class="col text-left">
 									</div>
 				                    <div class="col text-right">
 					                    <h:form>
-					                    	<h:commandLink class="btn btn-primary" action="#{createResearchBean.submitProject}" >
+					                    	<h:commandLink class="btn btn-primary" action="#{createResearchBean.submitResearch}" >
 					                    		Submit project
 				                    		</h:commandLink>
 			                    		</h:form>
@@ -358,12 +358,6 @@
 				        </div>
 			        </h:panelGroup>
 	        	</h:panelGroup>
-		
-		
-		
-		
-		
-		
 		
 		
 		

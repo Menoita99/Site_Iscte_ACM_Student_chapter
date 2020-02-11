@@ -300,7 +300,7 @@ public class CreateProjectBean implements Serializable{
 	 * @param event
 	 */
 	public String submitProject() {
-		List<String> paths = FileManager.saveProjectFiles(uploadedFiles);
+		List<String> paths = FileManager.saveFiles(uploadedFiles,"projects");
 		container.setImagePath(paths);
 		JpaUtil.createEntity(new Project(container));
 		return  "user?rendered=projects";

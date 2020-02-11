@@ -7,6 +7,10 @@ import java.util.Random;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import com.database.entities.Candidate;
+import com.database.entities.Event;
+import com.database.entities.Project;
+import com.database.entities.Research;
 import com.database.entities.User;
 import com.database.entities.View;
 import com.web.containers.UserContainer;
@@ -108,7 +112,6 @@ public class UserManager {
 			updateLastLog(results.get(0));
 			return results.get(0);
 		}
-
 		return null;	
 	}
 
@@ -275,5 +278,75 @@ public class UserManager {
 		User u = getUserById(id);
 		u.getViews().add(v);
 		JpaUtil.mergeEntity(u);
+	}
+
+
+
+
+	/**
+	 * @return return all the projects the user joined
+	 */
+	public static List<Project> getJoinedProject(int id) {
+		return JpaUtil.executeQuery(" Select p from Project p join p.participants u where u.id = "+id, Project.class);
+	}
+
+
+
+
+	/**
+	 * @return return all the events that user is staff of
+	 */
+	public static List<Event> getJoinedEvents(int id) {
+		return JpaUtil.executeQuery("Select distinct e from Event e join e.infos i join i.participants p where p.id = "+id, Event.class);
+	}
+
+
+
+
+	/**
+	 * @return return all the Researches that user is participant
+	 */
+	public static List<Research> getJoinedResearches(int id) {
+		return JpaUtil.executeQuery("Select r from Research r join r.participants u where u.id = "+id, Research.class);
+	}
+
+
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	public static List<Event> getLikedEvents(int id) {
+		return JpaUtil.executeQuery("Select e from Event e join e.likes l where l.user.id = "+id, Event.class);
+	}
+
+
+
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public static List<Research> getLikesResearches(int id) {
+		return JpaUtil.executeQuery("Select r from Research r join r.likes l where l.user.id = "+id, Research.class);
+	}
+
+
+	
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public static List<Candidate> getProjectsCandidatures(int id) {
+		return JpaUtil.executeQuery("Select c from Project p join p.candidates c where c.user.id = "+id, Candidate.class);
+	}
+
+
+
+
+	public static List<Candidate> getResearchesCandidatures(int id) {
+		return JpaUtil.executeQuery("Select c from Research p join p.candidates c where c.user.id = "+id, Candidate.class);
 	}
 }

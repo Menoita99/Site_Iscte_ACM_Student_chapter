@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ValueChangeEvent;
 
 import com.database.entities.User;
 import com.database.managers.JpaUtil;
@@ -109,6 +110,19 @@ public class UserBean implements Serializable{
 	
 	
 
+	
+	/**
+	 * 
+	 * @param e
+	 */
+	public void changePerfilImage(ValueChangeEvent e ) {
+		//TODO
+	}
+	
+	
+	
+	
+	
 	
 	
 	/**

@@ -70,11 +70,11 @@ public class FileManager {
 	 * Saves Part objects into projects folder and returns the paths
 	 * @return
 	 */
-	public static List<String> saveProjectFiles(List<Part> parts) {
+	public static List<String> saveFiles(List<Part> parts, String path) {
 		List<String> paths = new ArrayList<>();
 
 		//		File uploads = new File(properties.getProperty("upload.location"));
-		File uploads = new File(ROOT_PATH+File.separator+"projects");
+		File uploads = new File(ROOT_PATH+File.separator+path);
 
 		for (Part part : parts) {
 
@@ -90,7 +90,7 @@ public class FileManager {
 
 					Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-					paths.add("projects/"+file.getName());
+					paths.add(path+"/"+file.getName());
 
 				} catch (IOException e) {
 					e.printStackTrace();

@@ -58,6 +58,12 @@ public class UserContainer implements Serializable {
 	@Exclude
 	@lombok.EqualsAndHashCode.Exclude
 	private List<ResearchContainer> likedResearches;
+	@Exclude
+	@lombok.EqualsAndHashCode.Exclude
+	private List<CandidateContainer> researchesCandidatures;
+	@Exclude
+	@lombok.EqualsAndHashCode.Exclude
+	private List<CandidateContainer> projectsCandidatures;
 	
 	
 	
@@ -109,20 +115,99 @@ public class UserContainer implements Serializable {
 	 * @return return a list with projects that user is a participant
 	 */
 	public List<ProjectContainer> getJoinedProjects(){
-//		if(joinedProjects == null)
-//			this.joinedProjects = UserManager.getUserById(id).getProjects().stream().map(ProjectContainer::new).collect(Collectors.toList());
+		if(joinedProjects == null)
+			this.joinedProjects = UserManager.getJoinedProject(id).stream().map(ProjectContainer::new).collect(Collectors.toList());
 		return joinedProjects;
 	}
 
 
 	
 	
+	
+	/**
+	 * @return return a list with projects that user is a participant
+	 */
+	public List<EventContainer> getJoinedEvents(){
+		if(joinedEvents == null)
+			this.joinedEvents = UserManager.getJoinedEvents(id).stream().map(EventContainer::new).collect(Collectors.toList());
+		return joinedEvents;
+	}
+
+
+	
+	
+	
+	/**
+	 * @return return a list with projects that user is a participant
+	 */
+	public List<ResearchContainer> getJoinedResearches(){
+		if(joinedResearches == null)
+			this.joinedResearches = UserManager.getLikesResearches(id).stream().map(ResearchContainer::new).collect(Collectors.toList());
+		return joinedResearches;
+	}
+
+
+	
+	
+	/**
+	 * @return 
+	 */
 	public List<ProjectContainer> getLikedProjects(){
 		if(likedProjects == null) 
 			this.likedProjects = ProjectManager.getLikedProjects(id).stream().map(ProjectContainer::new).collect(Collectors.toList());
 		return likedProjects;
 	}
 
+
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public List<EventContainer> getLikedEvents(){
+		if(likedEvents == null) 
+			this.likedEvents = UserManager.getLikedEvents(id).stream().map(EventContainer::new).collect(Collectors.toList());
+		return likedEvents;
+	}
+
+
+	
+	
+	
+	/**
+	 * 
+	 */
+	public List<ResearchContainer> getLikedResearches(){
+		if(likedResearches == null) 
+			this.likedResearches = UserManager.getLikesResearches(id).stream().map(ResearchContainer::new).collect(Collectors.toList());
+		return likedResearches;
+	}
+
+
+	
+	
+	
+	/**
+	 * 
+	 */
+	public List<CandidateContainer> getResearchesCandidatures(){
+		if(researchesCandidatures == null) 
+			this.researchesCandidatures = UserManager.getResearchesCandidatures(id).stream().map(CandidateContainer::new).collect(Collectors.toList());
+		return researchesCandidatures;
+	}
+
+
+	
+	
+	
+	/**
+	 * 
+	 */
+	public List<CandidateContainer> getProjectsCandidatures(){
+		if(projectsCandidatures == null) 
+			this.projectsCandidatures = UserManager.getProjectsCandidatures(id).stream().map(CandidateContainer::new).collect(Collectors.toList());
+		return projectsCandidatures;
+	}
 	
 	
 	
@@ -161,5 +246,7 @@ public class UserContainer implements Serializable {
 		this.joinedProjects = null;
 		this.joinedEvents = null;
 		this.joinedResearches = null;
+		this.researchesCandidatures = null;
+		this.projectsCandidatures = null;
 	}
 }

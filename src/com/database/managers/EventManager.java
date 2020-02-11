@@ -42,7 +42,7 @@ public class EventManager {
 			
 			p = new Event( title, description, shortDescription, requirements, imagePath, manager, tags);
 			
-			for (int i = 0; i < places.size(); i++) 
+			for (int i = 0; i < places.size(); i++)
 				p.getInfos().add(new EventInfo(dates.get(i),endDates.get(i),subscriptionDeadlines.get(i),places.get(i),p,staff));
 			
 			JpaUtil.createEntity(p);

@@ -14,10 +14,13 @@ import javax.faces.event.ValueChangeEvent;
 import javax.servlet.http.Part;
 
 import com.database.entities.Investigator;
+import com.database.entities.Research;
 import com.database.entities.ResearchType;
 import com.database.entities.User;
+import com.database.managers.JpaUtil;
 import com.database.managers.ResearchManager;
 import com.database.managers.UserManager;
+import com.utils.FileManager;
 import com.web.Session;
 import com.web.containers.InvestigatorContainer;
 import com.web.containers.ResearchContainer;
@@ -65,7 +68,7 @@ public class CreateResearchBean implements Serializable{
 
 	
 	/**
-	 * @return
+	 * @return return all the research types
 	 */
 	public ResearchType[] getTypes() {
 		return ResearchType.values();
@@ -237,9 +240,11 @@ public class CreateResearchBean implements Serializable{
 					if(invs != null) {
 						
 						InvestigatorContainer inv = new InvestigatorContainer(invs);
-						if(!container.getInvestigators().contains(inv))
+						if(!container.getInvestigators().contains(inv)) {
 							container.getInvestigators().add(inv);
-						else
+							if(!container.getInstitutions().contains(inv.getInstitution())) 
+								container.getInstitutions().add(inv.getInstitution());
+						}else
 							sendMessageToComponent("investigatorForm:username", "User already added");//
 	
 						usernameOrEmail = "";
@@ -257,14 +262,23 @@ public class CreateResearchBean implements Serializable{
 	
 	
 	/**
-	 * 
-	 * @param event
+	 * This method removes an investigator and if there is only this investigator 
+	 * that represents his institution, then institution is removed as well
 	 */
 	public void removeInvestigator(ActionEvent event) {
 		InvestigatorContainer inv =  (InvestigatorContainer) event.getComponent().getAttributes().get("investigator");
-		if(inv.getUser().getId() != Session.getInstance().getUser().getId())
+		if(inv.getUser().getId() != Session.getInstance().getUser().getId()) {
 			container.getInvestigators().remove(inv);
-		else
+			
+			boolean remove = true;
+			for(InvestigatorContainer i : container.getInvestigators())
+				if(i.getInstitution().equals(inv.getInstitution()))
+					remove = false;
+			
+			if(remove)
+				container.getInstitutions().remove(inv.getInstitution());
+					
+		}else
 			sendMessageToComponent("investigatorForm:username", "Can't remove the manager");
 	}
 
@@ -283,5 +297,21 @@ public class CreateResearchBean implements Serializable{
 		FacesMessage msg = new FacesMessage(message);
 		msg.setSeverity(FacesMessage.SEVERITY_ERROR);
 		context.addMessage(componentId, msg);
+	}
+
+
+	
+	
+	
+	
+	/**
+	 * Saves project into database
+	 * @param event
+	 */
+	public String submitResearch() {
+		List<String> paths = FileManager.saveFiles(uploadedFiles,"research");
+		container.setImagePath(paths);
+		JpaUtil.createEntity(new Research(container));
+		return  "user?rendered=research";
 	}
 }

@@ -46,7 +46,7 @@
 	                    	<p>#{user.about}</p>
 	                    </c:if>
 	                    <c:if test="#{empty user.about}">
-	                    	 <p>#{user.firstName} hasn't written anything about himself</p>
+	                    	 <p>#{user.firstName} hasn't written anything about him</p>
 	                    </c:if>
 	                </div>
 	            </div>
@@ -83,8 +83,7 @@
 	                    <h1 class="display-4" style="font-size: 30px;">Events</h1>
 	                </div>
 	                <div class="card-body">
-	                
-	                	<h:dataTable class="table table-hover text-center" value="#{user.joinedProjects}" var="event" rendered="#{not empty user.joinedProjects}">
+	                	<h:dataTable class="table table-hover text-center" value="#{user.joinedEvents}" var="event" rendered="#{not empty user.joinedEvents}">
                        		<h:column>
                        			<f:facet name="header">
                        				<div style="text-align:center">
@@ -102,10 +101,9 @@
                        			#{event.state} 
                        		</h:column>
                        	</h:dataTable>
-                       	<c:if test="#{empty user.joinedProjects}">
+                       	<c:if test="#{empty user.joinedEvents}">
                        		<h1 class="display-2 text-center" style="font-size: 30px;">#{user.firstName} didn't joined any events</h1>
                        	</c:if>
-	                
 	                </div>
 	            </div>
 	            <div class="card shadow mb-3">
@@ -114,7 +112,7 @@
 	                </div>
 	                <div class="card-body">
 	                
-	                	<h:dataTable class="table table-hover text-center" value="#{user.joinedProjects}" var="research" rendered="#{not empty user.joinedProjects}">
+	                	<h:dataTable class="table table-hover text-center" value="#{user.joinedResearches}" var="research" rendered="#{not empty user.joinedResearches}">
                        		<h:column>
                        			<f:facet name="header">
                        				<div style="text-align:center">
@@ -132,10 +130,9 @@
                        			#{research.state} 
                        		</h:column>
                        	</h:dataTable>
-                       	<c:if test="#{empty user.joinedProjects}">
+                       	<c:if test="#{empty user.joinedResearches}">
                        		<h1 class="display-2 text-center" style="font-size: 30px;">#{user.firstName} didn't joined any researches</h1>
                        	</c:if>
-	                
 	                </div>
 	            </div>
 	        </div>

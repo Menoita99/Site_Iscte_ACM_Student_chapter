@@ -26,11 +26,23 @@
                   <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4" style="padding: 0px;">
                         <div class="card mb-3">
                             <div class="card-body text-center shadow">
-                            	<h:graphicImage class="rounded-circle mb-3 mt-4" a:loading="lazy" a:alt="user_image" a:width="160" a:height="160" value="/resources/files/#{user.imagePath}"/>
-                                <div class="mb-3"><button class="btn btn-primary btn-sm" type="button">Change Photo</button></div>
+                            	<h:graphicImage id="img" class="rounded-circle mb-3 mt-4" a:loading="lazy" a:alt="user_image" a:width="160" a:height="160" value="/resources/files/#{user.imagePath}"/>
+                                <div class="mb-3">
+                                	<h:outputLabel class="file-label btn btn-primary btn-sm" for="input-file" 	>
+		                        		 <i class="fa fa-image"/> Choose image
+	                        		</h:outputLabel>
+                        		    
+                        		    <h:form enctype="multipart/form-data" method="POST"><!-- file upload form	 -->
+				                        <h:inputFile id="input-file"  class="inputfile" style="max-width: 200px;" valueChangeListener="#{userBean.changePerfilImage}">
+				                        	<f:validator validatorId="ImageValidator" />
+				                        	<f:ajax execute="@form" render="@form :img"/>			 
+				                        </h:inputFile>
+				                        <h:message for="input-file" class="error-label-sm"/>
+		                           </h:form>	
+                               	</div>
                                 <div class="list-group">	
                                 	<h:form>
-		                                <h:commandLink class="list-group-item list-group-item-action" action="#{ userBean.setRendered('definitions')}"><span class="text-capitalize text-muted">Settings</span></h:commandLink>
+		                                <h:commandLink class="list-group-item list-group-item-action" action="	 	"><span class="text-capitalize text-muted">Settings</span></h:commandLink>
 		                                <h:commandLink class="list-group-item list-group-item-action" action="#{ userBean.setRendered('events')}"> <span class="text-capitalize text-muted">Events</span></h:commandLink>
 	                                    <h:commandLink class="list-group-item list-group-item-action" action="#{ userBean.setRendered('projects')}"><span class="text-capitalize text-muted">Projects</span></h:commandLink>
 	                                    <h:commandLink class="list-group-item list-group-item-action" action="#{ userBean.setRendered('research')}"><span class="text-capitalize text-muted">Research</span></h:commandLink>
@@ -149,7 +161,7 @@
                                    	</div>
                                     <div class="form-group">
                                         <div class="form-row">
-                                            <div class="col-3 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                                            <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
                                             	<h:commandButton class="btn btn-primary" value="Save Settings" actionListener="#{userBean.saveChanges}">
                                             		<f:ajax render="@form" execute="@form" />
                                             	</h:commandButton>
@@ -183,25 +195,151 @@
 
                	<h:panelGroup id="events" >
          			<h:panelGroup rendered="#{ userBean.rendered == 'events'}">
-        					<div class="card shadow mb-3">
-                            <div class="card-header py-3">
-                                <h1 class="display-4" style="font-size: 30px;">My joined events</h1>
-                            </div>
-                            <div class="card-body">
-                            	<c:if test="#{empty user.getEvents()}">
-	                      			<h2 class="display-4" style="font-size: 30px;text-align: center;">You don't have any events joined, try to create or dicover one!!!<br/><br/></h2>
-	                      		</c:if>
+       					   <div class="card shadow mb-3">
+					              <div class="card-header py-3">
+					                  <h1 class="display-4" style="font-size: 30px;">My joined Events</h1>
+					              </div>
+					              <div class="card-body text-left">
+						              <h:panelGroup class="table-responsive" rendered="#{not empty user.joinedEvents}">
+				                        	<h:dataTable class="table table-hover " value="#{user.joinedEvents}" var="e" >
+				                        		<h:column>
+				                        			<f:facet name="header" style="text-center">
+				                        				<div style="text-align:center">
+				                        					Event title
+				                        				</div>		
+		                        					</f:facet>
+													<div style="text-align:center">
+			                        					<h:link class="text-dark text-center" a:data-toggle="modal" a:data-target="#event-modal" value="#{e.title}"/>
+				                        			</div>	
+				                        			<div class="modal fade" role="dialog" tabindex="-1" id="event-modal">
+												        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+												            <div class="modal-content">
+												                <div class="modal-header">
+												                <h4 class="display-4 modal-title">#{e.title}</h4>
+												                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+												                <div class="modal-body">
+												                    <h4>Description</h4>
+												                    <p><br/>#{e.description}<br/><br/></p>
+												                    <h4>Requirements</h4>
+												                    <p><br/>#{e.requirements}<br/><br/></p>
+												                    <h4>Dates</h4>
+												                    <br/>
+												                    <p>TODO</p>
+												                    <div class="text-center">
+											                    	    <h:form>
+													                        <h:button class="btn btn-primary" value="Discover" outcome="event">
+													                        	<f:param name="eventId" value="#{e.id}" />
+													                        </h:button>
+												                        </h:form>
+												                        <br/>
+												                	</div>
+												                	<div class="modal-footer">
+												                		<button class="btn btn-light" type="button" data-dismiss="modal">Close</button>
+											                		</div>
+										                		</div>
+												            </div>
+												        </div>
+												    </div>
+												    
+			                        			</h:column>
+				                        		<h:column style="text-center">
+				                        			<f:facet name="header">Edit</f:facet>
+				                        			<i class="fa fa-remove"/>
+				                        		</h:column>
+				                        	</h:dataTable>
+			                         </h:panelGroup>
+		                         	<c:if test="#{empty user.joinedEvents}">
+		                      			<h2 class="display-4" style="font-size: 30px;text-align: center;margin-bottom:20px">You don't have any events joined, try to create or discover one!!!<br/></h2>
+		                      			<div class="row text-center" style="margin: 30px; auto">
+			                      			<c:if test="#{user.isMember() or user.isAdmin()}">
+										        <div class="col">
+										    		<h:link class="btn btn-primary" outcome="createEvent"> <i class="fa fa-plus"></i> Create Events</h:link>
+									    		</div>
+									    	</c:if>
+										    <div class="col">
+										    	<h:link class="btn btn-primary"  outcome="events"><i class="fa fa-search"></i> Discover Events</h:link>
+										    </div>
+										</div>
+		                      		</c:if>
+					              </div>
+					          </div>
+					          
+				          	  <div class="card shadow mb-3">
+			                     <div class="card-header py-3">
+			                         <h1 class="display-4" style="font-size: 30px;">My liked events</h1>
+			                     </div>
+			                     <div class="card-body text-left">
+			                     	<h:panelGroup id="event-likes-table" class="table-responsive" rendered="#{not empty user.likedEvents}">
+			                        
+			                        	<h:dataTable class="table table-hover" value="#{user.likedEvents}" var="e" >
+			                        		<h:column>
+		                        				<f:facet name="header">
+			                        				<div style="text-align:center">
+			                        					Event title
+	                        						</div>
+	                        					</f:facet>
+												<div style="text-align:center">
+			                        				<h:link class="text-dark" a:data-toggle="modal" a:data-target="#event-like-modal" value="#{e.title}"/>
+												</div>
 
-	                             <div class="row text-center" style="margin-top: 30px;">
-								    <div class="col">
-								    	<h:link class="btn btn-primary"> <i class="fa fa-plus"/> Create Event</h:link>
-							    	</div>
-								    <div class="col">
-								    	<h:link class="btn btn-primary"  outcome="events"><i class="fa fa-search"/> Discover Events</h:link>
-								    </div>
-								</div>
-                            </div>
-                        </div>
+			                        			<div class="modal fade" role="dialog" tabindex="-1" id="event-like-modal">
+											        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+											            <div class="modal-content">
+											                <div class="modal-header">
+											                <h4 class="display-4 modal-title">#{e.title}</h4>
+											                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+											                <div class="modal-body">
+											                    <h4>Description</h4>
+											                    <p><br/>#{e.description}<br/><br/></p>
+											                    <h4>Requirements</h4>
+											                    <p><br/>#{e.requirements}<br/><br/></p>
+											                    <h4>Dates</h4>
+											                    <br/>
+											                    <p>TODO</p>
+											                    <div class="text-center">
+										                    	    <h:form>
+												                        <h:button class="btn btn-primary" value="Discover" outcome="event">
+												                        	<f:param name="eventId" value="#{e.id}" />
+												                        </h:button>
+											                        </h:form>
+											                        <br/>
+											                	</div>
+											                	<div class="modal-footer">
+											                		<button class="btn btn-light" type="button" data-dismiss="modal">Close</button>
+										                		</div>
+									                		</div>
+											            </div>
+											        </div>
+											    </div>
+		                        			</h:column>
+			                        		<h:column >
+			                        			<f:facet name="header">
+			                        				<div style="text-align:center">
+			                        					Dislike
+	                        						</div>
+	                        					</f:facet>
+			                        			<div style="text-align:center">
+			                        				<h:form>
+			                        					<h:commandLink  >
+			                        						<f:attribute name="eventId" value="#{e.id}"/>
+			                        						<f:ajax render="@all" execute="@this"/>
+			                        						<i class="fa fa-thumbs-down hover-red"/>
+			                        					</h:commandLink>
+			                        				</h:form>
+			                        			</div>
+			                        		</h:column>
+			                        	</h:dataTable>
+			                        </h:panelGroup>
+									<c:if test="#{empty user.likedEvents}">
+		                      			<h2 class="display-4" style="font-size: 30px;text-align: center;">You didn't liked any project <i class="fa fa-frown-o"/></h2>
+		                      			<h2 class="display-4" style="font-size: 30px;text-align: center;">Try to discover one!!!<br/></h2>
+	                      		
+	                      				<div style="text-align:center;margin-top:40px">
+	                      					<h:link class="btn btn-primary"  outcome="projects"><i class="fa fa-search"></i> Discover Projects</h:link>
+	                      				</div>
+									</c:if>
+			                     </div>
+			                 </div>
                		</h:panelGroup>
                	</h:panelGroup>
 
@@ -364,6 +502,14 @@
 									</c:if>
 			                     </div>
 			                 </div>
+			                 
+			                 <div class="card shadow mb-3">
+					              <div class="card-header py-3">
+					                  <h1 class="display-4" style="font-size: 30px;">My project candidatures</h1>
+					              </div>
+					              <div class="card-body text-left">
+					              </div>
+				              </div>
                		</h:panelGroup>
                	</h:panelGroup>
 
@@ -376,10 +522,10 @@
 			                     <div class="card-body text-left">
 			                     	<div class="card-body text-left">
 						              <h:panelGroup class="table-responsive" rendered="#{not empty user.joinedResearches}">
-				                        	<h:dataTable class="table table-hover" value="#{user.joinedProjects}" var="r" >
+				                        	<h:dataTable class="table table-hover" value="#{user.joinedResearches}" var="r" >
 				                        		<h:column>
 				                        			<f:facet name="header">Research title</f:facet>
-
+													#{r.title}
 				                        			<h:link class="text-dark" a:data-toggle="modal" a:data-target="#project-modal" value="#{r.title}"/>
 				                        			
 				                        			<div class="modal fade" role="dialog" tabindex="-1" id="project-modal">
@@ -419,7 +565,7 @@
 				                        		</h:column>
 				                        	</h:dataTable>
 			                         </h:panelGroup>
-		                         	<c:if test="#{empty user.joinedProjects}">
+		                         	<c:if test="#{empty user.joinedResearches}">
 		                      			<h2 class="display-4" style="font-size: 30px;text-align: center;margin-bottom:20px">You don't have any research joined, try to create or discover one!!!<br/></h2>
 		                      			<div class="row text-center" style="margin: 30px; auto">
 										    <div class="col">
@@ -511,8 +657,66 @@
 									</c:if>
 			                     </div>
 			                 </div>
-               		</h:panelGroup>
-               	</h:panelGroup>
+			                 <div class="card shadow mb-3">
+			                     <div class="card-header py-3">
+			                         <h1 class="display-4" style="font-size: 30px;">My researches candidatures</h1>
+			                     </div>
+			                     <div class="card-body text-left">
+			                     	<h:panelGroup id="candidatures-research" class="table-responsive" rendered="#{not empty user.researchesCandidatures}">
+			                        	<h:dataTable class="table table-hover" value="#{user.researchesCandidatures}" var="c" >
+			                        		<h:column>
+		                        				<f:facet name="header">
+			                        				<div style="text-align:center">
+			                        					Motivation
+	                        						</div>
+	                        					</f:facet>
+	                        					<div style="text-align:center">
+	                        						#{c.motivation}
+                        						</div>
+		                        			</h:column>
+			                        		<h:column>
+			                        			<f:facet name="header">
+			                        				<div style="text-align:center">
+			                        					Hablitation
+	                        						</div>
+	                        					</f:facet>
+	                        					<div style="text-align:center">
+	                        						#{c.hablitations}
+	                        					</div>
+                       						</h:column>
+                   							<h:column>
+			                        			<f:facet name="header">
+			                        				<div style="text-align:center">
+			                        					Date
+	                        						</div>
+	                        						
+	                        					</f:facet>
+	                        					<div style="text-align:center">
+		                        					#{c.date.toString().substring(0,16)}
+                        						</div>
+                       						</h:column>
+                       						<h:column >
+			                        			<div style="text-align:center">
+		                        					<h:link >
+		                        						<i class="fa fa-pencil"/>
+		                        					</h:link>
+			                        			</div>
+			                        		</h:column>
+			                        	</h:dataTable>
+			                        </h:panelGroup>
+
+									<c:if test="#{empty user.researchesCandidatures}">
+		                      			<h2 class="display-4" style="font-size: 30px;text-align: center;">You didn't apply for any research</h2>
+		                      			<h2 class="display-4" style="font-size: 30px;text-align: center;">Try to discover one!!!<br/></h2>
+	                      		
+	                      				<div style="text-align:center;margin-top:40px">
+	                      					<h:link class="btn btn-primary"  outcome="researches"><i class="fa fa-search"></i> Discover Research</h:link>
+	                      				</div>
+									</c:if>
+			                     </div>
+			                 </div>
+	               		</h:panelGroup>
+	               	</h:panelGroup>
 
                 </div>
             </div>

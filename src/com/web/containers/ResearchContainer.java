@@ -75,6 +75,7 @@ public class ResearchContainer implements Serializable{
 		participants  = new ArrayList<>();
 		investigators  = new ArrayList<>();
 		investigators.add(inv);
+		institutions.add(inv.getInstitution());
 	}
 	
 

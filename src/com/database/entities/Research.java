@@ -1,6 +1,9 @@
 package com.database.entities;
 
 import com.database.entities.Investigator;
+import com.database.managers.ResearchManager;
+import com.database.managers.UserManager;
+import com.web.containers.ResearchContainer;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -79,7 +82,7 @@ public class Research implements Serializable {
 	@JoinTable(name = "research_participants",
 	joinColumns = @JoinColumn(name = "research_id"),
 	inverseJoinColumns = @JoinColumn(name = "user_id"))
-	private List<User> participants;
+	private List<User> participants = new ArrayList<>();
 
 	@Exclude
 	@ElementCollection(targetClass=String.class)
@@ -132,16 +135,6 @@ public class Research implements Serializable {
 
 
 
-	/**
-	 * @param investigator
-	 * @param title
-	 * @param description
-	 * @param shortDescription
-	 * @param requirements
-	 * @param tags
-	 * @param imagePath
-	 * @param type
-	 */
 	public Research(List<String> institutions,List<String> usefullLinks,List<Investigator> investigators, String title, String description, String shortDescription,
 			String requirements, List<String> tags, List<String> imagePath, ResearchType type) {
 		
@@ -158,5 +151,27 @@ public class Research implements Serializable {
 		this.type = type;
 		this.institutions = institutions;
 		this.usefullLinks = usefullLinks;
+		this.participants.addAll(investigators.stream().map(inv -> UserManager.getUserById(inv.getUser().getId())).collect(Collectors.toList()));
+	}
+
+
+
+
+
+	public Research(ResearchContainer container) {
+		if(container.getInvestigators().isEmpty()) throw new IllegalArgumentException("investigators can't be empty");
+		if(container.getInstitutions().isEmpty()) throw new IllegalArgumentException("institutions can't be empty");
+		
+		this.investigators = container.getInvestigators().stream().map(inv -> ResearchManager.findInvestigator(inv.getId())).collect(Collectors.toList());
+		this.title = container.getTitle();
+		this.description = container.getDescription();
+		this.shortDescription = container.getShortDescription();
+		this.requirements = container.getRequirements();
+		this.tags = container.getTags();
+		this.imagePath = container.getImagePath();
+		this.type = container.getType();
+		this.institutions = container.getInstitutions();
+		this.usefullLinks = container.getUsefulllinks();
+		this.participants.addAll(investigators.stream().map(inv -> UserManager.getUserById(inv.getUser().getId())).collect(Collectors.toList()));
 	}
 }
