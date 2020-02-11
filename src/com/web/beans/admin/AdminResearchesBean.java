@@ -41,6 +41,7 @@ public class AdminResearchesBean implements Serializable {
 		researchesDeveloping = JpaUtil.executeQuery("Select count(*) from Research p where p.state = "+ State.DEVELOPING.ordinal(), Long.class) .get(0);
 		viewsMonth = getViewsPerMonth();
 		likesMonth = getLikesPerMonth();
+		
 	}
 	
 	
@@ -83,6 +84,7 @@ public class AdminResearchesBean implements Serializable {
 	
 	
 	
+	
 	/**
 	 * Return the last lastMonths as a string
 	 * e.g lastMonths = 6 and today is 26/01/2020
@@ -109,17 +111,24 @@ public class AdminResearchesBean implements Serializable {
 	
 	
 	
+
+	
+	
+	
+	
+	
+	
 	/**
 	 * @return return a list of data that corresponds of how much researches have been created in a specific month
 	 */
 	public List<Long> getLastMonthsResearchesCreated(){
 		LocalDateTime later = LocalDateTime.now().minusMonths(lastMonths-1);
-		List<Long> months = new ArrayList<>();
+		List<Long> researches = new ArrayList<>();
 		for (int i = 0; i < lastMonths ; i++) {
-			months.add(JpaUtil.executeQuery("select count(p) from Research p WHERE YEAR(p.creationDate) = "+later.getYear()+" AND MONTH(p.creationDate) = "+later.getMonthValue(), Long.class).get(0));
+			researches.add(JpaUtil.executeQuery("select count(p) from Research p WHERE YEAR(p.creationDate) = "+later.getYear()+" AND MONTH(p.creationDate) = "+later.getMonthValue(), Long.class).get(0));
 			later = later.plusMonths(1);
 		}
-		return months;
+		return researches;
 	}
 	
 	
