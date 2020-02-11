@@ -32,6 +32,8 @@ private static final long serialVersionUID = 1L;
 	
 	private double viewsMonth;
 	private double mediaUsersCreatedMonth;
+	private Long totalInvestigators;
+	private Long totalAcmMembers;
 	
 	
 	@PostConstruct
@@ -39,14 +41,17 @@ private static final long serialVersionUID = 1L;
 		users = UserManager.findAll().stream().map(UserContainer::new).collect(Collectors.toList());
 		
 		totalUsers = JpaUtil.executeQuery("Select count(*) from User", Long.class).get(0);
+		totalAcmMembers = JpaUtil.executeQuery("Select count(*) from User u where u.isMember =  true", Long.class).get(0);
+		totalInvestigators = JpaUtil.executeQuery("Select count(*) from Investigator", Long.class).get(0);
+		
 		mediaUsersCreatedMonth = mediaUsersCreatedMonth();
 	}
 	
 
 	
-
 	
 	
+		
 	
 	/**
 	 * 
@@ -128,7 +133,7 @@ private static final long serialVersionUID = 1L;
 	public List<Long> getLoginCounts(){
 		List<Long> count = new ArrayList<>();
 		for (int i = 0; i < 24; i++) {
-			count.add(JpaUtil.executeQuery("Select count(*) from User u where HOUR (u.last_log) = " + i, Long.class).get(0));
+			count.add(JpaUtil.executeQuery("Select count(*) from User u join u.logs l where HOUR(l) = " + i, Long.class).get(0));
 		}
 		return count;
 	}

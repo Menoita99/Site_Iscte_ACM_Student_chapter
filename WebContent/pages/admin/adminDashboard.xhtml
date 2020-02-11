@@ -28,7 +28,7 @@
 										<span>Views (monthly)</span>
 									</div>
 									<div class="text-dark font-weight-bold h5 mb-0">
-										<span>#{adminDashboardBean.montlyViews}</span>
+										<span>#{adminDashboardBean.averageMontlyViews()}</span>
 									</div>
 								</div>
 								<div class="col-auto">
@@ -146,7 +146,8 @@
 					<div class="card shadow mb-4">
 						<div
 							class="card-header d-flex justify-content-between align-items-center">
-							<h6 class="text-primary font-weight-bold m-0">Quantity</h6>
+							<h6 class="text-primary font-weight-bold m-0">Budget
+								Distribution</h6>
 							<div class="dropdown no-arrow">
 								<button class="btn btn-link btn-sm dropdown-toggle"
 									data-toggle="dropdown" aria-expanded="false" type="button">
@@ -181,17 +182,23 @@
 					<div class="card-body">
 						<h3 class="display-4 text-center" style="font-size: 30px;">Instagram</h3>
 						<h:form>
-							<label>Instragram post adresses</label> 
-							<h:inputText class="form-control" a:type="url" style="margin-bottom: 10px;" value="#{adminDashboardBean.instagramPost1}"/>
-							<h:inputText class="form-control" a:type="url" style="margin-bottom: 10px;" value="#{adminDashboardBean.instagramPost2}"/>
-							<h:commandButton class="btn btn-primary" value="Save"/>
+							<label>Instragram post adresses</label>
+							<h:inputText class="form-control" a:type="url"
+								style="margin-bottom: 10px;"
+								value="#{adminDashboardBean.instagramPost1}" />
+							<h:inputText class="form-control" a:type="url"
+								style="margin-bottom: 10px;"
+								value="#{adminDashboardBean.instagramPost2}" />
+							<h:commandButton class="btn btn-primary" value="Save" />
 						</h:form>
 						<h3 class="display-4 text-center"
 							style="font-size: 30px; margin-top: 30px;">Activities</h3>
 						<form>
 							<ul class="list-inline">
-								<li class="list-inline-item"><label>Number of activities:</label></li>
-								<li class="list-inline-item"><input class="form-control" type="number" style="width: 80px;" /></li>
+								<li class="list-inline-item"><label>Number of
+										activities:</label></li>
+								<li class="list-inline-item"><input class="form-control"
+									type="number" style="width: 80px;" /></li>
 							</ul>
 						</form>
 						<div class="row">
@@ -441,11 +448,11 @@
 			var doughtnut = new Chart(ctxD, {
 				type : 'doughnut',
 				data : {
-					labels : [ "Red", "Green", "Yellow", "Grey", "Dark Grey" ],
-					datasets : [ {
-						data : [ 300, 50, 100, 40, 120 ],
-						backgroundColor : [ "#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360" ],
-						hoverBackgroundColor : [ "#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774" ]
+					labels : [ "Projects", "Events" ],
+					datasets : [{
+						data : [<c:forEach items="#{adminDashboardBean.getMonthPBudget()}" var="m"> "#{m}", </c:forEach>],
+						backgroundColor : [ "#F7464A", "#46BFBD"],
+						hoverBackgroundColor : [ "#FF5A5E", "#5AD3D1"]
 					} ]
 				},
 				options : {
@@ -468,23 +475,22 @@
 			var myLineChart = new Chart(ctxL, {
 				type : 'line',
 				data : {
-					labels : [ "January", "February", "March", "April", "May",
-							"June", "July" ],
+					labels : [<c:forEach items="#{adminDashboardBean.getAllMonths()}" var="m"> "#{m}", </c:forEach>],
 					datasets : [ {
-						label : "My First dataset",
-						data : [ 65, 59, 80, 81, 56, 55, 40 ],
+						label : "Researches views",
+						data : [ <c:forEach items="#{adminDashboardBean.getLastMonthsResearchesViews()}" var="d"> #{d}, </c:forEach> ],
 						backgroundColor : [ 'rgba(105, 0, 132, .2)', ],
 						borderColor : [ 'rgba(200, 99, 132, .7)', ],
 						borderWidth : 2
 					}, {
-						label : "My Second dataset",
-						data : [ 28, 48, 40, 19, 86, 27, 90 ],
+						label : "Event views",
+						data : [ <c:forEach items="#{adminDashboardBean.getLastMonthsEventsViews()}" var="d"> #{d}, </c:forEach>],
 						backgroundColor : [ 'rgba(0, 137, 132, .2)', ],
 						borderColor : [ 'rgba(0, 10, 130, .7)', ],
 						borderWidth : 2
 					}, {
-						label : "My Third dataset",
-						data : [ 28, 67, 32, 19, 34, 32, 89 ],
+						label : "Project views",
+						data : [ <c:forEach items="#{adminDashboardBean.getLastMonthsProjectsViews()}" var="d"> #{d}, </c:forEach> ],
 						backgroundColor : [ 'rgba(75, 45, 132, .2)', ],
 						borderColor : [ 'rgba(75, 45, 130, .7)', ],
 						borderWidth : 2
