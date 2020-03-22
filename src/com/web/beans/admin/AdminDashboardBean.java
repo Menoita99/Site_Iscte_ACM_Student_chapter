@@ -38,8 +38,8 @@ public class AdminDashboardBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	//hours:minutes:seconds time when daily news fetch is called
-	private int HOURS = 5;
-	private int MINUTES = 0;
+	private int HOURS = 1;
+	private int MINUTES = 42;
 	private int SECONDS = 0;
 	
 	
@@ -68,6 +68,8 @@ public class AdminDashboardBean implements Serializable{
 			if(!p.isEmpty() && i<p.size()) projects.add(new ProjectContainer(p.get(i)));
 			if(!r.isEmpty() && i<r.size()) researches.add(new ResearchContainer(r.get(i)));
 		}
+		
+		startDailyNewsFetch();
 	}
 	
 	
@@ -180,21 +182,24 @@ public class AdminDashboardBean implements Serializable{
 		
 		
 		
+		/**
+		 * Created a tread pool that periodically will fetch news
+		 */
 		public void startDailyNewsFetch() {
 			ZonedDateTime now = ZonedDateTime.now(ZoneId.of("GMT"));
 			ZonedDateTime nextRun = now.withHour(HOURS).withMinute(MINUTES).withSecond(SECONDS);
+			
+			System.out.println("Started daily news fetcher, next run : "+nextRun);
+			
 			if(now.compareTo(nextRun) > 0)
 			    nextRun = nextRun.plusDays(1);
 
 			Duration duration = Duration.between(now, nextRun);
-			long initalDelay = duration.getSeconds();
+//			long initalDelay = duration.getSeconds();
+			long initalDelay = 0;
 
 			ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);            
-			scheduler.scheduleAtFixedRate(new NewsFetcherRunnable(),
-				initalDelay,
-			    TimeUnit.DAYS.toSeconds(1),
-			    TimeUnit.SECONDS);
-
+			scheduler.scheduleAtFixedRate(new NewsFetcherRunnable(), initalDelay, TimeUnit.DAYS.toSeconds(1), TimeUnit.SECONDS);
 		}
 	
 
