@@ -1,9 +1,15 @@
 package com.web.beans.admin;
 
 import java.io.Serializable;
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.faces.bean.ManagedBean;
 
@@ -14,6 +20,7 @@ import com.database.managers.EventManager;
 import com.database.managers.JpaUtil;
 import com.database.managers.ProjectManager;
 import com.database.managers.ResearchManager;
+import com.utils.NewsFetcherRunnable;
 import com.web.containers.EventContainer;
 import com.web.containers.ProjectContainer;
 import com.web.containers.ResearchContainer;
@@ -29,6 +36,11 @@ import lombok.Data;
 public class AdminDashboardBean implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
+	
+	//hours:minutes:seconds time when daily news fetch is called
+	private int HOURS = 5;
+	private int MINUTES = 0;
+	private int SECONDS = 0;
 	
 	
 	private int numberOfActivities = 3;
@@ -164,6 +176,25 @@ public class AdminDashboardBean implements Serializable{
 			list.add(budget.get(0) == null  ? 0 : budget.get(0));
 			list.add(500.0);  //Calcular budget do event
 			return list;
+		}
+		
+		
+		
+		public void startDailyNewsFetch() {
+			ZonedDateTime now = ZonedDateTime.now(ZoneId.of("GMT"));
+			ZonedDateTime nextRun = now.withHour(HOURS).withMinute(MINUTES).withSecond(SECONDS);
+			if(now.compareTo(nextRun) > 0)
+			    nextRun = nextRun.plusDays(1);
+
+			Duration duration = Duration.between(now, nextRun);
+			long initalDelay = duration.getSeconds();
+
+			ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);            
+			scheduler.scheduleAtFixedRate(new NewsFetcherRunnable(),
+				initalDelay,
+			    TimeUnit.DAYS.toSeconds(1),
+			    TimeUnit.SECONDS);
+
 		}
 	
 
