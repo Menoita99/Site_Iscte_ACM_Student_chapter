@@ -39,9 +39,7 @@ public class Project implements Serializable {
 	@lombok.EqualsAndHashCode.Exclude
 	@ManyToMany(cascade=CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@JoinTable(name = "project_views",
-	joinColumns = @JoinColumn(name = "project_id"),
-	inverseJoinColumns = @JoinColumn(name = "view_id"))
+	@JoinTable(name = "project_views", joinColumns = @JoinColumn(name = "project_id"), inverseJoinColumns = @JoinColumn(name = "view_id"))
 	private List<View> views = new ArrayList<>();
 
 	@Column(nullable = false)

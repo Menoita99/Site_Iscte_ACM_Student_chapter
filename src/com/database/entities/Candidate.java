@@ -59,7 +59,7 @@ public class Candidate implements Serializable {
 	}
 
 
-	public void update(Candidate candidature) {
+	public void update(CandidateContainer candidature) {
 		this.motivation = candidature.getMotivation();
 		this.user = UserManager.getUserById(candidature.getUser().getId());
 		this.hablitations = candidature.getHablitations();

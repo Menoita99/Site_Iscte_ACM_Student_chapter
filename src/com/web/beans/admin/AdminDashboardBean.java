@@ -28,8 +28,6 @@ import lombok.Data;
 @Data
 public class AdminDashboardBean implements Serializable{
 	
-	private static int auxTemp = 0;
-
 	private static final long serialVersionUID = 1L;
 	
 	
@@ -58,8 +56,6 @@ public class AdminDashboardBean implements Serializable{
 			if(!p.isEmpty() && i<p.size()) projects.add(new ProjectContainer(p.get(i)));
 			if(!r.isEmpty() && i<r.size()) researches.add(new ResearchContainer(r.get(i)));
 		}
-		
-		
 	}
 	
 	
@@ -93,7 +89,6 @@ public class AdminDashboardBean implements Serializable{
 	
 	
 	public List<String> getAllMonths(){
-		
 		return List.of("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
 	}
 	

@@ -25,11 +25,6 @@
 	                    		<p class="lead">#{event.likes} <i class="fa fa-thumbs-o-up"></i></p>
 	                    	</h:panelGroup>
 		                </div>
-		               <div class="col-xl-3">
-		                    <div class="status">
-		                        <h3 class="text-capitalize">#{event.state.toString().toLowerCase().replace("_"," ")}</h3>
-		                    </div>
-		                </div>
 		            </div>
 		            <div class="row">
 		                <div class="col-12 col-sm-12 col-md-6 col-lg-8 col-xl-8">
@@ -53,8 +48,8 @@
 		                                data-slide="next"><span class="carousel-control-next-icon"></span><span class="sr-only">Next</span></a></div>
 		                    </div>
 		                </div>
-		                <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-		                    <ul class="list-group" style="margin-top: 20px;">
+		                <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 overflow-auto" style="max-height: 460px;margin-top: 20px">
+		                    <ul class="list-group">
 		                    	<c:forEach items="#{event.infos}" var="info">
 			                        <li class="list-group-item" style="padding-top: 12px;padding-right: 20px;padding-bottom: 0px;color: rgba(33,37,41,0.79);">
 		                                <div class="row">
@@ -116,7 +111,7 @@
 		                                </div>
 		                                <div class="card-body">
 		                                	<h:form>
-			                                    <div class="table-responsive" >
+			                                    <div class="table-responsive overflow-auto" style="max-height: 250px" >
 			                                    	<h:dataTable value="#{event.infos}" var="info" class="table">
 			                                    		<h:column>
 			                                    			#{info.startEventDate.getYear()} #{info.startEventDate.getMonth().toString().toLowerCase()} #{info.startEventDate.getDayOfMonth()} 

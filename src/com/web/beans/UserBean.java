@@ -9,11 +9,14 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
+import javax.servlet.http.Part;
 
 import com.database.entities.User;
 import com.database.managers.JpaUtil;
 import com.database.managers.ProjectManager;
+import com.database.managers.ResearchManager;
 import com.database.managers.UserManager;
+import com.utils.FileManager;
 import com.web.Session;
 import com.web.containers.UserContainer;
 
@@ -28,13 +31,13 @@ public class UserBean implements Serializable{
 
 	private UserContainer user;
 	private UserContainer update = new UserContainer();
-	
+
 	private String username;
 	private String email;
 	private String password;
 	private String newPassword;
-	
-	private String rendered = "definitions";
+
+	private String rendered = "settings";
 
 
 
@@ -47,9 +50,9 @@ public class UserBean implements Serializable{
 			user.refresh();
 	}
 
-	
-	
-	
+
+
+
 	/**
 	 * verify if username already exist
 	 */
@@ -60,9 +63,9 @@ public class UserBean implements Serializable{
 			update.setUsername(username);	
 	}
 
-	
-	
-	
+
+
+
 	/**
 	 * verify if email already exist
 	 */
@@ -73,9 +76,9 @@ public class UserBean implements Serializable{
 			update.setEmail(email);	
 	}
 
-	
-	
-	
+
+
+
 	/**
 	 * Updates user 
 	 */
@@ -90,14 +93,13 @@ public class UserBean implements Serializable{
 			update = new UserContainer(); //cleans form
 		}else
 			sendMessageToComponent(":def_form:password","Password is incorrect");
-		
 	}
-	
-	
-	
 
-	
-	
+
+
+
+
+
 	/**
 	 *Dislikes project 
 	 */
@@ -106,48 +108,75 @@ public class UserBean implements Serializable{
 		ProjectManager.dislike(projectId, Session.getInstance().getUser().getId());
 		Session.getInstance().getUser().refresh();
 	}
-	
-	
-	
 
-	
+
+
+
+
 	/**
 	 * 
 	 * @param e
 	 */
 	public void changePerfilImage(ValueChangeEvent e ) {
-		//TODO
+		Part img = (Part) e.getNewValue();
+		if(FileManager.validImage(img.getContentType())) {
+			String path = FileManager.saveFile(img, "users"); //saves files
+//			FileManager.deleteFile(user.getImagePath());	  //deletes old photo
+			path = path.substring(path.lastIndexOf("users/"));	  // sets path for tomcat
+			user.setImagePath(path);						  
+			UserManager.updateUser(user.getId(),user);		  //saves user
+		}
 	}
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
 	/**
 	 *Dislikes project 
 	 */
 	public void dislikeResearch(ActionEvent event) {
-		//TODO
+		int researchId = (int) event.getComponent().getAttributes().get("researchId");
+		ResearchManager.dislike(researchId, Session.getInstance().getUser().getId());
+		Session.getInstance().getUser().refresh();
 	}
-	
+
+
+
+
+
+
+	/**
+	 *Removes user from participating in the given project
+	 *if user is the project manager it won't let remove the user
+	 */
+	public void removeProject(ActionEvent event) {
+		int projectId = (int) event.getComponent().getAttributes().get("projectId");
+		ProjectManager.removeMember(user.getId(),projectId);
+	}
+
+
+
+
+
+
+	/**
+	 *Removes user from participating in the given project
+	 *if user is the project manager it won't let remove the user
+	 */
+	public void removeResearch(ActionEvent event) {
+		int projectId = (int) event.getComponent().getAttributes().get("researchId");
+		ResearchManager.removeMember(user.getId(),projectId);
+	}
 	
 	
 
 	
 	
-	/**
-	 *Dislikes project 
-	 */
-	public void dislikeLike(ActionEvent event) {
-		//TODO
-	}
-	
-	
-	
-	
-	
+
+
 	/**
 	 * Sends a message to component
 	 * 
@@ -160,4 +189,9 @@ public class UserBean implements Serializable{
 		msg.setSeverity(FacesMessage.SEVERITY_ERROR);
 		context.addMessage(componentId, msg);
 	}
+	
+	
+	
+	
+	
 }

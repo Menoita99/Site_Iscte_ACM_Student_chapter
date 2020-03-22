@@ -1,5 +1,6 @@
 package com.web.beans;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.bean.ViewScoped;
@@ -13,8 +14,10 @@ import lombok.Data;
 @ManagedBean
 @ViewScoped
 @Data
-public class HomeBean {
+public class HomeBean implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+
 	private String email;
 	
 	private String errorMessage;

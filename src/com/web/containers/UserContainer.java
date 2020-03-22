@@ -40,6 +40,7 @@ public class UserContainer implements Serializable {
 	private boolean isMember;
 	private boolean isAdmin;
 	private boolean isActive;
+	private boolean isInvestigator;
 	@Exclude
 	@lombok.EqualsAndHashCode.Exclude
 	private List<ProjectContainer> joinedProjects;
@@ -84,6 +85,7 @@ public class UserContainer implements Serializable {
 		this.lastLog = user.getLogs().get(user.getLogs().size()-1);
 		this.isActive = user.isActive();
 		this.about = user.getAbout();
+		this.isInvestigator = UserManager.isInvestigator(id);
 	}
 
 
@@ -105,6 +107,7 @@ public class UserContainer implements Serializable {
 		this.lastLog = user.getLogs().get(user.getLogs().size()-1);
 		this.isActive = user.isActive();
 		this.about = user.getAbout();
+		this.isInvestigator = UserManager.isInvestigator(id);
 	}
 
 
@@ -142,12 +145,11 @@ public class UserContainer implements Serializable {
 	 */
 	public List<ResearchContainer> getJoinedResearches(){
 		if(joinedResearches == null)
-			this.joinedResearches = UserManager.getLikesResearches(id).stream().map(ResearchContainer::new).collect(Collectors.toList());
+			this.joinedResearches = UserManager.getJoinedResearches(id).stream().map(ResearchContainer::new).collect(Collectors.toList());
 		return joinedResearches;
 	}
 
 
-	
 	
 	/**
 	 * @return 
@@ -179,7 +181,7 @@ public class UserContainer implements Serializable {
 	 */
 	public List<ResearchContainer> getLikedResearches(){
 		if(likedResearches == null) 
-			this.likedResearches = UserManager.getLikesResearches(id).stream().map(ResearchContainer::new).collect(Collectors.toList());
+			this.likedResearches = UserManager.getLikedResearches(id).stream().map(ResearchContainer::new).collect(Collectors.toList());
 		return likedResearches;
 	}
 
@@ -220,8 +222,8 @@ public class UserContainer implements Serializable {
 		return new ArrayList<EventContainer>();
 	}
 
-
-
+	
+	
 
 	/**
 	 * refresh 
@@ -248,5 +250,6 @@ public class UserContainer implements Serializable {
 		this.joinedResearches = null;
 		this.researchesCandidatures = null;
 		this.projectsCandidatures = null;
+		this.isInvestigator = UserManager.isInvestigator(id);
 	}
 }

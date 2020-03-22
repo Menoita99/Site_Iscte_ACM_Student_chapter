@@ -1,8 +1,6 @@
 package com.web.containers;
 
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -126,13 +124,7 @@ public class EventContainer implements Serializable {
 	public List<EventInfoContainer> getInfos() {
 		if(infos == null) { 
 			infos = EventManager.getEventById(id).getInfos().stream().map(EventInfoContainer::new).collect(Collectors.toList());
-			Collections.sort(infos, new Comparator<EventInfoContainer>() {
-
-				@Override
-				public int compare(EventInfoContainer o1, EventInfoContainer o2) {
-					return new NearestFutureComparator().compare(java.sql.Timestamp.valueOf(o1.getStartEventDate()),java.sql.Timestamp.valueOf(o2.getStartEventDate()));
-				}
-			});
+			infos.sort((EventInfoContainer o1, EventInfoContainer o2) -> new NearestFutureComparator().compare(o1.getStartEventDate(),o2.getStartEventDate()));
 		}
 		return infos;
 	}

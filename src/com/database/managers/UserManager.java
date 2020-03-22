@@ -9,6 +9,7 @@ import javax.persistence.TypedQuery;
 
 import com.database.entities.Candidate;
 import com.database.entities.Event;
+import com.database.entities.Investigator;
 import com.database.entities.Project;
 import com.database.entities.Research;
 import com.database.entities.User;
@@ -25,8 +26,6 @@ public class UserManager {
 	private static final int KEY_LENGTH = 64;
 
 	private static String ACCEPTABLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-";
-
-	
 	
 	
 	
@@ -327,7 +326,7 @@ public class UserManager {
 	 * @param id
 	 * @return
 	 */
-	public static List<Research> getLikesResearches(int id) {
+	public static List<Research> getLikedResearches(int id) {
 		return JpaUtil.executeQuery("Select r from Research r join r.likes l where l.user.id = "+id, Research.class);
 	}
 
@@ -348,5 +347,29 @@ public class UserManager {
 
 	public static List<Candidate> getResearchesCandidatures(int id) {
 		return JpaUtil.executeQuery("Select c from Research p join p.candidates c where c.user.id = "+id, Candidate.class);
+	}
+
+
+
+	/**
+	 * Updates user given an user container
+	 * @param id user to be updated
+	 * @param user info to update
+	 */
+	public static void updateUser(int id, UserContainer user) {
+		User u = getUserById(id);
+		u.update(user);
+		JpaUtil.mergeEntity(u);
+	}
+
+
+
+	/**
+	 * Return if the user is an investigator
+	 * @param id
+	 * @return
+	 */
+	public static boolean isInvestigator(int id) {
+		return !JpaUtil.executeQuery("Select i From Investigator i where i.user.id = "+id, Investigator.class).isEmpty();
 	}
 }

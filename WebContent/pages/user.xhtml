@@ -14,7 +14,6 @@
 	</ui:define>
 <div style="background-color: #fcfcfc;">
 	<ui:define name="content">
-
 	<c:if test="${param['rendered'] != null}">
 		#{ userBean.setRendered(param['rendered'])}
 	</c:if>
@@ -42,7 +41,7 @@
                                	</div>
                                 <div class="list-group">	
                                 	<h:form>
-		                                <h:commandLink class="list-group-item list-group-item-action" action="	 	"><span class="text-capitalize text-muted">Settings</span></h:commandLink>
+		                                <h:commandLink class="list-group-item list-group-item-action" action="#{ userBean.setRendered('settings')}"><span class="text-capitalize text-muted">Settings</span></h:commandLink>
 		                                <h:commandLink class="list-group-item list-group-item-action" action="#{ userBean.setRendered('events')}"> <span class="text-capitalize text-muted">Events</span></h:commandLink>
 	                                    <h:commandLink class="list-group-item list-group-item-action" action="#{ userBean.setRendered('projects')}"><span class="text-capitalize text-muted">Projects</span></h:commandLink>
 	                                    <h:commandLink class="list-group-item list-group-item-action" action="#{ userBean.setRendered('research')}"><span class="text-capitalize text-muted">Research</span></h:commandLink>
@@ -60,13 +59,14 @@
                 <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8">
 	
                 <h:panelGroup id="definitions" >
-                	<h:panelGroup rendered="#{ userBean.rendered == 'definitions'}">
+                	<h:panelGroup rendered="#{ userBean.rendered == 'settings'}">
                 		 <div class="card shadow mb-3">
                             <div class="card-header py-3">
                                 <h1 class="display-4" style="font-size: 30px;">Settings</h1>
                             </div>
                             <div class="card-body">
                                 <h:form id="def_form">
+                                	<h:messages/>
                                     <div class="form-group">
                                     	<label for="email">
                                     		<strong>Email Address</strong>
@@ -155,7 +155,7 @@
                                     	<label for="about">
                                     		<strong>Description about me</strong>
                                     	</label>
-                                    	<h:inputTextarea class="form-control" rows="5" a:placeholder="#{user.about}" value="#{userBean.update.about}">
+                                    	<h:inputTextarea class="form-control" rows="5" a:placeholder="#{user.about}" value="#{userBean.update.about}" id="about">
                                    		</h:inputTextarea>
 										<h:message for="about" class="error-label-sm" />
                                    	</div>
@@ -209,9 +209,9 @@
 				                        				</div>		
 		                        					</f:facet>
 													<div style="text-align:center">
-			                        					<h:link class="text-dark text-center" a:data-toggle="modal" a:data-target="#event-modal" value="#{e.title}"/>
+			                        					<h:link class="text-dark text-center" a:data-toggle="modal" a:data-target="#event-modal#{e.id}" value="#{e.title}"/>
 				                        			</div>	
-				                        			<div class="modal fade" role="dialog" tabindex="-1" id="event-modal">
+				                        			<div class="modal fade" role="dialog" tabindex="-1" id="event-modal#{e.id}">
 												        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
 												            <div class="modal-content">
 												                <div class="modal-header">
@@ -315,7 +315,7 @@
 			                        		<h:column >
 			                        			<f:facet name="header">
 			                        				<div style="text-align:center">
-			                        					Dislike
+			                        					Unlike
 	                        						</div>
 	                        					</f:facet>
 			                        			<div style="text-align:center">
@@ -355,9 +355,9 @@
 				                        		<h:column>
 				                        			<f:facet name="header">Project title</f:facet>
 
-				                        			<h:link class="text-dark" a:data-toggle="modal" a:data-target="#project-modal" value="#{p.title}"/>
+				                        			<h:link class="text-dark" a:data-toggle="modal" a:data-target="#project-modal#{p.id}" value="#{p.title}"/>
 				                        			
-				                        			<div class="modal fade" role="dialog" tabindex="-1" id="project-modal">
+				                        			<div class="modal fade text-center" role="dialog" tabindex="-1" id="project-modal#{p.id}">
 												        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
 												            <div class="modal-content">
 												                <div class="modal-header">
@@ -393,23 +393,67 @@
 				                        			<f:facet name="header">Date</f:facet>
 				                        			#{p.deadline.toString().substring(0,16)}
 			                        			</h:column>
-				                        		<h:column>
+				                        		<h:column >
 				                        			<f:facet name="header">Edit</f:facet>
-				                        			<i class="fa fa-remove"/>
+				                        			<h:link class="text-dark" a:data-toggle="modal" a:data-target="#remove-project-modal">
+				                        				<i class="fa fa-remove"/>	
+				                        			</h:link>	
+				                        			<h:panelGroup rendered="#{p.manager.id == sessionScope.user.id}">
+			                        					<h:link class="text-dark" style="max-width:20px"> <i class="fa fa-eye"/> </h:link>
+			                        				</h:panelGroup>
+	                        				    	
+	                        				    	<div id="remove-project-modal" class="modal fade" role="dialog" tabindex="-1">
+												        <div class="modal-dialog" role="document">
+												            <div class="modal-content text-center">
+												                <div class="modal-header">
+												                    <h4 class="modal-title">Are you sure?</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+												                <div class="modal-body">
+												                    <p>This operation will remove you from this project, if you want to join again you will need to submit the candidature again.
+												                    <br></br>
+												                    If you are the manager you won't be able to leave the project unless you assign a new project manager or delete the project.</p>
+												                </div>
+												                <div class="modal-footer">
+													                <button class="btn btn-light" type="button" data-dismiss="modal">Cancel</button>
+													                <h:form>
+							                        					<h:commandLink class="btn btn-primary" data-dismiss="modal" actionListener="#{userBean.removeProject}">
+							                        						<f:attribute name="projectId" value="#{p.id}"/>
+							                        						<f:ajax render="@all" execute="@this"/>
+							                        						Remove
+							                        					</h:commandLink>
+						                        					</h:form>
+													            </div>
+													        </div>
+													    </div>
+												    </div>
 				                        		</h:column>
 				                        	</h:dataTable>
 			                         </h:panelGroup>
 		                         	<c:if test="#{empty user.joinedProjects}">
 		                      			<h2 class="display-4" style="font-size: 30px;text-align: center;margin-bottom:20px">You don't have any projects joined, try to create or discover one!!!<br/></h2>
-		                      			<div class="row text-center" style="margin: 30px; auto">
-										    <div class="col">
-										    	<h:link class="btn btn-primary" outcome="createProject"> <i class="fa fa-plus"></i> Create Project</h:link>
-									    	</div>
-										    <div class="col">
-										    	<h:link class="btn btn-primary"  outcome="projects"><i class="fa fa-search"></i> Discover Projects</h:link>
-										    </div>
-										</div>
 		                      		</c:if>
+	                      			<div class="row text-center" style="margin: 0px; auto">
+									    <div class="col">
+									    	<c:if test="#{user.isMember() or user.isAdmin()}">
+									    		<h:link class="btn btn-primary" outcome="createProject"> <i class="fa fa-plus"></i> Create Project</h:link>
+									    	</c:if>
+									    	<c:if test="#{not (user.isMember() or user.isAdmin())}">
+									    		<a data-target="#error-modal" data-toggle="modal" class="btn btn-primary" style="color:white"><i class="fa fa-plus"></i> Create Research</a>
+								    		     <div role="dialog" tabindex="-1" class="modal fade" id="error-modal">
+												    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+												        <div class="modal-content">
+												            <div class="modal-body text-center">
+												                <h1 class="display-4" style="font-size: 40px;color: rgb(47,47,47);"><i class="fa fa-frown-o"></i> Sorry, you need to be an ACM member to be able to create a project</h1>
+											                	<button class="btn btn-light" type="button" data-dismiss="modal">Close</button>
+										                	</div>
+												        </div>
+												    </div>
+												</div>
+									    	</c:if>
+								    	</div>
+									    <div class="col">
+									    	<h:link class="btn btn-primary"  outcome="projects"><i class="fa fa-search"></i> Discover Projects</h:link>
+									    </div>
+									</div>
 					              </div>
 					          </div>
 
@@ -428,10 +472,10 @@
 	                        						</div>
 	                        					</f:facet>
 												<div style="text-align:center">
-			                        				<h:link class="text-dark" a:data-toggle="modal" a:data-target="#project-modal" value="#{p.title}"/>
+			                        				<h:link class="text-dark" a:data-toggle="modal" a:data-target="#project-modal#{p.id}" value="#{p.title}"/>
 												</div>
 
-			                        			<div class="modal fade" role="dialog" tabindex="-1" id="project-modal">
+			                        			<div class="modal fade text-center" role="dialog" tabindex="-1" id="project-modal#{p.id}" >
 											        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
 											            <div class="modal-content">
 											                <div class="modal-header">
@@ -445,7 +489,7 @@
 											                    <br/>
 											                    <p>Dead line : #{p.deadline.toString().substring(0,16)}</p>
 											                    <p>Candidature dead line : #{p.subscriptionDeadline.toString().substring(0,16)}</p>
-											                    <div class="text-center">
+											                    <div>
 										                    	    <h:form>
 												                        <h:button class="btn btn-primary" value="Discover" outcome="project">
 												                        	<f:param name="projectID" value="#{p.id}" />
@@ -475,7 +519,7 @@
 			                        		<h:column >
 			                        			<f:facet name="header">
 			                        				<div style="text-align:center">
-			                        					Dislike
+			                        					Unlike
 	                        						</div>
 	                        					</f:facet>
 			                        			<div style="text-align:center">
@@ -486,7 +530,6 @@
 			                        						<i class="fa fa-thumbs-down hover-red"/>
 			                        					</h:commandLink>
 			                        				</h:form>
-
 			                        			</div>
 			                        		</h:column>
 			                        	</h:dataTable>
@@ -508,6 +551,59 @@
 					                  <h1 class="display-4" style="font-size: 30px;">My project candidatures</h1>
 					              </div>
 					              <div class="card-body text-left">
+						              <h:panelGroup id="candidatures-project" class="table-responsive" rendered="#{not empty user.projectsCandidatures}">
+				                        	<h:dataTable class="table table-hover" value="#{user.projectsCandidatures}" var="c" >
+				                        		<h:column>
+			                        				<f:facet name="header">
+				                        				<div style="text-align:center">
+				                        					Motivation
+		                        						</div>
+		                        					</f:facet>
+		                        					<div style="text-align:center">
+		                        						#{c.motivation.substring(0,c.motivation.length() > 16 ? 16 : c.motivation.length())}
+		                        						#{c.motivation.length() > 16 ? "..." : ""}
+	                        						</div>
+			                        			</h:column>
+				                        		<h:column>
+				                        			<f:facet name="header">
+				                        				<div style="text-align:center">
+				                        					Hablitation
+		                        						</div>
+		                        					</f:facet>
+		                        					<div style="text-align:center">
+		                        						#{c.hablitations.substring(0,c.motivation.length() > 16 ? 16 : c.motivation.length())}
+		                        						#{c.hablitations.length() > 16 ? "..." : ""}
+		                        					</div>
+	                       						</h:column>
+	                   							<h:column>
+				                        			<f:facet name="header">
+				                        				<div style="text-align:center">
+				                        					Date
+		                        						</div>
+		                        						
+		                        					</f:facet>
+		                        					<div style="text-align:center">
+			                        					#{c.date.toString().substring(0,16)}
+	                        						</div>
+	                       						</h:column>
+	                       						<h:column >
+				                        			<div style="text-align:center;">
+			                        					<h:link >
+			                        						<i class="fa fa-pencil" style="color: rgba(33,37,41,0.85);"/>
+			                        					</h:link>
+				                        			</div>
+				                        		</h:column>
+				                        	</h:dataTable>
+				                        </h:panelGroup>
+	
+										<c:if test="#{empty user.projectsCandidatures}">
+			                      			<h2 class="display-4" style="font-size: 30px;text-align: center;">You didn't apply for any project</h2>
+			                      			<h2 class="display-4" style="font-size: 30px;text-align: center;">Try to discover one!!!<br/></h2>
+		                      		
+		                      				<div style="text-align:center;margin-top:40px">
+		                      					<h:link class="btn btn-primary"  outcome="researches"><i class="fa fa-search"></i> Discover Ptojects</h:link>
+		                      				</div>
+										</c:if>
 					              </div>
 				              </div>
                		</h:panelGroup>
@@ -525,10 +621,8 @@
 				                        	<h:dataTable class="table table-hover" value="#{user.joinedResearches}" var="r" >
 				                        		<h:column>
 				                        			<f:facet name="header">Research title</f:facet>
-													#{r.title}
-				                        			<h:link class="text-dark" a:data-toggle="modal" a:data-target="#project-modal" value="#{r.title}"/>
-				                        			
-				                        			<div class="modal fade" role="dialog" tabindex="-1" id="project-modal">
+				                        			<h:link class="text-dark" a:data-toggle="modal" a:data-target="#joined-r-modal#{r.id}" value="#{r.title}"/>
+				                        			<div class="modal fade text-center" role="dialog" tabindex="-1" id="joined-r-modal#{r.id}">
 												        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
 												            <div class="modal-content">
 												                <div class="modal-header">
@@ -561,26 +655,64 @@
 			                        			</h:column>
 				                        		<h:column>
 				                        			<f:facet name="header">Edit</f:facet>
-				                        			<i class="fa fa-remove"/>
+				                        			<h:link class="text-dark" a:data-toggle="modal" a:data-target="#remove-research-modal">
+				                        				<i class="fa fa-remove"/>	
+				                        			</h:link>	
+				                        			<h:panelGroup rendered="#{r.isInvestigator(sessionScope.user.id)}">
+			                        					<h:link class="text-dark" style="max-width:20px"> <i class="fa fa-eye"/></h:link>
+			                        				</h:panelGroup>
+		                        				    <div id="remove-research-modal" class="modal fade" role="dialog" tabindex="-1">
+												        <div class="modal-dialog" role="document">
+												            <div class="modal-content text-center">
+												                <div class="modal-header">
+												                    <h4 class="modal-title">Are you sure?</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+												                <div class="modal-body">
+												                    <p>This operation will remove you from this research, if you want to join again you will have to submit the candidature again.
+												                    <br></br>
+												                    If you are the manager you won't be able to leave the project unless you assign a new research manager or delete the research.</p>
+												                </div>
+												                <div class="modal-footer">
+													                <button class="btn btn-light" type="button" data-dismiss="modal">Cancel</button>
+													                <h:form>
+							                        					<h:commandLink class="btn btn-primary" data-dismiss="modal" actionListener="#{userBean.removeResearch}">
+							                        						<f:attribute name="researchId" value="#{r.id}"/>
+							                        						<f:ajax render="@all" execute="@this"/>
+							                        						Remove
+							                        					</h:commandLink>
+						                        					</h:form>
+													            </div>
+													        </div>
+													    </div>
+												    </div>
 				                        		</h:column>
 				                        	</h:dataTable>
 			                         </h:panelGroup>
 		                         	<c:if test="#{empty user.joinedResearches}">
 		                      			<h2 class="display-4" style="font-size: 30px;text-align: center;margin-bottom:20px">You don't have any research joined, try to create or discover one!!!<br/></h2>
-		                      			<div class="row text-center" style="margin: 30px; auto">
-										    <div class="col">
-										    	<c:if test="#{user.isMember() or user.isAdmin()}">
-										    		<h:link class="btn btn-primary" outcome="createResearch"> <i class="fa fa-plus"></i> Create Research</h:link>
-										    	</c:if>
-										    	<c:if test="#{not (user.isMember() or user.isAdmin())}">
-										    		<a data-target="#error-modal" data-toggle="modal" class="btn btn-primary" style="color:white"><i class="fa fa-plus"></i> Create Research</a>
-										    	</c:if>
-									    	</div>
-										    <div class="col">
-										    	<h:link class="btn btn-primary"  outcome="researches"><i class="fa fa-search"></i> Discover Researches</h:link>
-										    </div>
-										</div>
 		                      		</c:if>
+		                      		<div class="row text-center" style="margin: 0px; auto">
+									    <div class="col">
+									    	<c:if test="#{user.isInvestigator() or user.isAdmin()}">
+									    		<h:link class="btn btn-primary" outcome="createResearch"> <i class="fa fa-plus"></i> Create Research</h:link>
+									    	</c:if>
+									    	<c:if test="#{not (user.isInvestigator() or user.isAdmin())}">
+									    		<a data-target="#error-modal" data-toggle="modal" class="btn btn-primary" style="color:white"><i class="fa fa-plus"></i> Create Research</a>
+								    		     <div role="dialog" tabindex="-1" class="modal fade" id="error-modal">
+												    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+												        <div class="modal-content">
+												            <div class="modal-body text-center">
+												                <h1 class="display-4" style="font-size: 40px;color: rgb(47,47,47);"><i class="fa fa-frown-o"></i> Sorry, you need to be an investigator to be able to create a research</h1>
+											                	<button class="btn btn-light" type="button" data-dismiss="modal">Close</button>
+										                	</div>
+												        </div>
+												    </div>
+												</div>
+									    	</c:if>
+								    	</div>
+									    <div class="col">
+									    	<h:link class="btn btn-primary"  outcome="researches"><i class="fa fa-search"></i> Discover Researches</h:link>
+									    </div>
+									</div>
 					              </div>
 			                     </div>
 			                 </div>
@@ -590,8 +722,7 @@
 			                     </div>
 			                     <div class="card-body text-left">
 			                     	<h:panelGroup id="likes-table-research" class="table-responsive" rendered="#{not empty user.likedResearches}">
-			                        
-			                        	<h:dataTable class="table table-hover" value="#{user.likedProjects}" var="r" >
+			                        	<h:dataTable class="table table-hover" value="#{user.likedResearches}" var="r" >
 			                        		<h:column>
 		                        				<f:facet name="header">
 			                        				<div style="text-align:center">
@@ -599,15 +730,15 @@
 	                        						</div>
 	                        					</f:facet>
 												<div style="text-align:center">
-			                        				<h:link class="text-dark" a:data-toggle="modal" a:data-target="#project-modal" value="#{r.title}"/>
+			                        				<h:link class="text-dark" a:data-toggle="modal" a:data-target="#r-modal#{r.id}" value="#{r.title}"/>
 												</div>
 
-			                        			<div class="modal fade" role="dialog" tabindex="-1" id="project-modal">
+			                        			<div class="modal fade text-center" role="dialog" tabindex="-1" id="r-modal#{r.id}">
 											        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
-											            <div class="modal-content">
-											                <div class="modal-header">
+											            <div class="modal-content ">
+											                <div class="modal-header text-center">
 											                <h4 class="display-4 modal-title">#{r.title}</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-											                <div class="modal-body">
+											                <div class="modal-body ">
 											                    <h4>Description</h4>
 											                    <p><br/>#{r.description}<br/><br/></p>
 											                    <h4>Requirements</h4>
@@ -631,13 +762,13 @@
 			                        		<h:column >
 			                        			<f:facet name="header">
 			                        				<div style="text-align:center">
-			                        					Dislike
+			                        					Unlike
 	                        						</div>
 	                        					</f:facet>
 			                        			<div style="text-align:center">
 			                        				<h:form>
 			                        					<h:commandLink  actionListener="#{userBean.dislikeResearch}">
-			                        						<f:attribute name="researchID" value="#{r.id}"/>
+			                        						<f:attribute name="researchId" value="#{r.id}"/>
 			                        						<f:ajax render="@all" execute="@this"/>
 			                        						<i class="fa fa-thumbs-down hover-red"/>
 			                        					</h:commandLink>
@@ -646,7 +777,6 @@
 			                        		</h:column>
 			                        	</h:dataTable>
 			                        </h:panelGroup>
-
 									<c:if test="#{empty user.likedResearches}">
 		                      			<h2 class="display-4" style="font-size: 30px;text-align: center;">You didn't liked any Research <i class="fa fa-frown-o"/></h2>
 		                      			<h2 class="display-4" style="font-size: 30px;text-align: center;">Try to discover one!!!<br/></h2>
@@ -671,7 +801,8 @@
 	                        						</div>
 	                        					</f:facet>
 	                        					<div style="text-align:center">
-	                        						#{c.motivation}
+	                        						#{c.motivation.substring(0,c.motivation.length() > 16 ? 16 : c.motivation.length())}
+	                        						#{c.motivation.length() > 16 ? "..." : ""}
                         						</div>
 		                        			</h:column>
 			                        		<h:column>
@@ -681,7 +812,8 @@
 	                        						</div>
 	                        					</f:facet>
 	                        					<div style="text-align:center">
-	                        						#{c.hablitations}
+	                        						#{c.hablitations.substring(0,c.motivation.length() > 16 ? 16 : c.motivation.length())}
+	                        						#{c.hablitations.length() > 16 ? "..." : ""}
 	                        					</div>
                        						</h:column>
                    							<h:column>
@@ -696,8 +828,8 @@
                         						</div>
                        						</h:column>
                        						<h:column >
-			                        			<div style="text-align:center">
-		                        					<h:link >
+			                        			<div style="text-align:center;color: rgba(33,37,41,0.85);">
+		                        					<h:link>
 		                        						<i class="fa fa-pencil"/>
 		                        					</h:link>
 			                        			</div>
@@ -721,16 +853,6 @@
                 </div>
             </div>
         </div>
-	     <div role="dialog" tabindex="-1" class="modal fade" id="error-modal">
-		    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-		        <div class="modal-content">
-		            <div class="modal-body text-center">
-		                <h1 class="display-4" style="font-size: 40px;color: rgb(47,47,47);"><i class="fa fa-frown-o"></i> Sorry, you don't have permission access this page.</h1>
-	                	<button class="btn btn-light" type="button" data-dismiss="modal">Close</button>
-                	</div>
-		        </div>
-		    </div>
-		</div>
 	</ui:define>
  </div>
 </ui:composition>

@@ -246,5 +246,14 @@ public class ResearchManager {
 	public static Investigator findInvestigatorByUserId(int id) {
 		return JpaUtil.executeQuery("Select i from Investigator i where i.user.id = "+id, Investigator.class).get(0);
 	}
+
+
+
+
+
+	public static void removeMember(int id, int projectId) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
