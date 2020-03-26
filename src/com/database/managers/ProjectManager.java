@@ -164,9 +164,7 @@ public class ProjectManager {
 	 * @param project
 	 */	
 	public static void updateProject(ProjectContainer project) {
-		Project p = findById(project.getId());
-		p.update(project);
-		JpaUtil.mergeEntity(p);
+		// TODO Auto-generated method stub
 
 	}
 
@@ -231,6 +229,7 @@ public class ProjectManager {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 	/**
@@ -292,4 +291,6 @@ public class ProjectManager {
 		
 	}
 >>>>>>> branch 'master' of https://github.com/Menoita99/Site_Iscte_ACM_Student_chapter.git
+=======
+>>>>>>> parent of a41a048... Update commit
 }

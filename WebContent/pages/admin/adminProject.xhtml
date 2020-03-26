@@ -17,7 +17,7 @@
 
             <div class="container-fluid composition">
                 <div class="d-sm-flex justify-content-between align-items-center mb-4">
-                    <h3 class="text-dark mb-0">#{adminProjectBean.project.title}</h3><a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a></div>
+                    <h3 class="text-dark mb-0">Project title</h3><a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a></div>
                 
                 <div style="margin-bottom: 20px;"> <!-- Header -->
                     <div class="card shadow py-2" style="margin: 0 auto;">
@@ -32,7 +32,7 @@
                                             <div class="row align-items-center no-gutters">
                                                 <div class="col mr-2">
                                                     <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>Views</span></div>
-                                                    <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminProjectBean.project.views}</span></div>
+                                                    <div class="text-dark font-weight-bold h5 mb-0"><span>100</span></div>
                                                 </div>
                                                 <div class="col-auto"><i class="fas fa-calendar fa-2x text-gray-300"></i></div>
                                             </div>
@@ -43,7 +43,7 @@
                                             <div class="row align-items-center no-gutters">
                                                 <div class="col mr-2">
                                                     <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>Likes</span></div>
-                                                    <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminProjectBean.project.likes}</span></div>
+                                                    <div class="text-dark font-weight-bold h5 mb-0"><span>530</span></div>
                                                 </div>
                                                 <div class="col-auto"><i class="fas fa-calendar fa-2x text-gray-300"></i></div>
                                             </div>
@@ -54,7 +54,7 @@
                                             <div class="row align-items-center no-gutters">
                                                 <div class="col mr-2">
                                                     <div class="text-uppercase text-success font-weight-bold text-xs mb-1"><span>Budget</span></div>
-                                                    <div class="text-dark font-weight-bold h5 mb-0"><span>#{adminProjectBean.getProjectBudget()}€</span></div>
+                                                    <div class="text-dark font-weight-bold h5 mb-0"><span>€215,000</span></div>
                                                 </div>
                                                 <div class="col-auto"><i class="fas fa-euro-sign fa-2x text-gray-300"></i></div>
                                             </div>
@@ -72,18 +72,16 @@
                             <div>
                                 <h1>Details</h1>
                             </div>
-                            <h:form id="saveForm">
-                            	<h:messages></h:messages>
+                            <h:form>
                                 <div class="form-row">
                                     <div class="col"><label>Title</label><h:inputText class="form-control" value="#{adminProjectBean.project.title}"/></div>
-                                    <div class="col"><label>Manager</label><h:inputText class="form-control" value="#{adminProjectBean.managerUsername}"/><h:message for="mananger"></h:message></div>
+                                    <div class="col"><label>Manager</label><h:inputText class="form-control" value="#{adminProjectBean.managerUsername}"/></div>
                                 </div>
                                 <div class="form-row" style="margin-top: 10px;">
                                     <div class="col"><label>Deadline</label>
-                                    	<h:inputText class="form-control" a:type="datetime-local" value="#{adminProjectBean.project.deadline}" id="deadline">
+                                    	<h:inputText class="form-control" a:type="datetime-local" value="#{adminProjectBean.project.deadline}">
                                     		<f:converter converterId="dateTimeConverter"/>
                                     	</h:inputText>
-                                    	<h:message for="deadline"></h:message>
                                    	</div>
                                     <div class="col"><label>S deadline</label>
                                     	<h:inputText class="form-control" a:type="datetime-local" value="#{adminProjectBean.project.subscriptionDeadline}">
@@ -91,8 +89,7 @@
                                     	</h:inputText>
                                   	</div>
                                     <div class="col"><label>Max Members</label>
-                                    	<h:inputText class="form-control" a:type="number" a:step="1" a:min="1" value="#{adminProjectBean.project.maxMembers}" id="maxMembers"/>
-                                    	<h:message for="maxMembers"></h:message>
+                                    	<h:inputText class="form-control" a:type="number" a:step="1" a:min="1" value="#{adminProjectBean.project.maxMembers}"/>
                                     </div>
                                 </div>
                                 <div class="form-row" style="margin-top: 10px;">
@@ -110,7 +107,7 @@
                                		<h:inputTextarea class="form-control" rows="5" value="#{adminProjectBean.project.description}"/>
                                	</div>
                            
-                            <h:commandLink class="btn btn-info btn-icon-split" style="margin-top: 10px;" actionListener="#{adminProjectBean.saveDetails}">
+                            <h:commandLink class="btn btn-info btn-icon-split" style="margin-top: 10px;" actionListener="#{adminProjectBean.saveDeatils}">
                             	<f:ajax render="@form" execute="@form"/>
                             	<span class="text-white-50 icon"><i class="fas fa-save"></i></span><span class="text-white text">Save</span>
                             </h:commandLink>
@@ -125,7 +122,7 @@
                             <div>
                                 <h1>Participants<br/></h1>
                             </div>
-                            <h:form id="participantsList">
+                            <h:form>
                                 <ul class="list-group">
                                 	<c:forEach var="part" items="#{adminProjectBean.project.participants}">
                                 		<li class="list-group-item">
@@ -135,8 +132,7 @@
                                                 	<span>#{part.username}</span>
                                                	</div>
                                                 <div class="col text-right"> 
-                                                	<h:commandLink class="link" actionListener="#{adminProjectBean.removeUsers}">
-														<f:attribute name="removeUserId" value="#{part.id}"/>
+                                                	<h:commandLink class="link"> <!-- TODO -->
                                                 		<f:ajax render="@form" execute="@form" />
                                                 		<i class="fa fa-close"/>
                                                 	</h:commandLink>
@@ -154,12 +150,8 @@
 	                            <h:form>
 	                            	<label>User</label>
 	                                <div class="form-row">
-	                                    <div class="col"><h:inputText class="form-control" a:placeholder="Username or email" value="#{adminProjectBean.addUser}"/></div>
-	                                    <div class="col-1">
-	                                    <h:commandLink class="btn btn-primary" action="#{adminProjectBean.addUsers}" >
-	                                    	<i class="fa fa-plus"/> 
-	                                    	<f:ajax render=":participantsList" execute="@form" />
-	                                    </h:commandLink></div>
+	                                    <div class="col"><input class="form-control" type="text" placeholder="Username or email"/></div>
+	                                    <div class="col-1"><button class="btn btn-primary" type="button" ><i class="fa fa-plus"/></button></div>
 	                                </div>
 	                            </h:form>
 	                        </div>    
@@ -410,11 +402,11 @@
 		    var myLineChart = new Chart(ctxL, {
 		      type: 'line',
 		      data: {
-		        labels: [<c:forEach items="#{adminProjectsBean.getLastMonths()}" var="m"> "#{m}", </c:forEach>],
+		        labels: ["January", "February", "March", "April", "May", "June", "July"],
 		        datasets: [
 		          {
 		            label: "Views",
-		            data: [<c:forEach items="#{adminProjectBean.getLastMonthsViews()}" var="d"> #{d}, </c:forEach>],
+		            data: [0, 65, 45, 65, 35, 65, 0],
 		            backgroundColor: [ 'rgba(246,248,253, 0.2)', ],
 		            borderColor: [ '#4e73df', ],
 		            borderWidth: 2,
@@ -423,7 +415,7 @@
 		          },
 		          {
 		            label: "Likes",
-		            data: [<c:forEach items="#{adminProjectBean.getLastMonthsViews()}" var="d"> #{d}, </c:forEach>],
+		            data: [0, 25, 35, 15, 45, 5, 3],
 		            backgroundColor: [ 'rgb(255,230,230,0.5)', ],
 		            borderColor: [ 'rgba(255, 179, 179,1)', ],
 		            borderWidth: 2,

@@ -1,6 +1,5 @@
 package com.web.beans;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.bean.ViewScoped;
@@ -14,8 +13,9 @@ import lombok.Data;
 @ManagedBean
 @ViewScoped
 @Data
-public class HomeBean implements Serializable{
+public class HomeBean {
 	
+<<<<<<< HEAD
 <<<<<<< HEAD
 	/**
 	 * 
@@ -24,6 +24,8 @@ public class HomeBean implements Serializable{
 >>>>>>> branch 'master' of https://github.com/Menoita99/Site_Iscte_ACM_Student_chapter.git
 	private static final long serialVersionUID = 1L;
 
+=======
+>>>>>>> parent of a41a048... Update commit
 	private String email;
 	
 	private String errorMessage;

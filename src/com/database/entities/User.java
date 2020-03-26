@@ -210,6 +210,7 @@ public class User implements Serializable {
 				&& Objects.equals(course, other.course) && Objects.equals(email, other.email)
 				&& Objects.equals(fristName, other.fristName) && Objects.equals(imagePath, other.imagePath)
 				&& isActive == other.isActive && isAdmin == other.isAdmin && isMember == other.isMember
+<<<<<<< HEAD
 				&& Objects.equals(password, other.password) && Objects.equals(username, other.username);
 =======
 				&& Objects.equals(course, other.course) && Objects.equals(creationDate, other.creationDate)
@@ -220,6 +221,10 @@ public class User implements Serializable {
 				&& Objects.equals(password, other.password)
 				&& Objects.equals(username, other.username);
 >>>>>>> branch 'master' of https://github.com/Menoita99/Site_Iscte_ACM_Student_chapter.git
+=======
+				&& Objects.equals(password, other.password) && Objects.equals(username, other.username)
+				&& views == other.views;
+>>>>>>> parent of a41a048... Update commit
 	}
 
 
@@ -229,11 +234,15 @@ public class User implements Serializable {
 	public int hashCode() {
 <<<<<<< HEAD
 		return Objects.hash(activationKey, cellPhone, course, email, fristName, imagePath, isActive, isAdmin, isMember,
+<<<<<<< HEAD
 				lastName, password, username);
 =======
 		return Objects.hash(activationKey, cellPhone, course, creationDate, email, fristName, id, imagePath, isActive,
 				isAdmin, isMember, lastName, password, username);
 >>>>>>> branch 'master' of https://github.com/Menoita99/Site_Iscte_ACM_Student_chapter.git
+=======
+				lastName, password, username, views);
+>>>>>>> parent of a41a048... Update commit
 	}
 	
 	

@@ -128,7 +128,7 @@ public class AdminProjectsBean implements Serializable{
 	
 	
 	/**
-	 * @return return a list of data that corresponds of how many views have been created in a specific month
+	 * @return return a list of data that corresponds of how much projects have been created in a specific month
 	 */
 	public List<Long> getLastMonthsViews(){
 		LocalDateTime later = LocalDateTime.now().minusMonths(lastMonths-1);
@@ -146,7 +146,7 @@ public class AdminProjectsBean implements Serializable{
 	
 	
 	/**
-	 * @return return a list of data that corresponds of how many likes have been created in a specific month
+	 * @return return a list of data that corresponds of how much projects have been created in a specific month
 	 */
 	public List<Long> getLastMonthsLikes(){
 		LocalDateTime later = LocalDateTime.now().minusMonths(lastMonths-1);
