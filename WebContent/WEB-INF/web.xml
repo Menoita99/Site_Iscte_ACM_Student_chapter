@@ -5,6 +5,7 @@
 	id="WebApp_ID" version="4.0">
 	<display-name>Acm</display-name>
 	<welcome-file-list>
+		<welcome-file>home.xhtml</welcome-file>
 		<welcome-file>index.xhtml</welcome-file>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>
