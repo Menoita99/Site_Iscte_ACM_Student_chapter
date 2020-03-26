@@ -199,60 +199,76 @@ public class User implements Serializable {
 
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!(obj instanceof User))
-			return false;
-		User other = (User) obj;
-		return Objects.equals(activationKey, other.activationKey) && Objects.equals(cellPhone, other.cellPhone)
-<<<<<<< HEAD
-				&& Objects.equals(course, other.course) && Objects.equals(email, other.email)
-				&& Objects.equals(fristName, other.fristName) && Objects.equals(imagePath, other.imagePath)
-				&& isActive == other.isActive && isAdmin == other.isAdmin && isMember == other.isMember
-<<<<<<< HEAD
-<<<<<<< HEAD
-				&& Objects.equals(password, other.password) && Objects.equals(username, other.username);
-=======
-				&& Objects.equals(course, other.course) && Objects.equals(creationDate, other.creationDate)
-				&& Objects.equals(email, other.email) && Objects.equals(fristName, other.fristName) && id == other.id
-				&& Objects.equals(imagePath, other.imagePath) && isActive == other.isActive && isAdmin == other.isAdmin
-				&& isMember == other.isMember 
-				&& Objects.equals(lastName, other.lastName)
-				&& Objects.equals(password, other.password)
-				&& Objects.equals(username, other.username);
->>>>>>> branch 'master' of https://github.com/Menoita99/Site_Iscte_ACM_Student_chapter.git
-=======
-				&& Objects.equals(password, other.password) && Objects.equals(username, other.username)
-				&& views == other.views;
->>>>>>> parent of a41a048... Update commit
-=======
-				&& Objects.equals(password, other.password) && Objects.equals(username, other.username)
-				&& views == other.views;
->>>>>>> parent of a41a048... Update commit
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((activationKey == null) ? 0 : activationKey.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((fristName == null) ? 0 : fristName.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((imagePath == null) ? 0 : imagePath.hashCode());
+		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		return result;
 	}
 
 
 
 
 	@Override
-	public int hashCode() {
-<<<<<<< HEAD
-		return Objects.hash(activationKey, cellPhone, course, email, fristName, imagePath, isActive, isAdmin, isMember,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				lastName, password, username);
-=======
-		return Objects.hash(activationKey, cellPhone, course, creationDate, email, fristName, id, imagePath, isActive,
-				isAdmin, isMember, lastName, password, username);
->>>>>>> branch 'master' of https://github.com/Menoita99/Site_Iscte_ACM_Student_chapter.git
-=======
-				lastName, password, username, views);
->>>>>>> parent of a41a048... Update commit
-=======
-				lastName, password, username, views);
->>>>>>> parent of a41a048... Update commit
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (activationKey == null) {
+			if (other.activationKey != null)
+				return false;
+		} else if (!activationKey.equals(other.activationKey))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (fristName == null) {
+			if (other.fristName != null)
+				return false;
+		} else if (!fristName.equals(other.fristName))
+			return false;
+		if (id != other.id)
+			return false;
+		if (imagePath == null) {
+			if (other.imagePath != null)
+				return false;
+		} else if (!imagePath.equals(other.imagePath))
+			return false;
+		if (lastName == null) {
+			if (other.lastName != null)
+				return false;
+		} else if (!lastName.equals(other.lastName))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
+		return true;
 	}
+
+
+
+
+
 	
 	
 	

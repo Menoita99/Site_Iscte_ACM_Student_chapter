@@ -228,11 +228,6 @@ public class ProjectManager {
 	}
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-
 	/**
 	 * 
 	 * Adds a user and merges the database
@@ -262,7 +257,6 @@ public class ProjectManager {
 		JpaUtil.mergeEntity(p);
 	}
 
-=======
 	/**
 	 * Creates a candidate for given project 
 	 * @param userId user that wants to candidate
@@ -291,9 +285,4 @@ public class ProjectManager {
 		// TODO Auto-generated method stub
 		
 	}
->>>>>>> branch 'master' of https://github.com/Menoita99/Site_Iscte_ACM_Student_chapter.git
-=======
->>>>>>> parent of a41a048... Update commit
-=======
->>>>>>> parent of a41a048... Update commit
 }
