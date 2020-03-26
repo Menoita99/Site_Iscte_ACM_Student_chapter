@@ -17,6 +17,7 @@ public class HomeBean {
 	
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/**
 	 * 
 	 */
@@ -24,6 +25,8 @@ public class HomeBean {
 >>>>>>> branch 'master' of https://github.com/Menoita99/Site_Iscte_ACM_Student_chapter.git
 	private static final long serialVersionUID = 1L;
 
+=======
+>>>>>>> parent of a41a048... Update commit
 =======
 >>>>>>> parent of a41a048... Update commit
 	private String email;

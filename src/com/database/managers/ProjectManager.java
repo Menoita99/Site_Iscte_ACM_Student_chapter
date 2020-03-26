@@ -230,6 +230,7 @@ public class ProjectManager {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 	/**
@@ -291,6 +292,8 @@ public class ProjectManager {
 		
 	}
 >>>>>>> branch 'master' of https://github.com/Menoita99/Site_Iscte_ACM_Student_chapter.git
+=======
+>>>>>>> parent of a41a048... Update commit
 =======
 >>>>>>> parent of a41a048... Update commit
 }
