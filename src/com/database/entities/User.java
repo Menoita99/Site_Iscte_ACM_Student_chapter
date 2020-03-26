@@ -205,8 +205,7 @@ public class User implements Serializable {
 				&& Objects.equals(course, other.course) && Objects.equals(email, other.email)
 				&& Objects.equals(fristName, other.fristName) && Objects.equals(imagePath, other.imagePath)
 				&& isActive == other.isActive && isAdmin == other.isAdmin && isMember == other.isMember
-				&& Objects.equals(password, other.password) && Objects.equals(username, other.username)
-				&& views == other.views;
+				&& Objects.equals(password, other.password) && Objects.equals(username, other.username);
 	}
 
 
@@ -215,7 +214,7 @@ public class User implements Serializable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(activationKey, cellPhone, course, email, fristName, imagePath, isActive, isAdmin, isMember,
-				lastName, password, username, views);
+				lastName, password, username);
 	}
 
 

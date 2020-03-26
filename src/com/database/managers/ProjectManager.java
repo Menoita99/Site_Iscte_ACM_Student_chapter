@@ -163,7 +163,9 @@ public class ProjectManager {
 	 * @param project
 	 */	
 	public static void updateProject(ProjectContainer project) {
-		// TODO Auto-generated method stub
+		Project p = findById(project.getId());
+		p.update(project);
+		JpaUtil.mergeEntity(p);
 
 	}
 
@@ -226,5 +228,36 @@ public class ProjectManager {
 		return JpaUtil.executeQuery("Select c from  Project p join p.candidates c where p.id = "+projectId, Candidate.class);
 	}
 
+
+
+
+	/**
+	 * 
+	 * Adds a user and merges the database
+	 * 
+	 * @param userId
+	 * @param projectId
+	 */
+	public static void addParticipant(int userId, int projectId) {
+		System.out.println("ADD");
+		Project p = findById(projectId);
+		User u = UserManager.getUserById(userId);
+		p.getParticipants().add(u);
+		JpaUtil.mergeEntity(p);
+	}
+
+	/**
+	 * 
+	 * Removes a user and merges the database
+	 * 
+	 * @param userId
+	 * @param projectId
+	 */
+	public static void removeParticipant(int userId, int projectId) {
+		Project p = findById(projectId);
+		User u = UserManager.getUserById(userId);
+		p.getParticipants().remove(u);
+		JpaUtil.mergeEntity(p);
+	}
 
 }
