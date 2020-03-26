@@ -129,7 +129,6 @@
 		                       			<f:param value="#{user.id}" name="userID"/>
 		                       		</h:link>
 		                       	</h:form>
-		                       <!-- <h5 style="margin: 5px auto;">#{user.username}</h5> --> 
 		                    </div>
 		                </div>
 		                
@@ -146,9 +145,15 @@
 	                    <h1 class="modal-title">Candidature</h1><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
 	                <div class="modal-body">
 	                    <p>Write a short text about yourself, about your skills and motivations to join in this project. Take into account the requirements.<br/></p>
-	                    <h:form>
+	                      <h:form>
 	                        <div class="form-group">
-	                        	<h:inputTextarea class="form-control form-control-lg" rows="5" a:placeholder="Motivation letter..." style="font-size: 16px;" value="#{projectBean.candidature.motivation}" escape="true"/>
+	                        	<h:inputTextarea class="form-control form-control-lg" id="mLetter" rows="5" a:placeholder="Motivation letter..." style="font-size: 16px;" value="#{projectBean.candidature.motivation}" escape="true" required="true" requiredMessage="This field is required"/>
+	                       		<h:message for="mLetter" class="error-label-sm"/>
+	                       	</div>
+	                       	<p>Hablitations</p>
+	                       	 <div class="form-group">
+	                        	<h:inputTextarea class="form-control form-control-lg" id="hab" rows="5" a:placeholder="Hablitations" style="font-size: 16px;" value="#{projectBean.candidature.hablitations}" escape="true" required="true" requiredMessage="This field is required"/>
+	                       		<h:message for="hab" class="error-label-sm"/>
 	                       	</div>
 		                    <div class="text-left">
 		                    	<h:commandLink class="btn btn-primary" value="Submit" action="#{projectBean.submitCandidature}"/>

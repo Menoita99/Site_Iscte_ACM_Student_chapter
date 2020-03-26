@@ -16,9 +16,12 @@ import lombok.Data;
 @Data
 public class HomeBean implements Serializable{
 	
+<<<<<<< HEAD
 	/**
 	 * 
 	 */
+=======
+>>>>>>> branch 'master' of https://github.com/Menoita99/Site_Iscte_ACM_Student_chapter.git
 	private static final long serialVersionUID = 1L;
 
 	private String email;

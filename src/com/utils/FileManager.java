@@ -33,24 +33,8 @@ public class FileManager {
 			+ "/Git-repository/Site_Iscte_ACM_Student_chapter"
 			+ "/WebContent/resources/files";	
 
-	private static final String imageRegexValidator = "([^\\s]+(\\.(?i)(jpg|png|gif|jpeg))$)";
+//	private static final String imageRegexValidator = "([^\\s]+(\\.(?i)(jpg|png|gif|jpeg))$)";
 	private final static String typeRegex = ".*(jpg|png|gif|jpeg)$" ;
-
-
-
-
-
-
-	public static List<String> saveEventImages(List<Part> files) throws IOException {
-		List<String> paths = new ArrayList<>();
-
-		for (Part part : files) {
-			if(!part.getContentType().matches(typeRegex)) {
-			}
-		}
-
-		return paths;
-	}
 
 
 
@@ -60,7 +44,7 @@ public class FileManager {
 	 * @return validates if the path given pertences to an image
 	 */
 	public static boolean validImage(String path) {
-		return path.matches(imageRegexValidator);
+		return path.matches(typeRegex);
 	}
 
 
@@ -100,4 +84,40 @@ public class FileManager {
 		}
 		return paths;
 	}
+	
+	/**
+	 * Saves an file and returns the path to the file saved
+	 */
+	public static String saveFile(Part part, String path) {
+		try(InputStream input = part.getInputStream()) {
+			
+			//		File uploads = new File(properties.getProperty("upload.location"));
+			File uploads = new File(ROOT_PATH+File.separator+path);
+			String fileName =part.getSubmittedFileName();
+			String name = fileName.substring(0,fileName.lastIndexOf('.'));
+			String extension = fileName.substring(fileName.lastIndexOf('.'), fileName.length());
+
+			File file = File.createTempFile(name+"-", extension , uploads);
+
+			Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+			return path+"/"+file.getName();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+
+
+	/**
+	 * 
+	 * @param imagePath
+	 */
+	public static boolean deleteFile(String path) {
+		return new File(ROOT_PATH+File.separator+path).delete();
+	}
+	
+	
 }

@@ -92,6 +92,13 @@ public class ResearchContainer implements Serializable{
 	
 	
 	
+	public boolean isInvestigator(int userId) {
+		for (InvestigatorContainer inv : getInvestigators()) 
+			if(inv.getUser().getId() == userId)
+				return true;
+		return false;
+	}
+	
 	
 	
 	

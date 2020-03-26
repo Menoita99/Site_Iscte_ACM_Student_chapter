@@ -119,13 +119,12 @@ public class ProjectBean implements Serializable{
 		}
 		try {
 			if(ProjectManager.getCandidature(Session.getInstance().getUser().getId(), project.getId()) == null) {
-				Project p = ProjectManager.findById(project.getId());
-				p.getCandidates().add(new Candidate(candidature));
-				JpaUtil.mergeEntity(p);
+				candidature.setUser(Session.getInstance().getUser());
+				ProjectManager.createCandidate(project.getId(), candidature);
 			}
 			else {
 				Candidate c = ProjectManager.getCandidature(Session.getInstance().getUser().getId(), project.getId());
-				c.update(c);
+				c.update(candidature);
 				JpaUtil.mergeEntity(c);
 			}
 		}catch (Exception e) {

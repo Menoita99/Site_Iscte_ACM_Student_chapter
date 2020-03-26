@@ -23,6 +23,10 @@ public class CandidateContainer implements Serializable {
 	private String hablitations;
 	private Date date;
 	
+	private int projectId = 0;
+	private int eventId = 0;
+	private int researchId = 0;
+	
 	/**
 	 * Constructor
 	 */

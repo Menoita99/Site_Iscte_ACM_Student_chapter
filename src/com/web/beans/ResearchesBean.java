@@ -29,7 +29,7 @@ public class ResearchesBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private List<ResearchContainer> researches;
-	
+
 	private int page = 1;
 	private int rpp = 12;//research per page
 
@@ -37,21 +37,21 @@ public class ResearchesBean implements Serializable {
 	private State state = State.ALL;
 	private String searchField = "";
 	private boolean ascending = true;
-	
-	
-	
-	
+
+
+
+
 	@PostConstruct
 	public void init() {
 		researches = ResearchManager.findAllResearches().stream().map(ResearchContainer::new).collect(Collectors.toList());
 		Collections.sort(researches,(ResearchContainer o1, ResearchContainer o2) -> new StringComparator(ascending).compare(o1.getTitle(),o2.getTitle()));
 	}
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 	/**
 	 * @return return All the State enum values
 	 */
@@ -63,10 +63,10 @@ public class ResearchesBean implements Serializable {
 		states[3] = State.FINISHED;
 		return states;
 	}
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * This method will sort projects
 	 * @param event
@@ -85,8 +85,8 @@ public class ResearchesBean implements Serializable {
 		search();
 	}
 
-	
-	
+
+
 	/**
 	 * 
 	 * @param event
@@ -111,31 +111,33 @@ public class ResearchesBean implements Serializable {
 				.stream()
 				.map(ResearchContainer::new)
 				.collect(Collectors.toList());
-		
+
 		Collections.sort(researches, (ResearchContainer o1 ,ResearchContainer o2 )-> new StringComparator(ascending).compare(o1.getTitle(), o2.getTitle()));
 	}
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
 	/**
 	 * @return returns the researchContainer that are present in
 	 */
 	public List<ResearchContainer> getResearches(){
 		List<ResearchContainer> outPut = new ArrayList<>();
-		int start = Math.min(rpp*page-rpp, researches.size());
-		int finish = Math.min(rpp*page, researches.size());
-		for(int i = start; i< finish ; i++) 
-			outPut.add(researches.get(i));
+		if(page>0) {
+			int start = Math.min(rpp*page-rpp, researches.size());
+			int finish = Math.min(rpp*page, researches.size());
+			for(int i = start; i< finish ; i++) 
+				outPut.add(researches.get(i));
+		}
 		return outPut;
 	}
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * @return the number of total pages that research list has
 	 */

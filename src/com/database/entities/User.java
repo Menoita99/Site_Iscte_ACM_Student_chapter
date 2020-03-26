@@ -13,8 +13,10 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import com.web.containers.UserContainer;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.ToString.Exclude;
 
 /**
@@ -24,7 +26,9 @@ import lombok.ToString.Exclude;
  */
 @Entity
 @Table(name = "user")
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -187,13 +191,13 @@ public class User implements Serializable {
 			username = update.getUsername();
 		if(update.getAbout() != null && !update.getAbout().isEmpty())
 			about = update.getAbout();
+		if(update.getImagePath() != null && !update.getImagePath().isEmpty())
+			imagePath = update.getImagePath();
 	}
-	
-	
-	
-	
-	
-	
+
+
+
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -202,10 +206,20 @@ public class User implements Serializable {
 			return false;
 		User other = (User) obj;
 		return Objects.equals(activationKey, other.activationKey) && Objects.equals(cellPhone, other.cellPhone)
+<<<<<<< HEAD
 				&& Objects.equals(course, other.course) && Objects.equals(email, other.email)
 				&& Objects.equals(fristName, other.fristName) && Objects.equals(imagePath, other.imagePath)
 				&& isActive == other.isActive && isAdmin == other.isAdmin && isMember == other.isMember
 				&& Objects.equals(password, other.password) && Objects.equals(username, other.username);
+=======
+				&& Objects.equals(course, other.course) && Objects.equals(creationDate, other.creationDate)
+				&& Objects.equals(email, other.email) && Objects.equals(fristName, other.fristName) && id == other.id
+				&& Objects.equals(imagePath, other.imagePath) && isActive == other.isActive && isAdmin == other.isAdmin
+				&& isMember == other.isMember 
+				&& Objects.equals(lastName, other.lastName)
+				&& Objects.equals(password, other.password)
+				&& Objects.equals(username, other.username);
+>>>>>>> branch 'master' of https://github.com/Menoita99/Site_Iscte_ACM_Student_chapter.git
 	}
 
 
@@ -213,9 +227,18 @@ public class User implements Serializable {
 
 	@Override
 	public int hashCode() {
+<<<<<<< HEAD
 		return Objects.hash(activationKey, cellPhone, course, email, fristName, imagePath, isActive, isAdmin, isMember,
 				lastName, password, username);
+=======
+		return Objects.hash(activationKey, cellPhone, course, creationDate, email, fristName, id, imagePath, isActive,
+				isAdmin, isMember, lastName, password, username);
+>>>>>>> branch 'master' of https://github.com/Menoita99/Site_Iscte_ACM_Student_chapter.git
 	}
+	
+	
+	
+	
 
 
 

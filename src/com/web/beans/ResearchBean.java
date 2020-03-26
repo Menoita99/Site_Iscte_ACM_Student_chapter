@@ -124,7 +124,7 @@ public class ResearchBean implements Serializable {
 			}
 			else {
 				Candidate c = ResearchManager.getCandidature(Session.getInstance().getUser().getId(), research.getId());
-				c.update(c);
+				c.update(candidature);
 				JpaUtil.mergeEntity(c);
 			}
 		}catch (Exception e) {

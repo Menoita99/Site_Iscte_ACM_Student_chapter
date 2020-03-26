@@ -11,6 +11,7 @@ import com.database.entities.Project;
 import com.database.entities.State;
 import com.database.entities.User;
 import com.database.entities.View;
+import com.web.containers.CandidateContainer;
 import com.web.containers.ProjectContainer;
 
 public class ProjectManager {
@@ -229,6 +230,7 @@ public class ProjectManager {
 	}
 
 
+<<<<<<< HEAD
 
 
 	/**
@@ -260,4 +262,34 @@ public class ProjectManager {
 		JpaUtil.mergeEntity(p);
 	}
 
+=======
+	/**
+	 * Creates a candidate for given project 
+	 * @param userId user that wants to candidate
+	 * @param porjectId project to add the candidate
+	 * @return returns the candidate or null if candidate already exits
+	 */
+	public static Candidate createCandidate(int projectId, CandidateContainer candidature) {
+		Candidate c = null;
+		try {
+			Project p = findById(projectId);
+			c = new Candidate(candidature);
+			p.getCandidates().add(c);
+			JpaUtil.mergeEntity(p);
+		} catch (Exception e) {
+			e.printStackTrace();
+			c = null;
+		}
+		return c;
+	}
+
+
+
+
+
+	public static void removeMember(int id, int projectId) {
+		// TODO Auto-generated method stub
+		
+	}
+>>>>>>> branch 'master' of https://github.com/Menoita99/Site_Iscte_ACM_Student_chapter.git
 }

@@ -2,6 +2,7 @@ package com.utils.comparators;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -22,6 +23,16 @@ public class NearestFutureComparator implements Comparator<Date> {
 			return o1.after(o2) ? -1 : 1;
 	}
 
+	public int compare(LocalDateTime o1, LocalDateTime o2) {
+		LocalDateTime now = LocalDateTime.now();
+
+		if((o1.isAfter(now) && o2.isAfter(now)) || (o1.isBefore(now) && o2.isBefore(now))) {
+			long l1 = Math.abs(o1.toInstant(ZoneOffset.UTC).getEpochSecond() - now.toInstant(ZoneOffset.UTC).getEpochSecond());
+			long l2 = Math.abs(o2.toInstant(ZoneOffset.UTC).getEpochSecond() - now.toInstant(ZoneOffset.UTC).getEpochSecond());
+			return (int)(l1-l2);
+		}else
+			return o1.isAfter(o2) ? -1 : 1;
+	}
 	
 	public static void main(String[] args) {
 		LocalDateTime time1 = LocalDateTime.of(2020, 6, 3, 00, 00);
@@ -42,4 +53,7 @@ public class NearestFutureComparator implements Comparator<Date> {
 		Collections.sort(dates,new NearestFutureComparator());
 		dates.stream().forEach(d -> System.out.println(d));
 	}
+
+
+
 }
