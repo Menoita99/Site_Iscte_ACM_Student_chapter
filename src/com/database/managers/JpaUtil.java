@@ -16,6 +16,7 @@ import javax.persistence.TransactionRequiredException;
 import javax.persistence.TypedQuery;
 
 
+
 @ApplicationScoped
 public class JpaUtil {
 
@@ -73,20 +74,29 @@ public class JpaUtil {
 
 
 
-	
+	//TODO: Generalize the 3 executeQuery
 	/**
 	 * This method executes the query @param cutomQueryPart and returns a List
 	 * of object @param resultCLass
 	 * 
 	 * @param customQueryPart query
-	 * @param resultClass return class 
+	 * @param resultClass return class
+	 * @param variable arguments representing the various queries parameters
 	 * 
 	 * @return return a list of objects of type resultClass
 	 */
-	public static <T> List<T> executeQuery(String customQueryPart, Class<T> resultClass ){
+	public static <T> List<T> executeQuery(String customQueryPart, Class<T> resultClass, String ...parameters){
 		EntityManager manager = getEntityManager();										//get's manager instance
 		try {
 			TypedQuery<T> query = manager.createQuery(customQueryPart,resultClass);		//creates query
+			
+			//Replaces the placeholders for the parameters
+			int index = 1;
+			for (String parameter: parameters) {
+				query.setParameter(index, parameter);
+				index++;
+			}
+			
 			List<T> results = query.getResultList();									//get results
 
 			return results;
@@ -94,7 +104,41 @@ public class JpaUtil {
 			manager.close();
 		}
 	}
+	
+	
+	public static <T> List<T> executeQuery(String customQueryPart, Class<T> resultClass, int ...parameters) {
+		EntityManager manager = getEntityManager();										//get's manager instance
+		try {
+			TypedQuery<T> query = manager.createQuery(customQueryPart,resultClass);		//creates query
+			
+			//Replaces the placeholders for the parameters
+			int index = 1;
+			for (int parameter: parameters) {
+				query.setParameter(index, parameter);
+				index++;
+			}
+			
+			List<T> results = query.getResultList();									//get results
 
+			return results;
+		}finally {
+			manager.close();
+		}
+	}
+	
+	public static <T> List<T> executeQuery(String customQueryPart, Class<T> resultClass){
+		EntityManager manager = getEntityManager();										//get's manager instance
+		try {
+			TypedQuery<T> query = manager.createQuery(customQueryPart,resultClass);		//creates query
+			
+			
+			List<T> results = query.getResultList();									//get results
+
+			return results;
+		}finally {
+			manager.close();
+		}
+	}
 
 
 
