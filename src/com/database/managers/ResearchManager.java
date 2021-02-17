@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 import com.database.entities.AcmLike;
 import com.database.entities.Candidate;
+import com.database.entities.Event;
 import com.database.entities.Investigator;
 import com.database.entities.Research;
 import com.database.entities.ResearchType;
@@ -137,8 +139,8 @@ public class ResearchManager {
 	 * @return
 	 */
 	public static Candidate getCandidature(int userId, int researchId) {
-		List<Candidate> cand =  JpaUtil.executeQuery("Select c from Research r join r.candidates c where r.id = "
-				 +researchId+" and c.user.id = "+userId, Candidate.class);
+		List<Candidate> cand =  JpaUtil.executeQuery("Select c from Research r join r.candidates c where r.id = ?1 and c.user.id = ?2",
+				Candidate.class, String.valueOf(researchId), String.valueOf(userId));
 		return cand.isEmpty() ? null : cand.get(0);
 	}
 
@@ -149,7 +151,8 @@ public class ResearchManager {
 	 * @return return if  user has liked the given research
 	 */
 	public static boolean wasLiked(int researchId, int userId) {
-		return !JpaUtil.executeQuery("Select r from Research r join r.likes l where l.user.id = "+ userId +" and r.id= "+researchId, Research.class).isEmpty();
+		return !JpaUtil.executeQuery("Select r from Research r join r.likes l where l.user.id = ?1 and r.id= ?2",
+				Research.class, String.valueOf(userId), String.valueOf(researchId)).isEmpty();
 	}
 	
 	
@@ -187,7 +190,8 @@ public class ResearchManager {
 	public static void dislike(int researchId, int userId) {
 		Research p = findResearch(researchId);
 
-		List<AcmLike> result = JpaUtil.executeQuery("Select l from Research r join r.likes l where l.user.id = "+userId+" and r.id= "+researchId, AcmLike.class);
+		List<AcmLike> result = JpaUtil.executeQuery("Select l from Research r join r.likes l where l.user.id = ?1 and r.id= ?2", 
+				AcmLike.class, String.valueOf(userId), String.valueOf(researchId));
 		if(!result.isEmpty()) {
 			AcmLike l = result.get(0);
 			p.getLikes().remove(l);
@@ -225,15 +229,17 @@ public class ResearchManager {
 	 * @return return all accepted events
 	 */
 	public static List<Research> findAllAccepted() {
-		String query = "Select r from Research r Where ";
-		
-		List<State> acceptanceStates = State.getAcceptanceStates();
-		for (int i = 0; i < acceptanceStates.size(); i++) {
-			query += " r.state = "+acceptanceStates.get(i).ordinal();
-			if(i != acceptanceStates.size()-1)
-				query+=" or ";
+		EntityManager manager = JpaUtil.getEntityManager();
+		try {
+			List<State> acceptanceStates = State.getAcceptanceStates();
+			TypedQuery<Research> query = manager.createQuery("Select r from Research r Where r.state IN (:states)", Research.class);
+			
+			List<Research> results = query.setParameter("states", acceptanceStates).getResultList();
+
+			return results;
+		}finally {
+			manager.close();
 		}
-		return JpaUtil.executeQuery(query, Research.class);
 	}
 
 
@@ -244,7 +250,7 @@ public class ResearchManager {
 
 
 	public static Investigator findInvestigatorByUserId(int id) {
-		return JpaUtil.executeQuery("Select i from Investigator i where i.user.id = "+id, Investigator.class).get(0);
+		return JpaUtil.executeQuery("Select i from Investigator i where i.user.id = ?1", Investigator.class, String.valueOf(id)).get(0);
 	}
 
 

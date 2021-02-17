@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 import com.database.entities.AcmLike;
 import com.database.entities.Candidate;
@@ -35,15 +36,17 @@ public class ProjectManager {
 	 * @return return all accepted events
 	 */
 	public static List<Project> findAllAccepted() {
-		String query = "Select p from Project p Where ";
-		
-		List<State> acceptanceStates = State.getAcceptanceStates();
-		for (int i = 0; i < acceptanceStates.size(); i++) {
-			query += " p.state = "+acceptanceStates.get(i).ordinal();
-			if(i != acceptanceStates.size()-1)
-				query+=" or ";
+		EntityManager manager = JpaUtil.getEntityManager();
+		try {
+			List<State> acceptanceStates = State.getAcceptanceStates();
+			TypedQuery<Project> query = manager.createQuery("Select p from Project p Where p.state IN (:states)", Project.class);
+			
+			List<Project> results = query.setParameter("states", acceptanceStates).getResultList();
+
+			return results;
+		}finally {
+			manager.close();
 		}
-		return JpaUtil.executeQuery(query, Project.class);
 	}
 
 
@@ -122,7 +125,9 @@ public class ProjectManager {
 	public static void dislike(int projectId, int userId) {
 		Project p = findById(projectId);
 
-		List<AcmLike> result = JpaUtil.executeQuery("Select l from Project p join p.likes l where l.user.id = "+userId+" and p.id= "+projectId, AcmLike.class);
+		List<AcmLike> result = JpaUtil.executeQuery("Select l from Project p join p.likes l where l.user.id = ?1 and p.id= ?2",
+				AcmLike.class, String.valueOf(userId), String.valueOf(projectId));
+		
 		if(!result.isEmpty()) {
 			AcmLike l = result.get(0);
 			p.getLikes().remove(l);
@@ -140,7 +145,7 @@ public class ProjectManager {
 	 * if he didn't liked projects it returns an empty list
 	 */
 	public static List<Project> getLikedProjects(int userId) {
-		return JpaUtil.executeQuery("Select p from Project p join p.likes l where l.user.id = "+userId,Project.class);
+		return JpaUtil.executeQuery("Select p from Project p join p.likes l where l.user.id = ?1",Project.class, String.valueOf(userId));
 	}
 
 
@@ -151,7 +156,8 @@ public class ProjectManager {
 	 * 
 	 */
 	public static Project getLikedProject(int userId, int projectId) {
-		List<Project> rst = JpaUtil.executeQuery("Select p from Project p join p.likes l where l.user.id = "+userId+" and p.id = "+projectId,Project.class);
+		List<Project> rst = JpaUtil.executeQuery("Select p from Project p join p.likes l where l.user.id = ?1 and p.id = ?2",
+				Project.class, String.valueOf(userId), String.valueOf(projectId));
 		return rst.isEmpty() ? null : rst.get(0);
 	}
 
@@ -192,7 +198,8 @@ public class ProjectManager {
 	 * @return return if  user has liked the given project
 	 */
 	public static boolean wasLiked(int projectId, int userId) {
-		return !JpaUtil.executeQuery("Select p from Project p join p.likes l where l.user.id = "+ userId +" and p.id= "+projectId, Project.class).isEmpty();
+		return !JpaUtil.executeQuery("Select p from Project p join p.likes l where l.user.id = ?1 and p.id = ?2",
+				Project.class, String.valueOf(userId), String.valueOf(projectId)).isEmpty();
 	}
 
 
@@ -214,8 +221,8 @@ public class ProjectManager {
 	 * @return
 	 */
 	public static Candidate getCandidature(int userId , int projectId) {
-		List<Candidate> cand =  JpaUtil.executeQuery("Select c from Project p join p.candidates c where p.id = "
-													 +projectId+" and c.user.id = "+userId, Candidate.class);
+		List<Candidate> cand =  JpaUtil.executeQuery("Select c from Project p join p.candidates c where p.id = ?1 and c.user.id = ?2",
+				Candidate.class, String.valueOf(projectId), String.valueOf(userId));
 		return cand.isEmpty() ? null : cand.get(0);
 	}
 
@@ -224,7 +231,7 @@ public class ProjectManager {
 	 * @return return all candidatures of a project
 	 */
 	public static List<Candidate> getCandidates(int projectId){
-		return JpaUtil.executeQuery("Select c from  Project p join p.candidates c where p.id = "+projectId, Candidate.class);
+		return JpaUtil.executeQuery("Select c from  Project p join p.candidates c where p.id = ?1", Candidate.class, String.valueOf(projectId));
 	}
 
 
