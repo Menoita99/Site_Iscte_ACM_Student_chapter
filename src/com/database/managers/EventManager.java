@@ -182,7 +182,7 @@ public class EventManager {
 	 */
 	public static boolean wasLiked(int eventId, int userId) {
 		return !JpaUtil.executeQuery("Select e from Event e join e.likes l where l.user.id = ?1 and e.id= ?2", 
-				Event.class, String.valueOf(userId), String.valueOf(eventId)).isEmpty();
+				Event.class, userId, eventId).isEmpty();
 	}
 
 
@@ -198,7 +198,7 @@ public class EventManager {
 		Event e = getEventById(eventId);
 
 		List<AcmLike> result = JpaUtil.executeQuery("Select l from Event e join e.likes l where l.user.id = ?1 and e.id= ?2", 
-				AcmLike.class, String.valueOf(userId), String.valueOf(eventId));
+				AcmLike.class, userId, eventId);
 		if(!result.isEmpty()) {
 			AcmLike l = result.get(0);
 			e.getLikes().remove(l);
@@ -238,7 +238,7 @@ public class EventManager {
 	 * @return return the staff members of an event
 	 */
 	public static List<User> getStaff(int id) {
-		return JpaUtil.executeQuery("Select distinct u from Event e join e.infos i join i.staff u where e.id = ?1", User.class, String.valueOf(id));
+		return JpaUtil.executeQuery("Select distinct u from Event e join e.infos i join i.staff u where e.id = ?1", User.class, id);
 	}
 	
 	
@@ -250,7 +250,7 @@ public class EventManager {
 	 * @return return all participants of an event
 	 */
 	public static List<User> getParticipants(int id) {
-		return JpaUtil.executeQuery("Select distinct u from Event e join e.infos i join i.participants u where e.id = ?1", User.class, String.valueOf(id));
+		return JpaUtil.executeQuery("Select distinct u from Event e join e.infos i join i.participants u where e.id = ?1", User.class, id);
 	}
 
 
@@ -262,6 +262,6 @@ public class EventManager {
 	 */
 	public static boolean isParticipantOfInfo(int infoId, int userId) {
 		return !JpaUtil.executeQuery("Select distinct i from EventInfo i join i.participants p where i.id = ?1 and p.id = ?2",
-				EventInfo.class, String.valueOf(infoId), String.valueOf(userId)).isEmpty();
+				EventInfo.class, infoId, userId).isEmpty();
 	}
 }

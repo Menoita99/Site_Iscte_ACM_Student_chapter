@@ -126,7 +126,7 @@ public class ProjectManager {
 		Project p = findById(projectId);
 
 		List<AcmLike> result = JpaUtil.executeQuery("Select l from Project p join p.likes l where l.user.id = ?1 and p.id= ?2",
-				AcmLike.class, String.valueOf(userId), String.valueOf(projectId));
+				AcmLike.class, userId, projectId);
 		
 		if(!result.isEmpty()) {
 			AcmLike l = result.get(0);
@@ -145,7 +145,7 @@ public class ProjectManager {
 	 * if he didn't liked projects it returns an empty list
 	 */
 	public static List<Project> getLikedProjects(int userId) {
-		return JpaUtil.executeQuery("Select p from Project p join p.likes l where l.user.id = ?1",Project.class, String.valueOf(userId));
+		return JpaUtil.executeQuery("Select p from Project p join p.likes l where l.user.id = ?1",Project.class, userId);
 	}
 
 
@@ -157,7 +157,7 @@ public class ProjectManager {
 	 */
 	public static Project getLikedProject(int userId, int projectId) {
 		List<Project> rst = JpaUtil.executeQuery("Select p from Project p join p.likes l where l.user.id = ?1 and p.id = ?2",
-				Project.class, String.valueOf(userId), String.valueOf(projectId));
+				Project.class, userId, projectId);
 		return rst.isEmpty() ? null : rst.get(0);
 	}
 
@@ -199,7 +199,7 @@ public class ProjectManager {
 	 */
 	public static boolean wasLiked(int projectId, int userId) {
 		return !JpaUtil.executeQuery("Select p from Project p join p.likes l where l.user.id = ?1 and p.id = ?2",
-				Project.class, String.valueOf(userId), String.valueOf(projectId)).isEmpty();
+				Project.class, userId, projectId).isEmpty();
 	}
 
 
@@ -222,7 +222,7 @@ public class ProjectManager {
 	 */
 	public static Candidate getCandidature(int userId , int projectId) {
 		List<Candidate> cand =  JpaUtil.executeQuery("Select c from Project p join p.candidates c where p.id = ?1 and c.user.id = ?2",
-				Candidate.class, String.valueOf(projectId), String.valueOf(userId));
+				Candidate.class, projectId, userId);
 		return cand.isEmpty() ? null : cand.get(0);
 	}
 
@@ -231,7 +231,7 @@ public class ProjectManager {
 	 * @return return all candidatures of a project
 	 */
 	public static List<Candidate> getCandidates(int projectId){
-		return JpaUtil.executeQuery("Select c from  Project p join p.candidates c where p.id = ?1", Candidate.class, String.valueOf(projectId));
+		return JpaUtil.executeQuery("Select c from  Project p join p.candidates c where p.id = ?1", Candidate.class, projectId);
 	}
 
 

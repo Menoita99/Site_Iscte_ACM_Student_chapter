@@ -104,8 +104,8 @@ public class UserManager {
 	 *Otherwise returns null 
 	 */
 	public static User emailLogin(String email, String password ) {
-		List<User> results = JpaUtil.executeQuery("SELECT u FROM User u WHERE u.email = ?1 "+
-												  " and u.password = ?2 ", User.class, email, password);																					
+		List<User> results = JpaUtil.executeQuery("SELECT u FROM User u WHERE u.email = ?1 and u.password = ?2 ", 
+				User.class, email, password);																					
 		if(!results.isEmpty()) {
 			updateLastLog(results.get(0));
 			return results.get(0);
@@ -123,8 +123,8 @@ public class UserManager {
 	 *Otherwise returns null 
 	 */
 	public static User usernameLogin(String username, String password ) {
-		List<User> user = JpaUtil.executeQuery("SELECT u FROM User u WHERE u.username = ?1 "+
-													 " and u.password = ?2 ", User.class, username, password);																			
+		List<User> user = JpaUtil.executeQuery("SELECT u FROM User u WHERE u.username = ?1 and u.password = ?2 ",
+				User.class, username, password);																			
 		if(!user.isEmpty()) {
 			updateLastLog(user.get(0));
 			return user.get(0);
@@ -279,7 +279,7 @@ public class UserManager {
 	 * @return return all the projects the user joined
 	 */
 	public static List<Project> getJoinedProject(int id) {
-		return JpaUtil.executeQuery(" Select p from Project p join p.participants u where u.id = ?1", Project.class, String.valueOf(id));
+		return JpaUtil.executeQuery(" Select p from Project p join p.participants u where u.id = ?1", Project.class, id);
 	}
 
 
@@ -289,7 +289,7 @@ public class UserManager {
 	 * @return return all the events that user is staff of
 	 */
 	public static List<Event> getJoinedEvents(int id) {
-		return JpaUtil.executeQuery("Select distinct e from Event e join e.infos i join i.participants p where p.id = ?1", Event.class, String.valueOf(id));
+		return JpaUtil.executeQuery("Select distinct e from Event e join e.infos i join i.participants p where p.id = ?1", Event.class, id);
 	}
 
 
@@ -299,7 +299,7 @@ public class UserManager {
 	 * @return return all the Researches that user is participant
 	 */
 	public static List<Research> getJoinedResearches(int id) {
-		return JpaUtil.executeQuery("Select r from Research r join r.participants u where u.id =?1 ", Research.class, String.valueOf(id));
+		return JpaUtil.executeQuery("Select r from Research r join r.participants u where u.id = ?1 ", Research.class, id);
 	}
 
 
@@ -309,7 +309,7 @@ public class UserManager {
 	 * @return
 	 */
 	public static List<Event> getLikedEvents(int id) {
-		return JpaUtil.executeQuery("Select e from Event e join e.likes l where l.user.id = ?1", Event.class, String.valueOf(id));
+		return JpaUtil.executeQuery("Select e from Event e join e.likes l where l.user.id = ?1", Event.class, id);
 	}
 
 
@@ -320,7 +320,7 @@ public class UserManager {
 	 * @return
 	 */
 	public static List<Research> getLikedResearches(int id) {
-		return JpaUtil.executeQuery("Select r from Research r join r.likes l where l.user.id = ?1", Research.class, String.valueOf(id));
+		return JpaUtil.executeQuery("Select r from Research r join r.likes l where l.user.id = ?1", Research.class, id);
 	}
 
 
@@ -332,14 +332,14 @@ public class UserManager {
 	 * @return
 	 */
 	public static List<Candidate> getProjectsCandidatures(int id) {
-		return JpaUtil.executeQuery("Select c from Project p join p.candidates c where c.user.id = ?1", Candidate.class, String.valueOf(id));
+		return JpaUtil.executeQuery("Select c from Project p join p.candidates c where c.user.id = ?1", Candidate.class, id);
 	}
 
 
 
 
 	public static List<Candidate> getResearchesCandidatures(int id) {
-		return JpaUtil.executeQuery("Select c from Research p join p.candidates c where c.user.id = ?1", Candidate.class, String.valueOf(id));
+		return JpaUtil.executeQuery("Select c from Research p join p.candidates c where c.user.id = ?1", Candidate.class, id);
 	}
 
 
@@ -363,6 +363,6 @@ public class UserManager {
 	 * @return
 	 */
 	public static boolean isInvestigator(int id) {
-		return !JpaUtil.executeQuery("Select i From Investigator i where i.user.id = ?1", Investigator.class, String.valueOf(id)).isEmpty();
+		return !JpaUtil.executeQuery("Select i From Investigator i where i.user.id = ?1", Investigator.class, id).isEmpty();
 	}
 }

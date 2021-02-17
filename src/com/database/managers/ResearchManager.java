@@ -140,7 +140,7 @@ public class ResearchManager {
 	 */
 	public static Candidate getCandidature(int userId, int researchId) {
 		List<Candidate> cand =  JpaUtil.executeQuery("Select c from Research r join r.candidates c where r.id = ?1 and c.user.id = ?2",
-				Candidate.class, String.valueOf(researchId), String.valueOf(userId));
+				Candidate.class, researchId, userId);
 		return cand.isEmpty() ? null : cand.get(0);
 	}
 
@@ -152,7 +152,7 @@ public class ResearchManager {
 	 */
 	public static boolean wasLiked(int researchId, int userId) {
 		return !JpaUtil.executeQuery("Select r from Research r join r.likes l where l.user.id = ?1 and r.id= ?2",
-				Research.class, String.valueOf(userId), String.valueOf(researchId)).isEmpty();
+				Research.class, userId, researchId).isEmpty();
 	}
 	
 	
@@ -191,7 +191,7 @@ public class ResearchManager {
 		Research p = findResearch(researchId);
 
 		List<AcmLike> result = JpaUtil.executeQuery("Select l from Research r join r.likes l where l.user.id = ?1 and r.id= ?2", 
-				AcmLike.class, String.valueOf(userId), String.valueOf(researchId));
+				AcmLike.class, userId, researchId);
 		if(!result.isEmpty()) {
 			AcmLike l = result.get(0);
 			p.getLikes().remove(l);
@@ -250,7 +250,7 @@ public class ResearchManager {
 
 
 	public static Investigator findInvestigatorByUserId(int id) {
-		return JpaUtil.executeQuery("Select i from Investigator i where i.user.id = ?1", Investigator.class, String.valueOf(id)).get(0);
+		return JpaUtil.executeQuery("Select i from Investigator i where i.user.id = ?1", Investigator.class, id).get(0);
 	}
 
 
